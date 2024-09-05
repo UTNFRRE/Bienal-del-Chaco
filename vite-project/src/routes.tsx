@@ -9,7 +9,7 @@ const routes = [
   },
 
   {
-    path: 'error404',
+    path: 'esculturas',
     element: <ErrorPage />,
   },
 ];
