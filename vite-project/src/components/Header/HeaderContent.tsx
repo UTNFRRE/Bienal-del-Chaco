@@ -8,7 +8,7 @@ import {
     Button,
     IconButton,
   } from '@chakra-ui/react';
-  import imgLogo from '../icons/logoo.png';
+  import imgLogo from '../icons/logo.png';
   import logoUser from '../icons/logo-user.png';
   import { FiMenu } from 'react-icons/fi';
   

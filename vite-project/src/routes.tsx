@@ -4,7 +4,7 @@ import ErrorPage from './pages/Error404';
 const routes = [
   
   {
-    path: 'inicio',
+    path: 'escultores',
     element: <Inicio />,
   },
 

@@ -31,7 +31,7 @@ export default function Admin() {
       <Box pos="relative" zIndex="10">
         <Header onOpen={onOpen} />
       </Box>
-      <Box ml={{ base: 0, md: 20 }} p="10" pt="20">
+      <Box ml={{ base: 0, md: 40 }} p="10" pt="20">
         {element}
       </Box>
     </Box>

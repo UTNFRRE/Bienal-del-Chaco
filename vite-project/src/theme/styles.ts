@@ -13,7 +13,7 @@ export const globalStyles = {
     principalHover: '#0f183f',
     secundaryBg: '#e9eef4',
     secundary: '#c4daf4',
-    secundaryHover: '#94c0f4',
+    secundaryHover: '#B4B4B8',
   },
   styles: {
     global: (props: StyleFunctionProps) => ({

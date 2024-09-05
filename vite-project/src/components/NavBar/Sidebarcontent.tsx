@@ -22,7 +22,7 @@ export function SidebarContent({ onClose, ...rest }: SidebarProps) {
     <Box
       borderRight="1px"
       borderColor="gray.300"
-      w={{ base: 'full', md: '100px' }}
+      w={{ base: 'full', md: '202px' }}
       pos="fixed"
       h="100%"
       {...rest}
@@ -34,7 +34,7 @@ export function SidebarContent({ onClose, ...rest }: SidebarProps) {
         alignItems="center"
         justifyContent="center"
         flexDirection="column"
-        gap="2"
+        gap="1"
         mt="70px"
       >
         {LINK_ITEMS.map((link, key) => (
@@ -44,7 +44,7 @@ export function SidebarContent({ onClose, ...rest }: SidebarProps) {
               title={link.title}
               color={
                 location.pathname === '/admin/' + link.url
-                  ? 'secundary'
+                  ? 'secundaryHover'
                   : 'white'
               }
             />

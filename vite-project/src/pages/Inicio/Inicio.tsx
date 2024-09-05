@@ -1,9 +1,10 @@
+import {Box, Text} from '@chakra-ui/react'
 
 function Inicio () {
   return (
-    <div>
-      <h1>Inicio</h1>
-    </div>
+    <Box>
+      <Text>Inicio</Text>
+    </Box>
   )
 }
 
