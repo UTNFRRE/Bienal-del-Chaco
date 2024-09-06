@@ -12,22 +12,6 @@ export default function Admin() {
 
   return (
     <Box minH="100vh">
-      {/* <SidebarContent
-        onClose={onClose}
-        display={{ base: 'none', md: 'block' }}
-      />
-      <Drawer
-        autoFocus={false}
-        isOpen={isOpen}
-        placement="left"
-        onClose={onClose}
-        onOverlayClick={onClose}
-        size="xs"
-      >
-        <DrawerContent>
-          <SidebarContent onClose={onClose} />
-        </DrawerContent>
-      </Drawer> */}
       <Box pos="relative" zIndex="10">
         <Header onOpen={onOpen} />
       </Box>

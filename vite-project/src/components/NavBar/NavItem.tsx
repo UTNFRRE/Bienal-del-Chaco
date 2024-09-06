@@ -7,7 +7,7 @@ interface NavItemProps extends FlexProps {
 }
 
 export default function NavItem({
-  icon,
+  icon: Icon,
   color,
   title,
   ...props
@@ -37,9 +37,10 @@ export default function NavItem({
         w="100%" 
         h="40px" 
       >
-        <Text as="b" fontSize="md" color="white"> 
-          {title}
-        </Text>
+        {Icon && <Icon />}
+          <Text as="b" fontSize="md" color="white"> 
+        {title}
+      </Text>
       </Flex>
     // </Tooltip>
   );

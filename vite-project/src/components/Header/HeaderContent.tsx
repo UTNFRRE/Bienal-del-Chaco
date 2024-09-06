@@ -7,14 +7,14 @@ import {
     MenuItem,
     Button,
     IconButton,
+    Spacer,
     
   } from '@chakra-ui/react';
   import imgLogo from '../icons/pagina.png';
   import logoUser from '../icons/logo-user.png';
   import { FiMenu } from 'react-icons/fi';
-  import { LINK_ITEMS } from '../NavBar/LinksItems';
-  import NavItem from '../NavBar/NavItem';
-  import { Link, useLocation } from 'react-router-dom';
+  import {NavContent} from '../NavBar/NavContent';
+  import MovileNav from '../NavBar/MobileNav';
   
   
   export function HeaderContent({ onOpen }: { onOpen: any }) {
@@ -30,52 +30,36 @@ import {
         justifyContent="space-between"
         textAlign="center"
         h="80px"
-        background="linear-gradient(to right, #000000, #434343)" // Negro degradado
+        background="linear-gradient(to right, #000000, #434343)" 
         alignItems="center"
       >
-        <Image
+          <Image
             src={imgLogo}
             w="150px"
             display={{ base: 'none', md: 'flex' }}
           ></Image>
-          <Flex
-          flexDirection="row"
-          gap="2"
-          mt="4px"
-          >
-        {LINK_ITEMS.map((link, key) => (
-          <Link key={key} to={link.url}>
-            <NavItem
-              icon={link.icon}
-              title={link.title}
-              color={
-                location.pathname === '/admin/' + link.url
-                  ? '#61677A'
-                  : 'none'
-              }
-            />
-          </Link>
-        ))}
-      </Flex>
-          <Menu>
-          <IconButton
-            variant="outline"
-            onClick={onOpen}
-            aria-label="open menu"
-            icon={<FiMenu />}
-            display={{ base: 'flex', md: 'none' }}
-            color="white"
-          />
-          <MenuButton as={Button} borderRadius="50%" w="50px" h="50px" p="0px">
-            <Image src={logoUser} w="100%"></Image>
-          </MenuButton>
-          <MenuList>
-            <MenuItem color="gray" pointerEvents="none">
-              Ver Perfil
-            </MenuItem>
-            <MenuItem>Cerrar sesión</MenuItem>
-          </MenuList>
-        </Menu>
+          <Flex gap={19}  alignItems="center" flex={{ base: 1, md: 0 }}>
+            <Flex mt="3px" display={{ base: 'none', md: 'block' }}>
+              <NavContent/> 
+            </Flex>
+            <Flex
+              display={{ base: 'flex', md: 'none' }}
+            >
+              <MovileNav/>
+            </Flex>
+            <Spacer display={{ base: 'flex', md: 'none' }} />
+            <Menu>
+              <MenuButton as={Button} borderRadius="50%" w="50px" h="50px" p="0px">
+                <Image src={logoUser} w="100%"></Image>
+              </MenuButton>
+              <MenuList>
+                <MenuItem color="gray" pointerEvents="none">
+                  Ver Perfil
+                </MenuItem>
+                <MenuItem>Cerrar sesión</MenuItem>
+              </MenuList>
+          </Menu>
+        </Flex>
       </Flex>
     );
   }
