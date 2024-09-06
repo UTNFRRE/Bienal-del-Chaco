@@ -7,15 +7,20 @@ import {
     MenuItem,
     Button,
     IconButton,
+    
   } from '@chakra-ui/react';
-  import imgLogo from '../icons/logo.png';
+  import imgLogo from '../icons/pagina.png';
   import logoUser from '../icons/logo-user.png';
   import { FiMenu } from 'react-icons/fi';
+  import { LINK_ITEMS } from '../NavBar/LinksItems';
+  import NavItem from '../NavBar/NavItem';
+  import { Link, useLocation } from 'react-router-dom';
   
   
   export function HeaderContent({ onOpen }: { onOpen: any }) {
     return (
       <Flex
+        as="header"
         borderBottom="1px"
         borderColor="gray.300"
         w="100%"
@@ -25,15 +30,34 @@ import {
         justifyContent="space-between"
         textAlign="center"
         h="80px"
-        background="white"
+        background="linear-gradient(to right, #000000, #434343)" // Negro degradado
         alignItems="center"
       >
-        <Menu>
-          <Image
+        <Image
             src={imgLogo}
-            w="60px"
+            w="150px"
             display={{ base: 'none', md: 'flex' }}
           ></Image>
+          <Flex
+          flexDirection="row"
+          gap="2"
+          mt="4px"
+          >
+        {LINK_ITEMS.map((link, key) => (
+          <Link key={key} to={link.url}>
+            <NavItem
+              icon={link.icon}
+              title={link.title}
+              color={
+                location.pathname === '/admin/' + link.url
+                  ? '#61677A'
+                  : 'none'
+              }
+            />
+          </Link>
+        ))}
+      </Flex>
+          <Menu>
           <IconButton
             variant="outline"
             onClick={onOpen}

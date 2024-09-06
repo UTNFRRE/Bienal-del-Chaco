@@ -23,7 +23,7 @@ function App() {
             element={
               <Navigate
                 replace
-                to='/admin/inicio' 
+                to='/admin/escultores' 
               />
             }
           />

@@ -7,9 +7,16 @@ const routes = [
     path: 'escultores',
     element: <Inicio />,
   },
-
   {
-    path: 'esculturas',
+    path: 'eventos',
+    element: <ErrorPage />,
+  },
+  {
+    path: 'usuarios',
+    element: <ErrorPage />,
+  },
+  {
+    path: 'obras',
     element: <ErrorPage />,
   },
 ];

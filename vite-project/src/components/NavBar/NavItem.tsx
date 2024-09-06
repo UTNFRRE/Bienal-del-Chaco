@@ -29,15 +29,15 @@ export default function NavItem({
       <Flex
         align="center"
         justify="center"
-        p={0}
-        _hover={{ bg: 'secundaryHover' }}
+        p={4}
+        _hover={{ bg: "linear-gradient(to right, #000000, #434343)" }}
         {...props}
-        borderRadius="5px"
+        //borderRadius="5px"
         backgroundColor={color}
-        w="200px" 
-        h="60px" 
+        w="100%" 
+        h="40px" 
       >
-        <Text as="b" fontSize="lg"> 
+        <Text as="b" fontSize="md" color="white"> 
           {title}
         </Text>
       </Flex>

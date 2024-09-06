@@ -1,10 +1,14 @@
-import {Box, Text} from '@chakra-ui/react'
+import {Stack, Text} from '@chakra-ui/react'
 
 function Inicio () {
   return (
-    <Box>
+    <Stack
+      height="100%"
+      alignItems="center"
+      justifyContent="center"
+    >
       <Text>Inicio</Text>
-    </Box>
+    </Stack>
   )
 }
 
