@@ -1,19 +1,16 @@
-import React from 'react'; // Add import statement for React
 import {
     Box,
     Flex,
-    HStack,
-    CloseButton,
-    useMediaQuery,
-    BoxProps,
   } from '@chakra-ui/react';
   import { Link, useLocation } from 'react-router-dom';
-  import { LINK_ITEMS } from './LinksItems';
   import NavItem from './NavItem';
   
+  interface NavContentProps {
+    LINK_ITEMS: { title: string; url: string; rol:string }[];
+  }
 
   
-  export function NavContent() {
+  export function NavContent({LINK_ITEMS}:NavContentProps) {
    // const [isLargerThanMd] = useMediaQuery('(min-width: 768px)');
     const location = useLocation();
   
@@ -32,10 +29,9 @@ import {
         {LINK_ITEMS.map((link, key) => (
           <Link key={key} to={link.url}>
             <NavItem
-              icon={link.icon}
               title={link.title}
               color={
-                location.pathname === '/admin/' + link.url
+                location.pathname ===  `/${link.rol}/` + link.url
                   ? '#61677A'
                   : 'none'
               }

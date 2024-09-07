@@ -9,6 +9,7 @@ export const globalStyles = {
       50: '#f7fafc',
       900: '#171923',
     },
+    blue: '#252f5e',
     principal: '#252f5e',
     principalHover: '#0f183f',
     secundaryBg: '#e9eef4',

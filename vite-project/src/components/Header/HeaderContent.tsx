@@ -6,18 +6,19 @@ import {
     MenuList,
     MenuItem,
     Button,
-    IconButton,
     Spacer,
     
   } from '@chakra-ui/react';
   import imgLogo from '../icons/pagina.png';
   import logoUser from '../icons/logo-user.png';
-  import { FiMenu } from 'react-icons/fi';
   import {NavContent} from '../NavBar/NavContent';
   import MovileNav from '../NavBar/MobileNav';
   
-  
-  export function HeaderContent({ onOpen }: { onOpen: any }) {
+  interface NavContentProps {
+    LINK_ITEMS: { title: string; url: string; rol:string }[];
+  }
+
+  export function HeaderContent({LINK_ITEMS}:NavContentProps) {
     return (
       <Flex
         as="header"
@@ -39,13 +40,13 @@ import {
             display={{ base: 'none', md: 'flex' }}
           ></Image>
           <Flex gap={19}  alignItems="center" flex={{ base: 1, md: 0 }}>
-            <Flex mt="3px" display={{ base: 'none', md: 'block' }}>
-              <NavContent/> 
+            <Flex flexDirection="row" justifyContent="center" display={{ base: 'none', md: 'block' }}>
+              <NavContent LINK_ITEMS={LINK_ITEMS}/> 
             </Flex>
             <Flex
               display={{ base: 'flex', md: 'none' }}
             >
-              <MovileNav/>
+              <MovileNav LINK_ITEMS={LINK_ITEMS}/>
             </Flex>
             <Spacer display={{ base: 'flex', md: 'none' }} />
             <Menu>

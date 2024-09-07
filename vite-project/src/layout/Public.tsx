@@ -5,17 +5,17 @@ import { Box } from '@chakra-ui/react';
 import routes from '../routes';
 import Header from '../components/Header/Header';
 
-export default function Admin() {
-  const adminRoutes = routes.filter(route => route.rol !== 'public');
-  const element = useRoutes(adminRoutes);
-  const LINK_ITEMS_ = adminRoutes
+export default function Public() {
+  const publicRoutes = routes.filter(route => route.rol !== 'admin');
+  const element = useRoutes(publicRoutes);
+  const LINK_ITEMS_ = publicRoutes
     .filter(route => route.title && route.rol && route.path)
     .map(route => ({
       title: route.title!,
       url: route.path,
       rol: route.rol!,
     }));
-  const LINK_ITEMS = LINK_ITEMS_.filter((link) => link.rol === 'admin');
+  const LINK_ITEMS = LINK_ITEMS_.filter((link) => link.rol === 'public');
 
   return (
     <Box minH="100vh">

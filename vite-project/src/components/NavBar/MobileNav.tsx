@@ -13,11 +13,14 @@ import {
   VStack,
   Link,
 } from '@chakra-ui/react';
-import { FiMenu } from 'react-icons/fi';
-import { LINK_ITEMS } from './LinksItems'; 
+import { FiMenu } from 'react-icons/fi'; 
 import NavItem from './NavItem';
 
-export default function MobileNav() {
+interface NavContentProps {
+  LINK_ITEMS: { title: string; url: string; rol:string }[];
+}
+
+export default function MobileNav({LINK_ITEMS}:NavContentProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -46,7 +49,7 @@ export default function MobileNav() {
             <VStack align="start">
               {LINK_ITEMS.map((link, index) => (
                 <Link key={index} href={link.url} onClick={onClose}>
-                  <NavItem icon={link.icon} title={link.title} />
+                  <NavItem title={link.title} />
                 </Link>
               ))}
             </VStack>
