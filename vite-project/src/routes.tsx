@@ -1,5 +1,6 @@
 import Inicio from './pages/Inicio/Inicio';
 import ErrorPage from './pages/Error404';
+import Eventos from './pages/Eventos';
 
 const routes = [
   
@@ -11,7 +12,7 @@ const routes = [
   },
   {
     path: 'eventos',
-    element: <ErrorPage />,
+    element: <Eventos />,
     title: 'Eventos',
     rol: 'admin',
   },

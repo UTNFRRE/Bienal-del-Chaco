@@ -9,13 +9,20 @@ const theme = extendTheme({
           fontWeight: 'bold',
         },
         variants: {
-              solid: (props: any) => ({
-                bg: props.colorMode === 'dark' ? 'blue.300' : 'blue',
-                color: 'white',
-                _hover: {
-                  bg: props.colorMode === 'dark' ? 'blue.200' : 'blue.600',
-                },
-              }),
+          solid: (props: any) => ({
+            bg: props.colorMode === 'dark' ? 'principalHover' : 'principal',
+            color: 'white',
+            _hover: {
+              bg: props.colorMode === 'dark' ? 'principalHover' : 'principalHover',
+            },
+          }),
+          delete: {
+            bg: '#C7253E',
+            color: 'white',
+            _hover: {
+              bg: 'red.600',
+            },
+          },
         },
       },
     },

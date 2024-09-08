@@ -1,7 +1,5 @@
 import { useRoutes } from 'react-router-dom';
 import { Box } from '@chakra-ui/react';
-//import { MobileNav } from '../components/NavBar/MobileNav';
-//import { SidebarContent } from '../components/NavBar/Sidebarcontent';
 import routes from '../routes';
 import Header from '../components/Header/Header';
 
@@ -18,11 +16,11 @@ export default function Admin() {
   const LINK_ITEMS = LINK_ITEMS_.filter((link) => link.rol === 'admin');
 
   return (
-    <Box minH="100vh">
+    <Box w="100%">
       <Box pos="relative" zIndex="10">
         <Header LINK_ITEMS={LINK_ITEMS}/>
       </Box>
-      <Box p="10" pt="20">
+      <Box pt="20" ml="7px">
         {element}
       </Box>
     </Box>
