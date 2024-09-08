@@ -5,7 +5,7 @@ const Eventos = [
         titulo: "Evento 1",
         fecha: "2021-08-01",
         descripcion: "Descrpcion del evento 1",
-        lugar: "Bienal",
+        lugar: "Av las heras 812",
         tematica: "River",
 
     },
@@ -14,7 +14,7 @@ const Eventos = [
         titulo: "Evento 2",
         fecha: "2021-08-01",
         descripcion: "Descrpcion del evento 2",
-        lugar: "Bienal",
+        lugar: "Av las heras 812",
         tematica: "River",
     },
     {
@@ -22,7 +22,7 @@ const Eventos = [
         titulo: "Evento 3",
         fecha: "2021-08-01",
         descripcion: "Descrpcion del evento 3",
-        lugar: "Bienal",
+        lugar: "Av las heras 812",
         tematica: "River",
     },
     {
@@ -30,7 +30,7 @@ const Eventos = [
         titulo: "Evento 4",
         fecha: "2021-08-01",
         descripcion: "Descrpcion del evento 4",
-        lugar: "Bienal",
+        lugar: "Av las heras 812",
         tematica: "River",
     },
     {
@@ -38,7 +38,7 @@ const Eventos = [
         titulo: "Evento 5",
         fecha: "2021-08-01",
         descripcion: "Descrpcion del evento 5",
-        lugar: "Bienal",
+        lugar: "Av las heras 812",
         tematica: "River",
     },
     {
@@ -46,7 +46,7 @@ const Eventos = [
         titulo: "Evento 6",
         fecha: "2021-08-01",
         descripcion: "Descrpcion del evento 6",
-        lugar: "Bienal",
+        lugar: "Av las heras 812",
         tematica: "River",
     },
     {
@@ -54,7 +54,7 @@ const Eventos = [
         titulo: "Evento 7",
         fecha: "2021-08-01",
         descripcion: "Descrpcion del evento 7",
-        lugar: "Bienal",
+        lugar: "Av las heras 812",
         tematica: "River",
     },
     {
@@ -62,7 +62,7 @@ const Eventos = [
         titulo: "Evento 8",
         fecha: "2021-08-01",
         descripcion: "Descrpcion del evento 8",
-        lugar: "Bienal",
+        lugar: "Av las heras 812",
         tematica: "River",
     },
     {
@@ -70,7 +70,7 @@ const Eventos = [
         titulo: "Evento 9",
         fecha: "2021-08-01",
         descripcion: "Descrpcion del evento 9",
-        lugar: "Bienal",
+        lugar: "Av las heras 812",
         tematica: "River",
     },
     {
@@ -78,7 +78,7 @@ const Eventos = [
         titulo: "Evento 10",
         fecha: "2021-08-01",
         descripcion: "Descrpcion del evento 10",
-        lugar: "Bienal",
+        lugar: "Av las heras 812",
         tematica: "River",
     },
 ];
