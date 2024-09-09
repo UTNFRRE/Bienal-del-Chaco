@@ -2,7 +2,8 @@ import { Box, Table, Thead, Tbody, Tr, Th, Td, Flex, Text, IconButton, Button, I
 import { EditIcon, DeleteIcon, AddIcon, SearchIcon } from '@chakra-ui/icons'; 
 import Eventos from '../../API/Eventos';
 import {useState , useEffect} from 'react';
-
+import { useDisclosure } from '@chakra-ui/react';
+import ModalConfirmar from '../Modal/ConfirmarCambios';
 
 // Agregar paginacion
 // La parte de filtrado robe de por ahi, asi que ignoren nms eso por ahora
@@ -11,6 +12,8 @@ function TablaEventos () {
 
     const [eventos, setEventos] = useState<any[]>([]); //se usa una variable de estado para guardar los eventos, esta variable es del tipo any (objeto)
     const [filteredEventos, setFilteredEventos] = useState<any[]>([]);
+    const [EventoElegido, setEventoElegido] = useState<any>(); //se usa una variable de estado para guardar el evento que se quiere eliminar o editar
+    const { isOpen, onOpen, onClose } = useDisclosure();
     const [filters, setFilters] = useState({
         titulo: '',
         lugar: '',
@@ -25,6 +28,7 @@ function TablaEventos () {
         setFilteredEventos(Eventos);
     }, [])
 
+    // filtros
     useEffect(() => {
         setFilteredEventos(
           eventos.filter(evento =>
@@ -36,7 +40,8 @@ function TablaEventos () {
           )
         );
     }, [filters, eventos]);
-
+     
+    // funcion para manejar los cambios en los filtros
     const handleFilterChange = (e:any) => {
         const { name, value } = e.target;
         setFilters({
@@ -52,7 +57,21 @@ function TablaEventos () {
         return text;
     };
 
+    const handleDelete = (evento:any) => {
+      setEventoElegido(evento);
+      onOpen()
+    }
+
+  const handleConfirmarDelete = async () => {
+        setEventos((prevEventos) =>
+          prevEventos.filter((m) => m.id !== EventoElegido.id)
+        ); // Elimina del json el evento elegido
+
+      onClose();
+  };
+
     return (
+     <>
             <Flex
                 alignItems="center"
                 justifyContent="center"
@@ -160,7 +179,8 @@ function TablaEventos () {
                               aria-label="Eliminar"
                               icon={<DeleteIcon />}
                               variant="delete"
-                              borderRadius={3}                                           
+                              borderRadius={3}  
+                              onClick={() => handleDelete(evento)}                                         
                             />
                           </Flex>
                         </Td>
@@ -174,6 +194,13 @@ function TablaEventos () {
             )}
         </Box>
         </Flex>
+        <ModalConfirmar
+        isOpen={isOpen}
+        onClose={onClose}
+        texto={`¿Estás seguro que deseas eliminar ${EventoElegido?.titulo}?`}
+        confirmar={handleConfirmarDelete}
+        />
+    </>
         )
     }
 export default TablaEventos;
