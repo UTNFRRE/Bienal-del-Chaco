@@ -1,6 +1,6 @@
-import Inicio from './pages/Inicio/Inicio';
+import Inicio from './pages/Public/Inicio/Inicio';
 import ErrorPage from './pages/Error404';
-import Eventos from './pages/Eventos';
+import Eventos from './pages/Admin/Eventos';
 
 const routes = [
   
