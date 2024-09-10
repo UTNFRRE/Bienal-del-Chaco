@@ -1,0 +1,2 @@
+La carpeta "tests" en el directorio "BackEnd" generalmente se utiliza para almacenar archivos de prueba relacionados con el código de la parte trasera de una aplicación. 
+Estos archivos de prueba contienen casos de prueba y escenarios que se utilizan para verificar el correcto funcionamiento del código y garantizar su calidad
