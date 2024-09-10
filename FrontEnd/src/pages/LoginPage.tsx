@@ -1,4 +1,4 @@
-import {Stack, Box, Image, Input, FormLabel, Flex, Heading, FormControl, Button} from  '@chakra-ui/react';
+import {Box, Image, Input, Flex, Heading, FormControl, Button} from  '@chakra-ui/react';
 import ImagenFondo from '../components/icons/login2.png';
 import Logo from '../components/icons/pagina.png';
 
