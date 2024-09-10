@@ -4,6 +4,7 @@ import Eventos from '../../API/Eventos';
 import {useState , useEffect} from 'react';
 import { useDisclosure } from '@chakra-ui/react';
 import ModalConfirmar from '../Modal/ConfirmarCambios';
+import ModalAgregarEvento from '../Modal/AgregarEvento';
 
 // Agregar paginacion
 // La parte de filtrado robe de por ahi, asi que ignoren nms eso por ahora
@@ -13,7 +14,19 @@ function TablaEventos () {
     const [eventos, setEventos] = useState<any[]>([]); //se usa una variable de estado para guardar los eventos, esta variable es del tipo any (objeto)
     const [filteredEventos, setFilteredEventos] = useState<any[]>([]);
     const [EventoElegido, setEventoElegido] = useState<any>(); //se usa una variable de estado para guardar el evento que se quiere eliminar o editar
-    const { isOpen, onOpen, onClose } = useDisclosure();
+    // isopen, onopen y onclose son funciones que se usan para abrir y cerrar cada modal
+    const { 
+        isOpen: isOpenDelete, 
+        onOpen: onOpenDelete, 
+        onClose: onCloseDelete 
+    } = useDisclosure();
+    const { 
+      isOpen: isOpenAdd, 
+      onOpen: onOpenAdd, 
+      onClose: onCloseAdd 
+    } = useDisclosure();
+    
+
     const [filters, setFilters] = useState({
         titulo: '',
         lugar: '',
@@ -57,18 +70,37 @@ function TablaEventos () {
         return text;
     };
 
+    //funcion que se llama cuando se elige un evento para eliminar, seteo la variable de estado con el evento elegido y abro el modal
     const handleDelete = (evento:any) => {
       setEventoElegido(evento);
-      onOpen()
+      onOpenDelete()
     }
 
-  const handleConfirmarDelete = async () => {
-        setEventos((prevEventos) =>
-          prevEventos.filter((m) => m.id !== EventoElegido.id)
-        ); // Elimina del json el evento elegido
+    // funcion que se pasa como parametro al modal de confirmar cambios, y se llama dentro del modal llama cuando se selecciona confirmar
+    const handleConfirmarDelete = async () => {
+          setEventos((prevEventos) =>
+            prevEventos.filter((m) => m.id !== EventoElegido.id)
+          ); // Elimina del json el evento elegido
 
-      onClose();
-  };
+        onCloseDelete();
+    };
+
+    const handleConfirmarAdd = async (titulo:string, lugar:string, tematica:string, descripcion:string, fecha:string) => {
+      // Aca se hace el llamado a la funcion de la api que agrega un evento
+      // Agregar el evento al json
+      setEventos((prevEventos) => [
+        ...prevEventos,
+        {
+          id: prevEventos.length + 1,
+          titulo: titulo,
+          lugar: lugar,
+          tematica: tematica,
+          descripcion: descripcion,
+          fecha: fecha,
+        },
+      ]);
+      onCloseAdd();
+    };
 
     return (
      <>
@@ -78,7 +110,7 @@ function TablaEventos () {
                 flexDirection="column"
             >
             <Flex justifyContent="center" mb={4} mt={4} gap={4}>
-                <Button leftIcon={<AddIcon />} borderRadius={3}>Agregar Evento</Button>
+                <Button leftIcon={<AddIcon />} borderRadius={3} onClick={onOpenAdd}>Agregar Evento</Button>
                 {/* Al hacer click niego lo que tenia showfilters, la excpresion de abajo es un condicional simple en js */}
                 <Button onClick={() => setMostrarFiltros(!MostrarFiltros)} leftIcon={<SearchIcon />} borderRadius={3}>
                 {MostrarFiltros ? 'Ocultar Filtros' : 'Filtrar'}
@@ -175,6 +207,7 @@ function TablaEventos () {
                               variant="solid"
                               borderRadius={3}                                
                             />
+                            
                             <IconButton
                               aria-label="Eliminar"
                               icon={<DeleteIcon />}
@@ -194,11 +227,17 @@ function TablaEventos () {
             )}
         </Box>
         </Flex>
+        {/* Al final del flex principal se agregan las tags de los modal */}
         <ModalConfirmar
-        isOpen={isOpen}
-        onClose={onClose}
+        isOpen={isOpenDelete}
+        onClose={onCloseDelete}
         texto={`¿Estás seguro que deseas eliminar ${EventoElegido?.titulo}?`}
         confirmar={handleConfirmarDelete}
+        />
+        <ModalAgregarEvento
+        isOpen={isOpenAdd}
+        onClose={onCloseAdd}
+        confirmar={handleConfirmarAdd}
         />
     </>
         )

@@ -7,9 +7,11 @@ const theme = extendTheme({
       Button: {
         baseStyle: {
           fontWeight: 'bold',
+          borderRadius: 3,
         },
         variants: {
           solid: (props: any) => ({
+            
             bg: props.colorMode === 'dark' ? 'principalHover' : 'principal',
             color: 'white',
             _hover: {
@@ -21,6 +23,18 @@ const theme = extendTheme({
             color: 'white',
             _hover: {
               bg: 'red.600',
+            },
+          },
+          light: {
+            background: 'transparent',
+            color: '#022855',
+            border: '1px solid #022855',
+            _hover: {
+              bg: '#º  ',
+              background: '#e9eef4',
+            },
+            _focus: {
+              boxShadow: 'none',
             },
           },
         },

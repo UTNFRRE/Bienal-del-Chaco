@@ -53,7 +53,6 @@ import {
                 mr={3}
                 onClick={onClose}
                 variant="light"
-                borderColor={"black"}
                 size="sm"
               >
                 Cancelar
