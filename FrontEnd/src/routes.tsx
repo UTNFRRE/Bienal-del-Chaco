@@ -1,4 +1,4 @@
-import Inicio from './pages/Public/Inicio/Inicio';
+import Escultoress from './pages/Public/Escultores/Escultores';
 import ErrorPage from './pages/Error404';
 import Eventos from './pages/Admin/Eventos';
 
@@ -7,7 +7,7 @@ const routes = [
   {
     path: 'escultores',
     title: 'Escultores',
-    element: <Inicio />,
+    element: <ErrorPage />,
     rol: 'admin',
   },
   {
@@ -30,7 +30,7 @@ const routes = [
   },
   {
     path: 'escultores',
-    element: <Inicio />,
+    element: <Escultoress />,
     title: 'Escultores',
     rol: 'public',
   },
