@@ -5,6 +5,7 @@ import {useState , useEffect} from 'react';
 import { useDisclosure } from '@chakra-ui/react';
 import ModalConfirmar from '../Modal/ConfirmarCambios';
 import ModalAgregarEvento from '../Modal/AgregarEvento';
+import ModalEditarEvento from '../Modal/EditarEvento';
 
 // Agregar paginacion
 // La parte de filtrado robe de por ahi, asi que ignoren nms eso por ahora
@@ -14,6 +15,7 @@ function TablaEventos () {
     const [eventos, setEventos] = useState<any[]>([]); //se usa una variable de estado para guardar los eventos, esta variable es del tipo any (objeto)
     const [filteredEventos, setFilteredEventos] = useState<any[]>([]);
     const [EventoElegido, setEventoElegido] = useState<any>(); //se usa una variable de estado para guardar el evento que se quiere eliminar o editar
+    
     // isopen, onopen y onclose son funciones que se usan para abrir y cerrar cada modal
     const { 
         isOpen: isOpenDelete, 
@@ -24,6 +26,11 @@ function TablaEventos () {
       isOpen: isOpenAdd, 
       onOpen: onOpenAdd, 
       onClose: onCloseAdd 
+    } = useDisclosure();
+    const {
+      isOpen: isOpenEdit,
+      onOpen: onOpenEdit,
+      onClose: onCloseEdit
     } = useDisclosure();
     
 
@@ -100,6 +107,31 @@ function TablaEventos () {
         },
       ]);
       onCloseAdd();
+    };
+
+    const handleEditar = (evento:any) => {
+      setEventoElegido(evento);
+      onOpenEdit();
+    };
+    
+    const handleConfirmarEdit = async (titulo:string, lugar:string, tematica:string, descripcion:string, fecha:string) => {
+      // Aca se hace el llamado a la funcion de la api que edita un evento
+      // Editar el evento en el json
+      setEventos((prevEventos) =>
+        prevEventos.map((m) =>
+          m.id === EventoElegido.id
+            ? {
+                ...m,
+                titulo: titulo,
+                lugar: lugar,
+                tematica: tematica,
+                descripcion: descripcion,
+                fecha: fecha,
+              }
+            : m
+        )
+      );
+      onCloseEdit();
     };
 
     return (
@@ -205,7 +237,8 @@ function TablaEventos () {
                               aria-label="Editar"
                               icon={<EditIcon />}
                               variant="solid"
-                              borderRadius={3}                                
+                              borderRadius={3}  
+                              onClick={() => handleEditar(evento)}                              
                             />
                             
                             <IconButton
@@ -238,6 +271,12 @@ function TablaEventos () {
         isOpen={isOpenAdd}
         onClose={onCloseAdd}
         confirmar={handleConfirmarAdd}
+        />
+        <ModalEditarEvento
+        isOpen={isOpenEdit}
+        onClose={onCloseEdit}
+        confirmar={handleConfirmarEdit}
+        evento={EventoElegido}
         />
     </>
         )
