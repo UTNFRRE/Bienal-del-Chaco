@@ -1,13 +1,17 @@
-import { Box, Flex } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import { HeaderContent } from './HeaderContent';
 
-export default function Header({ onOpen }: { onOpen: any }) {
+interface NavContentProps {
+  LINK_ITEMS: { title: string; url: string; rol:string }[];
+}
+
+export default function Header({LINK_ITEMS}:NavContentProps) {
   //const { isOpen, onOpen, onClose } = useDisclosure();
   //const element = useRoutes(routes);
 
   return (
     <Flex minW="100vh">
-      <HeaderContent onOpen={onOpen} />
+      <HeaderContent LINK_ITEMS={LINK_ITEMS} />
     </Flex>
   );
 }

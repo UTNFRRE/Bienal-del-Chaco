@@ -6,16 +6,22 @@ import {
     MenuList,
     MenuItem,
     Button,
-    IconButton,
+    Spacer,
+    
   } from '@chakra-ui/react';
-  import imgLogo from '../icons/logo.png';
+  import imgLogo from '../icons/pagina.png';
   import logoUser from '../icons/logo-user.png';
-  import { FiMenu } from 'react-icons/fi';
+  import {NavContent} from '../NavBar/NavContent';
+  import MovileNav from '../NavBar/MobileNav';
   
-  
-  export function HeaderContent({ onOpen }: { onOpen: any }) {
+  interface NavContentProps {
+    LINK_ITEMS: { title: string; url: string; rol:string }[];
+  }
+
+  export function HeaderContent({LINK_ITEMS}:NavContentProps) {
     return (
       <Flex
+        as="header"
         borderBottom="1px"
         borderColor="gray.300"
         w="100%"
@@ -25,33 +31,36 @@ import {
         justifyContent="space-between"
         textAlign="center"
         h="80px"
-        background="white"
+        background="linear-gradient(to right, #000000, #434343)" 
         alignItems="center"
       >
-        <Menu>
           <Image
             src={imgLogo}
-            w="60px"
+            w="150px"
             display={{ base: 'none', md: 'flex' }}
           ></Image>
-          <IconButton
-            variant="outline"
-            onClick={onOpen}
-            aria-label="open menu"
-            icon={<FiMenu />}
-            display={{ base: 'flex', md: 'none' }}
-            color="white"
-          />
-          <MenuButton as={Button} borderRadius="50%" w="50px" h="50px" p="0px">
-            <Image src={logoUser} w="100%"></Image>
-          </MenuButton>
-          <MenuList>
-            <MenuItem color="gray" pointerEvents="none">
-              Ver Perfil
-            </MenuItem>
-            <MenuItem>Cerrar sesión</MenuItem>
-          </MenuList>
-        </Menu>
+          <Flex gap={19}  alignItems="center" flex={{ base: 1, md: 0 }}>
+            <Flex flexDirection="row" justifyContent="center" display={{ base: 'none', md: 'block' }}>
+              <NavContent LINK_ITEMS={LINK_ITEMS}/> 
+            </Flex>
+            <Flex
+              display={{ base: 'flex', md: 'none' }}
+            >
+              <MovileNav LINK_ITEMS={LINK_ITEMS}/>
+            </Flex>
+            <Spacer display={{ base: 'flex', md: 'none' }} />
+            <Menu>
+              <MenuButton as={Button} borderRadius="50%" w="50px" h="50px" p="0px">
+                <Image src={logoUser} w="100%"></Image>
+              </MenuButton>
+              <MenuList>
+                <MenuItem color="gray" pointerEvents="none">
+                  Ver Perfil
+                </MenuItem>
+                <MenuItem>Cerrar sesión</MenuItem>
+              </MenuList>
+          </Menu>
+        </Flex>
       </Flex>
     );
   }

@@ -4,11 +4,12 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 // import { useAuth } from './Context';
 // import Auth from './layouts/Auth';
 import Admin from './layout/Admin';
+import Public from './layout/Public';
 import theme from './theme/theme';
 
 function App() {
   useEffect(() => {
-    document.title = 'Bienal Admin';
+    document.title = 'Bienal del Chaco';
   }, []);
 
   // const { isAuthenticated } = useAuth();
@@ -18,15 +19,34 @@ function App() {
       <BrowserRouter>
         <Routes>
            <Route path="/admin/*" element={<Admin />} />
-          <Route
-            path="/*"
-            element={
-              <Navigate
-                replace
-                to='/admin/inicio' 
-              />
-            }
-          />
+           <Route
+              path="/admin/"
+              element={
+                <Navigate
+                  replace
+                  to='/admin/escultores' 
+                />
+              }
+            />
+           <Route path="/public/*" element={<Public />} />
+           <Route
+              path="/public/"
+              element={
+                <Navigate
+                  replace
+                  to='/public/eventos' 
+                />
+              }
+            />
+           <Route
+              path="/*"
+              element={
+                <Navigate
+                  replace
+                  to='/public/eventos' 
+                />
+              }
+            />
         </Routes>
       </BrowserRouter>
     </ChakraProvider>
