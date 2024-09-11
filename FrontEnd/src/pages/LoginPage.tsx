@@ -11,38 +11,51 @@ return (
       h="100vh"
     >
     <Box
-      bgImage={`url(${ImagenFondo})`}
+      bgImage={{base: '', lg: `url(${ImagenFondo})`}}
+      bgColor={{base: '', lg: 'transparent'}}
+      background={{base: 'linear-gradient(to bottom, black, rgba(0, 0, 0, 0.7))'}}
       w="100%"
       h="100%"
       bgSize="cover"
       bgPosition="center"
       position="absolute"
       filter="contrast(120%)"
+      display="flex"
+      alignItems={{ base: 'center', lg: 'flex-start' }}
+      justifyContent={{ base: 'center', lg: 'flex-start' }}
     >
     <Flex
               direction="column"
-              alignItems="flex-start"
-              w="100%"
-              background="transparent"
+              alignItems="center"
+              justifyContent={{base: 'center', lg: "flex-start"}}
+              w={{base: '65%', lg: "33%"}}
+              h="100%"
+              // background={{base: 'black', lg: "transparent"}}
               //p='48px'
-              mt={{ md: '150px', lg: '80px' }}
-              pl={{ base: '40px', md: '80px', lg: '160px' }}
+              mt={{ md: '150px', lg: '5%' }}
+              pl={{ base: '10px', md: '80px', lg: '160px' }}
               
             >
-              <Flex alignItems="center" direction="column" mb={{ base: '10px', md: '20px' }} gap={10} w="280px"> 
-                <Image src={Logo}  w="200px" h='auto' mr={{ base: '10px', md: '20px' }} mb="10%"/> 
-
-                <Box w="100%" textAlign={"center"}>
+              <Flex alignItems="center" direction="column" mb={{ base: '10px', md: '10%' }} gap={20} w="100%"> 
+                <Box >
+                <Image src={Logo}  w="200px" h='auto' mr={{ base: '10px', md: '20px' }} 
+                mb="15%"
+                /> 
                 <Heading
                     color={"white"}
-                    fontSize={{ base: '28px', md: '30px', lg: '37px' }}
+                    fontSize={{ base: '25px', md: '30px', lg: '37px' }}
                     fontWeight="500"
                     outline="none"
-                    mb="8%"
+                    textAlign={"center"}
+                    // mb="15%"
                     
                 >
                     Iniciar sesión
                 </Heading>
+                </Box>
+
+                <Box w="100%" textAlign={"center"}>
+                
                 <FormControl >
                 <Input
                   borderRadius="none"
@@ -97,7 +110,7 @@ return (
                   bg="#3C3D37"
                   w="100%"
                   h="42"
-                  mt="18%"  
+                  // mt="18%"  
                   color="white"
                   borderWidth={1}
                   borderColor="white"
