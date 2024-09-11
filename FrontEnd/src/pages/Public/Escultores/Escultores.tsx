@@ -1,5 +1,6 @@
-import { Box, HStack, Image, Container, Text, Heading , Stack} from '@chakra-ui/react'
+import { Box, HStack, Image, Container, Text, Heading , Stack, Card, CardBody} from '@chakra-ui/react'
 import Escultores from '../../../API/Escultores';
+
 
 function Escultoress () {
   return (
@@ -11,30 +12,32 @@ function Escultoress () {
       ml="190px"
       mt="40px" as="h1" 
       size="2xl" 
-      fontFamily="'Playfair Display', serif" 
-      fontWeight="bold" 
-      color="gray.800" 
+      fontFamily="'Mukta', serif" 
+      fontWeight="600" 
+      color="gray.700" 
       textAlign="left" 
       mb="4" 
     >
-      Selected Sculptors
+      Escultores Seleccionados
     </Heading>
   </Box>
 <HStack mt="10px" display="flex" flexWrap="wrap" spacing='24px' width="80%" mr="100px"  justifyContent="center" alignItems="center">
   
   
 {Escultores.map((escultor) => (
-  <Stack w="27%" h='27%' className='my-box' sx={{
+  <Card outline='4px solid #c0c8d0' bg="linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)" w="21%" h='27%' className='my-box' sx={{
         transition: 'transform 0.3s ease', 
         '&:hover': {
-          transform: 'scale(1.1)',
+          transform: 'scale(1.05)',
           cursor: 'pointer', 
         },
       }}
     >
-
-    <Image src={escultor.foto} height="300px"/>
-    <Stack bg="white" width="100%" height="33%" direction={"row"} justifyContent={"space-between"}>
+  <CardBody h={"70%"} w={"100%"} >
+      <Image src={escultor.foto} h={"100%"} w={"100%"} borderRadius='lg'/>
+  </CardBody>
+  
+    <Stack mt={0} bg="white" width="100%" height="33%" direction={"row"} justifyContent={"space-between"}>
       <Stack direction={"column"}>
       <Text whiteSpace="pre-line" fontSize="2xl"
         bg="black"
@@ -44,7 +47,7 @@ function Escultoress () {
       </Stack>
       <Image src={escultor.bandera} width="60px" height="40px" />
     </Stack>
-    </Stack>
+    </Card>
 ))}
   
 </HStack>

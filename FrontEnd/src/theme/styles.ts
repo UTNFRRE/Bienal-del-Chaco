@@ -18,7 +18,7 @@ export const globalStyles = {
   styles: {
     global: (props: StyleFunctionProps) => ({
       body: {
-        bg: mode('eeeef0', 'gray.800')(props), //color de fondo de la pagina completa
+        bg: mode('linear-gradient(to right, #f0f0f0, #d0d0d0, #a0a0a0)', 'gray.800')(props), //color de fondo de la pagina completa
         fontFamily: "'Roboto', sans-serif",
       },
       html: {
