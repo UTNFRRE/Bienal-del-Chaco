@@ -25,7 +25,7 @@ function Escultoress () {
   
   
 {Escultores.map((escultor) => (
-  <Card outline='4px solid #c0c8d0' bg="linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)" w="21%" h='27%' className='my-box' sx={{
+  <Card outline='4px solid #c0c8d0' bg="linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)" w="19%" h='27%' className='my-box' sx={{
         transition: 'transform 0.3s ease', 
         '&:hover': {
           transform: 'scale(1.05)',
@@ -39,13 +39,13 @@ function Escultoress () {
   
     <Stack mt={0} bg="white" width="100%" height="33%" direction={"row"} justifyContent={"space-between"}>
       <Stack direction={"column"}>
-      <Text whiteSpace="pre-line" fontSize="2xl"
+      <Text ml={"20px"} whiteSpace="pre-line" fontSize="20px"
         bg="black"
         bgClip="text"
         fontWeight="bold">{escultor.nombre}</Text>
-        <Text as='i' fontSize='20px' color='black'>{escultor.pais}</Text>
+        <Text ml={"20px"} as='i' fontSize='20px' color='black'>{escultor.pais}</Text>
       </Stack>
-      <Image src={escultor.bandera} width="60px" height="40px" />
+      <Image src={escultor.bandera} width="60px" height="40px" mr={"20px"}/>
     </Stack>
     </Card>
 ))}
