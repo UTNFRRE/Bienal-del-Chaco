@@ -2,7 +2,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 // import { useAuth } from './Context';
-// import Auth from './layouts/Auth';
+import Auth from './layout/Auth';
 import Admin from './layout/Admin';
 import Public from './layout/Public';
 import theme from './theme/theme';
@@ -18,6 +18,7 @@ function App() {
     <ChakraProvider theme={theme}>
       <BrowserRouter>
         <Routes>
+           <Route path="/auth/*" element={<Auth />} />
            <Route path="/admin/*" element={<Admin />} />
            <Route
               path="/admin/"
@@ -43,7 +44,7 @@ function App() {
               element={
                 <Navigate
                   replace
-                  to='/public/eventos' 
+                  to='/auth/' 
                 />
               }
             />
