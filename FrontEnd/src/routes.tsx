@@ -1,13 +1,13 @@
 import Inicio from './pages/Public/Inicio/Inicio';
 import ErrorPage from './pages/Error404';
 import Eventos from './pages/Admin/Eventos';
+import Escultores from './pages/Admin/Escultores';
 
 const routes = [
-  
   {
     path: 'escultores',
+    element: <Escultores />,
     title: 'Escultores',
-    element: <Inicio />,
     rol: 'admin',
   },
   {
