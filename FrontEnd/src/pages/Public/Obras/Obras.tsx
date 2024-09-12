@@ -2,6 +2,7 @@ import {Box, CardBody, Card, Heading, Text,  SimpleGrid, Flex, Button} from '@ch
 import { useState, useEffect } from 'react';
 import Obras from '../../../API/Public/Obras';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
@@ -9,6 +10,7 @@ import 'react-image-gallery/styles/css/image-gallery.css';
 export default function ObrasPublic () {
 
  const [obras, setObras] = useState<any[]>([]);
+ const navigate = useNavigate(); // para poder navegar entre paginas
 
  // La idea es agregar un paginado, ya que la cantidad de obras puede ser muy grande, agrego un paginado de 9 en 9
  // Los request se van a ir haciendo de a 9, y se va a ir mostrando de a 9, tdv no funciona pq no esta la api
@@ -32,6 +34,10 @@ export default function ObrasPublic () {
         if (offset > 0) {
           setOffset(offset - limit);
         }
+      };
+
+      const handleCardClick = (id: number) => {
+        navigate(`/public/obras/${id}`);
       };
 
     return (
@@ -64,7 +70,8 @@ export default function ObrasPublic () {
                         transform: 'scale(1.05)',
                         cursor: 'pointer', 
                         },
-                     }}>
+                     }}
+                     onClick={() => handleCardClick(obra.id)}>
         
                         <CardBody borderWidth={2}  borderRadius={10} w="100%" h="100%" display="flex" flexDirection={"column"}>
                         <Box display="flex" justifyContent="center" alignItems="center" w="100%" mb={4}>
