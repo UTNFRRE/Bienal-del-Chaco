@@ -10,20 +10,39 @@ export default function ObrasPublic () {
 
  const [obras, setObras] = useState<any[]>([]);
 
- useEffect (() => {
-        setObras(Obras);
-    }, []);
+ // La idea es agregar un paginado, ya que la cantidad de obras puede ser muy grande, agrego un paginado de 9 en 9
+ // Los request se van a ir haciendo de a 9, y se va a ir mostrando de a 9, tdv no funciona pq no esta la api
+ const [offset, setOffset] = useState(0);
+  const [limit] = useState(9);
+  const [totalCount, setTotalCount] = useState(0);
 
+    // Aca va el request a la api, cada vez que cambian el limite y el offset vuelvo a hacer el request para esos valores
+    useEffect (() => {
+        setObras(Obras);
+        setTotalCount(Obras.length);
+    }, [offset, limit]);
+
+    const handleNextPage = () => {
+        if (offset + limit < totalCount) {
+          setOffset(offset + limit);
+        }
+      };
+    
+      const handlePreviousPage = () => {
+        if (offset > 0) {
+          setOffset(offset - limit);
+        }
+      };
 
     return (
-        <Box p={4}>
+        <Box p={4} display={"flex"} justifyContent={"center"} alignItems={"center"} flexDirection={"column"}>
         <Flex>
         <Heading 
             size="2xl" 
             fontFamily="'Mukta', serif" 
             fontWeight="600" 
             color="gray.700" 
-            textAlign="left" 
+            // textAlign="left" 
             mb="5">
         Obras Seleccionadas
         </Heading>
@@ -38,7 +57,8 @@ export default function ObrasPublic () {
             return (
                 <React.Fragment key={obra.id}>   
                  {/* Como hay elementos que se renderizan dentro de otro elemento (carrusel dentro de la card) se usa esa tag para evitar errores */}
-                   <Card bgGradient="" sx={{
+                   <Card bgGradient="" 
+                    sx={{
                         transition: 'transform 0.3s ease', 
                         '&:hover': {
                         transform: 'scale(1.05)',
@@ -46,7 +66,7 @@ export default function ObrasPublic () {
                         },
                      }}>
         
-                        <CardBody borderWidth={2} w="100%" h="100%" display="flex" flexDirection={"column"}>
+                        <CardBody borderWidth={2}  borderRadius={10} w="100%" h="100%" display="flex" flexDirection={"column"}>
                         <Box display="flex" justifyContent="center" alignItems="center" w="100%" mb={4}>
                         <ImageGallery items={images} 
                             showThumbnails={false}  //desactivo las miniaturas
@@ -70,6 +90,17 @@ export default function ObrasPublic () {
             );
         })}
         </SimpleGrid>
+        <Box justifyContent={"center"} bottom="0" width="90%" bg="white" p="10px" mt={7} boxShadow="md">
+        <Flex justifyContent="space-between">
+          <Button onClick={handlePreviousPage} isDisabled={offset === 0}>
+            Anterior
+          </Button>
+          <Text>Página {Math.ceil(offset / limit) + 1} de {Math.ceil(totalCount / limit)}</Text>
+          <Button onClick={handleNextPage} isDisabled={offset + limit >= totalCount} >
+            Siguiente
+          </Button>
+        </Flex>
+        </Box>
         </Box>
     )
 }
