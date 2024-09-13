@@ -1,6 +1,8 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, Heading, Text, Image } from '@chakra-ui/react';
+import { Box, Heading, Text, Image, Flex} from '@chakra-ui/react';
+import ImageGallery from 'react-image-gallery';
+import 'react-image-gallery/styles/css/image-gallery.css';
 
 const ObraDetail = () => {
   const { id } = useParams<{ id: string }>(); // Se obtiene el id de la obra de la url
@@ -10,26 +12,47 @@ const ObraDetail = () => {
   const obra = 
   {
     id: 1,
-    nombre: "Obra 1",
-    tematica: "Tematica 1",
+    nombre: "Umbral IV",
+    tematica: "Tematica de la obra 1",
     descripcion: "Descripcion de la obra 1",
     fechaCreacion: "2021-07-01",
     distinciones: [ "Distincion 1", "Distincion 2" ],
-    escultor: "Escultor 1",
-    escultorImagen : "https://www.bienaldelchaco.org/2024/wp-content/uploads/2024/07/Monge_3784.jpg",
+    escultor: "Martin Lopez Soto",
+    escultorPais: "Argentina",
+    escultorImagen : "https://www.republicadecorrientes.com/content/bucket/4/66054w695h513c.jpg.webp",
     imagenes: [ "https://www.bienaldelchaco.org/2024/wp-content/uploads/2024/07/Monge_3784.jpg", "https://www.bienaldelchaco.org/2024/wp-content/uploads/2024/07/Monge_3174.jpg", "https://www.bienaldelchaco.org/2024/wp-content/uploads/2024/07/Monge_1612.jpg" ],
   };
 
+  const images = obra.imagenes.map((img: string) => ({
+    original: img,
+    thumbnail: img,
+  }));
+
   return (
-    <Box p={4}>
-      <Heading>{obra.nombre}</Heading>
-      <Text>{obra.tematica}</Text>
-      <Text>{obra.descripcion}</Text>
-      <Text>{obra.escultor}</Text>
-      <Box mt={4}>
-        {obra.imagenes.map((img, index) => (
-          <Image key={index} src={img} alt={`Imagen ${index + 1}`} mb={2} />
-        ))}
+    <Box p={0} display={"flex"} flexDirection={"row"}>
+    <Box display="flex" w="70%"  flexDirection={"column"}>
+      <Heading mt={5} mb={5} fontSize={"5xl"}
+      >{obra.nombre}</Heading>
+      <ImageGallery items={images} 
+        showPlayButton={false}  // desactivo el boton de play
+        autoPlay={true} //activo para que arranquen solas
+        slideInterval={4000} //cada cuanto cambia, 4seg
+        /> 
+      </Box>  
+      <Box w="30%" display="flex" flexDirection={"column"} gap={0} mt={1}>
+      <Flex gap='4' alignItems='center' justifyContent={"center"} mt={8}>
+          <Image src={obra.escultorImagen} boxSize="100px" borderRadius="full" />
+          <Box>
+            <Heading size='sm'>{obra.escultor}</Heading>
+            <Text as="i">{obra.escultorPais}</Text>
+          </Box>
+      </Flex>
+      <Box mt={6} display={"flex"} textAlign={"right"} flexDirection={"column"} marginLeft={"auto"}>
+          <Text>{obra.tematica}</Text>
+          <Text>{obra.fechaCreacion}</Text>
+          <Text>{obra.descripcion}</Text>
+          <Text>{obra.distinciones.join(', ')}</Text>
+      </Box>
       </Box>
     </Box>
   );
