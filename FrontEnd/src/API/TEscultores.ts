@@ -2,7 +2,7 @@ export const FetchPostEscultor = async (
     foto: string,
     nombre:string,
     pais:string,
-    contacto: number
+    contacto: string
 ) => {
     try {
 
@@ -62,7 +62,6 @@ try {
     method: 'PUT',
     headers: {
         'Content-Type': 'application/json',
-         // Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ foto, nombre, pais, contacto }),
     });
@@ -86,7 +85,6 @@ try {
     method: 'DELETE',
     headers: {
         'Content-Type': 'application/json',
-         // Authorization: `Bearer ${token}`,
     },
     });
 
