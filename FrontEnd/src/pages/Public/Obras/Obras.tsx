@@ -44,9 +44,8 @@ export default function ObrasPublic () {
         <Box p={4} display={"flex"} justifyContent={"center"} alignItems={"center"} flexDirection={"column"}>
         <Flex>
         <Heading 
-            size="2xl" 
-            fontFamily="'Mukta', serif" 
-            fontWeight="600" 
+            size="xl" 
+            fontWeight="540" 
             color="gray.700" 
             // textAlign="left" 
             mb="5">
@@ -80,7 +79,7 @@ export default function ObrasPublic () {
                             showPlayButton={false}  // desactivo el boton de play
                             showFullscreenButton={false}  // desactivo el boton de pantalla completa
                             autoPlay={true} //activo para que arranquen solas
-                            slideInterval={4000} //cada cuanto cambia, 4seg
+                            slideInterval={4000 + obra.id*100} //cada cuanto cambia, 4seg
                         /> 
                         </Box>
                         <Box w="100%" textAlign="left" display="flex" flexDirection={"column"} gap={0}>
@@ -97,7 +96,7 @@ export default function ObrasPublic () {
             );
         })}
         </SimpleGrid>
-        <Box justifyContent={"center"} bottom="0" width="90%" bg="white" p="10px" mt={7} boxShadow="md">
+        {/* <Box justifyContent={"center"} bottom="0" width="90%" bg="white" p="10px" mt={7} boxShadow="md">
         <Flex justifyContent="space-between">
           <Button onClick={handlePreviousPage} isDisabled={offset === 0}>
             Anterior
@@ -107,7 +106,7 @@ export default function ObrasPublic () {
             Siguiente
           </Button>
         </Flex>
-        </Box>
+        </Box> */}
         </Box>
     )
 }

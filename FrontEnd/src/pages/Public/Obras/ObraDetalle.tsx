@@ -1,4 +1,3 @@
-import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, Heading, Text, Image, Flex} from '@chakra-ui/react';
 import ImageGallery from 'react-image-gallery';
@@ -14,9 +13,8 @@ const ObraDetail = () => {
     id: 1,
     nombre: "Umbral IV",
     tematica: "Tematica de la obra 1",
-    descripcion: "Descripcion de la obra 1",
+    descripcion: "Descripcion de la obra 1111111",
     fechaCreacion: "2021-07-01",
-    distinciones: [ "Distincion 1", "Distincion 2" ],
     escultor: "Martin Lopez Soto",
     escultorPais: "Argentina",
     escultorImagen : "https://www.republicadecorrientes.com/content/bucket/4/66054w695h513c.jpg.webp",
@@ -34,11 +32,11 @@ const ObraDetail = () => {
       <Heading mt={5} mb={5} fontSize={"5xl"}
       >{obra.nombre}</Heading>
       <ImageGallery items={images} 
-        showPlayButton={false}  // desactivo el boton de play
+        showPlayButton={true}  // desactivo el boton de play
         autoPlay={true} //activo para que arranquen solas
-        slideInterval={4000} //cada cuanto cambia, 4seg
+        slideInterval={5000} //cada cuanto cambia, 4seg
         /> 
-      </Box>  
+    </Box>  
       <Box w="30%" display="flex" flexDirection={"column"} gap={0} mt={1}>
       <Flex gap='4' alignItems='center' justifyContent={"center"} mt={8}>
           <Image src={obra.escultorImagen} boxSize="100px" borderRadius="full" />
@@ -47,11 +45,10 @@ const ObraDetail = () => {
             <Text as="i">{obra.escultorPais}</Text>
           </Box>
       </Flex>
-      <Box mt={6} display={"flex"} textAlign={"right"} flexDirection={"column"} marginLeft={"auto"}>
-          <Text>{obra.tematica}</Text>
-          <Text>{obra.fechaCreacion}</Text>
-          <Text>{obra.descripcion}</Text>
-          <Text>{obra.distinciones.join(', ')}</Text>
+      <Box mt={6} display={"flex"} textAlign={"right"} flexDirection={"column"} marginLeft={"auto"} w={'100%'}>
+          <Text as='em'>Bajo la tematica {obra.tematica}</Text>
+          <Text as='em'>Creada el {obra.fechaCreacion}</Text>
+          <Text textAlign={"left"} mt={6} ml={4}>{obra.descripcion}</Text>
       </Box>
       </Box>
     </Box>
