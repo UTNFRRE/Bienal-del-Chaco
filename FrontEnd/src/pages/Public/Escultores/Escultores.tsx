@@ -30,7 +30,7 @@ function Escultoress () {
 <Grid templateColumns="repeat(auto-fit, minmax(250px, 1fr))" gap={10} w={"90%"} h={"100%"} justifyItems="center" alignItems="center">
   
 {Escultores.map((escultor) => (
-  <GridItem w="250px" h="325px" mr={"100px"}>
+  <GridItem w="250px" h="300px" mr={"100px"}>
 
   <Card outline='4px solid #c0c8d0' bg="linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)" w="110%" h="105%" className='my-box' sx={{
         transition: 'transform 0.3s ease', 
@@ -42,19 +42,19 @@ function Escultoress () {
   <CardBody h={"100%"} w={"100%"} display="flex" p={0} 
         justifyContent="center" 
         alignItems="center">
-      <Image src={escultor.foto} h={"225px"} w={"250px"} borderRadius='lg' m={0}/>
+      <Image src={escultor.foto} h={"210px"} w={"253px"} borderRadius='lg' m={0}/>
   </CardBody>
   
   
-    <Stack mt={0} bg="white" width="100%" height="27%" maxHeight={"27%"} direction={"row"} justifyContent={"space-between"}>
+    <Stack mt={0} bg="white" width="100%" height="90px" maxHeight={"27%"} direction={"row"} justifyContent={"space-between"}>
       <Stack direction={"column"}>
-      <Text ml={"22px"} whiteSpace="pre-line" fontSize="16px"
+      <Text ml={"22px"} mt={"5px"} whiteSpace="pre-line" fontSize="18px" lineHeight="1.2" 
         bg="black"
         bgClip="text"
         fontWeight="bold">{escultor.nombre}</Text>
         <Text ml={"22px"} as='i' fontSize='17px' color='black'>{escultor.pais}</Text>
       </Stack>
-      <Image src={escultor.bandera} width="60px" height="40px" mr={"20px"} mt={"5px"}/>
+      <Image src={escultor.bandera} width="60px" height="40px" mr={"11px"} mt={"5px"}/>
     </Stack>
     </Card>
     </GridItem>
