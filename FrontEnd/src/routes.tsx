@@ -4,8 +4,15 @@ import Eventos from './pages/Admin/Eventos';
 import ObrasPublic from './pages/Public/Obras/Obras';
 import ObraDetail from './pages/Public/Obras/ObraDetalle';
 import ObrasAdmin from './pages/Admin/Obras/ObrasAd';
+import Ejemplo from './components/ModalAmin/Ejemplo';
 
 const routes = [
+  { // A modo de prueba para los modalesObras
+    path: 'tests',
+    title: 'Test',
+    element: <Ejemplo />,
+    rol: 'admin',
+  },
   {
     path: 'escultores',
     title: 'Escultores',
