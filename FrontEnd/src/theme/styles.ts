@@ -11,7 +11,7 @@ export const globalStyles = {
     },
     principalHover: '#3F72AF',
     principal: '#112D4E',
-    secundaryBg: '#e9eef4',
+    secundaryBg: '#E3E1D9',
     secundary: '#c4daf4',
     secundaryHover: '#B4B4B8',
   },
