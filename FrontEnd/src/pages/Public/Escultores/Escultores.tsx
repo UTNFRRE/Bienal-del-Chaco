@@ -1,4 +1,4 @@
-import { Box, HStack, Image, Container, Text, Heading , Stack, Card, CardBody, Grid, GridItem} from '@chakra-ui/react'
+import { Box, Image, Container, Text, Heading , Stack, Card, CardBody, Grid, GridItem} from '@chakra-ui/react'
 import Escultores from '../../../API/Escultores';
 
 
