@@ -56,10 +56,23 @@ function TablaObras() {
 
     const [mostrarFiltros, setMostrarFiltros] = useState(false);
 
+    //Modifique para conincide los tipos entre el file Obras y el tipo Obra
     useEffect(() => {
-      setObras(Obras);
-      setFilteredObras(Obras);
-    }, []);
+      const nuevasObras = Obras.map(obra => ({
+        id: obra.id.toString(),
+        nombre: obra.nombre ?? '',
+        tematica: obra.tematica ?? '',
+        descripcion: obra.descripcion ?? '',
+        fechaCreacion:  '',
+        escultor: obra.escultor ?? '',
+        escultorPais:  '',
+        escultorImagen: '',
+        imagenes: obra.imagenes ?? [''],
+      }));
+    
+      setObras(nuevasObras);
+      setFilteredObras(nuevasObras);
+    }, [Obras]);
 
     useEffect(() => {
       setFilteredObras(
