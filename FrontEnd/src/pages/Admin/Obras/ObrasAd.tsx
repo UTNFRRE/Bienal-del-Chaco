@@ -4,9 +4,9 @@ import { EditIcon, DeleteIcon, AddIcon, SearchIcon } from '@chakra-ui/icons';
 import { useState, useEffect } from 'react';
 import { useDisclosure } from '@chakra-ui/react';
 
-import AgregarObra from '../../../components/ModalAmin/AgregarObra';
+import AgregarObra from '../../../components/Modal/AgregarObra';
 import ModalConfirmar from '../../../components/Modal/ConfirmarCambios';
-import ModificarObra from '../../../components/ModalAmin/ModificarObra';
+import ModificarObra from '../../../components/Modal/ModificarObra';
 import Obras from '../../../API/Public/Obras'; // Simulación de API con datos de obras.
 
 interface Obra {
