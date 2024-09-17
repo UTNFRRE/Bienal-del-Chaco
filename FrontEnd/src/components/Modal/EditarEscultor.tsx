@@ -9,14 +9,12 @@ import {
     Input,
     Button,
     Stack,
-    Text,
-    Flex,
     Box,
     FormLabel,
     FormControl,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { HiOutlinePhotograph } from "react-icons/hi";
+import ZonaCargaEscultor from '../ZonaCarga/ZonaCargaEscultor';
 
 interface ModalComponentProps {
     isOpen: boolean;
@@ -27,26 +25,14 @@ interface ModalComponentProps {
 
 export default function ModalAgregarEscultor({ isOpen, onClose, confirmar, escultor, }: ModalComponentProps) {
     const [foto, setFoto] = useState<string | null>(null);
-    const [nombreArchivo, setNombreArchivo] = useState<string>('');
     const [nombre, setNombre] = useState('');
     const [pais, setPais] = useState('');
     const [contacto, setContacto] = useState('');
     
-    const handleFotoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const selectedFile = event.target.files?.[0];
-        if (selectedFile) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setFoto(reader.result as string);  // Guardar la cadena base64
-            };
-            reader.readAsDataURL(selectedFile);
-            
-            setNombreArchivo(selectedFile.name);  // Guardar el nombre del archivo
-        } else {
-            setFoto(null);
-            setNombreArchivo('');
-        }
+    const handleFotoChange = (fotoData: string) => {
+        setFoto(fotoData);
     };
+
 
     const handleconfirmar = () => {
         confirmar(foto || '', nombre, pais, contacto);
@@ -121,35 +107,11 @@ export default function ModalAgregarEscultor({ isOpen, onClose, confirmar, escul
                                     />
                                 </Box>
                             </Stack>
-                            <Box>
-                                <Button
-                                    mt={4}
-                                    width="650px" 
-                                    height="100px" 
-                                    colorScheme="teal"
-                                    color="white"
-                                    fontSize={18}
-                                    rightIcon={<HiOutlinePhotograph style={{ height: '26px', width: '26px' }} />}
-                                    onClick={() => document.getElementById('fileInput')?.click()}
-                                >
-                                    Foto 
-                                </Button>
-                                <Input
-                                    type="file"
-                                    id="fileInput"
-                                    style={{ display: 'none' }}
-                                    onChange={handleFotoChange}
-                                />
-                                {escultor && nombreArchivo && (
-                                <Stack direction="column">
-                                    <Text fontWeight="bold" mt={6}>Archivo nuevo:</Text>
-                                    <Flex ml={1}>
-                                        <li>{nombreArchivo}</li> {/* Usamos el nombre almacenado */}
-                                    </Flex>
-                                </Stack>
-                                )}
-
-                            </Box>
+                            {/* Aquí integramos la Zona de Carga */}
+                            <ZonaCargaEscultor maxFiles={1}
+                            handleFotoChange={handleFotoChange}
+                            />
+                            
                         </Stack>
                     </FormControl>
                 </ModalBody>

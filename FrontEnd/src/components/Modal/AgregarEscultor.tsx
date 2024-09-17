@@ -1,23 +1,20 @@
-import {
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
-    Input,
-    Button,
+import { 
+    Modal, 
+    ModalOverlay, 
+    ModalContent, 
+    ModalHeader, 
+    ModalFooter, 
+    ModalBody, 
+    ModalCloseButton, 
+    Input, 
+    Button, 
     Stack,
-    Text,
-    Flex,
-    Box,
-    FormLabel,
-    FormControl,
+    Box, 
+    FormLabel, 
+    FormControl 
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { HiOutlinePhotograph } from "react-icons/hi";
-
+import ZonaCargaEscultor from '../ZonaCarga/ZonaCargaEscultor';
 interface ModalComponentProps {
     isOpen: boolean;
     onClose: () => void;
@@ -26,29 +23,16 @@ interface ModalComponentProps {
 
 export default function ModalAgregarEscultor({ isOpen, onClose, confirmar }: ModalComponentProps) {
     const [foto, setFoto] = useState<string | null>(null);
-    const [nombreArchivo, setNombreArchivo] = useState<string>('');
     const [nombre, setNombre] = useState('');
     const [pais, setPais] = useState('');
     const [contacto, setContacto] = useState('');
-    
-    const handleFotoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const selectedFile = event.target.files?.[0];
-        if (selectedFile) {
-            // Convertir a base64
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setFoto(reader.result as string);  // Guardar la cadena base64
-            };
-            reader.readAsDataURL(selectedFile);
-            
-            setNombreArchivo(selectedFile.name);  // Guardar el nombre del archivo
-        } else {
-            setFoto(null);
-            setNombreArchivo('');
-        }
+
+    const handleFotoChange = (fotoData: string) => {
+        setFoto(fotoData);
     };
 
-    const handleconfirmar = () => {
+    // Función para manejar la confirmación
+    const handleConfirmar = () => {
         confirmar(foto || '', nombre, pais, contacto);
         onClose();
     };
@@ -116,34 +100,7 @@ export default function ModalAgregarEscultor({ isOpen, onClose, confirmar }: Mod
                                     />
                                 </Box>
                             </Stack>
-                            <Box>
-                                <Button
-                                    mt={4}
-                                    width="650px" 
-                                    height="100px" 
-                                    colorScheme="teal"
-                                    color="white"
-                                    fontSize={18}
-                                    rightIcon={<HiOutlinePhotograph style={{ height: '26px', width: '26px' }} />}
-                                    onClick={() => document.getElementById('fileInput')?.click()}
-                                >
-                                    Foto 
-                                </Button>
-                                <Input
-                                    type="file"
-                                    id="fileInput"
-                                    style={{ display: 'none' }}
-                                    onChange={handleFotoChange}
-                                />
-                                {foto && (
-                                    <Stack direction="column">
-                                        <Text fontWeight="bold" mt={6}>Archivo cargado:</Text>
-                                        <Flex ml={1}>
-                                            <li>{nombreArchivo}</li>
-                                        </Flex>
-                                    </Stack>
-                                )}
-                            </Box>
+                            <ZonaCargaEscultor maxFiles={1} handleFotoChange={handleFotoChange}/>  {/* Limita a 1 una foto */}
                         </Stack>
                     </FormControl>
                 </ModalBody>
@@ -151,7 +108,7 @@ export default function ModalAgregarEscultor({ isOpen, onClose, confirmar }: Mod
                     <Button
                         colorScheme="blue"
                         mr={3}
-                        onClick={handleconfirmar}
+                        onClick={handleConfirmar}
                         size="sm"
                         isDisabled={!isFormValid()}
                     >
