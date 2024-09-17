@@ -28,11 +28,11 @@ interface ModalProps {
     confirmar:(
         titulo:string, 
         tematica:string, 
-        fecha:Date, 
+        fecha:string, 
         autor:string, 
         paisAutor:string, 
         descripcion:string, 
-        imagenes:File[] 
+        imagenes: string[], 
     ) => void;
     evento: any;
 }
@@ -42,14 +42,14 @@ function ModificarObra({isOpen, onClose, confirmar, evento}: ModalProps) {
     const [titulo, setTitulo] = useState('');  
     const [tematica, setTematica] = useState('');
     const [escultorPais, setEscultorPais] = useState('');
-    const [imagen, setImagen] = useState<File[]>([]); // Como recupero la ruta de la imagen?
+    const [imagen, setImagen] = useState(['']); // Como recupero la ruta de la imagen?
     const [autor, setAutor] = useState('');
     const [descripcion, setDescripcion] = useState('');
-    const [fecha, setFecha] = useState(new Date());
+    const [fecha, setFecha] = useState('');
 
 
     const handleConfirmar = () => {
-        confirmar("titulo", "tematica", new Date(), "autor", "paisAutor", "descripcion", [new File([""], "filename")]);
+        confirmar(titulo, tematica, fecha, autor, escultorPais, descripcion, imagen);
         onClose();
     }
 
@@ -73,7 +73,7 @@ function ModificarObra({isOpen, onClose, confirmar, evento}: ModalProps) {
             setEscultorPais(evento.paisAutor);
             setDescripcion(evento.descripcion);
             setFecha(evento.fecha);
-            setImagen([new File([""], "filename")]);
+            setImagen([evento.imagenes]);
         }
     }, [evento]);
 
@@ -100,8 +100,8 @@ function ModificarObra({isOpen, onClose, confirmar, evento}: ModalProps) {
                                         <FormLabel>Fecha</FormLabel>
                                         <Input 
                                             type="date" 
-                                            value={fecha.toISOString().substring(0, 10)}  
-                                            onChange={(e) => setFecha(new Date(e.target.value))} 
+                                            value={fecha}  
+                                            onChange={(e) => setFecha(e.target.value)}  
                                             bg="white" 
                                             border="1px" 
                                             borderColor="gray.300" 

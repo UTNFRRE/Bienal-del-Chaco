@@ -4,10 +4,10 @@ import { EditIcon, DeleteIcon, AddIcon, SearchIcon } from '@chakra-ui/icons';
 import { useState, useEffect } from 'react';
 import { useDisclosure } from '@chakra-ui/react';
 
-import AgregarObra from '../../components/ModalAdmin/AgregarObra';
-import EliminarObra from '../../components/ModalAmin/EliminarObra';
-import ModificarObra from '../../components/ModalAmin/ModificarObra';
-import Obras from '../../API/Public/Obras'; // Simulación de API con datos de obras.
+import AgregarObra from '../../../components/ModalAmin/AgregarObra';
+import ModalConfirmar from '../../../components/Modal/ConfirmarCambios';
+import ModificarObra from '../../../components/ModalAmin/ModificarObra';
+import Obras from '../../../API/Public/Obras'; // Simulación de API con datos de obras.
 
 interface Obra {
   id: string;
@@ -26,9 +26,21 @@ function TablaObras() {
     const [filteredObras, setFilteredObras] = useState<Obra[]>([]);
     const [obraElegida, setObraElegida] = useState<Obra | null>(null);
 
-    const { isOpen: isOpenDelete, onOpen: onOpenDelete, onClose: onCloseDelete } = useDisclosure();
-    const { isOpen: isOpenAdd, onOpen: onOpenAdd, onClose: onCloseAdd } = useDisclosure();
-    const { isOpen: isOpenEdit, onOpen: onOpenEdit, onClose: onCloseEdit } = useDisclosure();
+    const {
+      isOpen: isOpenAdd,
+      onOpen: onOpenAdd,
+      onClose: onCloseAdd,
+    } = useDisclosure();
+    const {
+      isOpen: isOpenEdit,
+      onOpen: onOpenEdit,
+      onClose: onCloseEdit,
+    } = useDisclosure();
+    const {
+      isOpen: isOpenDelete,
+      onOpen: onOpenDelete,
+      onClose: onCloseDelete,
+    } = useDisclosure();
 
     const [filters, setFilters] = useState({
       id: '', 
@@ -80,10 +92,10 @@ function TablaObras() {
       onCloseDelete();
     };
 
-    const handleConfirmarAdd = async (imagen: string, titulo: string, descripcion: string, fechaCreacion: string) => {
+    const handleConfirmarAdd = async (titulo:string, tematica:string, fecha:string, autor:string, paisAutor:string, descripcion:string, imagenes:string[] ) => {
       setObras((prevObras) => [
         ...prevObras,
-        { id: (prevObras.length + 1).toString(), nombre: titulo, tematica: '', descripcion, fechaCreacion, escultor: '', escultorPais: '', escultorImagen: '', imagenes: [imagen] },
+        { id: (prevObras.length + 1).toString(), nombre: titulo, tematica: tematica, descripcion: descripcion, fechaCreacion: fecha, escultor: autor, escultorPais: paisAutor, escultorImagen: 'nose.jpg', imagenes: imagenes },
       ]);
       onCloseAdd();
     };
@@ -93,11 +105,11 @@ function TablaObras() {
       onOpenEdit();
     };
 
-    const handleConfirmarEdit = async (imagen: string, titulo: string, descripcion: string, fechaCreacion: string) => {
+    const handleConfirmarEdit = async (titulo:string, tematica:string, fecha:string, autor:string, paisAutor:string, descripcion:string, imagenes:string[]) => {
       setObras((prevObras) =>
         prevObras.map((m) =>
           m === obraElegida
-            ? { ...m, imagen, titulo, descripcion, fechaCreacion }
+            ? { ...m, imagenes, titulo, descripcion, fecha }
             : m
         )
       );
@@ -198,9 +210,23 @@ function TablaObras() {
           </Box>
         </Flex>
 
-        <AgregarObra isOpen={isOpenAdd} onClose={onCloseAdd} confirmar={handleConfirmarAdd} />
-        <EliminarObra isOpen={isOpenDelete} onClose={onCloseDelete} confirmar={handleConfirmarDelete} obra={obraElegida} />
-        <ModificarObra isOpen={isOpenEdit} onClose={onCloseEdit} confirmar={handleConfirmarEdit} obra={obraElegida} />
+        <AgregarObra 
+            isOpen={isOpenAdd}
+            onClose={onCloseAdd}
+            confirmar= {handleConfirmarAdd}
+        />
+        <ModificarObra 
+              isOpen={isOpenEdit}
+              onClose={onCloseEdit}
+              confirmar = {handleConfirmarEdit}
+              evento={obraElegida}
+            />
+          <ModalConfirmar 
+              isOpen={isOpenDelete}
+              onClose={onCloseDelete}
+              texto="¿Está seguro que desea eliminar la obra?"
+              confirmar={handleConfirmarDelete}
+          />
       </>
     );
 }

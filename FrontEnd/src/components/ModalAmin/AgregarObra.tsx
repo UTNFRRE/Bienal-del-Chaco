@@ -28,11 +28,11 @@ interface ModalProps {
     confirmar: (
         titulo: string,
         tematica: string,
-        fecha: Date,
+        fecha: string,
         autor: string,
         paisAutor: string,
         descripcion: string,
-        imagenes: File[],
+        imagenes: string[],
     ) => void;
 }
 
@@ -41,10 +41,10 @@ function AgregarObra({isOpen, onClose, confirmar}: ModalProps) {
     const [titulo, setTitulo] = useState('');  
     const [tematica, setTematica] = useState('');
     const [escultorPais, setEscultorPais] = useState('');
-    const [imagen, setImagen] = useState<File[]>([]); // Como recupero la ruta de la imagen?
+    const [imagen, setImagen] = useState(['']); // Como recupero la ruta de la imagen?
     const [autor, setAutor] = useState('');
     const [descripcion, setDescripcion] = useState('');
-    const [fecha, setFecha] = useState(new Date());
+    const [fecha, setFecha] = useState('');
 
     const [listaEscultores, setListaEscultores] = useState<string[]>([]);
 
@@ -87,8 +87,8 @@ function AgregarObra({isOpen, onClose, confirmar}: ModalProps) {
                                         <FormLabel>Fecha</FormLabel>
                                         <Input 
                                             type="date" 
-                                            value={fecha.toISOString().substring(0, 10)}  
-                                            onChange={(e) => setFecha(new Date(e.target.value))} 
+                                            value={fecha}  
+                                            onChange={(e) => setFecha(e.target.value)} 
                                             bg="white" 
                                             border="1px" 
                                             borderColor="gray.300" 
@@ -124,8 +124,7 @@ function AgregarObra({isOpen, onClose, confirmar}: ModalProps) {
                                     <Flex justify="center">
                                         <FormLabel>Imagen</FormLabel>
                                         {/* Como recupero la ruta de la imagen? */}
-                                        <DropZone maxFiles={10}/> 
-                                      
+                                        <DropZone maxFiles={10}/>
                                     </Flex>
                                 </Stack>
                             </Stack>

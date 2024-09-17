@@ -23,7 +23,7 @@ function Holamundo(){
         onClose: onCloseDelete,
     } = useDisclosure();
 
-    async function handleConfirmarAdd(titulo:string, tematica:string, fecha:Date, autor:string, paisAutor:string, descripcion:string, imagenes:File[] ): Promise<void> {
+    async function handleConfirmarAdd(titulo:string, tematica:string, fecha:string, autor:string, paisAutor:string, descripcion:string, imagenes:string[] ): Promise<void> {
         console.log(titulo, tematica, fecha, autor, paisAutor, descripcion, imagenes);
         //Aca se hace el post a la API para agregar la obra
         onCloseAdd();
@@ -68,7 +68,7 @@ function Holamundo(){
         <>
             <Button onClick={onOpenAdd}> Agregrar</Button>
             <Button onClick={() => handleEditar(evento)}>Editar</Button>
-            <Button onClick={() => handleDelete}>Eliminar</Button>
+            <Button onClick={() => handleDelete(evento)}>Eliminar</Button>
 
             <AgregarObra 
                 isOpen={isOpenAdd}
