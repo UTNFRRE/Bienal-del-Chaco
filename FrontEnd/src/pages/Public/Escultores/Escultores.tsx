@@ -32,7 +32,7 @@ function Escultoress () {
 {Escultores.map((escultor) => (
   <GridItem w="250px" h="300px" mr={"100px"}>
 
-  <Card outline='4px solid #c0c8d0' bg="linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)" w="110%" h="105%" className='my-box' sx={{
+  <Card outline='4px solid #b4b4b8' bg="linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)" w="110%" h="105%" className='my-box' sx={{
         transition: 'transform 0.3s ease', 
         '&:hover': {
           transform: 'scale(1.05)',
@@ -54,7 +54,7 @@ function Escultoress () {
         fontWeight="bold">{escultor.nombre}</Text>
         <Text ml={"22px"} as='i' fontSize='17px' color='black'>{escultor.pais}</Text>
       </Stack>
-      <Image src={escultor.bandera} width="60px" height="40px" mr={"11px"} mt={"5px"}/>
+      <Image src={escultor.bandera} width="60px" height="40px" mr={"11px"} mt={"20px"}/>
     </Stack>
     </Card>
     </GridItem>
