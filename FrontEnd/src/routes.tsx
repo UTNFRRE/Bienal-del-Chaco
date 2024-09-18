@@ -1,14 +1,15 @@
 import Escultoress from './pages/Public/Escultores/Escultores';
 import ErrorPage from './pages/Error404';
 import Eventos from './pages/Admin/Eventos';
+import Escultores from './pages/Admin/Escultores';
 import ObrasPublic from './pages/Public/Obras/Obras';
 import ObraDetail from './pages/Public/Obras/ObraDetalle';
 
 const routes = [
   {
     path: 'escultores',
+    element: <Escultores />,
     title: 'Escultores',
-    element: <ErrorPage />,
     rol: 'admin',
   },
   {
