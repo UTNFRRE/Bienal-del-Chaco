@@ -11,14 +11,14 @@ export const globalStyles = {
     },
     principalHover: '#3F72AF',
     principal: '#112D4E',
-    secundaryBg: '#e9eef4',
+    secundaryBg: '#E3E1D9',
     secundary: '#c4daf4',
     secundaryHover: '#B4B4B8',
   },
   styles: {
     global: (props: StyleFunctionProps) => ({
       body: {
-        bg: mode('eeeef0', 'gray.800')(props), //color de fondo de la pagina completa
+        bg: mode('linear-gradient(to right, #f0f0f0, #d0d0d0, #a0a0a0)', 'gray.800')(props), //color de fondo de la pagina completa
         fontFamily: "'Roboto', sans-serif",
       },
       html: {
