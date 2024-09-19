@@ -62,7 +62,7 @@ export default function ObrasPublic () {
             return (
                 <React.Fragment key={obra.id}>   
                  {/* Como hay elementos que se renderizan dentro de otro elemento (carrusel dentro de la card) se usa esa tag para evitar errores */}
-                   <Card bgGradient="" 
+                   <Card bgColor={"secundaryBg"} 
                     sx={{
                         transition: 'transform 0.3s ease', 
                         '&:hover': {
@@ -70,9 +70,9 @@ export default function ObrasPublic () {
                         cursor: 'pointer', 
                         },
                      }}
-                     onClick={() => handleCardClick(obra.id)}>
+                     onClick={() => handleCardClick(obra.id)} borderWidth={2}  borderColor={"#B4B4B8"}>
         
-                        <CardBody borderWidth={2}  borderRadius={10} w="100%" h="100%" display="flex" flexDirection={"column"}>
+                        <CardBody   borderRadius={10} w="100%" h="100%" display="flex" flexDirection={"column"}>
                         <Box display="flex" justifyContent="center" alignItems="center" w="100%" mb={4}>
                         <ImageGallery items={images} 
                             showThumbnails={false}  //desactivo las miniaturas

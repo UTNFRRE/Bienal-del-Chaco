@@ -7,8 +7,9 @@ export default function LoginPage() {
 return (
 
     <Box
-      w="100%"
-      h="100vh"
+      w="100vh"
+      minHeight="100vh"
+      overflow="hidden"
     >
     <Box
       bgImage={{base: '', lg: `url(${ImagenFondo})`}}
@@ -116,6 +117,7 @@ return (
                   borderColor="white"
                   fontWeight="500"
                   letterSpacing="1px"
+                  _hover={{ bg: '#747264' }}
                 >
                   Acceder
                 </Button>

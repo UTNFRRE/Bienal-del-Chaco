@@ -1,4 +1,4 @@
-import { Box, HStack, Image, Container, Text, Heading , Stack, Card, CardBody} from '@chakra-ui/react'
+import { Box, Image, Container, Text, Heading , Stack, Card, CardBody, Grid, GridItem} from '@chakra-ui/react'
 import Escultores from '../../../API/Escultores';
 
 
@@ -6,51 +6,61 @@ function Escultoress () {
   return (
 <Container maxWidth="100vw" width="100vw" height="100vh" centerContent>
 <Box
-      maxWidth="100%" width="100%"
+      maxWidth="100%" width="100%" 
     >
 <Heading
-      ml="190px"
-      mt="40px" as="h1" 
-      size="2xl" 
+      mr={{ base: "100px", sm: "80px", md: "80px", lg: "90px" }}
+      mt={{ base: "20px", sm: "30px", md: "40px" }}
+      size={{ base: "md", sm: "lg", md: "xl", lg: "2xl" }}
+      textAlign={"center"}
+      as="h1" 
+      
       fontFamily="'Mukta', serif" 
       fontWeight="600" 
       color="gray.700" 
-      textAlign="left" 
+       
       mb="4" 
     >
       Escultores Seleccionados
     </Heading>
   </Box>
-<HStack mt="10px" display="flex" flexWrap="wrap" spacing='24px' width="80%" mr="100px"  justifyContent="center" alignItems="center">
-  
+
+
+
+<Grid templateColumns="repeat(auto-fit, minmax(250px, 1fr))" gap={10} w={"90%"} h={"100%"} justifyItems="center" alignItems="center">
   
 {Escultores.map((escultor) => (
-  <Card outline='4px solid #c0c8d0' bg="linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)" w="19%" h='27%' className='my-box' sx={{
+  <GridItem w="250px" h="300px" mr={"100px"}>
+
+  <Card outline='4px solid #b4b4b8' bg="linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)" w="110%" h="105%" className='my-box' sx={{
         transition: 'transform 0.3s ease', 
         '&:hover': {
           transform: 'scale(1.05)',
           cursor: 'pointer', 
         },
-      }}
-    >
-  <CardBody h={"70%"} w={"100%"} >
-      <Image src={escultor.foto} h={"100%"} w={"100%"} borderRadius='lg'/>
+      }}>
+  <CardBody h={"100%"} w={"100%"} display="flex" p={0} 
+        justifyContent="center" 
+        alignItems="center">
+      <Image src={escultor.foto} h={"210px"} w={"253px"} borderRadius='lg' m={0}/>
   </CardBody>
   
-    <Stack mt={0} bg="white" width="100%" height="33%" direction={"row"} justifyContent={"space-between"}>
+  
+    <Stack mt={0} bg="white" width="100%" height="90px" maxHeight={"27%"} direction={"row"} justifyContent={"space-between"}>
       <Stack direction={"column"}>
-      <Text ml={"20px"} whiteSpace="pre-line" fontSize="20px"
+      <Text ml={"22px"} mt={"5px"} whiteSpace="pre-line" fontSize="18px" lineHeight="1.2" 
         bg="black"
         bgClip="text"
         fontWeight="bold">{escultor.nombre}</Text>
-        <Text ml={"20px"} as='i' fontSize='20px' color='black'>{escultor.pais}</Text>
+        <Text ml={"22px"} as='i' fontSize='17px' color='black'>{escultor.pais}</Text>
       </Stack>
-      <Image src={escultor.bandera} width="60px" height="40px" mr={"20px"}/>
+      <Image src={escultor.bandera} width="60px" height="40px" mr={"11px"} mt={"20px"}/>
     </Stack>
     </Card>
+    </GridItem>
 ))}
   
-</HStack>
+</Grid>
 </Container>
   )
 }

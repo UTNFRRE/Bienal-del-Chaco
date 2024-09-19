@@ -5,16 +5,16 @@ import { HiOutlineDocumentAdd } from "react-icons/hi";
 import { CloseIcon } from '@chakra-ui/icons';
 
 // Los archivos seleccionados se guardan en el estado/array files, y las previsualizaciones en filePreviews
-// Se le debe pasar por props el maximo de archivos que se pueden cargar, por defecto es 10
 
-interface DropZoneProps {
+interface ZonaCargaProps {
     maxFiles?: number;
-    fileUploads?: string[];
+    handleFotoChange: (fotoData: string, nombreArchivo: string) => void;
+    filesUpload: string[];
 }
 
-const ZonaCarga: React.FC<DropZoneProps> = ({ maxFiles=10, fileUploads }) => {
+const ZonaCargaEscultor = ({maxFiles = 10, handleFotoChange, filesUpload }: ZonaCargaProps) => {
     const toast = useToast();
-    const [filePreviews, setFilePreviews] = useState<string[]>(fileUploads || []);  // Guarda las URL de las previsualizaciones 
+    const [filePreviews, setFilePreviews] = useState<string[]>(filesUpload || [""]);  // Guarda las URL de las previsualizaciones 
     const [files, setFiles] = useState<File[]>([]);  // Guarda los archivos seleccionados para dsp mandar al back
 
     const onDrop = useCallback((acceptedFiles: File[]) => {
@@ -40,7 +40,15 @@ const ZonaCarga: React.FC<DropZoneProps> = ({ maxFiles=10, fileUploads }) => {
                 ...newFiles.map((fileObj) => fileObj.previewUrl),
            ]);
             setFiles((prevFiles) => [...prevFiles, ...newFiles.map((fileObj) => fileObj.file)]);
-        
+
+            const file = newFiles[0].file;
+            const fileReader = new FileReader();
+            fileReader.onload = () => {
+                if (fileReader.result) {
+                    handleFotoChange(fileReader.result as string, file.name);
+                }
+            };
+        fileReader.readAsDataURL(file);
     }, [files, maxFiles, toast]);
 
     
@@ -80,15 +88,16 @@ const ZonaCarga: React.FC<DropZoneProps> = ({ maxFiles=10, fileUploads }) => {
         <Stack direction="column">
         <Flex
         borderRadius="10px"
-        w={610}     // Cambien aca el ancho de la zona de carga
+        w={650}  
         justifyContent="center"
         direction={"column"}
         alignItems="center"
-        border="2px solid #6f6f6f"
+        border="2px solid"
+        color="principal"
         borderStyle="dashed"
         {...getRootProps()}
         style={{
-          padding: '40px',
+        padding: '40px',
         }}
         >
         <VStack spacing={4}>
@@ -100,12 +109,12 @@ const ZonaCarga: React.FC<DropZoneProps> = ({ maxFiles=10, fileUploads }) => {
             <p>Soltar para cargar...</p>
             ) : (
             <p>Arrastrar y soltar archivo aquí</p>
-             )}
+            )}
         </VStack>
         {filePreviews.length > 0 && (
                 <SimpleGrid columns={{ base: 2, md: 4 }} spacing={4} mt="20px">
                     {filePreviews.map((preview, index) => (
-                        <Box key={index} position="relative">
+                        <Box key={index} position="relative" justifyContent="center">
                             <IconButton
                                 icon={<CloseIcon />}
                                 size="sm"
@@ -119,7 +128,7 @@ const ZonaCarga: React.FC<DropZoneProps> = ({ maxFiles=10, fileUploads }) => {
                             <img
                                 src={preview}
                                 alt={`Preview ${index}`}
-                                style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                                style={{ width: '100px', height: '100px', objectFit: 'cover'}}
                             />
                         </Box>
                     ))}
@@ -128,9 +137,6 @@ const ZonaCarga: React.FC<DropZoneProps> = ({ maxFiles=10, fileUploads }) => {
         </Flex>
         </Stack>
     );
-
-
-
 }
 
-export default ZonaCarga;
+export default ZonaCargaEscultor;
