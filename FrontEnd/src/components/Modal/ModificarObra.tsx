@@ -42,7 +42,7 @@ function ModificarObra({isOpen, onClose, confirmar, evento}: ModalProps) {
     const [titulo, setTitulo] = useState('');  
     const [tematica, setTematica] = useState('');
     const [escultorPais, setEscultorPais] = useState('');
-    const [imagen, setImagen] = useState(['']); // Como recupero la ruta de la imagen?
+    const [imagen, setImagen] = useState<string[]>(['']); // Como recupero la ruta de la imagen?
     const [autor, setAutor] = useState('');
     const [descripcion, setDescripcion] = useState('');
     const [fecha, setFecha] = useState('');
@@ -73,7 +73,7 @@ function ModificarObra({isOpen, onClose, confirmar, evento}: ModalProps) {
             setEscultorPais(evento.paisAutor);
             setDescripcion(evento.descripcion);
             setFecha(evento.fecha);
-            setImagen([evento.imagenes]);
+            setImagen(evento.imagenes);
         }
     }, [evento]);
 
@@ -127,17 +127,17 @@ function ModificarObra({isOpen, onClose, confirmar, evento}: ModalProps) {
                                         <Input placeholder="Pais" value={escultorPais} isReadOnly/>
                                     </Box>
                                 </Stack>
-                                <Stack direction="row" gap={4} alignItems="center">
-                                    <Flex justify='center' width="90%"> 
-                                        <FormLabel>Descripcion</FormLabel>
+                                <Stack direction="column" gap={0} justifyContent={"flex-start"}>
+                                <FormLabel>Descripcion</FormLabel>
+                                    <Flex justify='center' width="100%"> 
                                         <Textarea placeholder="Descripcion" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
                                     </Flex>
                                 </Stack>
-                                <Stack direction="row" gap={4} align="center">
-                                    <Flex justify="center">
-                                        <FormLabel>Imagen</FormLabel>
+                                <Stack direction="column" gap={0} justifyContent={"flex-start"}>
+                                <FormLabel>Imagen</FormLabel>
+                                    <Flex w="90%" flex={1}>
                                         {/* Como recupero la ruta de la imagen? */}
-                                        <DropZone maxFiles={10}/> 
+                                        <DropZone maxFiles={10} fileUploads={imagen}/> 
                                       
                                     </Flex>
                                 </Stack>
@@ -149,7 +149,7 @@ function ModificarObra({isOpen, onClose, confirmar, evento}: ModalProps) {
                     <Button colorScheme="blue" mr={3} onClick={handleConfirmar}>
                         Guardar Cambios
                     </Button>
-                    <Button onClick={onClose}>Cancelar</Button>
+                    <Button onClick={onClose} variant="light">Cancelar</Button>
                 </ModalFooter>
             </ModalContent>
         </Modal>

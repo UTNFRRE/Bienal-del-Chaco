@@ -198,7 +198,7 @@ function TablaEscultores () {
                             src={escultor.foto} 
                             alt={escultor.nombre} 
                             width="100px" 
-                            height="100px" 
+                            height="100%" 
                             objectFit="contain" 
                         />
                         </Td>

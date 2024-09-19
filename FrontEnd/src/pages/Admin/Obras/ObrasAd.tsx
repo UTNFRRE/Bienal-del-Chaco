@@ -47,8 +47,8 @@ function TablaObras() {
       nombre: '',
       tematica: '',
       descripcion: '',
-      fechaCreacion: '',
       escultor: '',
+      fechaCreacion: '',
       escultorPais: '',
       escultorImagen: '', 
       imagenes:  [''],  
@@ -80,7 +80,7 @@ function TablaObras() {
           obra.id.toLowerCase().includes(filters.id.toLowerCase()) &&
           obra.nombre.toLowerCase().includes(filters.nombre.toLowerCase()) &&
           obra.descripcion.toLowerCase().includes(filters.descripcion.toLowerCase()) &&
-          obra.fechaCreacion.includes(filters.fechaCreacion)
+          obra.escultor.toLowerCase().includes(filters.escultor.toLowerCase())
         )
       );
     }, [filters, obras]);
@@ -105,10 +105,12 @@ function TablaObras() {
       onCloseDelete();
     };
 
-    const handleConfirmarAdd = async (titulo:string, tematica:string, fecha:string, autor:string, paisAutor:string, descripcion:string, imagenes:string[] ) => {
+    const handleConfirmarAdd = async (titulo:string, tematica:string, fecha:string, autor:string, paisAutor:string, descripcion:string, imagenes:File[] ) => {
+      // fetch para agregar la obra
+      // fetch para traer las obras de nuevo
       setObras((prevObras) => [
         ...prevObras,
-        { id: (prevObras.length + 1).toString(), nombre: titulo, tematica: tematica, descripcion: descripcion, fechaCreacion: fecha, escultor: autor, escultorPais: paisAutor, escultorImagen: 'nose.jpg', imagenes: imagenes },
+        { id: (prevObras.length + 1).toString(), nombre: titulo, tematica: tematica, descripcion: descripcion, fechaCreacion: fecha, escultor: autor, escultorPais: paisAutor, escultorImagen: 'nose.jpg', imagenes: imagenes.map(img => URL.createObjectURL(img)) },
       ]);
       onCloseAdd();
     };
@@ -167,9 +169,9 @@ function TablaObras() {
                       <Th>
                         <Input
                           variant='flushed'
-                          placeholder="Filtrar por fecha de creación"
-                          name="fechaCreacion"
-                          value={filters.fechaCreacion}
+                          placeholder="Filtrar por Escultor"
+                          name="escultor"
+                          value={filters.escultor}
                           onChange={handleFilterChange}
                         />
                       </Th>
@@ -181,20 +183,20 @@ function TablaObras() {
                     <Th textAlign="center" fontSize={15}>Imagen</Th>
                     <Th textAlign="center" fontSize={15}>Título</Th>
                     <Th textAlign="center" fontSize={15}>Descripción</Th>
-                    <Th textAlign="center" fontSize={15}>Fecha de Creación</Th>
+                    <Th textAlign="center" fontSize={15}>Escultor</Th>
                     <Th textAlign="center" fontSize={15}>Acciones</Th>
                   </Tr>
                 </Thead>
 
                 <Tbody>
                   {filteredObras.map((obra, index) => (
-                    <Tr key={index}>
+                    <Tr key={index} mt={1} mb={1} p={1}>
                       <Td textAlign="center" display="flex" justifyContent="center">
-                        <Image src={obra.imagenes[0]} alt={obra.nombre} width="100px" height="100px" objectFit="contain" />
+                        <Image src={obra.imagenes[0]} alt={obra.nombre} width="100px" height="100%" objectFit="contain" />
                       </Td>
                       <Td textAlign="center">{obra.nombre}</Td>
                       <Td textAlign="center">{obra.descripcion}</Td>
-                      <Td textAlign="center">{obra.fechaCreacion}</Td>
+                      <Td textAlign="center">{obra.escultor}</Td>
                       <Td>
                         <Flex gap={2} justifyContent="center" alignItems="center">
                           <IconButton
@@ -207,7 +209,7 @@ function TablaObras() {
                           <IconButton
                             aria-label="Eliminar"
                             icon={<DeleteIcon />}
-                            variant="solid"
+                            variant="delete"
                             borderRadius={3}
                             onClick={() => handleDelete(obra)}
                           />
@@ -237,7 +239,7 @@ function TablaObras() {
           <ModalConfirmar 
               isOpen={isOpenDelete}
               onClose={onCloseDelete}
-              texto="¿Está seguro que desea eliminar la obra?"
+              texto={`¿Está seguro que desea eliminar la obra ${obraElegida?.nombre}?`}
               confirmar={handleConfirmarDelete}
           />
       </>
