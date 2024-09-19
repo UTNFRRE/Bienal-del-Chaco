@@ -70,9 +70,9 @@ export default function ObrasPublic () {
                         cursor: 'pointer', 
                         },
                      }}
-                     onClick={() => handleCardClick(obra.id)} borderWidth={2}  borderColor={"#B4B4B8"}>
+                      borderWidth={2}  borderColor={"#B4B4B8"}>
         
-                        <CardBody   borderRadius={10} w="100%" h="100%" display="flex" flexDirection={"column"}>
+                        <CardBody   borderRadius={10} w="100%" h="100%" display="flex" flexDirection={"column"} >
                         <Box display="flex" justifyContent="center" alignItems="center" w="100%" mb={4}>
                         <ImageGallery items={images} 
                             showThumbnails={false}  //desactivo las miniaturas
@@ -82,12 +82,12 @@ export default function ObrasPublic () {
                             slideInterval={4000 + obra.id*100} //cada cuanto cambia, 4seg
                         /> 
                         </Box>
-                        <Box w="100%" textAlign="left" display="flex" flexDirection={"column"} gap={0}>
+                        <Box w="100%" textAlign="left" display="flex" flexDirection={"column"} gap={0} onClick={() => handleCardClick(obra.id)}>
                             <Heading>{obra.nombre}</Heading>
                             <Text as={"i"} >{obra.tematica}</Text>
                             <Text as={"kbd"}>{obra.escultor}</Text>
                         </Box>
-                        <Box>
+                        <Box onClick={() => handleCardClick(obra.id)}>
                         <Text noOfLines={3} mt={3}> {obra.descripcion}</Text>
                         </Box>
                         </CardBody>
