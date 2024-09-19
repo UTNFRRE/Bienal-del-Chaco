@@ -58,6 +58,7 @@ const routes = [
     title: '',
     rol: 'public',
   },
+  {	
     path: 'obras/:id', // Se agrega el id de la obra
     element: <ObraDetail />,
     title: '',
