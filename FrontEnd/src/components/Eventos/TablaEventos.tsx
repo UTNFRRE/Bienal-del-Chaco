@@ -1,6 +1,6 @@
 import { Box, Table, Thead, Tbody, Tr, Th, Td, Flex, Text, IconButton, Button, Input} from '@chakra-ui/react';
 import { EditIcon, DeleteIcon, AddIcon, SearchIcon } from '@chakra-ui/icons'; 
-import Eventos from '../../API/Eventos';
+import Eventos from '../../API/Admin/Eventos';
 import {useState , useEffect} from 'react';
 import { useDisclosure } from '@chakra-ui/react';
 import ModalConfirmar from '../Modal/ConfirmarCambios';
