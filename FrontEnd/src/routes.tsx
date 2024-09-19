@@ -1,4 +1,5 @@
 import Escultoress from './pages/Public/Escultores/Escultores';
+import EscultorDetail from './pages/Public/Escultores/EscultorDetalle';
 import ErrorPage from './pages/Error404';
 import Eventos from './pages/Admin/Eventos';
 import Escultores from './pages/Admin/Escultores';
@@ -49,6 +50,11 @@ const routes = [
     rol: 'public',
   },
   {
+    path: 'escultores/:dni',
+    element: <EscultorDetail />,
+    title: '',
+    rol: 'public',
+  },
     path: 'obras/:id', // Se agrega el id de la obra
     element: <ObraDetail />,
     title: '',
