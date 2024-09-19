@@ -89,15 +89,15 @@ function ModificarObra({isOpen, onClose, confirmar, evento}: ModalProps) {
                             <Stack gap={4} >
                                 <Stack direction="row" gap={4}>
                                     <Box>
-                                        <FormLabel>Titulo</FormLabel>
+                                        <FormLabel ml="2px" mb={1}>Titulo</FormLabel>
                                         <Input placeholder="Titulo" value={titulo} onChange={(e) => setTitulo(e.target.value)} />
                                     </Box>
                                     <Box>
-                                        <FormLabel>Tematica</FormLabel>
+                                        <FormLabel ml="2px" mb={1}>Tematica</FormLabel>
                                         <Input placeholder="Tematica" value={tematica} onChange={(e) => setTematica(e.target.value)} />
                                     </Box>
                                     <Box>
-                                        <FormLabel>Fecha</FormLabel>
+                                        <FormLabel ml="2px" mb={1} >Fecha Creación</FormLabel>
                                         <Input 
                                             type="date" 
                                             value={fecha}  
@@ -111,9 +111,9 @@ function ModificarObra({isOpen, onClose, confirmar, evento}: ModalProps) {
                                         />
                                     </Box>
                                 </Stack>
-                                <Stack direction="row" gap={4} align="center">
-                                    <Box>
-                                        <FormLabel>Escultor</FormLabel>
+                                <Stack direction="row" gap={3} align="center" w="100%">
+                                    <Box w="100%">
+                                        <FormLabel ml="2px" mb={1}>Escultor</FormLabel>
                                         <Select placeholder={autor} value={autor} onChange={handleAutor}>
                                             {listaEscultores.map((escultor, index) => (
                                                 <option key={index} value={escultor}>
@@ -122,19 +122,19 @@ function ModificarObra({isOpen, onClose, confirmar, evento}: ModalProps) {
                                             ))}
                                         </Select>
                                     </Box>
-                                    <Box>
-                                        <FormLabel>Pais</FormLabel>
+                                    <Box w="100%">
+                                        <FormLabel ml="2px" mb={1}>Pais</FormLabel>
                                         <Input placeholder="Pais" value={escultorPais} isReadOnly/>
                                     </Box>
                                 </Stack>
                                 <Stack direction="column" gap={0} justifyContent={"flex-start"}>
-                                <FormLabel>Descripcion</FormLabel>
+                                <FormLabel mb={1}>Descripcion</FormLabel>
                                     <Flex justify='center' width="100%"> 
                                         <Textarea placeholder="Descripcion" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
                                     </Flex>
                                 </Stack>
                                 <Stack direction="column" gap={0} justifyContent={"flex-start"}>
-                                <FormLabel>Imagen</FormLabel>
+                                <FormLabel ml="2px" mb={1}>Imagen</FormLabel>
                                     <Flex w="90%" flex={1}>
                                         {/* Como recupero la ruta de la imagen? */}
                                         <DropZone maxFiles={10} fileUploads={imagen}/> 
@@ -146,7 +146,7 @@ function ModificarObra({isOpen, onClose, confirmar, evento}: ModalProps) {
                     </Stack>
                 </ModalBody>
                 <ModalFooter>
-                    <Button colorScheme="blue" mr={3} onClick={handleConfirmar}>
+                    <Button variant={'bienal'} mr={3} onClick={handleConfirmar}>
                         Guardar Cambios
                     </Button>
                     <Button onClick={onClose} variant="light">Cancelar</Button>

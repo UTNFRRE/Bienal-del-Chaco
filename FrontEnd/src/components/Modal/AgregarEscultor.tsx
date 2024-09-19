@@ -100,13 +100,13 @@ export default function ModalAgregarEscultor({ isOpen, onClose, confirmar }: Mod
                                     />
                                 </Box>
                             </Stack>
-                            <ZonaCargaEscultor maxFiles={1} handleFotoChange={handleFotoChange}/>  {/* Limita a 1 una foto */}
+                            <ZonaCargaEscultor maxFiles={1} handleFotoChange={handleFotoChange} filesUpload={[]}/>  {/* Limita a 1 una foto */}
                         </Stack>
                     </FormControl>
                 </ModalBody>
                 <ModalFooter mt={6}>
                     <Button
-                        colorScheme="blue"
+                        variant={'bienal'}
                         mr={3}
                         onClick={handleConfirmar}
                         size="sm"

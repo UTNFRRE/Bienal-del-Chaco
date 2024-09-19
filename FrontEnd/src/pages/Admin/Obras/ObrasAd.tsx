@@ -135,8 +135,8 @@ function TablaObras() {
       <>
         <Flex alignItems="center" justifyContent="center" flexDirection="column">
           <Flex justifyContent="center" mb={4} mt={4} gap={4}>
-            <Button leftIcon={<AddIcon />} borderRadius={3} onClick={onOpenAdd}>Agregar Obra</Button>
-            <Button onClick={() => setMostrarFiltros(!mostrarFiltros)} leftIcon={<SearchIcon />} borderRadius={3}>
+            <Button variant="bienal" leftIcon={<AddIcon />} borderRadius={3} onClick={onOpenAdd}>Agregar Obra</Button>
+            <Button variant="bienal" onClick={() => setMostrarFiltros(!mostrarFiltros)} leftIcon={<SearchIcon />} borderRadius={3}>
               {mostrarFiltros ? 'Ocultar Filtros' : 'Filtrar'}
             </Button>
           </Flex>
@@ -202,7 +202,7 @@ function TablaObras() {
                           <IconButton
                             aria-label="Editar"
                             icon={<EditIcon />}
-                            variant="solid"
+                           variant="bienal"
                             borderRadius={3}
                             onClick={() => handleEditar(obra)}
                           />

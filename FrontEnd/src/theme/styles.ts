@@ -1,3 +1,4 @@
+import { border } from '@chakra-ui/react';
 import { mode, StyleFunctionProps } from '@chakra-ui/theme-tools';
 
 export const globalStyles = {
@@ -10,15 +11,15 @@ export const globalStyles = {
       900: '#171923',
     },
     principalHover: '#3F72AF',
-    principal: '#112D4E',
-    secundaryBg: '#E3E1D9',
+    principal: '#1E2A5E',
+    secundaryBg: '#E9EFEC',
     secundary: '#c4daf4',
     secundaryHover: '#B4B4B8',
   },
   styles: {
     global: (props: StyleFunctionProps) => ({
       body: {
-        bg: mode('linear-gradient(to right, #f0f0f0, #d0d0d0, #a0a0a0)', 'gray.800')(props), //color de fondo de la pagina completa
+        bg: '#FCFAEE', //color de fondo de la pagina completa
         fontFamily: "'Roboto', sans-serif",
       },
       html: {

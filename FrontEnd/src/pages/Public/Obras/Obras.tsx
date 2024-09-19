@@ -70,7 +70,7 @@ export default function ObrasPublic () {
                         cursor: 'pointer', 
                         },
                      }}
-                      borderWidth={2}  borderColor={"#B4B4B8"}>
+                      borderWidth={2}  borderColor={"secundaryHover"}>
         
                         <CardBody   borderRadius={10} w="100%" h="100%" display="flex" flexDirection={"column"} >
                         <Box display="flex" justifyContent="center" alignItems="center" w="100%" mb={4}>
