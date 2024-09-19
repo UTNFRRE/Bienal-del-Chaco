@@ -50,12 +50,13 @@ const routes = [
     rol: 'public',
   },
   {
-    path: 'escultores/:dni',
+    path: 'escultores/:id',
     element: <EscultorDetail />,
     title: '',
     rol: 'public',
   },
-    path: 'obras/:id', // Se agrega el id de la obra
+  {
+    path:  'obras/:id', // Se agrega el id de la obra
     element: <ObraDetail />,
     title: '',
     rol: 'public',
