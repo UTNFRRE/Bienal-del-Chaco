@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { Box, Heading, Text, Image, Flex, IconButton, ButtonGroup} from '@chakra-ui/react';
 import ImageGallery from 'react-image-gallery';
-import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
+import { FaFacebook, FaTwitter, FaInstagram, FaWhatsapp } from 'react-icons/fa';
 import 'react-image-gallery/styles/css/image-gallery.css';
 
 const ObraDetail = () => {
@@ -54,16 +54,25 @@ const ObraDetail = () => {
               aria-label="Compartir en Facebook"
               icon={<FaFacebook />}
               colorScheme="facebook"
+              onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`, '_blank')}
             />
             <IconButton
               aria-label="Compartir en Twitter"
               icon={<FaTwitter />}
               colorScheme="twitter"
+              onClick={() => window.open(`https://twitter.com/intent/tweet?url=${window.location.href}`, '_blank')}
             />
             <IconButton
               aria-label="Compartir en Instagram"
               icon={<FaInstagram />}
               colorScheme="instagram"
+              onClick={() => window.open(`https://www.instagram.com/?url=${window.location.href}`, '_blank')}
+            />
+            <IconButton
+              aria-label="Compartir en Whatsapp"
+              icon={<FaWhatsapp />}
+              colorScheme="whatsapp"
+              onClick={() => window.open(`https://api.whatsapp.com/send?text=${window.location.href}`, '_blank')}
             />
         </ButtonGroup>
       </Flex>
