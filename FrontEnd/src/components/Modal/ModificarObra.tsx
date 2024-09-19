@@ -67,7 +67,7 @@ function ModificarObra({isOpen, onClose, confirmar, evento}: ModalProps) {
 
     useEffect(() => {
         if (evento){
-            setTitulo(evento.titulo);
+            setTitulo(evento.nombre);
             setTematica(evento.tematica);
             setAutor(evento.autor);
             setEscultorPais(evento.paisAutor);

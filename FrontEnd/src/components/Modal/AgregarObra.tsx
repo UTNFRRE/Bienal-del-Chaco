@@ -32,7 +32,7 @@ interface ModalProps {
         autor: string,
         paisAutor: string,
         descripcion: string,
-        imagenes: string[],
+        imagenes: File[],
     ) => void;
 }
 
@@ -41,7 +41,7 @@ function AgregarObra({isOpen, onClose, confirmar}: ModalProps) {
     const [titulo, setTitulo] = useState('');  
     const [tematica, setTematica] = useState('');
     const [escultorPais, setEscultorPais] = useState('');
-    const [imagen, setImagen] = useState(['']); // Como recupero la ruta de la imagen?
+    const [imagen, setImagen] = useState<File[]>([]); // Estado para almacenar múltiples archivos de imagen, se usara despues
     const [autor, setAutor] = useState('');
     const [descripcion, setDescripcion] = useState('');
     const [fecha, setFecha] = useState('');
