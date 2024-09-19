@@ -28,19 +28,19 @@ const ObraDetail = () => {
   }));
 
   return (
-    <Box p={0} display={"flex"} flexDirection={"row"}>
-    <Box display="flex" w="70%"  flexDirection={"column"}>
-      <Heading mt={5} mb={5} fontSize={"5xl"}
-      >{obra.nombre}</Heading>
-      <Box borderWidth={2} borderColor={'secundaryHover'} p={2}>
-      <ImageGallery items={images} 
-        showPlayButton={true}  // desactivo el boton de play
-        autoPlay={true} //activo para que arranquen solas
-        slideInterval={5000} //cada cuanto cambia, 4seg
-        /> 
-      </Box>
-    </Box>  
-      <Box w="30%" display="flex" flexDirection={"column"} gap={0} mt={1}>
+    <Box p={0} display={"flex"} flexDirection={{base: 'column' , md:'row', lg:'row'}}>
+      <Box display="flex" w={{ base: '100%', md:'100%', lg: '70%' }}  flexDirection={"column"} className='Galeria'>
+        <Heading mt={5} mb={5} fontSize={"5xl"}
+        >{obra.nombre}</Heading>
+        <Box borderWidth={2} borderColor={'secundaryHover'} p={2}>
+        <ImageGallery items={images} 
+          showPlayButton={true}  // desactivo el boton de play
+          autoPlay={true} //activo para que arranquen solas
+          slideInterval={5000} //cada cuanto cambia, 4seg
+          /> 
+        </Box>
+      </Box>  
+      <Box w={{ base: '100%', md:'100%', lg: '30%' }}  display="flex" flexDirection={"column"} gap={0} mt={1} className='Informacion'>
       <Flex gap='4' alignItems='center' justifyContent={"center"} mt={8}>
           <Image src={obra.escultorImagen} boxSize="90px" borderRadius="full" borderWidth={2} borderColor="secundaryHover" borderStyle="solid"/>
           <Box>
