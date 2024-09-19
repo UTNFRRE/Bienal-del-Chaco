@@ -5,8 +5,11 @@ import Eventos from './pages/Admin/Eventos';
 import Escultores from './pages/Admin/Escultores';
 import ObrasPublic from './pages/Public/Obras/Obras';
 import ObraDetail from './pages/Public/Obras/ObraDetalle';
+import ObrasAdmin from './pages/Admin/Obras/ObrasAd';
+
 
 const routes = [
+ 
   {
     path: 'escultores',
     element: <Escultores />,
@@ -27,7 +30,7 @@ const routes = [
   },
   {
     path: 'obras',
-    element: <ErrorPage />,
+    element: <ObrasAdmin />,
     title: 'Obras',
     rol: 'admin',
   },
