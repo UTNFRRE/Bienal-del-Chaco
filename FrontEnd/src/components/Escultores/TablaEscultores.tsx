@@ -197,9 +197,11 @@ function TablaEscultores () {
                         <Image 
                             src={escultor.foto} 
                             alt={escultor.nombre} 
-                            width="100px" 
-                            height="100%" 
-                            objectFit="contain" 
+                            // width="100px" 
+                            // height="100%" 
+                            boxSize={["80px"]}
+                            // objectFit="contain" 
+                            borderRadius="full"
                         />
                         </Td>
                         <Td textAlign="center">{escultor.nombre}</Td>
