@@ -3,6 +3,7 @@ import EscultorDetail from './pages/Public/Escultores/EscultorDetalle';
 import ErrorPage from './pages/Error404';
 import Eventos from './pages/Admin/Eventos';
 import EventoDetalle  from './pages/Public/Eventos/EventoDetalle';
+import EventoDetalle2  from './pages/Public/Eventos/EventoDetalle2';
 import EventosPublic from './pages/Public/Eventos/Eventos';
 import Escultores from './pages/Admin/Escultores';
 import ObrasPublic from './pages/Public/Obras/Obras';
@@ -50,7 +51,7 @@ const routes = [
   },
   {
     path: 'eventos/:id',
-    element: <EventoDetalle />,
+    element: <EventoDetalle2 />,
     title: '',
     rol: 'public',
   },

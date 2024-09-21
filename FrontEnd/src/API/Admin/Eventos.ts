@@ -123,7 +123,8 @@ const Eventos = [
         descripcion: "Descrpcion del evento 1",
         lugar: "Av las heras 812",
         tematica: "River",
-
+        latitud: -27.4545445483934,
+        longitud: -58.98652072485547
     },
     {
         id: 2,
@@ -132,6 +133,8 @@ const Eventos = [
         descripcion: "Descrpcion del evento 2",
         lugar: "Av las heras 812",
         tematica: "River",
+        latitud: -34.603722,
+        longitud: -58.381592
     },
     {
         id: 3,
@@ -140,6 +143,8 @@ const Eventos = [
         descripcion: "Descrpcion del evento 3",
         lugar: "Av las heras 812",
         tematica: "River",
+        latitud: -34.603722,
+        longitud: -58.381592
     },
     {
         id: 4,
@@ -148,6 +153,8 @@ const Eventos = [
         descripcion: "Descrpcion del evento 4",
         lugar: "Av las heras 812",
         tematica: "River",
+        latitud: -34.603722,
+        longitud: -58.381592
     },
     {
         id: 5,
@@ -156,6 +163,8 @@ const Eventos = [
         descripcion: "Descrpcion del evento 5",
         lugar: "Av las heras 812",
         tematica: "River",
+        latitud: -34.603722,
+        longitud: -58.381592
     },
     {
         id: 6,
@@ -164,6 +173,8 @@ const Eventos = [
         descripcion: "Descrpcion del evento 6",
         lugar: "Av las heras 812",
         tematica: "River",
+        latitud: -34.603722,
+        longitud: -58.381592
     },
     {
         id: 7,
@@ -172,6 +183,8 @@ const Eventos = [
         descripcion: "Descrpcion del evento 7",
         lugar: "Av las heras 812",
         tematica: "River",
+        latitud: -34.603722,
+        longitud: -58.381592
     },
     {
         id: 8,
@@ -180,6 +193,8 @@ const Eventos = [
         descripcion: "Descrpcion del evento 8",
         lugar: "Av las heras 812",
         tematica: "River",
+        latitud: -34.603722,
+        longitud: -58.381592
     },
     {
         id: 9,
@@ -188,6 +203,8 @@ const Eventos = [
         descripcion: "Descrpcion del evento 9",
         lugar: "Av las heras 812",
         tematica: "River",
+        latitud: -34.603722,
+        longitud: -58.381592
     },
     {
         id: 10,
@@ -196,6 +213,8 @@ const Eventos = [
         descripcion: "Descrpcion del evento 10",
         lugar: "Av las heras 812",
         tematica: "River",
+        latitud: -34.603722,
+        longitud: -58.381592
     },
 ];
 export default Eventos;
