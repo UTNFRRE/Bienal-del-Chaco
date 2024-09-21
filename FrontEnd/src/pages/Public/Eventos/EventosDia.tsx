@@ -1,3 +1,4 @@
+import {Flex, Heading, Text} from '@chakra-ui/react';
 
 interface EventosDiaProps {
     dia: Date | null;
@@ -12,9 +13,9 @@ const EventosDia: React.FC<EventosDiaProps> = ({ dia }) => {
     });
 
     return (
-        <div>
-            <h1>Eventos del dia {formattedDate}</h1>
-        </div>
+        <Flex>
+            <Text fontSize={20}>Eventos del {formattedDate}</Text>
+        </Flex>
     )
 }
 
