@@ -11,10 +11,10 @@ export const globalStyles = {
       900: '#171923',
     },
     principalHover: '#3F72AF',
-    principal: '#1E2A5E',
+    principal: '#1E2A5E',  // azul oscuro 
     secundaryBg: '#E9EFEC',
-    secundary: '#c4daf4',
-    secundaryHover: '#B4B4B8',
+    secundary: "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
+    secundaryHover: '#B4B4B8',  //Usado para los bordes grises
   },
   styles: {
     global: (props: StyleFunctionProps) => ({
