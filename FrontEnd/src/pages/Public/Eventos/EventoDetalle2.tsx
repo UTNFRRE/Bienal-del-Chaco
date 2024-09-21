@@ -63,7 +63,7 @@ export default function EventoDetalle2() {
   return (
     <Flex direction={"row"} gap={4}>
       <Flex mt={6}>
-      <LoadScript googleMapsApiKey={googleMapsApiKey}>
+      {/* <LoadScript googleMapsApiKey={googleMapsApiKey}>
         <GoogleMap
           mapContainerStyle={mapContainerStyle}
           center={position}
@@ -73,7 +73,7 @@ export default function EventoDetalle2() {
         >
           <Marker position={position} icon={redMarkerIcon}/>
         </GoogleMap>
-      </LoadScript>
+      </LoadScript> */}
       </Flex>
       <Flex direction={"column"} gap={5} alignItems={"center"} flex={1} mt={6}>
         <Flex direction={"column"} gap={1} textAlign={"center"}>
