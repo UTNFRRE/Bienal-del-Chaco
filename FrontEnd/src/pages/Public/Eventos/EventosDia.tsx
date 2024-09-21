@@ -1,13 +1,19 @@
 
 interface EventosDiaProps {
-    dia: Date;
+    dia: Date | null;
 };
 
 const EventosDia: React.FC<EventosDiaProps> = ({ dia }) => {
 
+    const formattedDate = dia?.toLocaleDateString('es-ES', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+
     return (
         <div>
-            <h1>Eventos del dia {dia.getUTCDate()}</h1>
+            <h1>Eventos del dia {formattedDate}</h1>
         </div>
     )
 }
