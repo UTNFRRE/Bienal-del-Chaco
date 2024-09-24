@@ -66,12 +66,12 @@ export default function ModalAgregarEscultor({ isOpen, onClose, confirmar, escul
                         <Stack gap={7}>
                             <Stack direction="row" gap={5} w="100%">
                                 <Box>
-                                    <FormLabel mb={0}>Nombre</FormLabel>
+                                    <FormLabel mb={1}>Nombre</FormLabel>
                                     <Input
                                         placeholder=""
                                         size="md"
                                         variant="Unstyled"
-                                        width={500}
+                                        width={650}
                                         borderWidth={1}
                                         flex={1}
                                         value={nombre}
@@ -81,7 +81,7 @@ export default function ModalAgregarEscultor({ isOpen, onClose, confirmar, escul
                             </Stack>
                             <Stack direction="row" gap={5} w="100%">
                                 <Box>
-                                    <FormLabel mb={0}>Pais</FormLabel>
+                                    <FormLabel mb={1}>Pais</FormLabel>
                                     <Input
                                         placeholder=""
                                         size="md"
@@ -94,7 +94,7 @@ export default function ModalAgregarEscultor({ isOpen, onClose, confirmar, escul
                                     />
                                 </Box>
                                 <Box>
-                                    <FormLabel mb={0}>Contacto</FormLabel>
+                                    <FormLabel mb={1}>Contacto</FormLabel>
                                     <Input
                                         placeholder=""
                                         size="md"
@@ -110,6 +110,7 @@ export default function ModalAgregarEscultor({ isOpen, onClose, confirmar, escul
                             {/* Aquí integramos la Zona de Carga */}
                             <ZonaCargaEscultor maxFiles={1}
                             handleFotoChange={handleFotoChange}
+                            filesUpload={foto ? [foto] : []}
                             />
                             
                         </Stack>
@@ -117,7 +118,7 @@ export default function ModalAgregarEscultor({ isOpen, onClose, confirmar, escul
                 </ModalBody>
                 <ModalFooter mt={6}>
                     <Button
-                        colorScheme="blue"
+                       variant={'bienal'}
                         mr={3}
                         onClick={handleconfirmar}
                         size="sm"

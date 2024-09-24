@@ -7,9 +7,14 @@ import { CloseIcon } from '@chakra-ui/icons';
 // Los archivos seleccionados se guardan en el estado/array files, y las previsualizaciones en filePreviews
 // Se le debe pasar por props el maximo de archivos que se pueden cargar, por defecto es 10
 
-const ZonaCarga = ({maxFiles = 10}) => {
+interface DropZoneProps {
+    maxFiles?: number;
+    fileUploads?: string[];
+}
+
+const ZonaCarga: React.FC<DropZoneProps> = ({ maxFiles=10, fileUploads }) => {
     const toast = useToast();
-    const [filePreviews, setFilePreviews] = useState<string[]>([]);  // Guarda las URL de las previsualizaciones 
+    const [filePreviews, setFilePreviews] = useState<string[]>(fileUploads || []);  // Guarda las URL de las previsualizaciones 
     const [files, setFiles] = useState<File[]>([]);  // Guarda los archivos seleccionados para dsp mandar al back
 
     const onDrop = useCallback((acceptedFiles: File[]) => {
@@ -75,7 +80,7 @@ const ZonaCarga = ({maxFiles = 10}) => {
         <Stack direction="column">
         <Flex
         borderRadius="10px"
-        w={500}     // Cambien aca el ancho de la zona de carga
+        w={610}     // Cambien aca el ancho de la zona de carga
         justifyContent="center"
         direction={"column"}
         alignItems="center"
