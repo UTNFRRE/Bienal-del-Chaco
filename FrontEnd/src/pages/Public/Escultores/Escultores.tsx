@@ -39,7 +39,7 @@ function Escultoress () {
 {Escultores.map((escultor) => (
   <GridItem w="270px" h="340px" mr={"100px"}>
 
-  <Card outline='2px solid #b4b4b8' bg="secundaryBg" w="110%" h="105%" className='my-box' borderRadius={3} sx={{
+  <Card outline='2px solid #b4b4b8' bg="linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)" w="110%" h="105%" className='my-box' borderRadius={3} sx={{
         transition: 'transform 0.3s ease', 
         '&:hover': {
           transform: 'scale(1.05)',
