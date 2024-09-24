@@ -15,7 +15,8 @@ import {
     FormLabel,
     FormControl,
   } from '@chakra-ui/react';
-  import { useEffect, useState } from 'react';
+  import { useEffect, useState, useRef } from 'react';
+  import { LoadScript, StandaloneSearchBox } from '@react-google-maps/api';
   
   interface ModalComponentProps {
     isOpen: boolean;
@@ -37,6 +38,24 @@ import {
     const [tematica, setTematica] = useState('');
     const [descripcion, setDescripcion] = useState('');
     const [fecha, setFecha] = useState('');
+    const [latitud, setLatitud] = useState(null);
+    const [longitud, setLongitud] = useState(null);
+
+    const searchBoxRef = useRef<any>(null);
+    const apiKey = 'AIzaSyB6cFwxUytgrCP9pqTTEIiLMm477qpJjPs'
+  
+    const handlePlaceChanged = () => {
+      if (searchBoxRef.current) {
+        const places = searchBoxRef.current.getPlaces();
+        if (places.length > 0) {
+          const place = places[0];
+          const location = place.geometry.location;
+          setLugar(place.formatted_address);
+          setLatitud(location.lat());
+          setLongitud(location.lng());
+        }
+      }
+    };
   
     const handleconfirmar = () => {
         // llamo a la funcion que se paso como parametro y le paso los valores de los inputs
@@ -62,7 +81,7 @@ import {
 
   
     return (
-      <>
+      <LoadScript googleMapsApiKey={apiKey}  libraries={['places']}>
         <Modal isOpen={isOpen} onClose={onClose} >
           <ModalOverlay />
           <ModalContent  maxW="700px">
@@ -85,16 +104,21 @@ import {
                     />
                     </Box>
                     <Box>
-                        <FormLabel mb={0}>Lugar</FormLabel>
+                      <FormLabel mb={0}>Lugar</FormLabel>
+                      <StandaloneSearchBox
+                        onLoad={(ref) => (searchBoxRef.current = ref)}
+                        onPlacesChanged={handlePlaceChanged}
+                      >
                         <Input
-                        placeholder=""
-                        size="md"
-                        variant="Unstyled"
-                        borderWidth={1}
-                        flex={1}
-                        value={lugar}
-                        onChange={(e) => setLugar(e.target.value)}
+                          placeholder="Ingresa la dirección"
+                          size="md"
+                          variant="unstyled"
+                          borderWidth={1}
+                          flex={1}
+                          value={lugar}
+                          onChange={(e) => setLugar(e.target.value)}
                         />
+                      </StandaloneSearchBox>
                     </Box>
                     <Box>
                         <FormLabel mb={0}>Tematica</FormLabel>
@@ -134,6 +158,12 @@ import {
                 </Box>
                 
               </Stack>
+              {latitud && longitud && (
+                  <Box>
+                    <Text>Latitud: {latitud}</Text>
+                    <Text>Longitud: {longitud}</Text>
+                  </Box>
+                )}
             </FormControl>
             </ModalBody>
             <ModalFooter mt={6}>
@@ -157,6 +187,6 @@ import {
             </ModalFooter>
           </ModalContent>
         </Modal>
-      </>
+      </LoadScript>
     );
   }
