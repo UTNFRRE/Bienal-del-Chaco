@@ -124,7 +124,7 @@ export default function ModalAgregarEscultor({ isOpen, onClose, confirmar, escul
                         size="sm"
                         isDisabled={!isFormValid()}
                     >
-                        Agregar
+                        Guardar Cambios
                     </Button>
                     <Button
                         mr={3}
