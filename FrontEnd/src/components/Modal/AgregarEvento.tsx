@@ -14,11 +14,11 @@ import {
     Box,
     FormLabel,
     FormControl,
+    InputProps,
   } from '@chakra-ui/react';
-  import { useEffect, useState, useRef } from 'react';
-  import { LoadScript, StandaloneSearchBox } from '@react-google-maps/api';
+  import { useEffect, useState  } from 'react';
   
-  interface ModalComponentProps {
+   interface ModalComponentProps {
     isOpen: boolean;
     onClose: () => void;
     confirmar: (
@@ -38,25 +38,39 @@ import {
     const [tematica, setTematica] = useState('');
     const [descripcion, setDescripcion] = useState('');
     const [fecha, setFecha] = useState('');
-    const [latitud, setLatitud] = useState(null);
-    const [longitud, setLongitud] = useState(null);
+    const [latitud, setLatitud] = useState<number | null>(null);
+    const [longitud, setLongitud] = useState<number | null>(null);
 
-    const searchBoxRef = useRef<any>(null);
-    const apiKey = 'AIzaSyB6cFwxUytgrCP9pqTTEIiLMm477qpJjPs'
+    const googleMapsApiKey = 'AIzaSyB6cFwxUytgrCP9pqTTEIiLMm477qpJjPs'; 
   
-    const handlePlaceChanged = () => {
-      if (searchBoxRef.current) {
-        const places = searchBoxRef.current.getPlaces();
-        if (places.length > 0) {
-          const place = places[0];
-          const location = place.geometry.location;
-          setLugar(place.formatted_address);
-          setLatitud(location.lat());
-          setLongitud(location.lng());
+    const handlePlaceChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+      const address = e.target.value;
+      setLugar(address);
+    };
+  
+    const handleKeyPress = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === 'Enter') {
+        const address = lugar;
+        if (address) {
+          const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&components=locality:Resistencia|administrative_area:Chaco|country:AR&key=${googleMapsApiKey}`);
+          const data = await response.json();
+  
+          if (data.results && data.results.length > 0) {
+            const location = data.results[0].geometry.location;
+            setLatitud(location.lat);
+            setLongitud(location.lng);
+            setLugar(data.results[0].formatted_address); // Actualiza el input con el nombre del lugar
+          } else {
+            setLatitud(null);
+            setLongitud(null);
+          }
+        } else {
+          setLatitud(null);
+          setLongitud(null);
         }
       }
     };
-  
+
     const handleconfirmar = () => {
         // llamo a la funcion que se paso como parametro y le paso los valores de los inputs
       confirmar(titulo, lugar, tematica, descripcion, fecha);
@@ -81,7 +95,6 @@ import {
 
   
     return (
-      <LoadScript googleMapsApiKey={apiKey}  libraries={['places']}>
         <Modal isOpen={isOpen} onClose={onClose} >
           <ModalOverlay />
           <ModalContent  maxW="700px">
@@ -105,20 +118,16 @@ import {
                     </Box>
                     <Box>
                       <FormLabel mb={0}>Lugar</FormLabel>
-                      <StandaloneSearchBox
-                        onLoad={(ref) => (searchBoxRef.current = ref)}
-                        onPlacesChanged={handlePlaceChanged}
-                      >
-                        <Input
-                          placeholder="Ingresa la dirección"
-                          size="md"
-                          variant="unstyled"
-                          borderWidth={1}
-                          flex={1}
-                          value={lugar}
-                          onChange={(e) => setLugar(e.target.value)}
-                        />
-                      </StandaloneSearchBox>
+                      <Input
+                        placeholder=""
+                        size="md"
+                        variant="unstyled"
+                        borderWidth={1}
+                        value={lugar}
+                        onChange={handlePlaceChange}
+                        onKeyPress={handleKeyPress}
+                        style={{ width: '100%', height: '64%' }}
+                      />
                     </Box>
                     <Box>
                         <FormLabel mb={0}>Tematica</FormLabel>
@@ -187,6 +196,5 @@ import {
             </ModalFooter>
           </ModalContent>
         </Modal>
-      </LoadScript>
     );
   }
