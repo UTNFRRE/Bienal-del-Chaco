@@ -24,6 +24,8 @@ import {
     evento: any;
   }
 
+  const googleMapsApiKey = 'AIzaSyB6cFwxUytgrCP9pqTTEIiLMm477qpJjPs';
+
 export default function ModalEditarEvento({ isOpen, onClose, confirmar, evento, }: ModalComponentProps) {
    
     const handleconfirmar = () => {
@@ -42,6 +44,8 @@ export default function ModalEditarEvento({ isOpen, onClose, confirmar, evento, 
     const [tematica, setTematica] = useState('');
     const [descripcion, setDescripcion] = useState('');
     const [fecha, setFecha] = useState('');
+    const [latitud, setLatitud] = useState<number | null>(null);
+    const [longitud, setLongitud] = useState<number | null>(null);
 
     // la diferencia de este modal con el de agregar es que las variables de estado se inicializan con los valores del evento
     useEffect(() => {
@@ -57,6 +61,35 @@ export default function ModalEditarEvento({ isOpen, onClose, confirmar, evento, 
     if (!evento) {
         return null;
     }
+
+    const handlePlaceChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+      const address = e.target.value;
+      setLugar(address);
+    };
+  
+    const handleKeyPress = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === 'Enter') {
+        const address = lugar;
+        if (address) {
+          const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&components=locality:Resistencia|administrative_area:Chaco|country:AR&key=${googleMapsApiKey}`);
+          const data = await response.json();
+  
+          if (data.results && data.results.length > 0) {
+            const location = data.results[0].geometry.location;
+            setLatitud(location.lat);
+            setLongitud(location.lng);
+            setLugar(data.results[0].formatted_address); // Actualiza el input con el nombre del lugar
+          } else {
+            setLatitud(null);
+            setLongitud(null);
+          }
+        } else {
+          setLatitud(null);
+          setLongitud(null);
+        }
+      }
+    };
+  
   
     return (
       <>
@@ -84,13 +117,14 @@ export default function ModalEditarEvento({ isOpen, onClose, confirmar, evento, 
                     <Box>
                         <FormLabel mb={0}>Lugar</FormLabel>
                         <Input
-                        placeholder=""
-                        size="md"
-                        variant="Unstyled"
-                        borderWidth={1}
-                        flex={1}
-                        value={lugar}
-                        onChange={(e) => setLugar(e.target.value)}
+                          placeholder=""
+                          size="md"
+                          variant="unstyled"
+                          borderWidth={1}
+                          value={lugar}
+                          onChange={handlePlaceChange}
+                          onKeyPress={handleKeyPress}
+                          style={{ width: '100%', height: '64%' }}
                         />
                     </Box>
                     <Box>
