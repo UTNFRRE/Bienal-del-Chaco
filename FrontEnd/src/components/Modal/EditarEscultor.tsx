@@ -118,13 +118,13 @@ export default function ModalAgregarEscultor({ isOpen, onClose, confirmar, escul
                 </ModalBody>
                 <ModalFooter mt={6}>
                     <Button
-                        colorScheme="blue"
+                       variant={'bienal'}
                         mr={3}
                         onClick={handleconfirmar}
                         size="sm"
                         isDisabled={!isFormValid()}
                     >
-                        Agregar
+                        Guardar Cambios
                     </Button>
                     <Button
                         mr={3}

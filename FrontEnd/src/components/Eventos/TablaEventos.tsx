@@ -142,9 +142,9 @@ function TablaEventos () {
                 flexDirection="column"
             >
             <Flex justifyContent="center" mb={4} mt={4} gap={4}>
-                <Button leftIcon={<AddIcon />} borderRadius={3} onClick={onOpenAdd}>Agregar Evento</Button>
+                <Button leftIcon={<AddIcon />} borderRadius={3} onClick={onOpenAdd} variant="bienal">Agregar Evento</Button>
                 {/* Al hacer click niego lo que tenia showfilters, la excpresion de abajo es un condicional simple en js */}
-                <Button onClick={() => setMostrarFiltros(!MostrarFiltros)} leftIcon={<SearchIcon />} borderRadius={3}>
+                <Button variant="bienal" onClick={() => setMostrarFiltros(!MostrarFiltros)} leftIcon={<SearchIcon />} borderRadius={3}>
                 {MostrarFiltros ? 'Ocultar Filtros' : 'Filtrar'}
                 </Button>
             </Flex>
@@ -236,7 +236,7 @@ function TablaEventos () {
                             <IconButton
                               aria-label="Editar"
                               icon={<EditIcon />}
-                              variant="solid"
+                              variant="bienal"
                               borderRadius={3}  
                               onClick={() => handleEditar(evento)}                              
                             />
