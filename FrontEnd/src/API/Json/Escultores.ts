@@ -82,74 +82,119 @@ const escultor =
       nombre: "Luis Bernardi",
       fechaNacimiento: "23-09-1965",
       lugarNacimiento: "Monte Caseros, Corrientes",
-      premios: "Children’s Award: “Reinaldo Martinez”, Audience Award: “Juan Alberto García”, Mention “Airports Argentina”",
-      obras: "obra1, obra2",
+      premios: ["Children’s Award: “Reinaldo Martinez”, Audience Award: “Juan Alberto García”, Mention “Airports Argentina”"],
+      obras: [{
+                id: 1,
+                nombre: "Obra 1",
+                tematica: "Tematica 1",
+                descripcion: "Descripcion de la obra 1",
+                imagenes: [ "https://www.bienaldelchaco.org/2024/wp-content/uploads/2024/07/Monge_3784.jpg", "https://www.bienaldelchaco.org/2024/wp-content/uploads/2024/07/Monge_3174.jpg", "https://www.bienaldelchaco.org/2024/wp-content/uploads/2024/07/Monge_1612.jpg" ],
+            },
+            {
+                id: 2,
+                nombre: "Obra 2",
+                tematica: "Tematica 2",
+                descripcion: "Descripcion de la obra 2",
+                imagenes: [ "https://www.bienaldelchaco.org/2024/wp-content/uploads/2024/07/Monge_3784.jpg", "https://www.bienaldelchaco.org/2024/wp-content/uploads/2024/07/Monge_3174.jpg", "https://www.bienaldelchaco.org/2024/wp-content/uploads/2024/07/Monge_1612.jpg" ],
+            },
+    ],
       foto: "https://www.republicadecorrientes.com/content/bucket/4/66054w695h513c.jpg.webp"
     };
 
 
 // api/escultoresAdmin. Metodos POST, PUT, DELETE, GET, PATCH.
 // queda para vos ver como matchear el pais con la imagen de la bandera
+// la parte de obras desde el perfil de admin del escultor la vemos despues
     const TEscultores = [
         {
             foto: "https://www.republicadecorrientes.com/content/bucket/4/66054w695h513c.jpg.webp",
             nombre:"Luis Bernardi",
             pais:"Argentina",
-            contacto:"3624367890"
+            contacto:"3624367890",
+            fechaNacimiento: "23-09-1965", 
+            lugarNacimiento: "Monte Caseros, Corrientes",
+            premios: ["Children’s Award: “Reinaldo Martinez”, Audience Award: “Juan Alberto García”, Mention “Airports Argentina”"],
     
         },
         {
             foto: "https://colinacultura.cl/wp-content/uploads/2021/12/photo_2021-12-09_14-20-04-768x1024.jpg" ,
             nombre:"Alejandro Mardones Guillen",
             pais:"Chile",
-            contacto:"3624367890"
+            contacto:"3624367890",
+            fechaNacimiento: "23-09-1965", 
+            lugarNacimiento: "Monte Caseros, Corrientes",
+            premios: ["Children’s Award: “Reinaldo Martinez”, Audience Award: “Juan Alberto García”, Mention “Airports Argentina”"],
         },
         {
             foto: "https://saisho-prod-1.fra1.cdn.digitaloceanspaces.com/art/uploads/2020/04/foto-perfil-1-min.jpg",
             nombre:"Carlos Iglesias Faura",
             pais:"España",
-            contacto:"3624367890"
+            contacto:"3624367890",
+            fechaNacimiento: "23-09-1965", 
+            lugarNacimiento: "Monte Caseros, Corrientes",
+            premios: ["Children’s Award: “Reinaldo Martinez”, Audience Award: “Juan Alberto García”, Mention “Airports Argentina”"],
         },
         {
             foto: "https://consideringart.com/wp-content/uploads/2023/04/top.jpg?w=800",
             nombre:"Billy Lee",
             pais:"Estados Unidos",
-            contacto:"3624367890"
+            contacto:"3624367890",
+            fechaNacimiento: "23-09-1965", 
+            lugarNacimiento: "Monte Caseros, Corrientes",
+            premios: ["Children’s Award: “Reinaldo Martinez”, Audience Award: “Juan Alberto García”, Mention “Airports Argentina”"],
         },
         {
             foto: "https://d38we5ntdyxyje.cloudfront.net/834498/profile/JMJHTTKX_avatar_medium_square.jpg",
             nombre:"Butrint Morina",
             pais:"Kosovo",
-            contacto:"3624367890"
+            contacto:"3624367890",
+            fechaNacimiento: "23-09-1965", 
+            lugarNacimiento: "Monte Caseros, Corrientes",
+            premios: ["Children’s Award: “Reinaldo Martinez”, Audience Award: “Juan Alberto García”, Mention “Airports Argentina"],
         },
         {
             foto: "https://www.arte-online.net/var/arte_online_net/storage/images/arte-online/notas/bienal-del-chaco/galeria-4/tiempo-de-solveiga-vasiljeva/958457-2-esl-AR/Tiempo-de-Solveiga-Vasiljeva_obra.jpg" ,
             nombre:"Solveiga Vasiljeva",
             pais:"Letonia",
-            contacto:"3624367890"
+            contacto:"3624367890",
+            fechaNacimiento: "23-09-1965", 
+            lugarNacimiento: "Monte Caseros, Corrientes",
+            premios: ["Children’s Award: “Reinaldo Martinez”, Audience Award: “Juan Alberto García”, Mention “Airports Argentina”"],
         },
         {
             foto: "https://riyadhart.sa/wp-content/uploads/2022/09/TS21-Anna-Korver.jpg",
             nombre:"Anna Korver",
             pais:"Nueva Zelanda",
-            contacto:"3624367890"
+            contacto:"3624367890",
+            fechaNacimiento: "23-09-1965", 
+            lugarNacimiento: "Monte Caseros, Corrientes",
+            premios: ["Children’s Award: “Reinaldo Martinez”, Audience Award: “Juan Alberto García”, Mention “Airports Argentina”"],
         },
         {
             foto: "https://i0.wp.com/mediosyestrategias.com/wp-content/uploads/2024/04/55IJ5IN3UVCYPPRWMOTKNSD4B4-e1713531261804.jpg?resize=696%2C683&quality=95&ssl=1",
             nombre:"Percy Raul Zorrilla Soto",
             pais:"Peru",
-            contacto:"3624367890"
+            contacto:"3624367890",
+            fechaNacimiento: "23-09-1965", 
+            lugarNacimiento: "Monte Caseros, Corrientes",
+            premios: ["Children’s Award: “Reinaldo Martinez”, Audience Award: “Juan Alberto García”, Mention “Airports Argentina”"],
         },
         {
             foto: "https://d38we5ntdyxyje.cloudfront.net/284155/profile/avatar_medium_square.jpg",
             nombre:"Bogdan Adrian Lefter",
             pais:"Rumania",
-            contacto:"3624367890"
+            contacto:"3624367890",
+            fechaNacimiento: "23-09-1965", 
+            lugarNacimiento: "Monte Caseros, Corrientes",
+            premios: ["Children’s Award: “Reinaldo Martinez”, Audience Award: “Juan Alberto García”, Mention “Airports Argentina”"],
         },
         {
             foto: "https://www.sanatgezgini.com/media/avatar/cbd5de.jpg" ,
             nombre:"Emrah Önal",
             pais:"Turquia",
-            contacto:"3624367890"
+            contacto:"3624367890",
+            fechaNacimiento: "23-09-1965", 
+            lugarNacimiento: "Monte Caseros, Corrientes",
+            premios: ["Children’s Award: “Reinaldo Martinez”, Audience Award: “Juan Alberto García”, Mention “Airports Argentina”"],    
         },
     ];

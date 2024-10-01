@@ -1,4 +1,5 @@
 // api/obras. Metodo GET, POST, PUT, PATCH, DELETE
+// para el metodo post/put/patch en el campo escultor va el id del escultor
 const Obras = [
     {
         id: 1,
@@ -89,20 +90,6 @@ const Obras = [
         imagenes: [ "https://www.bienaldelchaco.org/2024/wp-content/uploads/2024/07/Monge_3784.jpg", "https://www.bienaldelchaco.org/2024/wp-content/uploads/2024/07/Monge_3174.jpg", "https://www.bienaldelchaco.org/2024/wp-content/uploads/2024/07/Monge_1612.jpg" ],
     }
 ]
-
-//api/obrasPublic/:id. Metodo GET
-const obra = 
-  {
-    id: 1,
-    nombre: "Umbral IV",
-    tematica: "Tematica de la obra 1",
-    descripcion: "Descripcion de la obra 1111111",
-    fechaCreacion: "2021-07-01",
-    escultor: "Martin Lopez Soto",
-    escultorPais: "Argentina",
-    escultorImagen : "https://www.republicadecorrientes.com/content/bucket/4/66054w695h513c.jpg.webp",
-    imagenes: [ "https://www.bienaldelchaco.org/2024/wp-content/uploads/2024/07/Monge_3784.jpg", "https://www.bienaldelchaco.org/2024/wp-content/uploads/2024/07/Monge_3174.jpg", "https://www.bienaldelchaco.org/2024/wp-content/uploads/2024/07/Monge_1612.jpg" ],
-  };
 
 //api/obras/:id. Metodo GET
 const obraa = 
