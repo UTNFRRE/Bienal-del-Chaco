@@ -41,6 +41,24 @@ const Eventoss = [
     },
 ]
 
+// api/eventos/:dia. Metodo GET
+const s = [
+    {
+        id: 1,
+        titulo: "Evento 1",
+        fecha: "2021-08-01",
+        lugar: "Av las heras 812",
+        tematica: "River",
+    },
+    {
+        id: 2,
+        titulo: "Evento 2",
+        fecha: "2021-08-01",
+        lugar: "Av las heras 812",
+        tematica: "River",
+    },
+]
+
 // api/eventos/:id. Metodo GET
 const evento = 
     {
