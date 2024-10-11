@@ -76,6 +76,7 @@ const Escultores = [
 
 
 // api/escultores/:id. Metodo GET
+// otra opcion podria ser otro endpoint que me traiga las obras de un escultor
 const escultor = 
     {
       id: 1,
