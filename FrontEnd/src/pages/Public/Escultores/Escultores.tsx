@@ -12,29 +12,11 @@ function Escultoress () {
 
   return (
 <Container maxWidth="100vw" width="100vw" height="100vh" centerContent>
-<Box
-      maxWidth="100%" width="100%" 
-    >
-<Heading
-      mr={{ base: "100px", sm: "80px", md: "80px", lg: "90px" }}
-      mt={{ base: "20px", sm: "30px", md: "40px" }}
-      size={{ base: "md", sm: "lg", md: "xl", lg: "2xl" }}
-      textAlign={"center"}
-      as="h1" 
-      
-      fontFamily="'Mukta', serif" 
-      fontWeight="600" 
-      color="gray.700" 
-       
-      mb="4" 
-    >
-      Escultores Seleccionados
-    </Heading>
-  </Box>
 
 
 
-<Grid templateColumns="repeat(auto-fit, minmax(250px, 1fr))" gap={10} w={"90%"} h={"100%"} justifyItems="center" alignItems="center">
+
+<Grid templateColumns="repeat(auto-fit, minmax(250px, 1fr))" gap={10} w={"90%"} h={"100%"} justifyItems="center" alignItems="center" mt={6}>
   
 {Escultores.map((escultor) => (
   <GridItem w="270px" h="340px" mr={"100px"}>

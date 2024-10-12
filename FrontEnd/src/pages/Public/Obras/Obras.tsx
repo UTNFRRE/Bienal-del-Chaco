@@ -42,16 +42,6 @@ export default function ObrasPublic () {
 
     return (
         <Box p={4} display={"flex"} justifyContent={"center"} alignItems={"center"} flexDirection={"column"}>
-        <Flex>
-        <Heading 
-            size="xl" 
-            fontWeight="540" 
-            color="gray.700" 
-            // textAlign="left" 
-            mb="5">
-        Obras Seleccionadas
-        </Heading>
-        </Flex>
         <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={10}>
             {/* Como las imagenes estan en un arreglo, para usar el carrusel react pide que esten en un json con las llaves original y thumbnail. Entonces por cada obra se crea ese json */}
             {obras.map((obra) => {
