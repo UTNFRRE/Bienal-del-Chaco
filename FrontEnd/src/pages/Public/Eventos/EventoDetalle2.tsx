@@ -1,9 +1,11 @@
 import React from "react";
 import Eventos from '../../../API/Admin/Eventos'; // Ajusta la ruta a donde se encuentra tu archivo de datos de eventos
 import { useParams } from "react-router-dom";
-import { Flex, Heading, Text, Button, ButtonGroup, IconButton} from "@chakra-ui/react";
+import { Flex, Heading, Text, Button, ButtonGroup, IconButton, Skeleton} from "@chakra-ui/react";
 import { GoogleMap, LoadScript, Marker  } from "@react-google-maps/api";
 import { FaFacebook, FaTwitter, FaInstagram, FaWhatsapp } from 'react-icons/fa';
+import { useEffect, useRef, useState } from "react";	
+import marcador from '../../../components/icons/marcador.png';
 
 
 interface Evento {
@@ -47,33 +49,40 @@ export default function EventoDetalle2() {
     strokeWeight: 1,
   };
 
-  // const [map, setMap] = React.useState<any>(null)
+  const [map, setMap] = useState<any>(null);
+  const mapRef = useRef(null);
 
-  // const onLoad = React.useCallback(function callback(map: any) {
-  //   const bounds = new window.google.maps.LatLngBounds(position);
-  //   map.fitBounds(bounds);
+  useEffect(() => {
+    if (map) {
+      const iconoMarcador = {
+        url: marcador,
+        scaledSize: new window.google.maps.Size(70, 70), 
+        origin: new window.google.maps.Point(0, 0),
+        anchor: new window.google.maps.Point(20, 40),
+      };
 
-  //   setMap(map)
-  // }, [position])
-
-  // const onUnmount = React.useCallback(function callback(map: any) {
-  //   setMap(null)
-  // }, [])
+      const beachMarker = new google.maps.Marker({
+        position: { lat: evento.latitud, lng: evento.longitud },
+        map,
+        icon: iconoMarcador,
+      });
+    }
+  }, [map]);
 
   return (
     <Flex direction={"row"} gap={4}>
       <Flex mt={6}>
-      {/* <LoadScript googleMapsApiKey={googleMapsApiKey}>
+      <LoadScript googleMapsApiKey={googleMapsApiKey} loadingElement={<Skeleton height="500px" width="900px" />}>
         <GoogleMap
           mapContainerStyle={mapContainerStyle}
           center={position}
           zoom={18}
-          // onLoad={onLoad}
+          onLoad={(mapInstance) => setMap(mapInstance)}
           // onUnmount={onUnmount}
         >
           <Marker position={position} icon={redMarkerIcon}/>
         </GoogleMap>
-      </LoadScript> */}
+      </LoadScript>
       </Flex>
       <Flex direction={"column"} gap={5} alignItems={"center"} flex={1} mt={6}>
         <Flex direction={"column"} gap={1} textAlign={"center"}>
