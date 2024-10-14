@@ -14,6 +14,7 @@ export const globalStyles = {
     principal: '#1E2A5E',  // azul oscuro 
     secundaryBg: '#E9EFEC',
     secundary: "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
+    instagram: "linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)",
     secundaryHover: '#B4B4B8',  //Usado para los bordes grises
   },
   styles: {

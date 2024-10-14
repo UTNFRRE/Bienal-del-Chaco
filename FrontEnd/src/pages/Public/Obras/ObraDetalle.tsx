@@ -3,6 +3,7 @@ import { Box, Heading, Text, Image, Flex, IconButton, ButtonGroup} from '@chakra
 import ImageGallery from 'react-image-gallery';
 import { FaFacebook, FaTwitter, FaInstagram, FaWhatsapp } from 'react-icons/fa';
 import 'react-image-gallery/styles/css/image-gallery.css';
+import RedesSociales from '../../../components/Redes/RedesSociales';
 
 const ObraDetail = () => {
   const { id } = useParams<{ id: string }>(); // Se obtiene el id de la obra de la url
@@ -48,7 +49,11 @@ const ObraDetail = () => {
             <Text as="i">{obra.escultorPais}</Text>
           </Box>
       </Flex>
-      <Flex>
+      <Flex justifyContent={"center"} mt={6}>
+        <RedesSociales/>
+      </Flex>
+      
+      {/* <Flex>
         <ButtonGroup mt={6} display={"flex"} flexDirection={"row"} justifyContent={"center"} alignItems={"center"} w={'100%'}>
              <IconButton
               aria-label="Compartir en Facebook"
@@ -75,7 +80,7 @@ const ObraDetail = () => {
               onClick={() => window.open(`https://api.whatsapp.com/send?text=${window.location.href}`, '_blank')}
             />
         </ButtonGroup>
-      </Flex>
+      </Flex> */}
       <Box mt={6} display={"flex"} textAlign={"right"} flexDirection={"column"} marginLeft={"auto"} w={'100%'}>
           <Text as='em'>Bajo la tematica {obra.tematica}</Text>
           <Text as='em'>Creada el {obra.fechaCreacion}</Text>
