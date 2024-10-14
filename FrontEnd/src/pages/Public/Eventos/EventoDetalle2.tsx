@@ -5,6 +5,7 @@ import { Flex, Heading, Text, Button, ButtonGroup, IconButton, Skeleton} from "@
 import { GoogleMap, LoadScript, Marker  } from "@react-google-maps/api";
 import { FaFacebook, FaTwitter, FaInstagram, FaWhatsapp } from 'react-icons/fa';
 import { useEffect, useRef, useState } from "react";	
+import RedesSociales from "../../../components/Redes/RedesSociales";
 import marcador from '../../../components/icons/marcador.png';
 
 
@@ -90,32 +91,7 @@ export default function EventoDetalle2() {
         <Text as={"i"}>{evento.tematica}</Text>
         </Flex>
         <Flex>
-          <ButtonGroup mt={0} display={"flex"} flexDirection={"row"} justifyContent={"center"} alignItems={"center"} w={'100%'}>
-              <IconButton
-                aria-label="Compartir en Facebook"
-                icon={<FaFacebook />}
-                colorScheme="facebook"
-                onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`, '_blank')}
-              />
-              <IconButton
-                aria-label="Compartir en Twitter"
-                icon={<FaTwitter />}
-                colorScheme="twitter"
-                onClick={() => window.open(`https://twitter.com/intent/tweet?url=${window.location.href}`, '_blank')}
-              />
-              <IconButton
-                aria-label="Compartir en Instagram"
-                icon={<FaInstagram />}
-                colorScheme="instagram"
-                onClick={() => window.open(`https://www.instagram.com/?url=${window.location.href}`, '_blank')}
-              />
-              <IconButton
-                aria-label="Compartir en Whatsapp"
-                icon={<FaWhatsapp />}
-                colorScheme="whatsapp"
-                onClick={() => window.open(`https://api.whatsapp.com/send?text=${window.location.href}`, '_blank')}
-              />
-          </ButtonGroup>
+          <RedesSociales />
         </Flex>
         <Flex>
         <Text>{evento.descripcion}</Text>

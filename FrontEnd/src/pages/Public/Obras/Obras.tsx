@@ -52,7 +52,7 @@ export default function ObrasPublic () {
             return (
                 <React.Fragment key={obra.id}>   
                  {/* Como hay elementos que se renderizan dentro de otro elemento (carrusel dentro de la card) se usa esa tag para evitar errores */}
-                   <Card bgColor={"secundaryBg"} 
+                   <Card bgColor={"#F4F6FF"} 
                     sx={{
                         transition: 'transform 0.3s ease', 
                         '&:hover': {

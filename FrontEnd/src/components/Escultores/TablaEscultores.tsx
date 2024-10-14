@@ -142,6 +142,7 @@ function TablaEscultores () {
                     p={6}
                     boxShadow="md"
                     w="80%"
+                    borderWidth={1} borderColor={"secundaryHover"}
             >
             {escultores.length > 0 ? (
                 <>

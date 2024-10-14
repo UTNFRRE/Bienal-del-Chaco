@@ -141,7 +141,7 @@ function TablaObras() {
             </Button>
           </Flex>
 
-          <Box bg="secundaryBg" p={6} boxShadow="md" w="80%">
+          <Box bg="secundaryBg" p={6} boxShadow="md" w="80%" borderWidth={1} borderColor={"secundaryHover"}>
             {obras.length > 0 ? (
               <Table variant="striped" colorScheme="secundaryBg" width="100%">
                 <Thead>
