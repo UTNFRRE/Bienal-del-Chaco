@@ -4,11 +4,13 @@ import './RedesSociales.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 function RedesSociales() {
+    const currentUrl = window.location.href;
   return (
     <Flex className="wrapper" w="fit-content">
       <IconButton
         as="a"
-        href="https://www.facebook.com"
+        href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`}
+        target="_blank"
         aria-label="Facebook"
         icon={<FaFacebook />}
         className="icon facebook"
@@ -22,7 +24,8 @@ function RedesSociales() {
       />
       <IconButton
         as="a"
-        href="https://www.twitter.com"
+        href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(currentUrl)}`}
+        target="_blank"
         aria-label="Twitter"
         icon={<FaTwitter />}
         className="icon twitter"
@@ -36,7 +39,8 @@ function RedesSociales() {
       />
       <IconButton
         as="a"
-        href="https://www.instagram.com"
+        href={`https://www.instagram.com/?url=${encodeURIComponent(currentUrl)}`}
+        target="_blank"
         aria-label="Instagram"
         icon={<FaInstagram />}
         className="icon instagram"
@@ -50,7 +54,8 @@ function RedesSociales() {
       />
       <IconButton
         as="a"
-        href="https://www.whatsapp.com"
+        href={`https://api.whatsapp.com/send?text=${encodeURIComponent(currentUrl)}`}
+        target="_blank"
         aria-label="WhatsApp"
         icon={<FaWhatsapp />}
         className="icon whatsapp"
