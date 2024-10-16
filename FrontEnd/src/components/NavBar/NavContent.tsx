@@ -31,7 +31,7 @@ import {
             <NavItem
               title={link.title}
               color={
-                location.pathname ===  `/${link.rol}/` + link.url
+                location.pathname.startsWith(`/${link.rol}/${link.url}`)
                   ? '#61677A'
                   : 'none'
               }

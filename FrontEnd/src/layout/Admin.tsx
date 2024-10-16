@@ -18,7 +18,7 @@ export default function Admin() {
   return (
     <Box w="100%">
       <Box pos="relative" zIndex="10">
-        <Header LINK_ITEMS={LINK_ITEMS}/>
+        <Header LINK_ITEMS={LINK_ITEMS} user={true}/>
       </Box>
       <Box pt="20" ml="7px">
         {element}

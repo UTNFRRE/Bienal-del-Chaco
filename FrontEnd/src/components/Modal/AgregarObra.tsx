@@ -132,10 +132,10 @@ function AgregarObra({isOpen, onClose, confirmar}: ModalProps) {
                     </Stack>
                 </ModalBody>
                 <ModalFooter>
-                    <Button colorScheme="blue" mr={3} onClick={handleConfirmarAdd}>
+                    <Button variant={'bienal'} mr={3} onClick={handleConfirmarAdd}>
                         Agregar
                     </Button>
-                    <Button onClick={onClose}>Cancelar</Button>
+                    <Button onClick={onClose} variant={"light"}>Cancelar</Button>
                 </ModalFooter>
             </ModalContent>
         </Modal>      
