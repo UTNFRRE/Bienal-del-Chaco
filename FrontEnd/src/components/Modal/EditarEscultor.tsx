@@ -20,18 +20,11 @@ import ZonaCargaEscultor from '../ZonaCarga/ZonaCargaEscultor';
 interface ModalComponentProps {
     isOpen: boolean;
     onClose: () => void;
-    confirmar: (fotoPreview: string, nombre: string, pais: string, contacto: string, fechaNacimiento:string, lugarNacimiento:string, premios: string) => void;
+    confirmar: (fotoPreview: string, nombre: string, pais: string, contacto: string, fechaNacimiento:string, lugarNacimiento:string, premios:string,) => void;
     escultor:any
 }
 
-export default function ModalAgregarEscultor({ isOpen, onClose, confirmar, escultor, }: ModalComponentProps) {
-    const [foto, setFoto] = useState<string | null>(null);
-    const [nombre, setNombre] = useState('');
-    const [pais, setPais] = useState('');
-    const [contacto, setContacto] = useState('');
-    const [fechaNacimiento, setFechaNacimiento] = useState('');
-    const [lugarNacimiento, setLugarNacimiento] = useState('');
-    const [premios, setPremios] = useState('');
+export default function ModalEditarEscultor({ isOpen, onClose, confirmar, escultor, }: ModalComponentProps) {
     
     const handleFotoChange = (fotoData: string) => {
         setFoto(fotoData);
@@ -44,8 +37,16 @@ export default function ModalAgregarEscultor({ isOpen, onClose, confirmar, escul
     };
 
     const isFormValid = () => {
-        return nombre.trim() !== '' && pais.trim() !== '' && contacto.trim() !== '' && fechaNacimiento.trim() !== '' && lugarNacimiento.trim() !== '' && premios.trim() !== '';
+        return nombre.trim() !== '' && pais.trim() !== '' && contacto.trim() !== '' && fechaNacimiento.trim() !== '' && lugarNacimiento.trim() !== '' && (premios ? premios.toString().trim() !== '' : true);
     };
+
+    const [foto, setFoto] = useState<string | null>(null);
+    const [nombre, setNombre] = useState('');
+    const [pais, setPais] = useState('');
+    const [contacto, setContacto] = useState('');
+    const [fechaNacimiento, setFechaNacimiento] = useState('');
+    const [lugarNacimiento, setLugarNacimiento] = useState('');
+    const [premios, setPremios] = useState('');
 
     useEffect(() => {
         if(escultor){
@@ -153,38 +154,36 @@ export default function ModalAgregarEscultor({ isOpen, onClose, confirmar, escul
                                         variant="outline"
                                         h={140}
                                         width={650}
+                                        maxLength={5000}
                                         borderWidth={1}
                                         value={premios}
                                         onChange={(e) => setPremios(e.target.value)}
                                     />
                                 </Box>
                             </Stack>
-                            {/* Aquí integramos la Zona de Carga */}
-                            <ZonaCargaEscultor maxFiles={1}
-                            handleFotoChange={handleFotoChange}
-                            />
+                            <ZonaCargaEscultor maxFiles={1} handleFotoChange={handleFotoChange}/>
                             
                         </Stack>
                     </FormControl>
                 </ModalBody>
                 <ModalFooter mt={6}>
-                    <Button
-                        colorScheme="blue"
-                        mr={3}
-                        onClick={handleconfirmar}
-                        size="sm"
-                        isDisabled={!isFormValid()}
-                    >
-                        Agregar
-                    </Button>
-                    <Button
-                        mr={3}
-                        onClick={onClose}
-                        variant="light"
-                        size="sm"
-                    >
-                        Cancelar
-                    </Button>
+                <Button
+                colorScheme="blue"
+                mr={3}
+                onClick={handleconfirmar}
+                size="sm"
+                isDisabled={!isFormValid()}
+                >
+                Guardar Cambios
+                </Button>
+                <Button
+                mr={3}
+                onClick={onClose}
+                variant="light"
+                size="sm"
+                >
+                Cancelar
+                </Button>
                 </ModalFooter>
             </ModalContent>
         </Modal>

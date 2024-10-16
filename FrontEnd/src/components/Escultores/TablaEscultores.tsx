@@ -13,7 +13,7 @@ function TablaEscultores () {
     const [escultores, setEscultores] = useState<any[]>([]);
     const [filteredEscultor, setFilteredEscultor] = useState<any[]>([]);
     const [EscultorElegido, setEscultorElegido] = useState<any>();
-   
+
     // isopen, onopen y onclose son funciones que se usan para abrir y cerrar cada modal
     const {
         isOpen: isOpenDelete,
@@ -30,7 +30,7 @@ function TablaEscultores () {
     onOpen: onOpenEdit,
     onClose: onCloseEdit
     } = useDisclosure();
-   
+
 
 
     const [filters, setFilters] = useState({
@@ -40,7 +40,7 @@ function TablaEscultores () {
         contacto:'',
         fechaNacimiento:'', 
         lugarNacimiento:'',
-        premios:''
+        premios:'',
     });
     const [MostrarFiltros, setMostrarFiltros] = useState(false);
 
@@ -58,8 +58,9 @@ function TablaEscultores () {
             escultor.pais.toLowerCase().includes(filters.pais.toLowerCase()) &&
             escultor.contacto.toLowerCase().includes(filters.contacto.toLowerCase()) &&
             escultor.fechaNacimiento.toLowerCase().includes(filters.fechaNacimiento.toLowerCase()) &&
-            escultor.lugarNacimiento.toLowerCase().includes(filters.lugarNacimiento.toLowerCase()) 
-            //escultor.premios.toLowerCase().includes(filters.premios.toLowerCase()) 
+            escultor.lugarNacimiento.toLowerCase().includes(filters.lugarNacimiento.toLowerCase()) &&
+            (Array.isArray(escultor.premios) ? escultor.premios.join(', ') : 
+            (escultor.premios || '')).toLowerCase().includes(filters.premios.toLowerCase())
         )
         );
     }, [filters, escultores]);
