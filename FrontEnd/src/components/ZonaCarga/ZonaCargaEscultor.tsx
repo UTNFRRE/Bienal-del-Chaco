@@ -3,7 +3,6 @@ import { Flex, Box, VStack, useToast, Stack, SimpleGrid, IconButton } from '@cha
 import { useState, useCallback } from 'react';
 import { HiOutlineDocumentAdd } from "react-icons/hi";
 import { CloseIcon } from '@chakra-ui/icons';
-import { useEffect } from 'react';
 
 // Los archivos seleccionados se guardan en el estado/array files, y las previsualizaciones en filePreviews
 
@@ -17,12 +16,6 @@ const ZonaCargaEscultor = ({maxFiles = 10, handleFotoChange }: ZonaCargaProps) =
     const [filePreviews, setFilePreviews] = useState<string[]>([]);  // Guarda las URL de las previsualizaciones 
     const [files, setFiles] = useState<File[]>([]);  // Guarda los archivos seleccionados para dsp mandar al back
 
-    useEffect(() => {
-        // Actualiza el estado cuando cambien las props filesUpload
-        setFilePreviews(filesUpload);
-        setFiles([]);
-    }, [filesUpload]);
-    
     const onDrop = useCallback((acceptedFiles: File[]) => {
 
             if (files.length + acceptedFiles.length > maxFiles) {
