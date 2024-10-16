@@ -29,7 +29,7 @@ interface ModalProps {
         titulo: string,
         tematica: string,
         fecha: string,
-        autor: string,
+        autor: number,
         paisAutor: string,
         descripcion: string,
         imagen: File,
@@ -42,7 +42,7 @@ function AgregarObra({isOpen, onClose, confirmar}: ModalProps) {
     const [tematica, setTematica] = useState('');
     const [escultorPais, setEscultorPais] = useState('');
     const [imagen, setImagen] = useState<File>(); // Estado para almacenar múltiples archivos de imagen, se usara despues
-    const [autor, setAutor] = useState('');
+    const [autor, setAutor] = useState<number>(0);
     const [descripcion, setDescripcion] = useState('');
     const [fecha, setFecha] = useState('');
 
@@ -55,20 +55,22 @@ function AgregarObra({isOpen, onClose, confirmar}: ModalProps) {
 
     const handleFilesChange = (files: File[]) => {
         setImagen(files[0]);
+        console.log('La imagen es' + files[0]);
     };
 
 
     function handleConfirmarAdd() {
         if (imagen) {
+            console.log('encontrp');
             confirmar(titulo, tematica, fecha, autor, escultorPais, descripcion, imagen);
         };
         onClose();
     }
 
-    const handleAutor = (e: React.ChangeEvent<HTMLSelectElement>): void => {
-        setAutor(e.target.value);
-        setEscultorPais(Escultores.find((escultor) => escultor.nombre === autor)?.pais || '');
-    }
+    // const handleAutor = (e: React.ChangeEvent<HTMLSelectElement>): void => {
+    //     setAutor(e.target.value);
+    //     setEscultorPais(Escultores.find((escultor) => escultor.nombre === autor)?.pais || '');
+    // }
 
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
@@ -107,17 +109,18 @@ function AgregarObra({isOpen, onClose, confirmar}: ModalProps) {
                                 <Stack direction="row" gap={4} align="center">
                                     <Box w="100%">
                                         <FormLabel ml="2px" mb={1}>Escultor</FormLabel>
-                                        <Select placeholder='Seleccione escultor' onChange={handleAutor}>
+                                        {/* <Select placeholder='Seleccione escultor' onChange={handleAutor}>
                                             {listaEscultores.map((escultor, index) => (
                                                 <option key={index} value={escultor}>
                                                     {escultor}
                                                 </option>
                                             ))}
-                                        </Select>
+                                        </Select> */}
+                                        <Input placeholder="Escultor" value={autor} onChange={(e) => setAutor(Number(e.target.value))}/>
                                     </Box>
                                     <Box w="100%">
                                         <FormLabel ml="2px" mb={1}>Pais</FormLabel>
-                                        <Input placeholder="Pais" value={escultorPais} isReadOnly/>
+                                        <Input placeholder="Pais" value={escultorPais} onChange={(e) => setEscultorPais(e.target.value)}/>
                                     </Box>
                                 </Stack>
                                 <Stack direction="column" gap={0} justifyContent={"flex-start"}>

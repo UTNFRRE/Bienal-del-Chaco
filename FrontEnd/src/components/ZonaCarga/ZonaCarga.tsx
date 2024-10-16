@@ -47,13 +47,15 @@ const ZonaCarga: React.FC<DropZoneProps> = ({ maxFiles=10, fileUploads, onFilesC
                 ...newFiles.map((fileObj) => fileObj.previewUrl),
            ]);
            
-        setFiles((prevFiles) => {
+           setFiles((prevFiles) => {
             const updatedFiles = [...prevFiles, ...newFiles.map((fileObj) => fileObj.file)];
-            if (onFilesChange) {
-                onFilesChange(updatedFiles); // Llamar a la función de callback con los archivos actualizados
-            }
             return updatedFiles;
         });
+
+        // Llamar a la función de callback después de actualizar el estado
+        if (onFilesChange) {
+            onFilesChange([...files, ...newFiles.map((fileObj) => fileObj.file)]);
+        }
         
     }, [files, maxFiles, toast]);
 

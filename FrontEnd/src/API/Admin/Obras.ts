@@ -1,16 +1,17 @@
-const API_URL = 'https://your-backend-api-url.com'; // Reemplaza con la URL de tu backend
+const API_URL = 'http://localhost:5232'; // Reemplaza con la URL de tu backend
 
 // Obtener todas las obras
 export const getObras = async () => {
     try {
-        const response = await fetch(`${API_URL}/obras`);
-        if (!response.ok) {
-            throw new Error('Error al obtener las obras');
-        }
-        return await response.json();
+        const response = await fetch(`${API_URL}/Esculturas`);
+        if (response.ok) {
+            const data = await response.json();
+            return data;
+          } else {
+            throw new Error('Error en la respuesta del servidor');
+          }
     } catch (error) {
-        console.error('Error al obtener las obras:', error);
-        throw error;
+          throw new Error('Network error: ' + error);
     }
 };
 
@@ -18,16 +19,15 @@ export const getObras = async () => {
 export const addObra = async (titulo: string, tematica: string, fecha:string, autor: number, paisAutor: string, descripcion: string, imagen:File ) => {
 
     const formData = new FormData();
-    formData.append('nombre', titulo);
-    formData.append('tematica', tematica);
-    formData.append('fechaCreacion', fecha);
-    formData.append('escultor', autor.toString());
-    formData.append('escultorPais', paisAutor);
-    formData.append('descripcion', descripcion);
-    formData.append('imagen', imagen);
-
+    formData.append('Nombre', titulo);
+    formData.append('Descripcion', descripcion);
+    formData.append('Imagen', imagen);
+    formData.append('EscultorID', autor.toString());
+    formData.append('FechaCreacion', fecha);
+    formData.append('Tematica', tematica);
+   
     try {
-        const response = await fetch(`${API_URL}/obras`, {
+        const response = await fetch(`${API_URL}/Esculturas`, {
             method: 'POST',
             body: formData,
         });
@@ -45,7 +45,7 @@ export const addObra = async (titulo: string, tematica: string, fecha:string, au
 // Editar una obra existente
 export const editObra = async (id: string, obraData: FormData) => {
     try {
-        const response = await fetch(`${API_URL}/obras/${id}`, {
+        const response = await fetch(`${API_URL}/Esculturas/${id}`, {
             method: 'PUT',
             body: obraData,
         });
@@ -62,7 +62,7 @@ export const editObra = async (id: string, obraData: FormData) => {
 // Eliminar una obra
 export const deleteObra = async (id: string) => {
     try {
-        const response = await fetch(`${API_URL}/obras/${id}`, {
+        const response = await fetch(`${API_URL}/Esculturas/${id}`, {
             method: 'DELETE',
         });
         if (response.ok) {
