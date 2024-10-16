@@ -32,7 +32,7 @@ interface ModalProps {
         autor: string,
         paisAutor: string,
         descripcion: string,
-        imagenes: File[],
+        imagen: File,
     ) => void;
 }
 
@@ -41,7 +41,7 @@ function AgregarObra({isOpen, onClose, confirmar}: ModalProps) {
     const [titulo, setTitulo] = useState('');  
     const [tematica, setTematica] = useState('');
     const [escultorPais, setEscultorPais] = useState('');
-    const [imagen, setImagen] = useState<File[]>([]); // Estado para almacenar múltiples archivos de imagen, se usara despues
+    const [imagen, setImagen] = useState<File>(); // Estado para almacenar múltiples archivos de imagen, se usara despues
     const [autor, setAutor] = useState('');
     const [descripcion, setDescripcion] = useState('');
     const [fecha, setFecha] = useState('');
@@ -53,9 +53,15 @@ function AgregarObra({isOpen, onClose, confirmar}: ModalProps) {
         setListaEscultores(nombresEscultores);
     }, []);
 
+    const handleFilesChange = (files: File[]) => {
+        setImagen(files[0]);
+    };
+
 
     function handleConfirmarAdd() {
-        confirmar(titulo,tematica,fecha, autor,escultorPais,descripcion, imagen);
+        if (imagen) {
+            confirmar(titulo, tematica, fecha, autor, escultorPais, descripcion, imagen);
+        };
         onClose();
     }
 
@@ -69,22 +75,22 @@ function AgregarObra({isOpen, onClose, confirmar}: ModalProps) {
             <ModalOverlay />
             <ModalContent maxW="50%" >
                 <ModalHeader>Agregar Obra</ModalHeader>
-                <ModalCloseButton />
+                 <ModalCloseButton />
                 <ModalBody>
                     <Stack spacing={20}>
                         <FormControl isRequired gap={4} >
                             <Stack gap={4} >
                                 <Stack direction="row" gap={4}>
                                     <Box>
-                                        <FormLabel>Titulo</FormLabel>
+                                        <FormLabel ml="2px" mb={1}>Titulo</FormLabel>
                                         <Input placeholder="Titulo" value={titulo} onChange={(e) => setTitulo(e.target.value)} />
                                     </Box>
                                     <Box>
-                                        <FormLabel>Tematica</FormLabel>
+                                        <FormLabel ml="2px" mb={1}>Tematica</FormLabel>
                                         <Input placeholder="Tematica" value={tematica} onChange={(e) => setTematica(e.target.value)} />
                                     </Box>
                                     <Box>
-                                        <FormLabel>Fecha</FormLabel>
+                                        <FormLabel ml="2px" mb={1}>Fecha</FormLabel>
                                         <Input 
                                             type="date" 
                                             value={fecha}  
@@ -99,8 +105,8 @@ function AgregarObra({isOpen, onClose, confirmar}: ModalProps) {
                                     </Box>
                                 </Stack>
                                 <Stack direction="row" gap={4} align="center">
-                                    <Box>
-                                        <FormLabel>Escultor</FormLabel>
+                                    <Box w="100%">
+                                        <FormLabel ml="2px" mb={1}>Escultor</FormLabel>
                                         <Select placeholder='Seleccione escultor' onChange={handleAutor}>
                                             {listaEscultores.map((escultor, index) => (
                                                 <option key={index} value={escultor}>
@@ -109,22 +115,22 @@ function AgregarObra({isOpen, onClose, confirmar}: ModalProps) {
                                             ))}
                                         </Select>
                                     </Box>
-                                    <Box>
-                                        <FormLabel>Pais</FormLabel>
+                                    <Box w="100%">
+                                        <FormLabel ml="2px" mb={1}>Pais</FormLabel>
                                         <Input placeholder="Pais" value={escultorPais} isReadOnly/>
                                     </Box>
                                 </Stack>
-                                <Stack direction="row" gap={4} alignItems="center">
-                                    <Flex justify='center' width="90%"> 
-                                        <FormLabel>Descripcion</FormLabel>
+                                <Stack direction="column" gap={0} justifyContent={"flex-start"}>
+                                    <FormLabel ml="2px" mb={1}>Descripcion</FormLabel>
+                                    <Flex justify='center' width="100%"> 
                                         <Textarea placeholder="Descripcion" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
                                     </Flex>
                                 </Stack>
-                                <Stack direction="row" gap={4} align="center">
+                                <Stack direction="column" gap={0} justifyContent={"flex-start"}>
+                                    <FormLabel ml="2px" mb={1}>Imagen</FormLabel>
                                     <Flex justify="center">
-                                        <FormLabel>Imagen</FormLabel>
                                         {/* Como recupero la ruta de la imagen? */}
-                                        <DropZone maxFiles={10}/>
+                                        <DropZone maxFiles={1}  onFilesChange={handleFilesChange}/>
                                     </Flex>
                                 </Stack>
                             </Stack>

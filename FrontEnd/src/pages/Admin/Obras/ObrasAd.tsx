@@ -9,6 +9,8 @@ import ModalConfirmar from '../../../components/Modal/ConfirmarCambios';
 import ModificarObra from '../../../components/Modal/ModificarObra';
 import Obras from '../../../API/Public/Obras'; // Simulación de API con datos de obras.
 
+import { getObras } from '../../../API/Admin/Obras';
+
 interface Obra {
   id: string;
   nombre: string;
@@ -18,7 +20,7 @@ interface Obra {
   escultor: string;
   escultorPais: string;
   escultorImagen: string;
-  imagenes:  string[]; 
+  imagen:  string; 
 }
 
 function TablaObras() {
@@ -58,20 +60,17 @@ function TablaObras() {
 
     //Modifique para conincide los tipos entre el file Obras y el tipo Obra
     useEffect(() => {
-      const nuevasObras = Obras.map(obra => ({
-        id: obra.id.toString(),
-        nombre: obra.nombre ?? '',
-        tematica: obra.tematica ?? '',
-        descripcion: obra.descripcion ?? '',
-        fechaCreacion:  '',
-        escultor: obra.escultor ?? '',
-        escultorPais:  '',
-        escultorImagen: '',
-        imagenes: obra.imagenes ?? [''],
-      }));
+      const fetchObras = async () => {
+        try {
+          const data = await getObras();
+          setObras(data);
+          setFilteredObras(data);
+        } catch (error) {
+          console.error('Error en el fetch de obras:', error);
+        }
+      };
     
-      setObras(nuevasObras);
-      setFilteredObras(nuevasObras);
+      fetchObras();
     }, [Obras]);
 
     useEffect(() => {
@@ -105,13 +104,13 @@ function TablaObras() {
       onCloseDelete();
     };
 
-    const handleConfirmarAdd = async (titulo:string, tematica:string, fecha:string, autor:string, paisAutor:string, descripcion:string, imagenes:File[] ) => {
+    const handleConfirmarAdd = async (titulo:string, tematica:string, fecha:string, autor:string, paisAutor:string, descripcion:string, imagen:File ) => {
       // fetch para agregar la obra
       // fetch para traer las obras de nuevo
-      setObras((prevObras) => [
-        ...prevObras,
-        { id: (prevObras.length + 1).toString(), nombre: titulo, tematica: tematica, descripcion: descripcion, fechaCreacion: fecha, escultor: autor, escultorPais: paisAutor, escultorImagen: 'nose.jpg', imagenes: imagenes.map(img => URL.createObjectURL(img)) },
-      ]);
+      // setObras((prevObras) => [
+      //   ...prevObras,
+      //   { id: (prevObras.length + 1).toString(), nombre: titulo, tematica: tematica, descripcion: descripcion, fechaCreacion: fecha, escultor: autor, escultorPais: paisAutor, escultorImagen: 'nose.jpg', imagenes: imagenes.map(img => URL.createObjectURL(img)) },
+      // ]);
       onCloseAdd();
     };
 
@@ -192,7 +191,7 @@ function TablaObras() {
                   {filteredObras.map((obra, index) => (
                     <Tr key={index} mt={1} mb={1} p={1}>
                       <Td textAlign="center" display="flex" justifyContent="center">
-                        <Image src={obra.imagenes[0]} alt={obra.nombre} width="100px" height="100%" objectFit="contain" />
+                        <Image src={obra.imagen} alt={obra.nombre} width="100px" height="100%" objectFit="contain" />
                       </Td>
                       <Td textAlign="center">{obra.nombre}</Td>
                       <Td textAlign="center">{obra.descripcion}</Td>
