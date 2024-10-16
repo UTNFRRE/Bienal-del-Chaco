@@ -1,0 +1,59 @@
+.wrapper {
+    display: flex;
+    flex: auto;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.icon {
+    width: 4.325rem;
+    height: 6.125rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.3s, color 0.3s;
+    z-index: 1;
+}
+
+.icon:before {
+    content: '';
+    position: absolute;
+    width: 130%;
+    height: 130%;
+    left: -110%;
+    top: 80%;
+    transform: rotate(45deg);
+    transition: left 0.7s, top 0.7s;
+    z-index: -1;
+   
+}
+
+.icon:hover {
+    transform: scale(1.2);
+    color: white;
+}
+.icon:hover:before {
+    left: -15%;
+    top: -15%;
+  
+}
+
+
+.icon.facebook:before {
+    background-color: #3b5998; /* Color de fondo para Facebook */
+}
+
+.icon.twitter:before {
+    background-color: #1da1f2; /* Color de fondo para Twitter */
+}
+
+.icon.instagram:before {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+}
+
+.icon.whatsapp:before {
+    background-color: #25d366; /* Color de fondo para WhatsApp */
+}

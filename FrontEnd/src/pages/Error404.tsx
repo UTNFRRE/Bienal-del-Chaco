@@ -7,7 +7,7 @@ function ErrorPage() {
       <Text fontSize="3rem">404</Text>
       <Text fontSize="2xl">Página no encontrada</Text>
       <Link to="/admin/escultores">
-        <Button colorScheme="blue" variant="solid" size="md" mt="4">
+        <Button variant={'bienal'} size="md" mt="4">
           Ir al Inicio
         </Button>
       </Link>

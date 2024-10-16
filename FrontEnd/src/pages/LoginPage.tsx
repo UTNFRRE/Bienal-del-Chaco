@@ -7,13 +7,15 @@ export default function LoginPage() {
 return (
 
     <Box
-      w="100%"
-      h="100vh"
+      w="100vh"
+      h={{ base: '100vh', lg: '100vh' }}
+      minHeight="100vh"
+      overflow="hidden"
     >
     <Box
       bgImage={{base: '', lg: `url(${ImagenFondo})`}}
       bgColor={{base: '', lg: 'transparent'}}
-      background={{base: 'linear-gradient(to bottom, black, rgba(0, 0, 0, 0.7))'}}
+      //background={{base: 'linear-gradient(to bottom, black, rgba(0, 0, 0, 0.7))'}}
       w="100%"
       h="100%"
       bgSize="cover"
@@ -28,12 +30,15 @@ return (
               direction="column"
               alignItems="center"
               justifyContent={{base: 'center', lg: "flex-start"}}
-              w={{base: '65%', lg: "33%"}}
+              w={{base: '100%', lg: "30%"}}
               h="100%"
-              // background={{base: 'black', lg: "transparent"}}
-              //p='48px'
-              mt={{ md: '150px', lg: '5%' }}
-              pl={{ base: '10px', md: '80px', lg: '160px' }}
+              background={{ base: 'black', lg: "rgba(255, 255, 255, 0.15)" }} 
+              backdropFilter={{ base: 'none', lg: 'blur(5px)' }}
+              border={{ base: 'none', lg: '1px solid rgba(255, 255, 255, 0.15)' }} 
+              boxShadow={{ base: 'none', lg: '0 4px 6px rgba(0, 0, 0, 0.1)' }}
+              p={{base: '40px', lg:'48px'}}
+              mt={{ md: '150px', lg: '2%' }}
+              ml={{ base: '0px', md: '80px', lg: '120px' }}
               
             >
               <Flex alignItems="center" direction="column" mb={{ base: '10px', md: '10%' }} gap={20} w="100%"> 
@@ -116,6 +121,7 @@ return (
                   borderColor="white"
                   fontWeight="500"
                   letterSpacing="1px"
+                  _hover={{ bg: '#747264' }}
                 >
                   Acceder
                 </Button>

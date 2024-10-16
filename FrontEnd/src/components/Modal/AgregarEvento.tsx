@@ -14,10 +14,11 @@ import {
     Box,
     FormLabel,
     FormControl,
+    InputProps,
   } from '@chakra-ui/react';
-  import { useEffect, useState } from 'react';
+  import { useEffect, useState  } from 'react';
   
-  interface ModalComponentProps {
+   interface ModalComponentProps {
     isOpen: boolean;
     onClose: () => void;
     confirmar: (
@@ -37,7 +38,39 @@ import {
     const [tematica, setTematica] = useState('');
     const [descripcion, setDescripcion] = useState('');
     const [fecha, setFecha] = useState('');
+    const [latitud, setLatitud] = useState<number | null>(null);
+    const [longitud, setLongitud] = useState<number | null>(null);
+
+    const googleMapsApiKey = 'AIzaSyB6cFwxUytgrCP9pqTTEIiLMm477qpJjPs'; 
   
+    const handlePlaceChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+      const address = e.target.value;
+      setLugar(address);
+    };
+  
+    const handleKeyPress = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === 'Enter') {
+        const address = lugar;
+        if (address) {
+          const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&components=locality:Resistencia|administrative_area:Chaco|country:AR&key=${googleMapsApiKey}`);
+          const data = await response.json();
+  
+          if (data.results && data.results.length > 0) {
+            const location = data.results[0].geometry.location;
+            setLatitud(location.lat);
+            setLongitud(location.lng);
+            setLugar(data.results[0].formatted_address); // Actualiza el input con el nombre del lugar
+          } else {
+            setLatitud(null);
+            setLongitud(null);
+          }
+        } else {
+          setLatitud(null);
+          setLongitud(null);
+        }
+      }
+    };
+
     const handleconfirmar = () => {
         // llamo a la funcion que se paso como parametro y le paso los valores de los inputs
       confirmar(titulo, lugar, tematica, descripcion, fecha);
@@ -62,7 +95,6 @@ import {
 
   
     return (
-      <>
         <Modal isOpen={isOpen} onClose={onClose} >
           <ModalOverlay />
           <ModalContent  maxW="700px">
@@ -85,16 +117,17 @@ import {
                     />
                     </Box>
                     <Box>
-                        <FormLabel mb={0}>Lugar</FormLabel>
-                        <Input
+                      <FormLabel mb={0}>Lugar</FormLabel>
+                      <Input
                         placeholder=""
                         size="md"
-                        variant="Unstyled"
+                        variant="unstyled"
                         borderWidth={1}
-                        flex={1}
                         value={lugar}
-                        onChange={(e) => setLugar(e.target.value)}
-                        />
+                        onChange={handlePlaceChange}
+                        onKeyPress={handleKeyPress}
+                        style={{ width: '100%', height: '64%' }}
+                      />
                     </Box>
                     <Box>
                         <FormLabel mb={0}>Tematica</FormLabel>
@@ -134,11 +167,17 @@ import {
                 </Box>
                 
               </Stack>
+              {latitud && longitud && (
+                  <Box>
+                    <Text>Latitud: {latitud}</Text>
+                    <Text>Longitud: {longitud}</Text>
+                  </Box>
+                )}
             </FormControl>
             </ModalBody>
             <ModalFooter mt={6}>
               <Button
-                colorScheme="blue"
+                variant={'bienal'}
                 mr={3}
                 onClick={handleconfirmar}
                 size="sm"
@@ -157,6 +196,5 @@ import {
             </ModalFooter>
           </ModalContent>
         </Modal>
-      </>
     );
   }

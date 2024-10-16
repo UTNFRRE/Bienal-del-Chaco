@@ -9,11 +9,12 @@ import { CloseIcon } from '@chakra-ui/icons';
 interface ZonaCargaProps {
     maxFiles?: number;
     handleFotoChange: (fotoData: string, nombreArchivo: string) => void;
+    filesUpload: string[];
 }
 
-const ZonaCargaEscultor = ({maxFiles = 10, handleFotoChange }: ZonaCargaProps) => {
+const ZonaCargaEscultor = ({maxFiles = 10, handleFotoChange, filesUpload }: ZonaCargaProps) => {
     const toast = useToast();
-    const [filePreviews, setFilePreviews] = useState<string[]>([]);  // Guarda las URL de las previsualizaciones 
+    const [filePreviews, setFilePreviews] = useState<string[]>(filesUpload || []);  // Guarda las URL de las previsualizaciones 
     const [files, setFiles] = useState<File[]>([]);  // Guarda los archivos seleccionados para dsp mandar al back
 
     const onDrop = useCallback((acceptedFiles: File[]) => {

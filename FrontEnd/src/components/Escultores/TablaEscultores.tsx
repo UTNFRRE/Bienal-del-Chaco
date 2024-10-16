@@ -144,8 +144,8 @@ function TablaEscultores () {
                 flexDirection="column"
             >
             <Flex justifyContent="center" mb={4} mt={4} gap={4}>
-                <Button leftIcon={<AddIcon />} borderRadius={3} onClick={onOpenAdd}>Agregar Escultor</Button>
-                <Button onClick={() => setMostrarFiltros(!MostrarFiltros)} leftIcon={<SearchIcon />} borderRadius={3}>
+                <Button  variant="bienal"leftIcon={<AddIcon />} borderRadius={3} onClick={onOpenAdd}>Agregar Escultor</Button>
+                <Button variant="bienal" onClick={() => setMostrarFiltros(!MostrarFiltros)} leftIcon={<SearchIcon />} borderRadius={3}>
                 {MostrarFiltros ? 'Ocultar Filtros' : 'Filtrar'}
                 </Button>
             </Flex>
@@ -154,6 +154,7 @@ function TablaEscultores () {
                     p={5}
                     boxShadow="md"
                     w="87%"
+                    borderWidth={1} borderColor={"secundaryHover"}
             >
             {escultores.length > 0 ? (
                 <>
@@ -243,11 +244,13 @@ function TablaEscultores () {
                         <Td p={2} textAlign="center"  >
                         <Image 
                             src={escultor.foto} 
+                         
                             alt={escultor.nombre}  
                             boxSize={["90px"]}
                             //width="80px" 
                             //height="80px" 
                             objectFit="cover" 
+
                             borderRadius="full"
                         />
                         </Td>
@@ -263,7 +266,7 @@ function TablaEscultores () {
                             <IconButton
                                 aria-label="Editar"
                                 icon={<EditIcon />}
-                                variant="solid"
+                               variant="bienal"
                                 borderRadius={3}  
                                 onClick={() => handleEditar(escultor)}                              
                             />

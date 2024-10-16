@@ -75,12 +75,12 @@ export default function ModalEditarEscultor({ isOpen, onClose, confirmar, escult
                         <Stack gap={7}>
                             <Stack direction="row" gap={5} w="100%">
                                 <Box>
-                                    <FormLabel mb={0}>Nombre</FormLabel>
+                                    <FormLabel mb={1}>Nombre</FormLabel>
                                     <Input
                                         placeholder=""
                                         size="md"
                                         variant="Unstyled"
-                                        width={500}
+                                        width={650}
                                         borderWidth={1}
                                         flex={1}
                                         value={nombre}
@@ -90,7 +90,7 @@ export default function ModalEditarEscultor({ isOpen, onClose, confirmar, escult
                             </Stack>
                             <Stack direction="row" gap={5} w="100%">
                                 <Box>
-                                    <FormLabel mb={0}>Pais</FormLabel>
+                                    <FormLabel mb={1}>Pais</FormLabel>
                                     <Input
                                         placeholder=""
                                         size="md"
@@ -103,7 +103,7 @@ export default function ModalEditarEscultor({ isOpen, onClose, confirmar, escult
                                     />
                                 </Box>
                                 <Box>
-                                    <FormLabel mb={0}>Contacto</FormLabel>
+                                    <FormLabel mb={1}>Contacto</FormLabel>
                                     <Input
                                         placeholder=""
                                         size="md"

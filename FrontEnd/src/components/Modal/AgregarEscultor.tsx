@@ -157,7 +157,7 @@ export default function ModalAgregarEscultor({ isOpen, onClose, confirmar }: Mod
                 </ModalBody>
                 <ModalFooter mt={6}>
                     <Button
-                        colorScheme="blue"
+                        variant={'bienal'}
                         mr={3}
                         onClick={handleConfirmar}
                         size="sm"
