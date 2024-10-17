@@ -20,7 +20,7 @@ export default function Public() {
   return (
     <Box minH="100vh">
       <Box pos="relative" zIndex="10">
-        <Header LINK_ITEMS={LINK_ITEMS}/>
+        <Header LINK_ITEMS={LINK_ITEMS} user={false}/>
       </Box>
       <Box p="10" pt="20">
         {element}

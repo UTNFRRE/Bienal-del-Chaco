@@ -16,9 +16,10 @@ import {
   
   interface NavContentProps {
     LINK_ITEMS: { title: string; url: string; rol:string }[];
+    user: boolean;
   }
 
-  export function HeaderContent({LINK_ITEMS}:NavContentProps) {
+  export function HeaderContent({LINK_ITEMS, user}:NavContentProps) {
     return (
       <Flex
         as="header"
@@ -49,7 +50,7 @@ import {
               <MovileNav LINK_ITEMS={LINK_ITEMS}/>
             </Flex>
             <Spacer display={{ base: 'flex', md: 'none' }} />
-            <Menu>
+            {user && <Menu>
               <MenuButton as={Button} borderRadius="50%" w="50px" h="50px" p="0px">
                 <Image src={logoUser} w="100%"></Image>
               </MenuButton>
@@ -60,6 +61,7 @@ import {
                 <MenuItem>Cerrar sesión</MenuItem>
               </MenuList>
           </Menu>
+          }
         </Flex>
       </Flex>
     );

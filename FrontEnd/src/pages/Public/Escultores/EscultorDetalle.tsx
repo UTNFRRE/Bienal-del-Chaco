@@ -3,11 +3,11 @@ import { useParams } from 'react-router-dom';
 
 
 const EscultorDetail = () => {
-    const { dni } = useParams<{ dni: string }>();
+    const { id } = useParams<{ id: string }>();
 
     const escultor = 
     {
-      dni: 45000000,
+      id: 1,
       nombre: "Luis Bernardi",
       fechaNacimiento: "23-09-1965",
       lugarNacimiento: "Monte Caseros, Corrientes",
@@ -29,7 +29,7 @@ const EscultorDetail = () => {
                         <Text>{escultor.nombre}</Text>
                         <Text>{escultor.fechaNacimiento}</Text>
                         <Text>{escultor.lugarNacimiento}</Text>
-                        <Text>{escultor.dni}</Text>
+                        <Text>{escultor.id}</Text>
                     </Box>
 
                  </Box>
