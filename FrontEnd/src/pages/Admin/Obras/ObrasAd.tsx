@@ -9,7 +9,7 @@ import ModalConfirmar from '../../../components/Modal/ConfirmarCambios';
 import ModificarObra from '../../../components/Modal/ModificarObra';
 import Obras from '../../../API/Public/Obras'; // Simulación de API con datos de obras.
 
-import { getObras, addObra, editObra } from '../../../API/Admin/Obras';
+import { getObras, addObra, editObra, deleteObra } from '../../../API/Admin/Obras';
 
 interface Obra {
   esculturaId: string;
@@ -27,6 +27,7 @@ function TablaObras() {
     const [obras, setObras] = useState<Obra[]>([]);
     const [filteredObras, setFilteredObras] = useState<Obra[]>([]);
     const [obraElegida, setObraElegida] = useState<Obra | null>(null);
+    const [refresh, setRefresh] = useState(false);
 
     const {
       isOpen: isOpenAdd,
@@ -72,7 +73,7 @@ function TablaObras() {
       };
     
       fetchObras();
-    }, []);
+    }, [refresh]);
 
     // useEffect(() => {
     //   setFilteredObras(
@@ -99,9 +100,18 @@ function TablaObras() {
     };
 
     const handleConfirmarDelete = async () => {
-      setObras((prevObras) =>
-        prevObras.filter((m) => m !== obraElegida)
-      );
+
+      const DeleteObra = async () => {
+        try {
+          if (obraElegida) {
+            await deleteObra(obraElegida.esculturaId);
+            setRefresh(!refresh);
+          }
+        } catch (error) {
+          console.error('Error en el fetch de obras:', error);
+        }
+      };
+      DeleteObra();
       onCloseDelete();
     };
 
@@ -115,7 +125,8 @@ function TablaObras() {
 
       const PostObra = async () => {
         try {
-          const data = await addObra(titulo, tematica, fecha, autor, paisAutor, descripcion, imagen);
+          await addObra(titulo, tematica, fecha, autor, paisAutor, descripcion, imagen);
+          setRefresh(!refresh);
         } catch (error) {
           console.error('Error en el fetch de obras:', error);
         }
