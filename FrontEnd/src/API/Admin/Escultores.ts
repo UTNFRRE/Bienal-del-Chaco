@@ -4,7 +4,7 @@ const API_URL = 'http://localhost:5232'; // Reemplaza con la URL de tu backend
 export const getEscultor = async () => {
     try {
         const response = await fetch(`${API_URL}/escultoresAdmin`);
-        if (response.ok) { //si la api me pudo pasar el escultor sin problema
+        if (response.ok) { 
             const data = await response.json(); //lo convierto a formato jason 
             return data; //lo muestro
           } else {
@@ -35,7 +35,7 @@ export const addEscultor = async (nombre: string, foto: File, Pais: string, cont
     
    
     try {
-        const response = await fetch(`${API_URL}/Escultores`, {
+        const response = await fetch(`${API_URL}/Escultor`, {
             method: 'POST',
             body: formData,
         });
