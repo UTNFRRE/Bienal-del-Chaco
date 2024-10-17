@@ -114,7 +114,7 @@ function TablaEventos () {
         
     };
 
-    const handleConfirmarAdd = async (nombre:string, lugar:string, tematica:string, descripcion:string, fecha:string) => {
+    const handleConfirmarAdd = async (nombre:string, lugar:string, tematica:string, descripcion:string, fecha:string, longitud:number, latitud:number) => {
       // Aca se hace el llamado a la funcion de la api que agrega un evento
       // Agregar el evento al json
       // setEventos((prevEventos) => [
@@ -131,7 +131,7 @@ function TablaEventos () {
 
       const PostEvento = async () => {
         try {
-          await addEvento(nombre, fecha, lugar, descripcion, tematica);
+          await addEvento(nombre, fecha, lugar, descripcion, tematica, longitud, latitud);
           setRefresh(!refresh);
         } catch (error) {
           console.error('Error al agregar evento:', error);
@@ -146,7 +146,7 @@ function TablaEventos () {
       onOpenEdit();
     };
     
-    const handleConfirmarEdit = async (nombre:string, lugar:string, tematica:string, descripcion:string, fecha:string) => {
+    const handleConfirmarEdit = async (nombre:string, lugar:string, tematica:string, descripcion:string, fecha:string, longitud: number, latitud:number) => {
       // Aca se hace el llamado a la funcion de la api que edita un evento
       // Editar el evento en el json
       // setEventos((prevEventos) =>
@@ -167,7 +167,7 @@ function TablaEventos () {
       const PutEvento = async () => {
         try {
           if(EventoElegido){
-            await editEvento(EventoElegido.id, nombre, fecha, lugar, descripcion, tematica);
+            await editEvento(EventoElegido.id, nombre, fecha, lugar, descripcion, tematica, longitud, latitud);
             setRefresh(!refresh);
           }
         }catch (error){

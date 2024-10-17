@@ -20,7 +20,7 @@ import {
   interface ModalComponentProps {
     isOpen: boolean;
     onClose: () => void;
-    confirmar: (nombre:string, lugar:string, tematica: string, descripcion:string, fecha: string) => void;
+    confirmar: (nombre:string, lugar:string, tematica: string, descripcion:string, fecha: string, longitud:number, latitud:number) => void;
     evento: any;
   }
 
@@ -29,7 +29,7 @@ import {
 export default function ModalEditarEvento({ isOpen, onClose, confirmar, evento, }: ModalComponentProps) {
    
     const handleconfirmar = () => {
-      confirmar(nombre, lugar, tematica, descripcion, fecha);
+      confirmar(nombre, lugar, tematica, descripcion, fecha, longitud ?? -58.981256488503035, latitud ?? -27.43757052684891); // -58.981256488503035, -27.43757052684891 son las coordenadas de Resistencia, Chaco
       onClose();
     };
 
@@ -67,7 +67,7 @@ export default function ModalEditarEvento({ isOpen, onClose, confirmar, evento, 
       setLugar(address);
     };
   
-    const handleKeyPress = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key === 'Enter') {
         const address = lugar;
         if (address) {
@@ -123,7 +123,7 @@ export default function ModalEditarEvento({ isOpen, onClose, confirmar, evento, 
                           borderWidth={1}
                           value={lugar}
                           onChange={handlePlaceChange}
-                          onKeyPress={handleKeyPress}
+                          onKeyDown={handleKeyDown}
                           style={{ width: '100%', height: '64%' }}
                         />
                     </Box>

@@ -18,7 +18,7 @@ export const getEventos = async () => {
  
 // Agregar un evento  (aun falta lo de latitud y longitud)
 
-export const addEvento = async ( Nombre: string, Fecha: string,  Lugar: string, Descripcion: string, Tematica: string) => {
+export const addEvento = async ( Nombre: string, Fecha: string,  Lugar: string, Descripcion: string, Tematica: string, longitud: number, latitud: number) => {
     
     const formData = new FormData();
     formData.append('Id', '0'); // No se si esta bien el Id, 
@@ -27,6 +27,8 @@ export const addEvento = async ( Nombre: string, Fecha: string,  Lugar: string, 
     formData.append('Lugar', Lugar);
     formData.append('Descripcion', Descripcion);
     formData.append('Tematica', Tematica);
+    formData.append('longitud', longitud.toString().replace('.',','));
+    formData.append('latitud', latitud.toString().replace('.',','));
     
 
     try {
@@ -49,17 +51,19 @@ export const addEvento = async ( Nombre: string, Fecha: string,  Lugar: string, 
 
 // Editar Evento existente
 
-export const editEvento = async (Id:string, Nombre: string, Fecha: string,  Lugar: string, Descripcion: string, Tematica: string) =>{
+export const editEvento = async (Id:string, Nombre: string, Fecha: string,  Lugar: string, Descripcion: string, Tematica: string, longitud:number, latitud: number) =>{
     const formData = new FormData();
     formData.append('Nombre', Nombre);
     formData.append('Fecha', Fecha);
     formData.append('Lugar', Lugar);
     formData.append('Descripcion', Descripcion);
     formData.append('Tematica', Tematica);
+    formData.append('longitud', longitud.toString().replace('.',','));
+    formData.append('latitud', latitud.toString().replace('.',','));
 
     try {
         const response = await fetch(`${API_URL}/Eventos/${Id}`, {
-            method: 'PUT',
+            method: 'PATCH',
             body: formData,
         });
         if (response.ok) {
