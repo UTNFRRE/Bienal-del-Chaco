@@ -50,9 +50,10 @@ import {
       setLugar(address);
     };
   
-    const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const handleKeyUp = async (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key === 'Enter') {
         const address = lugar;
+        console.log('Address', address);
         if (address) {
           const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&components=locality:Resistencia|administrative_area:Chaco|country:AR&key=${googleMapsApiKey}`);
           const data = await response.json();
@@ -96,7 +97,6 @@ import {
         setFecha('');
     }, [isOpen]);
 
-  
     return (
         <Modal isOpen={isOpen} onClose={onClose} >
           <ModalOverlay />
@@ -128,7 +128,7 @@ import {
                         borderWidth={1}
                         value={lugar}
                         onChange={handlePlaceChange}
-                        onKeyDown={handleKeyDown}
+                        onKeyUp={handleKeyUp}
                         style={{ width: '100%', height: '64%' }}
                       />
                     </Box>
