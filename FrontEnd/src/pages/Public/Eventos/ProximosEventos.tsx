@@ -42,7 +42,7 @@ export const ProximosEventos = () => {
                 <SimpleGrid columns={3} spacing={7}>
                     {eventos.length === 0 ? <Text>No hay eventos proximos</Text> : null}
                     {eventos.map((evento, index) => (
-                        index < 6 ? (
+                        index < 9 ? (
                         <Flex direction={"column"} key={evento.id} 
                             bg={'secundary'} 
                             p={4} 
