@@ -109,3 +109,19 @@ export const getObraById = async (id: string) => {
           throw new Error('Network error: ' + error);
     }
 };
+
+
+// Obtener todos los escultores
+export const getEscultores = async () => {
+    try {
+        const response = await fetch(`${API_URL}/Escultor/api/escultoresPublic`);
+        if (response.ok) {
+            const data = await response.json();
+            return data;
+          } else {
+            throw new Error('Error en la respuesta del servidor');
+          }
+    } catch (error) {
+          throw new Error('Network error: ' + error);
+    }
+};

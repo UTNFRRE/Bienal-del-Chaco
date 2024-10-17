@@ -17,6 +17,7 @@ import {
     Flex,
   } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
+import { getEscultores } from '../../API/Admin/Obras';
 import DropZone from '../ZonaCarga/ZonaCarga';
 import Escultores from '../../API/Escultores';
 
@@ -36,6 +37,14 @@ interface ModalProps {
     ) => void;
 }
 
+interface Escultor {
+    id: number;
+    nombre: string;
+    pais: string;
+    foto: string;
+  }
+  
+
 function AgregarObra({isOpen, onClose, confirmar}: ModalProps) {
 
     const [titulo, setTitulo] = useState('');  
@@ -45,12 +54,25 @@ function AgregarObra({isOpen, onClose, confirmar}: ModalProps) {
     const [autor, setAutor] = useState<number>(0);
     const [descripcion, setDescripcion] = useState('');
     const [fecha, setFecha] = useState('');
+    const [Escultoress, setEscultoress] = useState<Escultor[]>([]);
 
-    const [listaEscultores, setListaEscultores] = useState<string[]>([]);
+    const [listaEscultores, setListaEscultores] = useState<any[]>([]);
 
     useEffect(() => {
-        const nombresEscultores = Escultores.map((escultor) => escultor.nombre);
-        setListaEscultores(nombresEscultores);
+
+        const fetchEscultores = async () => {
+            try {
+                const data = await getEscultores();
+                setEscultoress(data);
+                const nombresEscultores = Escultoress.map((escultor) => ({ id: escultor.id, nombre: escultor.nombre }));
+                setListaEscultores(nombresEscultores);
+            } catch (error) {
+                console.error('Error en el fetch de escultores:', error);
+            }
+        };
+
+        fetchEscultores();
+        
         setTitulo('');
         setTematica('');
         setEscultorPais('');
@@ -58,7 +80,7 @@ function AgregarObra({isOpen, onClose, confirmar}: ModalProps) {
         setAutor(0);
         setDescripcion('');
         setFecha('');
-        
+
     }, []);
 
     const handleFilesChange = (files: File[]) => {
@@ -117,14 +139,14 @@ function AgregarObra({isOpen, onClose, confirmar}: ModalProps) {
                                 <Stack direction="row" gap={4} align="center">
                                     <Box w="100%">
                                         <FormLabel ml="2px" mb={1}>Escultor</FormLabel>
-                                        {/* <Select placeholder='Seleccione escultor' onChange={handleAutor}>
-                                            {listaEscultores.map((escultor, index) => (
-                                                <option key={index} value={escultor}>
-                                                    {escultor}
+                                        <Select placeholder='Seleccione escultor' onChange={(e) => setAutor(Number(e.target.value))}>
+                                            {listaEscultores.map((escultor) => (
+                                                <option key={escultor.id} value={escultor.id}>
+                                                    {escultor.nombre}
                                                 </option>
                                             ))}
-                                        </Select> */}
-                                        <Input placeholder="Escultor" value={autor} onChange={(e) => setAutor(Number(e.target.value))}/>
+                                        </Select>
+                                        {/* <Input placeholder="Escultor" value={autor} onChange={(e) => setAutor(Number(e.target.value))}/> */}
                                     </Box>
                                     <Box w="100%">
                                         <FormLabel ml="2px" mb={1}>Pais</FormLabel>
