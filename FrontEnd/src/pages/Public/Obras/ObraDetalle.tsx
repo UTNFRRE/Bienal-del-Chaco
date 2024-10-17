@@ -3,6 +3,7 @@ import { Box, Heading, Text, Image, Flex, IconButton, ButtonGroup} from '@chakra
 import ImageGallery from 'react-image-gallery';
 import { FaFacebook, FaTwitter, FaInstagram, FaWhatsapp } from 'react-icons/fa';
 import 'react-image-gallery/styles/css/image-gallery.css';
+import RedesSociales from '../../../components/Redes/RedesSociales';
 
 const ObraDetail = () => {
   const { id } = useParams<{ id: string }>(); // Se obtiene el id de la obra de la url
@@ -41,47 +42,22 @@ const ObraDetail = () => {
         </Box>
       </Box>  
       <Box w={{ base: '100%', md:'100%', lg: '30%' }}  display="flex" flexDirection={"column"} gap={0} mt={1} className='Informacion'>
-      <Flex gap='4' alignItems='center' justifyContent={"center"} mt={8}>
-          <Image src={obra.escultorImagen} boxSize="90px" borderRadius="full" borderWidth={2} borderColor="secundaryHover" borderStyle="solid"/>
-          <Box>
-            <Heading size='sm'>{obra.escultor}</Heading>
-            <Text as="i">{obra.escultorPais}</Text>
+          <Flex gap='4' alignItems='center' justifyContent={"center"} mt={8}>
+              <Image src={obra.escultorImagen} boxSize="90px" borderRadius="full" borderWidth={2} borderColor="secundaryHover" borderStyle="solid"/>
+              <Box>
+                <Heading size='sm'>{obra.escultor}</Heading>
+                <Text as="i">{obra.escultorPais}</Text>
+              </Box>
+          </Flex>
+          <Flex justifyContent={"center"} mt={6}>
+            <RedesSociales/>
+          </Flex>
+          <Box mt={6} display={"flex"} textAlign={"right"} flexDirection={"column"} marginLeft={"auto"} w={'100%'}>
+              <Text as='em'>Bajo la tematica {obra.tematica}</Text>
+              <Text as='em'>Creada el {obra.fechaCreacion}</Text>
+              <Text textAlign={"left"} mt={6} ml={4}>{obra.descripcion}</Text>
           </Box>
-      </Flex>
-      <Flex>
-        <ButtonGroup mt={6} display={"flex"} flexDirection={"row"} justifyContent={"center"} alignItems={"center"} w={'100%'}>
-             <IconButton
-              aria-label="Compartir en Facebook"
-              icon={<FaFacebook />}
-              colorScheme="facebook"
-              onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`, '_blank')}
-            />
-            <IconButton
-              aria-label="Compartir en Twitter"
-              icon={<FaTwitter />}
-              colorScheme="twitter"
-              onClick={() => window.open(`https://twitter.com/intent/tweet?url=${window.location.href}`, '_blank')}
-            />
-            <IconButton
-              aria-label="Compartir en Instagram"
-              icon={<FaInstagram />}
-              colorScheme="instagram"
-              onClick={() => window.open(`https://www.instagram.com/?url=${window.location.href}`, '_blank')}
-            />
-            <IconButton
-              aria-label="Compartir en Whatsapp"
-              icon={<FaWhatsapp />}
-              colorScheme="whatsapp"
-              onClick={() => window.open(`https://api.whatsapp.com/send?text=${window.location.href}`, '_blank')}
-            />
-        </ButtonGroup>
-      </Flex>
-      <Box mt={6} display={"flex"} textAlign={"right"} flexDirection={"column"} marginLeft={"auto"} w={'100%'}>
-          <Text as='em'>Bajo la tematica {obra.tematica}</Text>
-          <Text as='em'>Creada el {obra.fechaCreacion}</Text>
-          <Text textAlign={"left"} mt={6} ml={4}>{obra.descripcion}</Text>
-      </Box>
-      </Box>
+        </Box>
     </Box>
   );
 };

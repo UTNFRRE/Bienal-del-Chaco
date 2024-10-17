@@ -154,13 +154,14 @@ function TablaEventos () {
                 p={6}
                 // boxShadow="md"
                 w="80%"
+                borderWidth={1} borderColor={"secundaryHover"}
                 // position="relative"
                 // overflowX="auto"
                 // overflowY="auto"
             >
             {eventos.length > 0 ? (
               <>
-                <Table variant="striped" colorScheme="secundaryBg" width="100%">
+                <Table variant="striped" colorScheme="secundaryBg" width="100%" >
                   <Thead>
                     {/* Si MostrarFiltros es verdadero entonces... */}
                     {MostrarFiltros && (

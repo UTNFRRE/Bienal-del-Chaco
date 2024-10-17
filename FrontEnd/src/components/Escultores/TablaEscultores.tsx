@@ -10,11 +10,10 @@ import ModalEditarEscultor from '../Modal/EditarEscultor';
 
 function TablaEscultores () {
 
-
     const [escultores, setEscultores] = useState<any[]>([]);
     const [filteredEscultor, setFilteredEscultor] = useState<any[]>([]);
     const [EscultorElegido, setEscultorElegido] = useState<any>();
-   
+
     // isopen, onopen y onclose son funciones que se usan para abrir y cerrar cada modal
     const {
         isOpen: isOpenDelete,
@@ -31,14 +30,17 @@ function TablaEscultores () {
     onOpen: onOpenEdit,
     onClose: onCloseEdit
     } = useDisclosure();
-   
+
 
 
     const [filters, setFilters] = useState({
         foto:'',
         nombre:'',
         pais:'',
-        contacto:''
+        contacto:'',
+        fechaNacimiento:'', 
+        lugarNacimiento:'',
+        premios:'',
     });
     const [MostrarFiltros, setMostrarFiltros] = useState(false);
 
@@ -54,7 +56,11 @@ function TablaEscultores () {
             escultor.foto.toLowerCase().includes(filters.foto.toLowerCase()) &&
             escultor.nombre.toLowerCase().includes(filters.nombre.toLowerCase()) &&
             escultor.pais.toLowerCase().includes(filters.pais.toLowerCase()) &&
-            escultor.contacto.toLowerCase().includes(filters.contacto.toLowerCase())
+            escultor.contacto.toLowerCase().includes(filters.contacto.toLowerCase()) &&
+            escultor.fechaNacimiento.toLowerCase().includes(filters.fechaNacimiento.toLowerCase()) &&
+            escultor.lugarNacimiento.toLowerCase().includes(filters.lugarNacimiento.toLowerCase()) &&
+            (Array.isArray(escultor.premios) ? escultor.premios.join(', ') : 
+            (escultor.premios || '')).toLowerCase().includes(filters.premios.toLowerCase())
         )
         );
     }, [filters, escultores]);
@@ -84,7 +90,7 @@ function TablaEscultores () {
     };
 
 
-    const handleConfirmarAdd = async (foto:string, nombre:string, pais:string, contacto:string) => {
+    const handleConfirmarAdd = async (foto:string, nombre:string, pais:string, contacto:string, fechaNacimiento:string, lugarNacimiento:string, premios:string) => {
       // Aca se hace el llamado a la funcion de la api que agrega un escultor
       // Agregar el escultor al json
     setEscultores((prevEscultores) => [
@@ -93,7 +99,10 @@ function TablaEscultores () {
             foto: foto,
             nombre: nombre,
             pais: pais,
-            contacto: contacto
+            contacto: contacto,
+            fechaNacimiento: fechaNacimiento,
+            lugarNacimiento: lugarNacimiento,
+            premios: premios,
         },
     ]);
     onCloseAdd();
@@ -104,7 +113,7 @@ function TablaEscultores () {
     onOpenEdit();
     };
 
-    const handleConfirmarEdit = async (foto:string, nombre:string, pais:string, contacto:string) => {
+    const handleConfirmarEdit = async (foto:string, nombre:string, pais:string, contacto:string, fechaNacimiento:string, lugarNacimiento:string, premios:string) => {
       // Aca se hace el llamado a la funcion de la api que edita un escultor
       // Edita el escultor en el json
     setEscultores((prevEscultores) =>
@@ -115,7 +124,10 @@ function TablaEscultores () {
                 foto: foto,
                 nombre: nombre,
                 pais: pais,
-                contacto: contacto
+                contacto: contacto,
+                fechaNacimiento: fechaNacimiento,
+                lugarNacimiento: lugarNacimiento,
+                premios: premios,
             }
             : m
         )
@@ -139,13 +151,14 @@ function TablaEscultores () {
             </Flex>
             <Box
                     bg="secundaryBg"
-                    p={6}
+                    p={5}
                     boxShadow="md"
-                    w="80%"
+                    w="87%"
+                    borderWidth={1} borderColor={"secundaryHover"}
             >
             {escultores.length > 0 ? (
                 <>
-                <Table variant="striped" colorScheme="secundaryBg" width="100%">
+                <Table  style={{ width: '100%' }} colorScheme="secundaryBg" width="100%"> {/*variant="striped"*/}
                     <Thead>
                        {/* Si MostrarFiltros es verdadero entonces... */}
                     {MostrarFiltros && (
@@ -155,6 +168,7 @@ function TablaEscultores () {
                         <Th>
                             <Input
                             variant='flushed'
+                            fontSize={13}
                             placeholder="Filtrar por nombre"
                             name="nombre"
                             value={filters.nombre}
@@ -164,6 +178,7 @@ function TablaEscultores () {
                         <Th>
                             <Input
                             variant='flushed'
+                            fontSize={13}
                             placeholder="Filtrar por pais"
                             name="pais"
                             value={filters.pais}
@@ -173,41 +188,80 @@ function TablaEscultores () {
                         <Th>
                             <Input
                             variant='flushed'
+                            fontSize={13}
                             placeholder="Filtrar por contacto"
                             name="contacto"
                             value={filters.contacto}
                             onChange={handleFilterChange}
                             />
                         </Th>
-                        <Th></Th>
+                        <Th>
+                            <Input
+                            variant='flushed'
+                            fontSize={13}
+                            placeholder="Filtrar por fechaNacimiento"
+                            name="fechaNacimiento"
+                            value={filters.fechaNacimiento}
+                            onChange={handleFilterChange}
+                            />
+                        </Th>
+                        <Th>
+                            <Input
+                            variant='flushed'
+                            fontSize={13}
+                            placeholder="Filtrar por lugarNacimiento"
+                            name="lugarNacimiento"
+                            value={filters.lugarNacimiento}
+                            onChange={handleFilterChange}
+                            />
+                        </Th>
+                        <Th>
+                            <Input
+                            variant='flushed'
+                            fontSize={13}
+                            placeholder="Filtrar por premios"
+                            name="premios"
+                            value={filters.premios}
+                            onChange={handleFilterChange}
+                            />
+                        </Th>
                         </Tr>
                     )}
-                    <Tr mt={8}>
-                        <Th textAlign="center" fontSize={15}>Foto</Th>
-                        <Th textAlign="center" fontSize={15}>Nombre</Th>
-                        <Th textAlign="center" fontSize={15}>Pais</Th>
-                        <Th textAlign="center" fontSize={15}>Contacto</Th>
-                        <Th textAlign="center" fontSize={15}>Acciones</Th>
+                    <Tr mt={8} >
+                        <Th p={2} textAlign="center" fontSize={13} width="10%">Foto</Th>
+                        <Th p={2} textAlign="center" fontSize={13}>Nombre</Th>
+                        <Th p={2} textAlign="center" fontSize={13}>Pais</Th>
+                        <Th p={2} textAlign="center" fontSize={13}>Contacto</Th>
+                        <Th p={2} textAlign="center" fontSize={13}>FechaNacimiento</Th>
+                        <Th p={2} textAlign="center" fontSize={13}>LugarNacimiento</Th>
+                        <Th p={2} textAlign="center" fontSize={13}>Premios</Th>
+                        <Th p={2} textAlign="center" fontSize={13}>Acciones</Th>
                     </Tr>
                     </Thead>
                     <Tbody>
                     {filteredEscultor.map((escultor, index) => (
                         <Tr key={index} >
-                        <Td textAlign="center" display="flex" justifyContent="center" >
+                        <Td p={2} textAlign="center"  >
                         <Image 
                             src={escultor.foto} 
-                            alt={escultor.nombre} 
-                            // width="100px" 
-                            // height="100%" 
-                            boxSize={["80px"]}
-                            // objectFit="contain" 
+                         
+                            alt={escultor.nombre}  
+                            boxSize={["90px"]}
+                            //width="80px" 
+                            //height="80px" 
+                            objectFit="cover" 
+
                             borderRadius="full"
                         />
                         </Td>
-                        <Td textAlign="center">{escultor.nombre}</Td>
-                        <Td textAlign="center">{escultor.pais}</Td>
-                        <Td textAlign="center">{escultor.contacto}</Td>
-                        <Td>
+                        <Td p={2} textAlign="center" fontSize={14} >{escultor.nombre}</Td>
+                        <Td p={2} textAlign="center" fontSize={14}>{escultor.pais}</Td>
+                        <Td p={2} textAlign="center" fontSize={14}>{escultor.contacto}</Td>
+                        <Td p={2} textAlign="center" fontSize={14}>{escultor.fechaNacimiento}</Td>
+                        <Td p={2} textAlign="center" fontSize={14}>{escultor.lugarNacimiento}</Td>
+                        <Td p={1} textAlign="center" fontSize={13} maxWidth={300}>{escultor.premios}</Td>
+                        <Td p={2}>
+                            
                             <Flex gap={2} justifyContent="center" alignItems="center">
                             <IconButton
                                 aria-label="Editar"
