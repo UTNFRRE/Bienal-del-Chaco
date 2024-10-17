@@ -1,11 +1,12 @@
 import { Box, Table, Thead, Tbody, Tr, Th, Td, Flex, Text, IconButton, Button, Input} from '@chakra-ui/react';
 import { EditIcon, DeleteIcon, AddIcon, SearchIcon } from '@chakra-ui/icons'; 
-import Eventos from '../../API/Admin/Eventos';
+import { getEventos, addEvento, editEvento, deleteEvento} from '../../API/Admin/Eventoss';
 import {useState , useEffect} from 'react';
 import { useDisclosure } from '@chakra-ui/react';
 import ModalConfirmar from '../Modal/ConfirmarCambios';
 import ModalAgregarEvento from '../Modal/AgregarEvento';
 import ModalEditarEvento from '../Modal/EditarEvento';
+import { SiTheregister } from 'react-icons/si';
 
 // Agregar paginacion
 // La parte de filtrado robe de por ahi, asi que ignoren nms eso por ahora
@@ -15,7 +16,8 @@ function TablaEventos () {
     const [eventos, setEventos] = useState<any[]>([]); //se usa una variable de estado para guardar los eventos, esta variable es del tipo any (objeto)
     const [filteredEventos, setFilteredEventos] = useState<any[]>([]);
     const [EventoElegido, setEventoElegido] = useState<any>(); //se usa una variable de estado para guardar el evento que se quiere eliminar o editar
-    
+    const [refresh, setRefresh] = useState(false);
+
     // isopen, onopen y onclose son funciones que se usan para abrir y cerrar cada modal
     const { 
         isOpen: isOpenDelete, 
@@ -35,7 +37,7 @@ function TablaEventos () {
     
 
     const [filters, setFilters] = useState({
-        titulo: '',
+        nombre: '',
         lugar: '',
         tematica: '',
         descripcion: '',
@@ -44,15 +46,26 @@ function TablaEventos () {
     const [MostrarFiltros, setMostrarFiltros] = useState(false);
 
     useEffect(() => {
-        setEventos(Eventos)   //esto se hace dentro de un useeffect para que se ejecute solo una vez, en este caso cuando se recarga la pagina
-        setFilteredEventos(Eventos);
-    }, [])
+      const fetchEventos = async () => {
+        try {
+          const data = await getEventos(); // se hace la solicitud a la api para obtener los eventos
+          console.log(data);
+          setEventos(data);
+          setFilteredEventos(data);
+        } catch (error) {
+        console.error('Error fetching eventos:', error);
+        }
+      };
+
+      fetchEventos();
+    }, [refresh]);
+
 
     // filtros
     useEffect(() => {
         setFilteredEventos(
           eventos.filter(evento =>
-            evento.titulo.toLowerCase().includes(filters.titulo.toLowerCase()) &&
+            evento.nombre.toLowerCase().includes(filters.nombre.toLowerCase()) &&
             evento.lugar.toLowerCase().includes(filters.lugar.toLowerCase()) &&
             evento.tematica.toLowerCase().includes(filters.tematica.toLowerCase()) &&
             evento.descripcion.toLowerCase().includes(filters.descripcion.toLowerCase()) &&
@@ -85,28 +98,47 @@ function TablaEventos () {
 
     // funcion que se pasa como parametro al modal de confirmar cambios, y se llama dentro del modal llama cuando se selecciona confirmar
     const handleConfirmarDelete = async () => {
-          setEventos((prevEventos) =>
-            prevEventos.filter((m) => m.id !== EventoElegido.id)
-          ); // Elimina del json el evento elegido
+          const DeleteObra = async () => {
+            try{
+              if(EventoElegido){
+                await deleteEvento(EventoElegido.id);
+                setRefresh(!refresh);
+              }
+            }catch (error){
+              console.error('Error al eliminar evento:', error);
+            }
+          };
+          DeleteObra();
 
         onCloseDelete();
+        
     };
 
-    const handleConfirmarAdd = async (titulo:string, lugar:string, tematica:string, descripcion:string, fecha:string) => {
+    const handleConfirmarAdd = async (nombre:string, lugar:string, tematica:string, descripcion:string, fecha:string, longitud:number, latitud:number) => {
       // Aca se hace el llamado a la funcion de la api que agrega un evento
       // Agregar el evento al json
-      setEventos((prevEventos) => [
-        ...prevEventos,
-        {
-          id: prevEventos.length + 1,
-          titulo: titulo,
-          lugar: lugar,
-          tematica: tematica,
-          descripcion: descripcion,
-          fecha: fecha,
-        },
-      ]);
-      onCloseAdd();
+      // setEventos((prevEventos) => [
+      //   ...prevEventos,
+      //   {
+      //     id: prevEventos.length + 1,
+      //     nombre: nombre,
+      //     lugar: lugar,
+      //     tematica: tematica,
+      //     descripcion: descripcion,
+      //     fecha: fecha,
+      //   },
+      // ]);
+
+      const PostEvento = async () => {
+        try {
+          await addEvento(nombre, fecha, lugar, descripcion, tematica, longitud, latitud);
+          setRefresh(!refresh);
+        } catch (error) {
+          console.error('Error al agregar evento:', error);
+        }
+      };
+        PostEvento();
+        onCloseAdd();
     };
 
     const handleEditar = (evento:any) => {
@@ -114,23 +146,36 @@ function TablaEventos () {
       onOpenEdit();
     };
     
-    const handleConfirmarEdit = async (titulo:string, lugar:string, tematica:string, descripcion:string, fecha:string) => {
+    const handleConfirmarEdit = async (nombre:string, lugar:string, tematica:string, descripcion:string, fecha:string, longitud: number, latitud:number) => {
       // Aca se hace el llamado a la funcion de la api que edita un evento
       // Editar el evento en el json
-      setEventos((prevEventos) =>
-        prevEventos.map((m) =>
-          m.id === EventoElegido.id
-            ? {
-                ...m,
-                titulo: titulo,
-                lugar: lugar,
-                tematica: tematica,
-                descripcion: descripcion,
-                fecha: fecha,
-              }
-            : m
-        )
-      );
+      // setEventos((prevEventos) =>
+      //   prevEventos.map((m) =>
+      //     m.id === EventoElegido.id
+      //       ? {
+      //           ...m,
+      //           nombre: nombre,
+      //           lugar: lugar,
+      //           tematica: tematica,
+      //           descripcion: descripcion,
+      //           fecha: fecha,
+      //         }
+      //       : m
+      //   )
+      // );
+
+      const PutEvento = async () => {
+        try {
+          if(EventoElegido){
+            await editEvento(EventoElegido.id, nombre, fecha, lugar, descripcion, tematica, longitud, latitud);
+            setRefresh(!refresh);
+          }
+        }catch (error){
+          console.error('Error al editar evento:', error);
+        }
+      };
+
+      PutEvento();
       onCloseEdit();
     };
 
@@ -169,9 +214,9 @@ function TablaEventos () {
                         <Th>
                           <Input
                             variant='flushed'
-                            placeholder="Filtrar por Titulo"
-                            name="titulo"
-                            value={filters.titulo}
+                            placeholder="Filtrar por Nombre"
+                            name="nombre"
+                            value={filters.nombre}
                             onChange={handleFilterChange}
                           />
                         </Th>
@@ -216,7 +261,7 @@ function TablaEventos () {
                       </Tr>
                     )}
                     <Tr mt={6}>
-                      <Th textAlign="center">Titulo</Th>
+                      <Th textAlign="center">Nombre</Th>
                       <Th textAlign="center">Lugar</Th>
                       <Th textAlign="center">Tematica</Th>
                       <Th textAlign="center" minW="300px">Descripcion</Th>
@@ -227,7 +272,7 @@ function TablaEventos () {
                   <Tbody>
                     {filteredEventos.map((evento, index) => (
                       <Tr key={index} >
-                        <Td textAlign="center">{evento.titulo}</Td>
+                        <Td textAlign="center">{evento.nombre}</Td>
                         <Td textAlign="center">{evento.lugar}</Td>
                         <Td textAlign="center">{evento.tematica}</Td>
                         <Td textAlign="center">{truncateText(evento.descripcion, 40)}</Td>
@@ -265,7 +310,7 @@ function TablaEventos () {
         <ModalConfirmar
         isOpen={isOpenDelete}
         onClose={onCloseDelete}
-        texto={`¿Estás seguro que deseas eliminar ${EventoElegido?.titulo}?`}
+        texto={`¿Estás seguro que deseas eliminar ${EventoElegido?.nombre}?`}
         confirmar={handleConfirmarDelete}
         />
         <ModalAgregarEvento

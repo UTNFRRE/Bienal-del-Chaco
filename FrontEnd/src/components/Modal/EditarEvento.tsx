@@ -20,7 +20,7 @@ import {
   interface ModalComponentProps {
     isOpen: boolean;
     onClose: () => void;
-    confirmar: (titulo:string, lugar:string, tematica: string, descripcion:string, fecha: string) => void;
+    confirmar: (nombre:string, lugar:string, tematica: string, descripcion:string, fecha: string, longitud:number, latitud:number) => void;
     evento: any;
   }
 
@@ -29,17 +29,17 @@ import {
 export default function ModalEditarEvento({ isOpen, onClose, confirmar, evento, }: ModalComponentProps) {
    
     const handleconfirmar = () => {
-      confirmar(titulo, lugar, tematica, descripcion, fecha);
+      confirmar(nombre, lugar, tematica, descripcion, fecha, longitud ?? -58.981256488503035, latitud ?? -27.43757052684891); // -58.981256488503035, -27.43757052684891 son las coordenadas de Resistencia, Chaco
       onClose();
     };
 
     // funcion para validar que los campos no esten vacios
     const isFormValid = () => {
-        return (titulo.trim() !== '') && (lugar.trim() !== '') && (tematica.trim() !== '') && (fecha.trim() !== '');
+        return (nombre.trim() !== '') && (lugar.trim() !== '') && (tematica.trim() !== '') && (fecha.trim() !== '');
     };
 
 
-    const [titulo, setTitulo] = useState('');
+    const [nombre, setTitulo] = useState('');
     const [lugar, setLugar] = useState('');
     const [tematica, setTematica] = useState('');
     const [descripcion, setDescripcion] = useState('');
@@ -50,7 +50,7 @@ export default function ModalEditarEvento({ isOpen, onClose, confirmar, evento, 
     // la diferencia de este modal con el de agregar es que las variables de estado se inicializan con los valores del evento
     useEffect(() => {
         if (evento) {
-        setTitulo(evento.titulo);
+        setTitulo(evento.nombre);
         setLugar(evento.lugar);
         setTematica(evento.tematica);
         setDescripcion(evento.descripcion);
@@ -67,7 +67,7 @@ export default function ModalEditarEvento({ isOpen, onClose, confirmar, evento, 
       setLugar(address);
     };
   
-    const handleKeyPress = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key === 'Enter') {
         const address = lugar;
         if (address) {
@@ -96,20 +96,20 @@ export default function ModalEditarEvento({ isOpen, onClose, confirmar, evento, 
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent maxW="700px">
-            <ModalHeader>Editar {evento.titulo}</ModalHeader>
+            <ModalHeader>Editar {evento.nombre}</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
             <FormControl isRequired>
               <Stack gap={7}>
                 <Stack direction="row" gap={5} w="100%">
                     <Box>
-                        <FormLabel mb={0}>Titulo</FormLabel>
+                        <FormLabel mb={0}>Nombre</FormLabel>
                         <Input
                         placeholder=""
                         size="md"
                         variant="Unstyled"
                         borderWidth={1}
-                        value={titulo}
+                        value={nombre}
                         flex={1}
                         onChange={(e) => setTitulo(e.target.value)}
                     />
@@ -123,7 +123,7 @@ export default function ModalEditarEvento({ isOpen, onClose, confirmar, evento, 
                           borderWidth={1}
                           value={lugar}
                           onChange={handlePlaceChange}
-                          onKeyPress={handleKeyPress}
+                          onKeyDown={handleKeyDown}
                           style={{ width: '100%', height: '64%' }}
                         />
                     </Box>
