@@ -80,7 +80,7 @@ export const editEscultor = async (id:string, Nombre:string, fechaNacimiento:str
 // Eliminar un escultor
 export const deleteEscultor = async (id: string) => {
     try {
-        const response = await fetch(`${API_URL}/Escultores/${id}`, {
+        const response = await fetch(`${API_URL}/Escultor/${id}`, {
             method: 'DELETE',
         });
         if (response.ok) {

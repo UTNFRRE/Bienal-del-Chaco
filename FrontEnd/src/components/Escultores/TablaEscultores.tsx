@@ -98,7 +98,7 @@ function TablaEscultores () {
         });
     };
 
-    const handleDelete = (escultor:any) => {
+    const handleDelete = (escultor:Escultor) => {
     setEscultorElegido(escultor);
     onOpenDelete()
     }
@@ -374,12 +374,12 @@ const handleConfirmarAdd = async (nombre: string, foto: File, Pais: string, cont
         onClose={onCloseAdd}
         confirmar={handleConfirmarAdd}
         /> 
-        <ModalEditarEscultor
+        {/* <ModalEditarEscultor
         isOpen={isOpenEdit}
         onClose={onCloseEdit}
         confirmar={handleConfirmarEdit}
         escultor={EscultorElegido}
-        />
+        /> */}
     </>
         )
     }
