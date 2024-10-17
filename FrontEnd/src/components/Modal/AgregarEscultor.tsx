@@ -46,7 +46,7 @@ export default function ModalAgregarEscultor({ isOpen, onClose, confirmar }: Mod
     };
 
     const isFormValid = () => {
-        return nombre.trim() !== '' && Pais.trim() !== '' && contacto.trim() !== '' && fechaNacimiento.trim() !== '' && lugarNacimiento.trim() !== '' && premios.trim() !== '';
+        return nombre.trim() !== '' && Pais.trim() !== '' && contacto.trim() !== '' && fechaNacimiento.trim() !== '' && lugarNacimiento.trim() !== '' && premios.trim() !== '' && foto;
     };
 
     // useEffect(() => {
