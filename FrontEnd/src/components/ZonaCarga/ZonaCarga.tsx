@@ -1,6 +1,6 @@
 import { useDropzone , FileRejection} from 'react-dropzone';
 import { Flex, Box, VStack, useToast, Stack, SimpleGrid, IconButton } from '@chakra-ui/react';
-import { useState, useCallback } from 'react';
+import { useState, useEffect ,useCallback } from 'react';
 import { HiOutlineDocumentAdd } from "react-icons/hi";
 import { CloseIcon } from '@chakra-ui/icons';
 
