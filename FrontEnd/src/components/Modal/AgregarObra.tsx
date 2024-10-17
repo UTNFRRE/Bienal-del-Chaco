@@ -81,7 +81,7 @@ function AgregarObra({isOpen, onClose, confirmar}: ModalProps) {
         setDescripcion('');
         setFecha('');
 
-    }, []);
+    }, [isOpen]);
 
     const handleFilesChange = (files: File[]) => {
         setImagen(files[0]);
