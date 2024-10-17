@@ -161,7 +161,6 @@ function TablaObras() {
               {mostrarFiltros ? 'Ocultar Filtros' : 'Filtrar'}
             </Button>
           </Flex>
-
           <Box bg="secundaryBg" p={6} boxShadow="md" w="80%" borderWidth={1} borderColor={"secundaryHover"}>
             {obras.length > 0 ? (
               <Table variant="striped" colorScheme="secundaryBg" width="100%">
@@ -208,13 +207,12 @@ function TablaObras() {
                     <Th textAlign="center" fontSize={15}>Acciones</Th>
                   </Tr>
                 </Thead>
-
                 <Tbody>
                   {filteredObras.map((obra, index) => (
                     <Tr key={index} mt={1} mb={1} p={1}>
-                      <Td textAlign="center" display="flex" justifyContent="center">
-                        <Image src={obra.imagenes} alt={obra.nombre} width="100px" height="100%" objectFit="contain" />
-                      </Td>
+                        <Td textAlign="center" display="flex" justifyContent="center">
+                        <Image src={obra.imagenes} alt={obra.nombre} width="100px" height="auto" maxHeight="150px" objectFit="contain" />
+                        </Td>
                       <Td textAlign="center">{obra.nombre}</Td>
                       <Td textAlign="center">{obra.descripcion}</Td>
                       <Td textAlign="center">{obra.escultorID}</Td>
