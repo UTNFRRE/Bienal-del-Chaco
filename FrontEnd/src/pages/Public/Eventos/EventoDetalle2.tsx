@@ -11,18 +11,18 @@ import marcador from '../../../components/icons/marcador.png';
 
 interface Evento {
   id: string;
-  titulo: string;
+  nombre: string;
   fecha: string;
-  descripcion: string;
   lugar: string;
+  descripcion: string;
   tematica: string;
   latitud: number;
   longitud: number;
 }
 
 const mapContainerStyle = {
-  height: "500px",
-  width: "900px",
+  height: "520px",
+  width: "920px",
 };
 
 const googleMapsApiKey = "AIzaSyB6cFwxUytgrCP9pqTTEIiLMm477qpJjPs"; 
@@ -43,6 +43,7 @@ if (!id) {
       try {
         const eventoData = await getEventosId(id); // Llamada a la API para obtener el evento por ID
         setEvento(eventoData);
+        console.log(eventoData);
       } catch (err) {
         setError("Evento no encontrado");
       } finally {
@@ -97,25 +98,6 @@ if (!id) {
     strokeWeight: 1,
   };
 
-  //const mapRef = useRef(null);
-
-  {/*useEffect(() => {
-    if (map) {
-      const iconoMarcador = {
-        url: marcador,
-        scaledSize: new window.google.maps.Size(70, 70), 
-        origin: new window.google.maps.Point(0, 0),
-        anchor: new window.google.maps.Point(20, 40),
-      };
-
-      const beachMarker = new google.maps.Marker({
-        position: { lat: evento.latitud, lng: evento.longitud },
-        map,
-        icon: iconoMarcador,
-      });
-    }
-  }, [map]);*/}
-
   return (
     <Flex direction={"row"} gap={4}>
       <Flex mt={6}>
@@ -133,7 +115,7 @@ if (!id) {
       </Flex>
       <Flex direction={"column"} gap={5} alignItems={"center"} flex={1} mt={6}>
         <Flex direction={"column"} gap={1} textAlign={"center"}>
-        <Heading>{evento.titulo}</Heading>
+        <Heading>{evento.nombre}</Heading>
         <Text as={"i"}>{evento.tematica}</Text>
         </Flex>
         <Flex>
