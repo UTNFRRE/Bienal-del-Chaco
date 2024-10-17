@@ -15,8 +15,7 @@ import {
     FormControl 
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import ZonaCargaEscultor from '../ZonaCarga/ZonaCargaEscultor';
-import DropZone from '../ZonaCarga/ZonaCargaEscultor';
+import ZonaCarga from '../ZonaCarga/ZonaCarga';
 interface ModalComponentProps {
     isOpen: boolean;
     onClose: () => void;
@@ -156,7 +155,7 @@ export default function ModalAgregarEscultor({ isOpen, onClose, confirmar }: Mod
                                     />
                                 </Box>
                             </Stack>
-                            <DropZone maxFiles={1}  onFilesChange={handleFilesChange}/> {/* Limita a 1 una foto */}
+                            <ZonaCarga maxFiles={1}  onFilesChange={handleFilesChange}/> {/* Limita a 1 una foto */}
                         </Stack>
                     </FormControl>
                 </ModalBody>
