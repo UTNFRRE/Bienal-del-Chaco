@@ -4,7 +4,7 @@ const API_URL = 'http://localhost:5232';
 
 export const getEventos = async () => {
     try {
-        const response = await fetch(`${API_URL}/Eventos/GetAll`);
+        const response = await fetch(`${API_URL}/Eventos`);
         if (response.ok) {
             const data = await response.json();
             return data;
@@ -30,7 +30,7 @@ export const addEvento = async ( Nombre: string, Fecha: string,  Lugar: string, 
     
 
     try {
-        const response = await fetch(`${API_URL}/Eventos/Create`, {
+        const response = await fetch(`${API_URL}/Eventos`, {
             method: 'POST',
             body: formData,
         });
@@ -58,7 +58,7 @@ export const editEvento = async (Id:string, Nombre: string, Fecha: string,  Luga
     formData.append('Tematica', Tematica);
 
     try {
-        const response = await fetch(`${API_URL}/Eventos/Update?id=${Id}`, {
+        const response = await fetch(`${API_URL}/Eventos/${Id}`, {
             method: 'PUT',
             body: formData,
         });
@@ -78,7 +78,7 @@ export const editEvento = async (Id:string, Nombre: string, Fecha: string,  Luga
 
 export const deleteEvento = async (Id:string) => {
     try {
-        const response = await fetch(`${API_URL}/Eventos/Delete?id=${Id}`, {
+        const response = await fetch(`${API_URL}/Eventos/${Id}`, {
             method: 'DELETE',
         });
         if (response.ok) {
