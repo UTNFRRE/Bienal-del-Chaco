@@ -27,7 +27,9 @@ import {
       tematica: string,
       descripcion: string,
       // por ahora lo dejo como string, pero deberia ser un objeto Date
-      fecha: string
+      fecha: string,
+      longitud: number,
+      latitud: number
     ) => void;
   }
   export default function ModalAgregarEvento({ isOpen, onClose, confirmar, }: ModalComponentProps) {
@@ -48,9 +50,10 @@ import {
       setLugar(address);
     };
   
-    const handleKeyPress = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const handleKeyUp = async (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key === 'Enter') {
         const address = lugar;
+        console.log('Address', address);
         if (address) {
           const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&components=locality:Resistencia|administrative_area:Chaco|country:AR&key=${googleMapsApiKey}`);
           const data = await response.json();
@@ -72,8 +75,9 @@ import {
     };
 
     const handleconfirmar = () => {
+      
         // llamo a la funcion que se paso como parametro y le paso los valores de los inputs
-      confirmar(titulo, lugar, tematica, descripcion, fecha);
+        confirmar(titulo, lugar, tematica, descripcion, fecha, longitud ?? -58.981256488503035, latitud ?? -27.43757052684891) //coordenadas de la bienal QUE CHILLEEE
 
       // cierro el modal
       onClose();
@@ -93,7 +97,6 @@ import {
         setFecha('');
     }, [isOpen]);
 
-  
     return (
         <Modal isOpen={isOpen} onClose={onClose} >
           <ModalOverlay />
@@ -125,7 +128,7 @@ import {
                         borderWidth={1}
                         value={lugar}
                         onChange={handlePlaceChange}
-                        onKeyPress={handleKeyPress}
+                        onKeyUp={handleKeyUp}
                         style={{ width: '100%', height: '64%' }}
                       />
                     </Box>
