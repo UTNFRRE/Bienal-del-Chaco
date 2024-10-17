@@ -15,45 +15,49 @@ import {
     FormControl 
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import ZonaCargaEscultor from '../ZonaCarga/ZonaCargaEscultor';
+import ZonaCarga from '../ZonaCarga/ZonaCarga';
 interface ModalComponentProps {
     isOpen: boolean;
     onClose: () => void;
-    confirmar: (fotoPreview: string, nombre: string, pais: string, contacto: string, fechaNacimiento:string,  lugarNacimiento:string, premios: string) => void;
+    confirmar: (nombre: string, foto: File, Pais: string, contacto: string ) => void;
 }
 
 export default function ModalAgregarEscultor({ isOpen, onClose, confirmar }: ModalComponentProps) {
-    const [foto, setFoto] = useState<string | null>(null);
+    const [foto, setFoto] = useState<File>();
     const [nombre, setNombre] = useState('');
-    const [pais, setPais] = useState('');
+    const [Pais, setPais] = useState('');
     const [contacto, setContacto] = useState('');
     const [fechaNacimiento, setFechaNacimiento] = useState('');
     const [lugarNacimiento, setLugarNacimiento] = useState('');
     const [premios, setPremios] = useState('');
 
-    const handleFotoChange = (fotoData: string) => {
-        setFoto(fotoData);
+    // const handleFotoChange = (fotoData: string) => {
+    //     setFoto(fotoData);
+    // };
+    const handleFilesChange = (files: File[]) => {
+        setFoto(files[0]);
+        console.log('La imagen es' + files[0]);
     };
-
     // Función para manejar la confirmación
     const handleConfirmar = () => {
-        confirmar(foto || '', nombre, pais, contacto, fechaNacimiento, lugarNacimiento, premios);
+        
+        if(foto){confirmar(nombre, foto, Pais, contacto );}
         onClose();
     };
 
     const isFormValid = () => {
-        return nombre.trim() !== '' && pais.trim() !== '' && contacto.trim() !== '' && fechaNacimiento.trim() !== '' && lugarNacimiento.trim() !== '' && premios.trim() !== '';
+        return nombre.trim() !== '' && Pais.trim() !== '' && contacto.trim() !== '' && fechaNacimiento.trim() !== '' && lugarNacimiento.trim() !== '' && premios.trim() !== '' && foto;
     };
 
-    useEffect(() => {
-        setNombre('');
-        setPais('');
-        setContacto('');
-        setFoto(null);
-        setFechaNacimiento('');
-        setLugarNacimiento('');
-        setPremios('');
-    }, [isOpen]);
+    // useEffect(() => {
+    //     setNombre('');
+    //     setPais('');
+    //     setContacto('');
+    //     setFoto();
+    //     setFechaNacimiento('');
+    //     setLugarNacimiento('');
+    //     setPremios('');
+    // }, [isOpen]);
 
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
@@ -89,7 +93,7 @@ export default function ModalAgregarEscultor({ isOpen, onClose, confirmar }: Mod
                                         borderWidth={1}
                                         width={315}
                                         flex={1}
-                                        value={pais}
+                                        value={Pais}
                                         onChange={(e) => setPais(e.target.value)}
                                     />
                                 </Box>
@@ -151,7 +155,7 @@ export default function ModalAgregarEscultor({ isOpen, onClose, confirmar }: Mod
                                     />
                                 </Box>
                             </Stack>
-                            <ZonaCargaEscultor maxFiles={1} handleFotoChange={handleFotoChange}/>  {/* Limita a 1 una foto */}
+                            <ZonaCarga maxFiles={1}  onFilesChange={handleFilesChange}/> {/* Limita a 1 una foto */}
                         </Stack>
                     </FormControl>
                 </ModalBody>

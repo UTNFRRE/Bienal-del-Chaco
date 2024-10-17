@@ -7,12 +7,25 @@ import ModalConfirmar from '../Modal/ConfirmarCambios';
 import ModalAgregarEscultor from '../Modal/AgregarEscultor';
 import ModalEditarEscultor from '../Modal/EditarEscultor';
 
+import { getEscultor, addEscultor, deleteEscultor, editEscultor} from '../../API/Admin/Escultores';
+
+interface Escultor {
+    id: number,
+    nombre:  string,
+    fechaNacimiento: string,
+    lugarNacimiento: string,
+    premios: string,
+    foto: string,
+    pais: string
+    contacto: string
+  }
 
 function TablaEscultores () {
 
-    const [escultores, setEscultores] = useState<any[]>([]);
-    const [filteredEscultor, setFilteredEscultor] = useState<any[]>([]);
-    const [EscultorElegido, setEscultorElegido] = useState<any>();
+    const [escultores, setEscultores] = useState<Escultor[]>([]);
+    const [filteredEscultor, setFilteredEscultor] = useState<Escultor[]>([]);
+    const [EscultorElegido, setEscultorElegido] = useState<Escultor>();
+    const [refresh, setRefresh] = useState(false);
 
     // isopen, onopen y onclose son funciones que se usan para abrir y cerrar cada modal
     const {
@@ -46,24 +59,35 @@ function TablaEscultores () {
 
 
     useEffect(() => {
-        setEscultores(TEscultores)  
-        setFilteredEscultor(TEscultores);
-    }, [])
+        const fetchEscultores = async () => {
+          try {
+            const data = await getEscultor();
+            console.log(data);
+            setEscultores(data);
+            setFilteredEscultor(data);
+          } catch (error) {
+            console.error('Error en el fetch de escultores:', error);
+          }
+        };
+      
+        fetchEscultores();
+      }, [refresh]);
 
-    useEffect(() => {
-        setFilteredEscultor(
-        escultores.filter(escultor =>
-            escultor.foto.toLowerCase().includes(filters.foto.toLowerCase()) &&
-            escultor.nombre.toLowerCase().includes(filters.nombre.toLowerCase()) &&
-            escultor.pais.toLowerCase().includes(filters.pais.toLowerCase()) &&
-            escultor.contacto.toLowerCase().includes(filters.contacto.toLowerCase()) &&
-            escultor.fechaNacimiento.toLowerCase().includes(filters.fechaNacimiento.toLowerCase()) &&
-            escultor.lugarNacimiento.toLowerCase().includes(filters.lugarNacimiento.toLowerCase()) &&
-            (Array.isArray(escultor.premios) ? escultor.premios.join(', ') : 
-            (escultor.premios || '')).toLowerCase().includes(filters.premios.toLowerCase())
-        )
-        );
-    }, [filters, escultores]);
+    
+  //  useEffect(() => {
+//    setFilteredEscultor(
+  //      escultores.filter(escultor =>
+  //          escultor.foto.toLowerCase().includes(filters.foto.toLowerCase()) &&
+  //          escultor.nombre.toLowerCase().includes(filters.nombre.toLowerCase()) &&
+  //          escultor.pais.toLowerCase().includes(filters.pais.toLowerCase()) &&
+  //          escultor.contacto.toLowerCase().includes(filters.contacto.toLowerCase()) &&
+  //          escultor.fechaNacimiento.toLowerCase().includes(filters.fechaNacimiento.toLowerCase()) &&
+  //          escultor.lugarNacimiento.toLowerCase().includes(filters.lugarNacimiento.toLowerCase()) &&
+  //          (Array.isArray(escultor.premios) ? escultor.premios.join(', ') : 
+  //          (escultor.premios || '')).toLowerCase().includes(filters.premios.toLowerCase())
+  //      )
+  //      );
+  //  }, [filters, escultores]);
    
     // funcion para manejar los cambios en los filtros
     const handleFilterChange = (e:any) => {
@@ -74,68 +98,117 @@ function TablaEscultores () {
         });
     };
 
-    const handleDelete = (escultor:any) => {
+    const handleDelete = (escultor:Escultor) => {
     setEscultorElegido(escultor);
     onOpenDelete()
     }
 
 
-    const handleConfirmarDelete = async () => {
-        setEscultores((prevEscultores) =>
-            prevEscultores.filter((m) => m !== EscultorElegido)
-        ); 
+    //const handleConfirmarDelete = async () => {
+    //    setEscultores((prevEscultores) =>
+    //        prevEscultores.filter((m) => m !== EscultorElegido)
+   //     ); 
 
 
-        onCloseDelete();
+    //    onCloseDelete();
+   // };
+
+   const handleConfirmarDelete = async () => {
+
+    const DeleteEscultor = async () => {
+      try {
+        if (EscultorElegido) {
+          await deleteEscultor((EscultorElegido.id).toString());
+          setRefresh(!refresh);
+        }
+      } catch (error) {
+        console.error('Error en el fetch de escultores:', error);
+      }
     };
+    DeleteEscultor();
+    onCloseDelete();
+  };
 
-
-    const handleConfirmarAdd = async (foto:string, nombre:string, pais:string, contacto:string, fechaNacimiento:string, lugarNacimiento:string, premios:string) => {
+   // const handleConfirmarAdd = async (foto:string, nombre:string, pais:string, contacto:string, fechaNacimiento:string, lugarNacimiento:string, premios:string) => {
       // Aca se hace el llamado a la funcion de la api que agrega un escultor
       // Agregar el escultor al json
-    setEscultores((prevEscultores) => [
-        ...prevEscultores,
-        {
-            foto: foto,
-            nombre: nombre,
-            pais: pais,
-            contacto: contacto,
-            fechaNacimiento: fechaNacimiento,
-            lugarNacimiento: lugarNacimiento,
-            premios: premios,
-        },
-    ]);
-    onCloseAdd();
+    //setEscultores((prevEscultores) => [
+      //  ...prevEscultores,
+      //  {
+      //      foto: foto,
+      //      nombre: nombre,
+      //      pais: pais,
+      //      contacto: contacto,
+      //      fechaNacimiento: fechaNacimiento,
+      //      lugarNacimiento: lugarNacimiento,
+      //      premios: premios,
+      //  },
+  //  ]);
+//  onCloseAdd();
+//    };
+
+const handleConfirmarAdd = async (nombre: string, foto: File, Pais: string, contacto: string ) => {
+
+
+    const PostEscultor = async () => {
+      try {
+        await addEscultor(nombre, foto, Pais, contacto);
+        setRefresh(!refresh);
+      } catch (error) {
+        console.error('Error en el fetch de escultores:', error);
+      }
     };
+    PostEscultor();
+    onCloseAdd();
+  };
+
 
     const handleEditar = (escultor:any) => {
     setEscultorElegido(escultor);
     onOpenEdit();
     };
 
-    const handleConfirmarEdit = async (foto:string, nombre:string, pais:string, contacto:string, fechaNacimiento:string, lugarNacimiento:string, premios:string) => {
+    //const handleConfirmarEdit = async (foto:string, nombre:string, pais:string, contacto:string, fechaNacimiento:string, lugarNacimiento:string, premios:string) => {
       // Aca se hace el llamado a la funcion de la api que edita un escultor
       // Edita el escultor en el json
-    setEscultores((prevEscultores) =>
-        prevEscultores.map((m) =>
-        m === EscultorElegido
-            ? {
-                ...m,
-                foto: foto,
-                nombre: nombre,
-                pais: pais,
-                contacto: contacto,
-                fechaNacimiento: fechaNacimiento,
-                lugarNacimiento: lugarNacimiento,
-                premios: premios,
-            }
-            : m
-        )
-    );
-    onCloseEdit();
+ //   setEscultores((prevEscultores) =>
+ //       prevEscultores.map((m) =>
+ //       m === EscultorElegido
+ //           ? {
+ //               ...m,
+ //               foto: foto,
+ //               nombre: nombre,
+//              pais: pais,
+//                contacto: contacto,
+//                fechaNacimiento: fechaNacimiento,
+//                lugarNacimiento: lugarNacimiento,
+//                premios: premios,
+//            }
+//            : m
+ //       )
+ //   );
+ //   onCloseEdit();
+ //   };
+
+ const handleConfirmarEdit = async (Nombre:string, fechaNacimiento:string, lugarNacimiento:string, premios:string, obras:string,  foto: File | string) => {
+   
+    const PutEscultor = async () => {
+      try {
+        if (EscultorElegido) {
+          await editEscultor((EscultorElegido.id).toString(), Nombre, fechaNacimiento, lugarNacimiento, premios, obras, foto);
+        }
+      } catch (error) {
+        console.error('Error en el fetch de escultores:', error);
+      }
     };
+    PutEscultor();
+    onCloseEdit();
+  };
 
 
+
+
+ 
     return (
         <>
             <Flex
@@ -300,13 +373,13 @@ function TablaEscultores () {
         isOpen={isOpenAdd}
         onClose={onCloseAdd}
         confirmar={handleConfirmarAdd}
-        />
-        <ModalEditarEscultor
+        /> 
+        {/* <ModalEditarEscultor
         isOpen={isOpenEdit}
         onClose={onCloseEdit}
         confirmar={handleConfirmarEdit}
         escultor={EscultorElegido}
-        />
+        /> */}
     </>
         )
     }

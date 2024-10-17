@@ -29,10 +29,10 @@ interface ModalProps {
         titulo:string, 
         tematica:string, 
         fecha:string, 
-        autor:string, 
+        autor:number, 
         paisAutor:string, 
         descripcion:string, 
-        imagenes: string[], 
+        imagenes: string | File, 
     ) => void;
     evento: any;
 }
@@ -42,8 +42,9 @@ function ModificarObra({isOpen, onClose, confirmar, evento}: ModalProps) {
     const [titulo, setTitulo] = useState('');  
     const [tematica, setTematica] = useState('');
     const [escultorPais, setEscultorPais] = useState('');
-    const [imagen, setImagen] = useState<string[]>(['']); // Como recupero la ruta de la imagen?
-    const [autor, setAutor] = useState('');
+    const [imagenPrev, setImagenPrev] = useState<string>('');
+    const [imagen, setImagen] = useState<string | File>(''); // Como recupero la ruta de la imagen?
+    const [autor, setAutor] = useState<number>(0);
     const [descripcion, setDescripcion] = useState('');
     const [fecha, setFecha] = useState('');
 
@@ -60,22 +61,28 @@ function ModificarObra({isOpen, onClose, confirmar, evento}: ModalProps) {
     }, []);
 
 
-    const handleAutor = (e: React.ChangeEvent<HTMLSelectElement>): void => {
-        setAutor(e.target.value);
-        setEscultorPais(Escultores.find((escultor) => escultor.nombre === autor)?.pais || '');
-    }
+    // const handleAutor = (e: React.ChangeEvent<HTMLSelectElement>): void => {
+    //     setAutor(e.target.value);
+    //     setEscultorPais(Escultores.find((escultor) => escultor.nombre === autor)?.pais || '');
+    // }
 
     useEffect(() => {
         if (evento){
             setTitulo(evento.nombre);
             setTematica(evento.tematica);
-            setAutor(evento.autor);
+            setAutor(evento.escultorID);
             setEscultorPais(evento.paisAutor);
             setDescripcion(evento.descripcion);
-            setFecha(evento.fecha);
+            setFecha(evento.fechaCreacion);
+            setImagenPrev(evento.imagenes);
             setImagen(evento.imagenes);
         }
     }, [evento]);
+
+    const handleFilesChange = (files: File[]) => {
+        setImagen(files[0]);
+        console.log('La imagen es' + files[0]);
+    };
 
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
@@ -114,13 +121,14 @@ function ModificarObra({isOpen, onClose, confirmar, evento}: ModalProps) {
                                 <Stack direction="row" gap={3} align="center" w="100%">
                                     <Box w="100%">
                                         <FormLabel ml="2px" mb={1}>Escultor</FormLabel>
-                                        <Select placeholder={autor} value={autor} onChange={handleAutor}>
+                                        {/* <Select placeholder={autor} value={autor} onChange={handleAutor}>
                                             {listaEscultores.map((escultor, index) => (
                                                 <option key={index} value={escultor}>
                                                     {escultor}
                                                 </option>
                                             ))}
-                                        </Select>
+                                        </Select> */}
+                                        <Input placeholder="Escultor" value={autor} onChange={(e) => setAutor(Number(e.target.value))}/>
                                     </Box>
                                     <Box w="100%">
                                         <FormLabel ml="2px" mb={1}>Pais</FormLabel>
@@ -137,8 +145,7 @@ function ModificarObra({isOpen, onClose, confirmar, evento}: ModalProps) {
                                 <FormLabel ml="2px" mb={1}>Imagen</FormLabel>
                                     <Flex w="90%" flex={1}>
                                         {/* Como recupero la ruta de la imagen? */}
-                                        <DropZone maxFiles={10} fileUploads={imagen}/> 
-                                      
+                                        <DropZone maxFiles={10} fileUploads={imagenPrev} onFilesChange={handleFilesChange}/> 
                                     </Flex>
                                 </Stack>
                             </Stack>
