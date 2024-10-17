@@ -1,6 +1,6 @@
 import { useDropzone , FileRejection} from 'react-dropzone';
 import { Flex, Box, VStack, useToast, Stack, SimpleGrid, IconButton } from '@chakra-ui/react';
-import { useState, useCallback } from 'react';
+import { useState, useEffect ,useCallback } from 'react';
 import { HiOutlineDocumentAdd } from "react-icons/hi";
 import { CloseIcon } from '@chakra-ui/icons';
 
@@ -16,6 +16,12 @@ const ZonaCarga: React.FC<DropZoneProps> = ({ maxFiles=10, fileUploads }) => {
     const toast = useToast();
     const [filePreviews, setFilePreviews] = useState<string[]>(fileUploads || []);  // Guarda las URL de las previsualizaciones 
     const [files, setFiles] = useState<File[]>([]);  // Guarda los archivos seleccionados para dsp mandar al back
+
+    useEffect(() => {
+        // Actualiza el estado cuando cambien las props filesUpload
+        setFilePreviews(fileUploads || []);
+        setFiles([]);
+    }, [fileUploads]);
 
     const onDrop = useCallback((acceptedFiles: File[]) => {
 

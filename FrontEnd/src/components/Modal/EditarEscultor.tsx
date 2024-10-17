@@ -161,6 +161,7 @@ export default function ModalEditarEscultor({ isOpen, onClose, confirmar, escult
                                     />
                                 </Box>
                             </Stack>
+                            
                             <ZonaCargaEscultor maxFiles={1} handleFotoChange={handleFotoChange}/>
                             
                         </Stack>
