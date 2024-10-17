@@ -15,3 +15,60 @@ export const getEventos = async () => {
         throw new Error('Network error: ' + error);
     }
 };
+ 
+// Agregar un evento  (aun falta lo de latitud y longitud)
+
+export const addEvento = async ( Nombre: string, Fecha: string,  Lugar: string, Descripcion: string, Tematica: string) => {
+    
+    const formData = new FormData();
+    formData.append('Id', '0'); // No se si esta bien el Id, 
+    formData.append('Nombre', Nombre);
+    formData.append('Fecha', Fecha);
+    formData.append('Lugar', Lugar);
+    formData.append('Descripcion', Descripcion);
+    formData.append('Tematica', Tematica);
+    
+
+    try {
+        const response = await fetch(`${API_URL}/Eventos/Create`, {
+            method: 'POST',
+            body: formData,
+        });
+        if (response.ok) {
+            const data = await response.json();
+            return data;
+        }else {
+            throw new Error('Error en la respuesta del servidor');
+        }
+    } catch (error){
+        throw new Error('Network error: ' + error);
+    }
+};
+
+
+
+// Editar Evento existente
+
+export const editEvento = async (Id:string, Nombre: string, Fecha: string,  Lugar: string, Descripcion: string, Tematica: string) =>{
+    const formData = new FormData();
+    formData.append('Nombre', Nombre);
+    formData.append('Fecha', Fecha);
+    formData.append('Lugar', Lugar);
+    formData.append('Descripcion', Descripcion);
+    formData.append('Tematica', Tematica);
+
+    try {
+        const response = await fetch(`${API_URL}/Eventos/Update?id=${Id}`, {
+            method: 'PUT',
+            body: formData,
+        });
+        if (response.ok) {
+            const data = await response.json();
+            return data;
+        } else {
+            throw new Error('Error en la respuesta del servidor');
+        }
+    }catch (error){
+        throw new Error('Network error: ' + error);
+    }
+}

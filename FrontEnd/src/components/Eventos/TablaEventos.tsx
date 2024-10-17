@@ -1,6 +1,6 @@
 import { Box, Table, Thead, Tbody, Tr, Th, Td, Flex, Text, IconButton, Button, Input} from '@chakra-ui/react';
 import { EditIcon, DeleteIcon, AddIcon, SearchIcon } from '@chakra-ui/icons'; 
-import { getEventos} from '../../API/Admin/Eventoss';
+import { getEventos, addEvento, editEvento} from '../../API/Admin/Eventoss';
 import {useState , useEffect} from 'react';
 import { useDisclosure } from '@chakra-ui/react';
 import ModalConfirmar from '../Modal/ConfirmarCambios';
@@ -106,18 +106,27 @@ function TablaEventos () {
     const handleConfirmarAdd = async (nombre:string, lugar:string, tematica:string, descripcion:string, fecha:string) => {
       // Aca se hace el llamado a la funcion de la api que agrega un evento
       // Agregar el evento al json
-      setEventos((prevEventos) => [
-        ...prevEventos,
-        {
-          id: prevEventos.length + 1,
-          nombre: nombre,
-          lugar: lugar,
-          tematica: tematica,
-          descripcion: descripcion,
-          fecha: fecha,
-        },
-      ]);
-      onCloseAdd();
+      // setEventos((prevEventos) => [
+      //   ...prevEventos,
+      //   {
+      //     id: prevEventos.length + 1,
+      //     nombre: nombre,
+      //     lugar: lugar,
+      //     tematica: tematica,
+      //     descripcion: descripcion,
+      //     fecha: fecha,
+      //   },
+      // ]);
+
+      const PostEvento = async () => {
+        try {
+          await addEvento(nombre, fecha, lugar, descripcion, tematica);
+        } catch (error) {
+          console.error('Error al agregar evento:', error);
+        }
+      };
+        PostEvento();
+        onCloseAdd();
     };
 
     const handleEditar = (evento:any) => {
@@ -128,20 +137,32 @@ function TablaEventos () {
     const handleConfirmarEdit = async (nombre:string, lugar:string, tematica:string, descripcion:string, fecha:string) => {
       // Aca se hace el llamado a la funcion de la api que edita un evento
       // Editar el evento en el json
-      setEventos((prevEventos) =>
-        prevEventos.map((m) =>
-          m.id === EventoElegido.id
-            ? {
-                ...m,
-                nombre: nombre,
-                lugar: lugar,
-                tematica: tematica,
-                descripcion: descripcion,
-                fecha: fecha,
-              }
-            : m
-        )
-      );
+      // setEventos((prevEventos) =>
+      //   prevEventos.map((m) =>
+      //     m.id === EventoElegido.id
+      //       ? {
+      //           ...m,
+      //           nombre: nombre,
+      //           lugar: lugar,
+      //           tematica: tematica,
+      //           descripcion: descripcion,
+      //           fecha: fecha,
+      //         }
+      //       : m
+      //   )
+      // );
+
+      const PutEvento = async () => {
+        try {
+          if(EventoElegido){
+            await editEvento(EventoElegido.id, nombre, fecha, lugar, descripcion, tematica);
+          }
+        }catch (error){
+          console.error('Error al editar evento:', error);
+        }
+      };
+
+      PutEvento();
       onCloseEdit();
     };
 
