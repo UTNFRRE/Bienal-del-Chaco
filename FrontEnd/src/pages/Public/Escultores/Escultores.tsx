@@ -1,8 +1,32 @@
 import { Box, Image, Container, Text, Heading , Stack, Card, CardBody, Grid, GridItem} from '@chakra-ui/react'
-import Escultores from '../../../API/Escultores';
+import { getEscultores } from '../../../API/Escultores';
+import { useEffect, useState } from 'react';
+
+interface Escultor {
+  id: number;
+  nombre: string;
+  pais: string;
+  foto: string;
+}
 
 
 function Escultoress () {
+    //Modifique para conincide los tipos entre el file Obras y el tipo Obra
+    const [Escultores, setEscultores] = useState<Escultor[]>([]);
+    useEffect(() => {
+      const fetchEscultores = async () => {
+        try {
+          const data = await getEscultores();
+          console.log(data);
+          setEscultores(data);
+        } catch (error) {
+          console.error('Error en el fetch de Escultores:', error);
+        }
+      };
+    
+      fetchEscultores();
+    }, []);
+
   return (
 <Container maxWidth="100vw" width="100vw" height="100vh" centerContent>
 <Box
@@ -49,12 +73,12 @@ function Escultoress () {
     <Stack mt={0} bg="white" width="100%" height="90px" maxHeight={"27%"} direction={"row"} justifyContent={"space-between"}>
       <Stack direction={"column"}>
       <Text ml={"22px"} mt={"5px"} whiteSpace="pre-line" fontSize="18px" lineHeight="1.2" 
-        bg="black"
-        bgClip="text"
-        fontWeight="bold">{escultor.nombre}</Text>
-        <Text ml={"22px"} as='i' fontSize='17px' color='black'>{escultor.pais}</Text>
+      bg="black"
+      bgClip="text"
+      fontWeight="bold">{escultor.nombre}</Text>
+      <Text ml={"22px"} as='i' fontSize='17px' color='black'>{escultor.pais}</Text>
       </Stack>
-      <Image src={escultor.bandera} width="60px" height="40px" mr={"11px"} mt={"20px"}/>
+     {/* <Image src={escultor.bandera} width="60px" height="40px" mr={"11px"} mt={"20px"}/> */}
     </Stack>
     </Card>
     </GridItem>
