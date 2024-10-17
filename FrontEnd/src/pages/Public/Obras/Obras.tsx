@@ -42,16 +42,6 @@ export default function ObrasPublic () {
 
     return (
         <Box p={4} display={"flex"} justifyContent={"center"} alignItems={"center"} flexDirection={"column"}>
-        <Flex>
-        <Heading 
-            size="xl" 
-            fontWeight="540" 
-            color="gray.700" 
-            // textAlign="left" 
-            mb="5">
-        Obras Seleccionadas
-        </Heading>
-        </Flex>
         <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={10}>
             {/* Como las imagenes estan en un arreglo, para usar el carrusel react pide que esten en un json con las llaves original y thumbnail. Entonces por cada obra se crea ese json */}
             {obras.map((obra) => {
@@ -62,7 +52,7 @@ export default function ObrasPublic () {
             return (
                 <React.Fragment key={obra.id}>   
                  {/* Como hay elementos que se renderizan dentro de otro elemento (carrusel dentro de la card) se usa esa tag para evitar errores */}
-                   <Card bgColor={"secundaryBg"} 
+                   <Card bgColor={"#F4F6FF"} 
                     sx={{
                         transition: 'transform 0.3s ease', 
                         '&:hover': {
@@ -70,9 +60,9 @@ export default function ObrasPublic () {
                         cursor: 'pointer', 
                         },
                      }}
-                     onClick={() => handleCardClick(obra.id)} borderWidth={2}  borderColor={"#B4B4B8"}>
+                      borderWidth={2}  borderColor={"secundaryHover"}>
         
-                        <CardBody   borderRadius={10} w="100%" h="100%" display="flex" flexDirection={"column"}>
+                        <CardBody   borderRadius={10} w="100%" h="100%" display="flex" flexDirection={"column"} >
                         <Box display="flex" justifyContent="center" alignItems="center" w="100%" mb={4}>
                         <ImageGallery items={images} 
                             showThumbnails={false}  //desactivo las miniaturas
@@ -82,12 +72,12 @@ export default function ObrasPublic () {
                             slideInterval={4000 + obra.id*100} //cada cuanto cambia, 4seg
                         /> 
                         </Box>
-                        <Box w="100%" textAlign="left" display="flex" flexDirection={"column"} gap={0}>
+                        <Box w="100%" textAlign="left" display="flex" flexDirection={"column"} gap={0} onClick={() => handleCardClick(obra.id)}>
                             <Heading>{obra.nombre}</Heading>
                             <Text as={"i"} >{obra.tematica}</Text>
                             <Text as={"kbd"}>{obra.escultor}</Text>
                         </Box>
-                        <Box>
+                        <Box onClick={() => handleCardClick(obra.id)}>
                         <Text noOfLines={3} mt={3}> {obra.descripcion}</Text>
                         </Box>
                         </CardBody>

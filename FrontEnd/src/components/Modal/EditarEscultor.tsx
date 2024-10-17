@@ -7,6 +7,7 @@ import {
     ModalBody,
     ModalCloseButton,
     Input,
+    Textarea,
     Button,
     Stack,
     Box,
@@ -19,15 +20,11 @@ import ZonaCargaEscultor from '../ZonaCarga/ZonaCargaEscultor';
 interface ModalComponentProps {
     isOpen: boolean;
     onClose: () => void;
-    confirmar: (fotoPreview: string, nombre: string, pais: string, contacto: string) => void;
+    confirmar: (fotoPreview: string, nombre: string, pais: string, contacto: string, fechaNacimiento:string, lugarNacimiento:string, premios:string,) => void;
     escultor:any
 }
 
-export default function ModalAgregarEscultor({ isOpen, onClose, confirmar, escultor, }: ModalComponentProps) {
-    const [foto, setFoto] = useState<string | null>(null);
-    const [nombre, setNombre] = useState('');
-    const [pais, setPais] = useState('');
-    const [contacto, setContacto] = useState('');
+export default function ModalEditarEscultor({ isOpen, onClose, confirmar, escultor, }: ModalComponentProps) {
     
     const handleFotoChange = (fotoData: string) => {
         setFoto(fotoData);
@@ -35,20 +32,32 @@ export default function ModalAgregarEscultor({ isOpen, onClose, confirmar, escul
 
 
     const handleconfirmar = () => {
-        confirmar(foto || '', nombre, pais, contacto);
+        confirmar(foto || '', nombre, pais, contacto, fechaNacimiento, lugarNacimiento, premios);
         onClose();
     };
 
     const isFormValid = () => {
-        return nombre.trim() !== '' && pais.trim() !== '' && contacto.trim() !== '';
+        return nombre.trim() !== '' && pais.trim() !== '' && contacto.trim() !== '' && fechaNacimiento.trim() !== '' && lugarNacimiento.trim() !== '' && (premios ? premios.toString().trim() !== '' : true);
     };
+
+    const [foto, setFoto] = useState<string | null>(null);
+    const [nombre, setNombre] = useState('');
+    const [pais, setPais] = useState('');
+    const [contacto, setContacto] = useState('');
+    const [fechaNacimiento, setFechaNacimiento] = useState('');
+    const [lugarNacimiento, setLugarNacimiento] = useState('');
+    const [premios, setPremios] = useState('');
 
     useEffect(() => {
         if(escultor){
         setNombre(escultor.nombre);
         setPais(escultor.pais);
         setContacto(escultor.contacto);
-        setFoto(escultor.foto);}
+        setFoto(escultor.foto);
+        setFechaNacimiento(escultor.fechaNacimiento);
+        setLugarNacimiento(escultor.lugarNacimiento);
+        setPremios(escultor.premios);
+    }
     }, [escultor]);
 
     if (!escultor) {
@@ -66,12 +75,12 @@ export default function ModalAgregarEscultor({ isOpen, onClose, confirmar, escul
                         <Stack gap={7}>
                             <Stack direction="row" gap={5} w="100%">
                                 <Box>
-                                    <FormLabel mb={0}>Nombre</FormLabel>
+                                    <FormLabel mb={1}>Nombre</FormLabel>
                                     <Input
                                         placeholder=""
                                         size="md"
                                         variant="Unstyled"
-                                        width={500}
+                                        width={650}
                                         borderWidth={1}
                                         flex={1}
                                         value={nombre}
@@ -81,7 +90,7 @@ export default function ModalAgregarEscultor({ isOpen, onClose, confirmar, escul
                             </Stack>
                             <Stack direction="row" gap={5} w="100%">
                                 <Box>
-                                    <FormLabel mb={0}>Pais</FormLabel>
+                                    <FormLabel mb={1}>Pais</FormLabel>
                                     <Input
                                         placeholder=""
                                         size="md"
@@ -94,7 +103,7 @@ export default function ModalAgregarEscultor({ isOpen, onClose, confirmar, escul
                                     />
                                 </Box>
                                 <Box>
-                                    <FormLabel mb={0}>Contacto</FormLabel>
+                                    <FormLabel mb={1}>Contacto</FormLabel>
                                     <Input
                                         placeholder=""
                                         size="md"
@@ -107,32 +116,75 @@ export default function ModalAgregarEscultor({ isOpen, onClose, confirmar, escul
                                     />
                                 </Box>
                             </Stack>
-                            {/* Aquí integramos la Zona de Carga */}
-                            <ZonaCargaEscultor maxFiles={1}
-                            handleFotoChange={handleFotoChange}
-                            />
+                            <Stack direction="row" gap={5} w="100%">
+                                <Box>
+                                    <FormLabel mb={0}>Fecha de Nacimiento</FormLabel>
+                                    <Input
+                                        placeholder=""
+                                        size="md"
+                                        variant="Unstyled"
+                                        width={315}
+                                        type='date'
+                                        borderWidth={1}
+                                        flex={1}
+                                        value={fechaNacimiento}
+                                        onChange={(e) => setFechaNacimiento(e.target.value)}
+                                    />
+                                </Box>
+                                <Box>
+                                    <FormLabel mb={0}>Lugar de Nacimiento</FormLabel>
+                                    <Input
+                                        placeholder=""
+                                        size="md"
+                                        variant="Unstyled"
+                                        width={315}
+                                        borderWidth={1}
+                                        flex={1}
+                                        value={lugarNacimiento}
+                                        onChange={(e) => setLugarNacimiento(e.target.value)}
+                                    />
+                                </Box>
+                            </Stack>
+                            <Stack direction="row" gap={5} w="100%">
+                                <Box>
+                                    <FormLabel mb={0}>Premios</FormLabel>
+                                    <Textarea
+                                        placeholder=""
+                                        size="md"
+                                        variant="outline"
+                                        h={140}
+                                        width={650}
+                                        maxLength={5000}
+                                        borderWidth={1}
+                                        value={premios}
+                                        onChange={(e) => setPremios(e.target.value)}
+                                    />
+                                </Box>
+                            </Stack>
+                            
+                            <ZonaCargaEscultor maxFiles={1} handleFotoChange={handleFotoChange}/>
                             
                         </Stack>
                     </FormControl>
                 </ModalBody>
                 <ModalFooter mt={6}>
-                    <Button
-                        colorScheme="blue"
-                        mr={3}
-                        onClick={handleconfirmar}
-                        size="sm"
-                        isDisabled={!isFormValid()}
-                    >
-                        Agregar
-                    </Button>
-                    <Button
-                        mr={3}
-                        onClick={onClose}
-                        variant="light"
-                        size="sm"
-                    >
-                        Cancelar
-                    </Button>
+                <Button
+                colorScheme="blue"
+                mr={3}
+                onClick={handleconfirmar}
+                size="sm"
+                isDisabled={!isFormValid()}
+                >
+                Guardar Cambios
+                </Button>
+                <Button
+                mr={3}
+                onClick={onClose}
+                variant="light"
+                size="sm"
+                >
+                Cancelar
+                </Button>
                 </ModalFooter>
             </ModalContent>
         </Modal>
