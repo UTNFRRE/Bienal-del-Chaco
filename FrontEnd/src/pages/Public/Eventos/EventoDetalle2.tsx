@@ -1,16 +1,16 @@
-import React from "react";
-import Eventos from '../../../API/Admin/Eventos'; // Ajusta la ruta a donde se encuentra tu archivo de datos de eventos
+import React, { useEffect, useState } from "react";
+//import Eventos from '../../../API/Admin/Eventos'; // Ajusta la ruta a donde se encuentra tu archivo de datos de eventos
 import { useParams } from "react-router-dom";
 import { Flex, Heading, Text, Button, ButtonGroup, IconButton, Skeleton} from "@chakra-ui/react";
 import { GoogleMap, LoadScript, Marker  } from "@react-google-maps/api";
-import { FaFacebook, FaTwitter, FaInstagram, FaWhatsapp } from 'react-icons/fa';
-import { useEffect, useRef, useState } from "react";	
+//import { FaFacebook, FaTwitter, FaInstagram, FaWhatsapp } from 'react-icons/fa';
+import {getEventosId} from "../../../API/Public/EventosPu";	
 import RedesSociales from "../../../components/Redes/RedesSociales";
 import marcador from '../../../components/icons/marcador.png';
 
 
 interface Evento {
-  id: number;
+  id: string;
   titulo: string;
   fecha: string;
   descripcion: string;
@@ -29,8 +29,55 @@ const googleMapsApiKey = "AIzaSyB6cFwxUytgrCP9pqTTEIiLMm477qpJjPs";
 
 export default function EventoDetalle2() {
   const { id } = useParams<{ id: string }>();
+  const [evento, setEvento] = useState<Evento | null>(null); // Estado para almacenar el evento
+  const [loading, setLoading] = useState(true); // Estado de carga
+  const [error, setError] = useState<string | null>(null); // Estado de error
 
-  const evento = Eventos.find((evento: Evento) => evento.id === Number(id));
+if (!id) {
+  // Manejo del caso cuando `id` es `undefined`
+  return <div>ID no encontrado</div>;
+}
+
+  useEffect(() => {
+    const fetchEvento = async () => {
+      try {
+        const eventoData = await getEventosId(id); // Llamada a la API para obtener el evento por ID
+        setEvento(eventoData);
+      } catch (err) {
+        setError("Evento no encontrado");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchEvento();
+  }, [id]);
+
+  const [map, setMap] = useState<any>(null);
+
+  useEffect(() => {
+    if (map && evento) {
+      const iconoMarcador = {
+        url: marcador,
+        scaledSize: new window.google.maps.Size(70, 70), 
+        origin: new window.google.maps.Point(0, 0),
+        anchor: new window.google.maps.Point(20, 40),
+      };
+
+      new google.maps.Marker({
+        position: { lat: evento.latitud, lng: evento.longitud },
+        map,
+        icon: iconoMarcador,
+      });
+    }
+  }, [map, evento]);
+
+  if (loading) {
+    return <Skeleton height="500px" width="900px" />;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   if (!evento) {
     return <div>Evento no encontrado</div>;
@@ -50,10 +97,9 @@ export default function EventoDetalle2() {
     strokeWeight: 1,
   };
 
-  const [map, setMap] = useState<any>(null);
-  const mapRef = useRef(null);
+  //const mapRef = useRef(null);
 
-  useEffect(() => {
+  {/*useEffect(() => {
     if (map) {
       const iconoMarcador = {
         url: marcador,
@@ -68,7 +114,7 @@ export default function EventoDetalle2() {
         icon: iconoMarcador,
       });
     }
-  }, [map]);
+  }, [map]);*/}
 
   return (
     <Flex direction={"row"} gap={4}>
