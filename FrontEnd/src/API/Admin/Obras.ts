@@ -95,3 +95,17 @@ export const deleteObra = async (id: string) => {
           throw new Error('Network error: ' + error);
     }
 };
+
+export const getObraById = async (id: string) => {
+    try {
+        const response = await fetch(`${API_URL}/Esculturas/${id}`);
+        if (response.ok) {
+            const data = await response.json();
+            return data;
+          } else {
+            throw new Error('Error en la respuesta del servidor');
+          }
+    } catch (error) {
+          throw new Error('Network error: ' + error);
+    }
+};
