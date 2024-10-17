@@ -9,8 +9,7 @@ import ModalConfirmar from '../../../components/Modal/ConfirmarCambios';
 import ModificarObra from '../../../components/Modal/ModificarObra';
 import Obras from '../../../API/Public/Obras'; // Simulación de API con datos de obras.
 
-import { getObras, addObra } from '../../../API/Admin/Obras';
-import { getEscultorbyID } from '../../../API/Admin/Escultores';
+import { getObras, addObra, editObra } from '../../../API/Admin/Obras';
 
 interface Obra {
   esculturaId: string;
@@ -130,7 +129,7 @@ function TablaObras() {
       onOpenEdit();
     };
 
-    const handleConfirmarEdit = async (titulo:string, tematica:string, fecha:string, autor:number, paisAutor:string, descripcion:string, imagenes:string[]) => {
+    const handleConfirmarEdit = async (titulo:string, tematica:string, fecha:string, autor:number, paisAutor:string, descripcion:string, imagenes:string | File) => {
       // setObras((prevObras) =>
       //   prevObras.map((m) =>
       //     m === obraElegida
@@ -138,6 +137,16 @@ function TablaObras() {
       //       : m
       //   )
       // );
+      const PutObra = async () => {
+        try {
+          if (obraElegida) {
+            await editObra(obraElegida.esculturaId, titulo, tematica, fecha, autor, paisAutor, descripcion, imagenes);
+          }
+        } catch (error) {
+          console.error('Error en el fetch de obras:', error);
+        }
+      };
+      PutObra();
       onCloseEdit();
     };
 
@@ -240,12 +249,12 @@ function TablaObras() {
             onClose={onCloseAdd}
             confirmar= {handleConfirmarAdd}
         />
-        {/* <ModificarObra 
+        <ModificarObra 
               isOpen={isOpenEdit}
               onClose={onCloseEdit}
               confirmar = {handleConfirmarEdit}
               evento={obraElegida}
-            /> */}
+            />
           <ModalConfirmar 
               isOpen={isOpenDelete}
               onClose={onCloseDelete}

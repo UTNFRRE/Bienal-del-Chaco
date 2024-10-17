@@ -43,20 +43,34 @@ export const addObra = async (titulo: string, tematica: string, fecha:string, au
 };
 
 // Editar una obra existente
-export const editObra = async (id: string, obraData: FormData) => {
-    try {
-        const response = await fetch(`${API_URL}/Esculturas/${id}`, {
-            method: 'PUT',
-            body: obraData,
-        });
-        if (response.ok) {
-            return;
-          } else {
-            throw new Error('Error en la respuesta del servidor');
-          }
-    } catch (error) {
-          throw new Error('Network error: ' + error);
+export const editObra = async (id: string, titulo: string, tematica: string, fecha:string, autor: number, paisAutor: string, descripcion: string, imagen: File | string ) => {
+  
+  const formData = new FormData();
+  formData.append('Nombre', titulo);
+  formData.append('Descripcion', descripcion);
+  // if (typeof imagen === 'string') {
+  //   formData.append('Imagen', "");
+  // } else {
+  //   formData.append('Imagen', imagen);
+  // }
+  formData.append('Imagen', imagen);
+  formData.append('EscultorID', autor.toString());
+  formData.append('FechaCreacion', fecha);
+  formData.append('Tematica', tematica);
+  
+  try {
+  const response = await fetch(`${API_URL}/Esculturas/${id}`, {
+    method: 'PUT',
+    body: formData,
+  });
+  if (response.ok) {
+    return;
+    } else {
+    throw new Error('Error en la respuesta del servidor');
     }
+  } catch (error) {
+    throw new Error('Network error: ' + error);
+  }
 };
 
 // Eliminar una obra

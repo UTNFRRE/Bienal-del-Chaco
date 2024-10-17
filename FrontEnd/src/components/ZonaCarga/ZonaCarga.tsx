@@ -9,18 +9,18 @@ import { CloseIcon } from '@chakra-ui/icons';
 
 interface DropZoneProps {
     maxFiles?: number;
-    fileUploads?: string[];
+    fileUploads?: string;
     onFilesChange?: (files: File[]) => void;
 }
 
 const ZonaCarga: React.FC<DropZoneProps> = ({ maxFiles=10, fileUploads, onFilesChange }) => {
     const toast = useToast();
-    const [filePreviews, setFilePreviews] = useState<string[]>(fileUploads || []);  // Guarda las URL de las previsualizaciones 
+    const [filePreviews, setFilePreviews] = useState<string[]>(fileUploads ? [fileUploads] : []);  // Guarda las URL de las previsualizaciones 
     const [files, setFiles] = useState<File[]>([]);  // Guarda los archivos seleccionados para dsp mandar al back
 
     useEffect(() => {
         // Actualiza el estado cuando cambien las props filesUpload
-        setFilePreviews(fileUploads || []);
+        setFilePreviews(fileUploads ? [fileUploads] : []);
         setFiles([]);
     }, [fileUploads]);
 
