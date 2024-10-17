@@ -116,13 +116,7 @@ function TablaObras() {
     };
 
     const handleConfirmarAdd = async (titulo:string, tematica:string, fecha:string, autor:number, paisAutor:string, descripcion:string, imagen:File ) => {
-      // fetch para agregar la obra
-      // fetch para traer las obras de nuevo
-      // setObras((prevObras) => [
-      //   ...prevObras,
-      //   { id: (prevObras.length + 1).toString(), nombre: titulo, tematica: tematica, descripcion: descripcion, fechaCreacion: fecha, escultor: autor, escultorPais: paisAutor, escultorImagen: 'nose.jpg', imagenes: imagenes.map(img => URL.createObjectURL(img)) },
-      // ]);
-
+      
       const PostObra = async () => {
         try {
           await addObra(titulo, tematica, fecha, autor, paisAutor, descripcion, imagen);
@@ -131,6 +125,7 @@ function TablaObras() {
           console.error('Error en el fetch de obras:', error);
         }
       };
+
       PostObra();
       onCloseAdd();
     };
@@ -141,22 +136,18 @@ function TablaObras() {
     };
 
     const handleConfirmarEdit = async (titulo:string, tematica:string, fecha:string, autor:number, paisAutor:string, descripcion:string, imagenes:string | File) => {
-      // setObras((prevObras) =>
-      //   prevObras.map((m) =>
-      //     m === obraElegida
-      //       ? { ...m, imagenes, titulo, descripcion, fecha }
-      //       : m
-      //   )
-      // );
+      
       const PutObra = async () => {
         try {
           if (obraElegida) {
             await editObra(obraElegida.esculturaId, titulo, tematica, fecha, autor, paisAutor, descripcion, imagenes);
           }
+          setRefresh(!refresh);
         } catch (error) {
           console.error('Error en el fetch de obras:', error);
         }
       };
+
       PutObra();
       onCloseEdit();
     };

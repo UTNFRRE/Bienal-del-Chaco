@@ -46,21 +46,28 @@ export const addObra = async (titulo: string, tematica: string, fecha:string, au
 export const editObra = async (id: string, titulo: string, tematica: string, fecha:string, autor: number, paisAutor: string, descripcion: string, imagen: File | string ) => {
   
   const formData = new FormData();
-  formData.append('Nombre', titulo);
-  formData.append('Descripcion', descripcion);
-  // if (typeof imagen === 'string') {
-  //   formData.append('Imagen', "");
-  // } else {
-  //   formData.append('Imagen', imagen);
-  // }
-  formData.append('Imagen', imagen);
-  formData.append('EscultorID', autor.toString());
-  formData.append('FechaCreacion', fecha);
-  formData.append('Tematica', tematica);
+  var method = '';
+  if (typeof imagen === 'string') {
+    formData.append('Nombre', titulo);
+    formData.append('Descripcion', descripcion);
+    formData.append('EscultorID', autor.toString());
+    formData.append('FechaCreacion', fecha);
+    formData.append('Tematica', tematica);
+    method = 'PATCH';
+  } else {
+    formData.append('Nombre', titulo);
+    formData.append('Descripcion', descripcion);
+    formData.append('Imagen', imagen);
+    formData.append('EscultorID', autor.toString());
+    formData.append('FechaCreacion', fecha);
+    formData.append('Tematica', tematica);
+    method = 'PUT';
+  }
+ 
   
   try {
   const response = await fetch(`${API_URL}/Esculturas/${id}`, {
-    method: 'PUT',
+    method: `${method}`,
     body: formData,
   });
   if (response.ok) {
