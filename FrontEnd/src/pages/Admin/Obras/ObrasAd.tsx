@@ -17,7 +17,7 @@ interface Obra {
   tematica: string;
   descripcion: string;
   fechaCreacion: string;
-  escultorID: string;
+  escultorNombre: string;
   escultorPais: string;
   escultorImagen: string;
   imagenes:  string; 
@@ -215,13 +215,13 @@ function TablaObras() {
                         </Td>
                       <Td textAlign="center">{obra.nombre}</Td>
                       <Td textAlign="center">{obra.descripcion}</Td>
-                      <Td textAlign="center">{obra.escultorID}</Td>
+                      <Td textAlign="center">{obra.escultorNombre}</Td>
                       <Td>
                         <Flex gap={2} justifyContent="center" alignItems="center">
                           <IconButton
                             aria-label="Editar"
                             icon={<EditIcon />}
-                           variant="bienal"
+                            variant="bienal"
                             borderRadius={3}
                             onClick={() => handleEditar(obra)}
                           />

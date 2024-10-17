@@ -51,6 +51,14 @@ function AgregarObra({isOpen, onClose, confirmar}: ModalProps) {
     useEffect(() => {
         const nombresEscultores = Escultores.map((escultor) => escultor.nombre);
         setListaEscultores(nombresEscultores);
+        setTitulo('');
+        setTematica('');
+        setEscultorPais('');
+        setImagen(undefined);
+        setAutor(0);
+        setDescripcion('');
+        setFecha('');
+        
     }, []);
 
     const handleFilesChange = (files: File[]) => {

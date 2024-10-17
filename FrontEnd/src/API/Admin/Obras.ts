@@ -3,7 +3,7 @@ const API_URL = 'http://localhost:5232'; // Reemplaza con la URL de tu backend
 // Obtener todas las obras
 export const getObras = async () => {
     try {
-        const response = await fetch(`${API_URL}/Esculturas`);
+        const response = await fetch(`${API_URL}/Esculturas/GetAllLite`);
         if (response.ok) {
             const data = await response.json();
             return data;
@@ -64,7 +64,7 @@ export const editObra = async (id: string, titulo: string, tematica: string, fec
     method = 'PUT';
   }
  
-  
+  console.log(method);
   try {
   const response = await fetch(`${API_URL}/Esculturas/${id}`, {
     method: `${method}`,
@@ -98,7 +98,7 @@ export const deleteObra = async (id: string) => {
 
 export const getObraById = async (id: string) => {
     try {
-        const response = await fetch(`${API_URL}/Esculturas/${id}`);
+        const response = await fetch(`${API_URL}/Esculturas/GetDetail/${id}`);
         if (response.ok) {
             const data = await response.json();
             return data;

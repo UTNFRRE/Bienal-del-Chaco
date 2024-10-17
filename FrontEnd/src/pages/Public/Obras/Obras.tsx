@@ -15,7 +15,7 @@ interface Obra {
   tematica: string | null;
   descripcion: string;
   fechaCreacion: string;
-  escultorID: string;
+  escultorNombre: string;
   escultorPais: string;
   escultorImagen: string;
   imagenes: string;
@@ -109,7 +109,7 @@ export default function ObrasPublic () {
                             { obra.tematica && (
                             <Text as={"i"} >{obra.tematica}</Text>
                             )}
-                            <Text as={"kbd"}>{obra.escultorID}</Text>
+                            <Text as={"kbd"}>{obra.escultorNombre}</Text>
                         </Box>
                         <Box onClick={() => handleCardClick(obra.esculturaId)}>
                         <Text noOfLines={3} mt={3}> {obra.descripcion}</Text>

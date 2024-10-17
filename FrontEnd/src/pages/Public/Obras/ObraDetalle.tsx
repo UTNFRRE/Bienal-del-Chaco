@@ -14,7 +14,7 @@ interface Obra {
   tematica: string | null;
   descripcion: string;
   fechaCreacion: string;
-  escultorID: string;
+  escultorNombre: string;
   escultorPais: string;
   escultorImagen: string;
   imagenes: string;
@@ -29,7 +29,7 @@ const ObraDetail = () => {
     tematica: '',
     descripcion: '',
     fechaCreacion: '',
-    escultorID: '',
+    escultorNombre: '',
     escultorPais: '',
     escultorImagen: '',
     imagenes: '',
@@ -43,6 +43,7 @@ const ObraDetail = () => {
       if (!id) return;
       const data = await getObraById(id);
       setObra(data);
+      console.log(data);
     }
     catch (error) {
       console.error('Error en el fetch de la obra:', error);
@@ -79,7 +80,7 @@ const ObraDetail = () => {
           <Flex gap='4' alignItems='center' justifyContent={"center"} mt={8}>
               <Image src={obra.escultorImagen} boxSize="90px" borderRadius="full" borderWidth={2} borderColor="secundaryHover" borderStyle="solid"/>
               <Box>
-                <Heading size='sm'>{obra.escultorID}</Heading>
+                <Heading size='sm'>{obra.escultorNombre}</Heading>
                 <Text as="i">{obra.escultorPais}</Text>
               </Box>
           </Flex>
