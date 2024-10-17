@@ -1,11 +1,12 @@
 import { Box, Table, Thead, Tbody, Tr, Th, Td, Flex, Text, IconButton, Button, Input} from '@chakra-ui/react';
 import { EditIcon, DeleteIcon, AddIcon, SearchIcon } from '@chakra-ui/icons'; 
-import { getEventos, addEvento, editEvento} from '../../API/Admin/Eventoss';
+import { getEventos, addEvento, editEvento, deleteEvento} from '../../API/Admin/Eventoss';
 import {useState , useEffect} from 'react';
 import { useDisclosure } from '@chakra-ui/react';
 import ModalConfirmar from '../Modal/ConfirmarCambios';
 import ModalAgregarEvento from '../Modal/AgregarEvento';
 import ModalEditarEvento from '../Modal/EditarEvento';
+import { SiTheregister } from 'react-icons/si';
 
 // Agregar paginacion
 // La parte de filtrado robe de por ahi, asi que ignoren nms eso por ahora
@@ -15,7 +16,8 @@ function TablaEventos () {
     const [eventos, setEventos] = useState<any[]>([]); //se usa una variable de estado para guardar los eventos, esta variable es del tipo any (objeto)
     const [filteredEventos, setFilteredEventos] = useState<any[]>([]);
     const [EventoElegido, setEventoElegido] = useState<any>(); //se usa una variable de estado para guardar el evento que se quiere eliminar o editar
-    
+    const [refresh, setRefresh] = useState(false);
+
     // isopen, onopen y onclose son funciones que se usan para abrir y cerrar cada modal
     const { 
         isOpen: isOpenDelete, 
@@ -56,7 +58,7 @@ function TablaEventos () {
       };
 
       fetchEventos();
-    }, []);
+    }, [refresh]);
 
 
     // filtros
@@ -96,11 +98,20 @@ function TablaEventos () {
 
     // funcion que se pasa como parametro al modal de confirmar cambios, y se llama dentro del modal llama cuando se selecciona confirmar
     const handleConfirmarDelete = async () => {
-          setEventos((prevEventos) =>
-            prevEventos.filter((m) => m.id !== EventoElegido.id)
-          ); // Elimina del json el evento elegido
+          const DeleteObra = async () => {
+            try{
+              if(EventoElegido){
+                await deleteEvento(EventoElegido.id);
+                setRefresh(!refresh);
+              }
+            }catch (error){
+              console.error('Error al eliminar evento:', error);
+            }
+          };
+          DeleteObra();
 
         onCloseDelete();
+        
     };
 
     const handleConfirmarAdd = async (nombre:string, lugar:string, tematica:string, descripcion:string, fecha:string) => {
@@ -121,6 +132,7 @@ function TablaEventos () {
       const PostEvento = async () => {
         try {
           await addEvento(nombre, fecha, lugar, descripcion, tematica);
+          setRefresh(!refresh);
         } catch (error) {
           console.error('Error al agregar evento:', error);
         }
@@ -156,6 +168,7 @@ function TablaEventos () {
         try {
           if(EventoElegido){
             await editEvento(EventoElegido.id, nombre, fecha, lugar, descripcion, tematica);
+            setRefresh(!refresh);
           }
         }catch (error){
           console.error('Error al editar evento:', error);

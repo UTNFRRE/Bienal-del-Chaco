@@ -72,3 +72,21 @@ export const editEvento = async (Id:string, Nombre: string, Fecha: string,  Luga
         throw new Error('Network error: ' + error);
     }
 }
+
+
+// Eliminar un evento
+
+export const deleteEvento = async (Id:string) => {
+    try {
+        const response = await fetch(`${API_URL}/Eventos/Delete?id=${Id}`, {
+            method: 'DELETE',
+        });
+        if (response.ok) {
+            return;
+        } else {
+            throw new Error('Error en la respuesta del servidor');
+        }
+    } catch(error){
+        throw new Error('Network error: ' + error);
+    }
+};
