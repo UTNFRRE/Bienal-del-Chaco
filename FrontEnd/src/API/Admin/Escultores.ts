@@ -1,5 +1,6 @@
 const API_URL = 'http://localhost:5232'; // Reemplaza con la URL de tu backend
 
+
 //Obtener un escultor
 export const getEscultor = async () => {
     try {
@@ -91,4 +92,5 @@ export const deleteEscultor = async (id: string) => {
     } catch (error) {
           throw new Error('Network error: ' + error);
     }
+
 };

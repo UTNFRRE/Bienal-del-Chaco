@@ -9,22 +9,25 @@ import ModalConfirmar from '../../../components/Modal/ConfirmarCambios';
 import ModificarObra from '../../../components/Modal/ModificarObra';
 import Obras from '../../../API/Public/Obras'; // Simulación de API con datos de obras.
 
+import { getObras, addObra, editObra, deleteObra } from '../../../API/Admin/Obras';
+
 interface Obra {
-  id: string;
+  esculturaId: string;
   nombre: string;
   tematica: string;
   descripcion: string;
   fechaCreacion: string;
-  escultor: string;
+  escultorNombre: string;
   escultorPais: string;
   escultorImagen: string;
-  imagenes:  string[]; 
+  imagenes:  string; 
 }
 
 function TablaObras() {
     const [obras, setObras] = useState<Obra[]>([]);
     const [filteredObras, setFilteredObras] = useState<Obra[]>([]);
     const [obraElegida, setObraElegida] = useState<Obra | null>(null);
+    const [refresh, setRefresh] = useState(false);
 
     const {
       isOpen: isOpenAdd,
@@ -58,40 +61,38 @@ function TablaObras() {
 
     //Modifique para conincide los tipos entre el file Obras y el tipo Obra
     useEffect(() => {
-      const nuevasObras = Obras.map(obra => ({
-        id: obra.id.toString(),
-        nombre: obra.nombre ?? '',
-        tematica: obra.tematica ?? '',
-        descripcion: obra.descripcion ?? '',
-        fechaCreacion:  '',
-        escultor: obra.escultor ?? '',
-        escultorPais:  '',
-        escultorImagen: '',
-        imagenes: obra.imagenes ?? [''],
-      }));
+      const fetchObras = async () => {
+        try {
+          const data = await getObras();
+          console.log(data);
+          setObras(data);
+          setFilteredObras(data);
+        } catch (error) {
+          console.error('Error en el fetch de obras:', error);
+        }
+      };
     
-      setObras(nuevasObras);
-      setFilteredObras(nuevasObras);
-    }, [Obras]);
+      fetchObras();
+    }, [refresh]);
 
-    useEffect(() => {
-      setFilteredObras(
-        obras.filter((obra) =>
-          obra.id.toLowerCase().includes(filters.id.toLowerCase()) &&
-          obra.nombre.toLowerCase().includes(filters.nombre.toLowerCase()) &&
-          obra.descripcion.toLowerCase().includes(filters.descripcion.toLowerCase()) &&
-          obra.escultor.toLowerCase().includes(filters.escultor.toLowerCase())
-        )
-      );
-    }, [filters, obras]);
+    // useEffect(() => {
+    //   setFilteredObras(
+    //     obras.filter((obra) =>
+    //       obra.id.toLowerCase().includes(filters.id.toLowerCase()) &&
+    //       obra.nombre.toLowerCase().includes(filters.nombre.toLowerCase()) &&
+    //       obra.descripcion.toLowerCase().includes(filters.descripcion.toLowerCase()) &&
+    //       obra.escultor.toLowerCase().includes(filters.escultor.toLowerCase())
+    //     )
+    //   );
+    // }, [filters, obras]);
 
-    const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = e.target;
-      setFilters({
-        ...filters,
-        [name]: value,
-      });
-    };
+    // const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //   const { name, value } = e.target;
+    //   setFilters({
+    //     ...filters,
+    //     [name]: value,
+    //   });
+    // };
 
     const handleDelete = (obra: Obra) => {
       setObraElegida(obra);
@@ -99,19 +100,33 @@ function TablaObras() {
     };
 
     const handleConfirmarDelete = async () => {
-      setObras((prevObras) =>
-        prevObras.filter((m) => m !== obraElegida)
-      );
+
+      const DeleteObra = async () => {
+        try {
+          if (obraElegida) {
+            await deleteObra(obraElegida.esculturaId);
+            setRefresh(!refresh);
+          }
+        } catch (error) {
+          console.error('Error en el fetch de obras:', error);
+        }
+      };
+      DeleteObra();
       onCloseDelete();
     };
 
-    const handleConfirmarAdd = async (titulo:string, tematica:string, fecha:string, autor:string, paisAutor:string, descripcion:string, imagenes:File[] ) => {
-      // fetch para agregar la obra
-      // fetch para traer las obras de nuevo
-      setObras((prevObras) => [
-        ...prevObras,
-        { id: (prevObras.length + 1).toString(), nombre: titulo, tematica: tematica, descripcion: descripcion, fechaCreacion: fecha, escultor: autor, escultorPais: paisAutor, escultorImagen: 'nose.jpg', imagenes: imagenes.map(img => URL.createObjectURL(img)) },
-      ]);
+    const handleConfirmarAdd = async (titulo:string, tematica:string, fecha:string, autor:number, paisAutor:string, descripcion:string, imagen:File ) => {
+      
+      const PostObra = async () => {
+        try {
+          await addObra(titulo, tematica, fecha, autor, paisAutor, descripcion, imagen);
+          setRefresh(!refresh);
+        } catch (error) {
+          console.error('Error en el fetch de obras:', error);
+        }
+      };
+
+      PostObra();
       onCloseAdd();
     };
 
@@ -120,14 +135,20 @@ function TablaObras() {
       onOpenEdit();
     };
 
-    const handleConfirmarEdit = async (titulo:string, tematica:string, fecha:string, autor:string, paisAutor:string, descripcion:string, imagenes:string[]) => {
-      setObras((prevObras) =>
-        prevObras.map((m) =>
-          m === obraElegida
-            ? { ...m, imagenes, titulo, descripcion, fecha }
-            : m
-        )
-      );
+    const handleConfirmarEdit = async (titulo:string, tematica:string, fecha:string, autor:number, paisAutor:string, descripcion:string, imagenes:string | File) => {
+      
+      const PutObra = async () => {
+        try {
+          if (obraElegida) {
+            await editObra(obraElegida.esculturaId, titulo, tematica, fecha, autor, paisAutor, descripcion, imagenes);
+          }
+          setRefresh(!refresh);
+        } catch (error) {
+          console.error('Error en el fetch de obras:', error);
+        }
+      };
+
+      PutObra();
       onCloseEdit();
     };
 
@@ -140,12 +161,11 @@ function TablaObras() {
               {mostrarFiltros ? 'Ocultar Filtros' : 'Filtrar'}
             </Button>
           </Flex>
-
           <Box bg="secundaryBg" p={6} boxShadow="md" w="80%" borderWidth={1} borderColor={"secundaryHover"}>
             {obras.length > 0 ? (
               <Table variant="striped" colorScheme="secundaryBg" width="100%">
                 <Thead>
-                  {mostrarFiltros && (
+                  {/* {mostrarFiltros && (
                     <Tr>
                       <Th></Th>
                       <Th>
@@ -177,7 +197,7 @@ function TablaObras() {
                       </Th>
                       <Th></Th>
                     </Tr>
-                  )}
+                  )} */}
 
                   <Tr mt={8}>
                     <Th textAlign="center" fontSize={15}>Imagen</Th>
@@ -187,22 +207,21 @@ function TablaObras() {
                     <Th textAlign="center" fontSize={15}>Acciones</Th>
                   </Tr>
                 </Thead>
-
                 <Tbody>
                   {filteredObras.map((obra, index) => (
                     <Tr key={index} mt={1} mb={1} p={1}>
-                      <Td textAlign="center" display="flex" justifyContent="center">
-                        <Image src={obra.imagenes[0]} alt={obra.nombre} width="100px" height="100%" objectFit="contain" />
-                      </Td>
+                        <Td textAlign="center" display="flex" justifyContent="center">
+                        <Image src={obra.imagenes} alt={obra.nombre} width="100px" height="auto" maxHeight="150px" objectFit="contain" />
+                        </Td>
                       <Td textAlign="center">{obra.nombre}</Td>
                       <Td textAlign="center">{obra.descripcion}</Td>
-                      <Td textAlign="center">{obra.escultor}</Td>
+                      <Td textAlign="center">{obra.escultorNombre}</Td>
                       <Td>
                         <Flex gap={2} justifyContent="center" alignItems="center">
                           <IconButton
                             aria-label="Editar"
                             icon={<EditIcon />}
-                           variant="bienal"
+                            variant="bienal"
                             borderRadius={3}
                             onClick={() => handleEditar(obra)}
                           />
