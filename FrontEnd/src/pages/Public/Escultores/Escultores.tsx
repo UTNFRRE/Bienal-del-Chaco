@@ -1,6 +1,8 @@
 import { Box, Image, Container, Text, Heading , Stack, Card, CardBody, Grid, GridItem} from '@chakra-ui/react'
-import { getEscultores } from '../../../API/Escultores';
-import { useEffect, useState } from 'react';
+
+import getEscultor from '../../../API/Admin/Escultores';
+import { useNavigate } from 'react-router-dom';
+
 
 interface Escultor {
   id: number;
