@@ -18,9 +18,15 @@ import {
   } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import DropZone from '../ZonaCarga/ZonaCarga';
-import Escultores from '../../API/Escultores';
+import { getEscultores } from '../../API/Admin/Obras';
 
-
+interface Escultor {
+    id: number;
+    nombre: string;
+    pais: string;
+    foto: string;
+  }
+  
 
 interface ModalProps {
     isOpen: boolean;
@@ -34,10 +40,10 @@ interface ModalProps {
         descripcion:string, 
         imagenes: string | File, 
     ) => void;
-    evento: any;
+    obra: any;
 }
 
-function ModificarObra({isOpen, onClose, confirmar, evento}: ModalProps) {
+function ModificarObra({isOpen, onClose, confirmar, obra  }: ModalProps) {
 
     const [titulo, setTitulo] = useState('');  
     const [tematica, setTematica] = useState('');
@@ -47,6 +53,8 @@ function ModificarObra({isOpen, onClose, confirmar, evento}: ModalProps) {
     const [autor, setAutor] = useState<number>(0);
     const [descripcion, setDescripcion] = useState('');
     const [fecha, setFecha] = useState('');
+    const [Escultoress, setEscultoress] = useState<Escultor[]>([]);
+
 
 
     const handleConfirmar = () => {
@@ -54,30 +62,31 @@ function ModificarObra({isOpen, onClose, confirmar, evento}: ModalProps) {
         onClose();
     }
 
-    const [listaEscultores, setListaEscultores] = useState<string[]>([]);
-    useEffect(() => {
-        const nombresEscultores = Escultores.map((escultor) => escultor.nombre);
-        setListaEscultores(nombresEscultores);
-    }, []);
-
-
-    // const handleAutor = (e: React.ChangeEvent<HTMLSelectElement>): void => {
-    //     setAutor(e.target.value);
-    //     setEscultorPais(Escultores.find((escultor) => escultor.nombre === autor)?.pais || '');
-    // }
+    const [listaEscultores, setListaEscultores] = useState<any[]>([])
 
     useEffect(() => {
-        if (evento){
-            setTitulo(evento.nombre);
-            setTematica(evento.tematica);
-            setAutor(evento.escultorID);
-            setEscultorPais(evento.paisAutor);
-            setDescripcion(evento.descripcion);
-            setFecha(evento.fechaCreacion);
-            setImagenPrev(evento.imagenes);
-            setImagen(evento.imagenes);
+        if (obra){
+            setTitulo(obra.nombre);
+            setTematica(obra.tematica);
+            setAutor(obra.escultorID);
+            setEscultorPais(obra.paisAutor);
+            setDescripcion(obra.descripcion);
+            setFecha(obra.fechaCreacion);
+            setImagenPrev(`${obra.imagenes}?${new Date().getTime()}`);   //Se agrega marca de tiempo, pq sino la imagen queda en cache del navegador
+            setImagen(obra.imagenes);
         }
-    }, [evento]);
+        const fetchEscultores = async () => {
+            try {
+                const data = await getEscultores();
+                setEscultoress(data);
+                const nombresEscultores = Escultoress.map((escultor) => ({ id: escultor.id, nombre: escultor.nombre }));
+                setListaEscultores(nombresEscultores);
+            } catch (error) {
+                console.error('Error en el fetch de escultores:', error);
+            }
+        };
+        fetchEscultores();
+    }, [isOpen]);
 
     const handleFilesChange = (files: File[]) => {
         setImagen(files[0]);
@@ -121,18 +130,22 @@ function ModificarObra({isOpen, onClose, confirmar, evento}: ModalProps) {
                                 <Stack direction="row" gap={3} align="center" w="100%">
                                     <Box w="100%">
                                         <FormLabel ml="2px" mb={1}>Escultor</FormLabel>
-                                        {/* <Select placeholder={autor} value={autor} onChange={handleAutor}>
-                                            {listaEscultores.map((escultor, index) => (
-                                                <option key={index} value={escultor}>
-                                                    {escultor}
+                                        <Select 
+                                            placeholder='Seleccione escultor' 
+                                            value={autor} 
+                                            onChange={(e) => setAutor(Number(e.target.value))}
+                                        >
+                                            {listaEscultores.map((escultor) => (
+                                                <option key={escultor.id} value={escultor.id}>
+                                                    {escultor.nombre}
                                                 </option>
                                             ))}
-                                        </Select> */}
-                                        <Input placeholder="Escultor" value={autor} onChange={(e) => setAutor(Number(e.target.value))}/>
+                                        </Select>
+                                        {/* <Input placeholder="Escultor" value={autor} onChange={(e) => setAutor(Number(e.target.value))}/> */}
                                     </Box>
                                     <Box w="100%">
                                         <FormLabel ml="2px" mb={1}>Pais</FormLabel>
-                                        <Input placeholder="Pais" value={escultorPais} isReadOnly/>
+                                        <Input placeholder="Pais" value={escultorPais} onChange={(e) => setEscultorPais(e.target.value)}/>
                                     </Box>
                                 </Stack>
                                 <Stack direction="column" gap={0} justifyContent={"flex-start"}>

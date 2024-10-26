@@ -211,7 +211,7 @@ function TablaObras() {
                   {filteredObras.map((obra, index) => (
                     <Tr key={index} mt={1} mb={1} p={1}>
                         <Td textAlign="center" display="flex" justifyContent="center">
-                        <Image src={obra.imagenes} alt={obra.nombre} width="100px" height="auto" maxHeight="150px" objectFit="contain" />
+                        <Image src={`${obra.imagenes}?${new Date().getTime()}`} alt={obra.nombre} width="100px" height="auto" maxHeight="150px" objectFit="contain" />
                         </Td>
                       <Td textAlign="center">{obra.nombre}</Td>
                       <Td textAlign="center">{obra.descripcion}</Td>
@@ -253,7 +253,7 @@ function TablaObras() {
               isOpen={isOpenEdit}
               onClose={onCloseEdit}
               confirmar = {handleConfirmarEdit}
-              evento={obraElegida}
+              obra={obraElegida}
             />
           <ModalConfirmar 
               isOpen={isOpenDelete}
