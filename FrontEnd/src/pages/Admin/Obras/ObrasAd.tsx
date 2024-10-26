@@ -161,9 +161,9 @@ function TablaObras() {
               {mostrarFiltros ? 'Ocultar Filtros' : 'Filtrar'}
             </Button>
           </Flex>
-          <Box bg="secundaryBg" p={6} boxShadow="md" w="80%" borderWidth={1} borderColor={"secundaryHover"}>
+          <Box overflowX="auto" bg="secundaryBg" p={6} boxShadow="md" w="80%" borderWidth={1} borderColor={"secundaryHover"}>  
             {obras.length > 0 ? (
-              <Table variant="striped" colorScheme="secundaryBg" width="100%">
+              <Table variant="striped" colorScheme="secundaryBg" width="100%" size="sm">
                 <Thead>
                   {/* {mostrarFiltros && (
                     <Tr>
@@ -211,7 +211,7 @@ function TablaObras() {
                   {filteredObras.map((obra, index) => (
                     <Tr key={index} mt={1} mb={1} p={1}>
                         <Td textAlign="center" display="flex" justifyContent="center">
-                        <Image src={`${obra.imagenes}?${new Date().getTime()}`} alt={obra.nombre} width="100px" height="auto" maxHeight="150px" objectFit="contain" />
+                        <Image src={`${obra.imagenes}?${new Date().getTime()}`} alt={obra.nombre} width="100px" height="auto" maxHeight="150px" objectFit="contain"></Image>
                         </Td>
                       <Td textAlign="center">{obra.nombre}</Td>
                       <Td textAlign="center">{obra.descripcion}</Td>

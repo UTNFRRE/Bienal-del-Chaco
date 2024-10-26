@@ -230,7 +230,7 @@ const handleConfirmarAdd = async (nombre: string, foto: File, Pais: string, cont
                     borderWidth={1} borderColor={"secundaryHover"}
             >
             {escultores.length > 0 ? (
-                <>
+                <Box overflowX="auto" w={"100%"}>
                 <Table  style={{ width: '100%' }} colorScheme="secundaryBg" width="100%"> {/*variant="striped"*/}
                     <Thead>
                        {/* Si MostrarFiltros es verdadero entonces... */}
@@ -356,7 +356,7 @@ const handleConfirmarAdd = async (nombre: string, foto: File, Pais: string, cont
                     ))}
                     </Tbody>
                 </Table>
-                </>
+                </Box>
             ) : (
                 <Text>No hay datos disponibles</Text>
             )}

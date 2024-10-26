@@ -205,7 +205,7 @@ function TablaEventos () {
                 // overflowY="auto"
             >
             {eventos.length > 0 ? (
-              <>
+              <Box overflowX="auto" w={"100%"}>
                 <Table variant="striped" colorScheme="secundaryBg" width="100%" >
                   <Thead>
                     {/* Si MostrarFiltros es verdadero entonces... */}
@@ -300,7 +300,7 @@ function TablaEventos () {
                     ))}
                   </Tbody>
                 </Table>
-              </>
+              </Box>
             ) : (
               <Text>No hay datos disponibles</Text>
             )}
