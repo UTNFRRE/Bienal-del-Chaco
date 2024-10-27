@@ -51,7 +51,7 @@ export const editObra = async (id: string, titulo: string, tematica: string, fec
     formData.append('Nombre', titulo);
     formData.append('Descripcion', descripcion);
     formData.append('EscultorID', autor.toString());
-    // formData.append('FechaCreacion', fecha);
+    formData.append('FechaCreacion', fecha);
     formData.append('Tematica', tematica);
     method = 'PATCH';
   } else {
@@ -59,7 +59,7 @@ export const editObra = async (id: string, titulo: string, tematica: string, fec
     formData.append('Descripcion', descripcion);
     formData.append('Imagen', imagen);
     formData.append('EscultorID', autor.toString());
-    formData.append('FechaCreacion', '2021-01-01');
+    formData.append('FechaCreacion', fecha);
     formData.append('Tematica', tematica);
     method = 'PUT';
   }

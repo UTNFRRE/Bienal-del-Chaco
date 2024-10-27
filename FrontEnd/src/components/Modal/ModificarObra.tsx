@@ -59,6 +59,13 @@ function ModificarObra({isOpen, onClose, confirmar, obra  }: ModalProps) {
 
     const handleConfirmar = () => {
         confirmar(titulo, tematica, fecha, autor, escultorPais, descripcion, imagen);
+        setTitulo('');
+        setTematica('');
+        setEscultorPais('');
+        setImagen('');
+        setAutor(0);
+        setDescripcion('');
+        setFecha('');
         onClose();
     }
 
@@ -69,7 +76,7 @@ function ModificarObra({isOpen, onClose, confirmar, obra  }: ModalProps) {
             setTitulo(obra.nombre);
             setTematica(obra.tematica);
             setAutor(obra.escultorID);
-            setEscultorPais(obra.paisAutor);
+            setEscultorPais(obra.escultorPais);
             setDescripcion(obra.descripcion);
             setFecha(obra.fechaCreacion);
             setImagenPrev(`${obra.imagenes}?${new Date().getTime()}`);   //Se agrega marca de tiempo, pq sino la imagen queda en cache del navegador
