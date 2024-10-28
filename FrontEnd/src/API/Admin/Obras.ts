@@ -1,9 +1,9 @@
 const API_URL = 'http://localhost:5232'; // Reemplaza con la URL de tu backend
 
 // Obtener todas las obras
-export const getObras = async () => {
+export const getObras = async (currentPage: number, pageSize: number ) => {
     try {
-        const response = await fetch(`${API_URL}/Esculturas/GetAllLite`);
+        const response = await fetch(`${API_URL}/Esculturas/GetAllLite?pageNumber=${currentPage}&pageSize=${pageSize}`);
         if (response.ok) {
             const data = await response.json();
             return data;

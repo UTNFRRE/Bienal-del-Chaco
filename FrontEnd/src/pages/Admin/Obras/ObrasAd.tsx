@@ -1,6 +1,6 @@
 // Objective: Create a page to manage the works of the artists.
 import { Box, Table, Thead, Tbody, Tr, Th, Td, Flex, Text, IconButton, Button, Input, Image } from '@chakra-ui/react';
-import { EditIcon, DeleteIcon, AddIcon, SearchIcon } from '@chakra-ui/icons';
+import { EditIcon, DeleteIcon, AddIcon, SearchIcon, ChevronLeftIcon, ChevronRightIcon, ArrowLeftIcon, ArrowRightIcon } from '@chakra-ui/icons';
 import { useState, useEffect } from 'react';
 import { useDisclosure } from '@chakra-ui/react';
 
@@ -28,6 +28,10 @@ function TablaObras() {
     const [filteredObras, setFilteredObras] = useState<Obra[]>([]);
     const [obraElegida, setObraElegida] = useState<Obra | null>(null);
     const [refresh, setRefresh] = useState(false);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize] = useState(10); // Cantidad de obras por página
+    const [totalPages, setTotalPages] = useState(2);
 
     const {
       isOpen: isOpenAdd,
@@ -63,7 +67,7 @@ function TablaObras() {
     useEffect(() => {
       const fetchObras = async () => {
         try {
-          const data = await getObras();
+          const data = await getObras(currentPage, pageSize);
           console.log(data);
           setObras(data);
           setFilteredObras(data);
@@ -73,7 +77,7 @@ function TablaObras() {
       };
     
       fetchObras();
-    }, [refresh]);
+    }, [refresh, currentPage, pageSize]);
 
     // useEffect(() => {
     //   setFilteredObras(
@@ -152,9 +156,21 @@ function TablaObras() {
       onCloseEdit();
     };
 
+    const handlePreviousPage = () => {
+      if (currentPage > 1) {
+        setCurrentPage(currentPage - 1);
+      }
+    };
+  
+    const handleNextPage = () => {
+      if (currentPage < totalPages) {
+        setCurrentPage(currentPage + 1);
+      }
+    };
+
     return (
       <>
-        <Flex alignItems="center" justifyContent="center" flexDirection="column">
+        <Flex alignItems="center"  flexDirection="column">
           <Flex justifyContent="center" mb={4} mt={4} gap={4}>
             <Button variant="bienal" leftIcon={<AddIcon />} borderRadius={3} onClick={onOpenAdd}>Agregar Obra</Button>
             <Button variant="bienal" onClick={() => setMostrarFiltros(!mostrarFiltros)} leftIcon={<SearchIcon />} borderRadius={3}>
@@ -163,6 +179,7 @@ function TablaObras() {
           </Flex>
           <Box overflowX="auto" bg="secundaryBg" p={6} boxShadow="md" w="80%" borderWidth={1} borderColor={"secundaryHover"}>  
             {obras.length > 0 ? (
+              <>
               <Table variant="striped" colorScheme="secundaryBg" width="100%" size="sm">
                 <Thead>
                   {/* {mostrarFiltros && (
@@ -238,9 +255,30 @@ function TablaObras() {
                   ))}
                 </Tbody>
               </Table>
+              </>
             ) : (
               <Text>No hay datos disponibles</Text>
             )}
+          </Box>
+          <Box w={"80%"} mb={4}>
+          <Flex justifyContent="flex-end" mt={4} gap={1}>
+                <IconButton
+                  aria-label="Previous Page"
+                  icon={<ArrowLeftIcon />}
+                  variant="bienal"
+                  borderRadius={3}
+                  onClick={() => handlePreviousPage()}
+                  isDisabled={currentPage === 1}
+                />
+                <IconButton
+                  aria-label="Next Page"
+                  icon={<ArrowRightIcon />}
+                  variant="bienal"
+                  borderRadius={3}
+                  onClick={() => handleNextPage()}
+                  isDisabled={currentPage === totalPages}
+                />
+          </Flex>
           </Box>
         </Flex>
 
