@@ -7,7 +7,7 @@ import {
     MenuItem,
     Button,
     Spacer,
-    
+    Avatar,
   } from '@chakra-ui/react';
   import imgLogo from '../icons/pagina.png';
   import logoUser from '../icons/logo-user.png';
@@ -52,7 +52,7 @@ import {
             <Spacer display={{ base: 'flex', md: 'none' }} />
             {user && <Menu>
               <MenuButton as={Button} borderRadius="50%" w="50px" h="50px" p="0px">
-                <Image src={logoUser} w="100%"></Image>
+                <Avatar name='Yoel Marain'/>
               </MenuButton>
               <MenuList>
                 <MenuItem color="gray" pointerEvents="none">

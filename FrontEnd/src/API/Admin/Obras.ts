@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5232'; // Reemplaza con la URL de tu backend
+const API_URL = 'http://localhost:5232'; 
 
 // Obtener todas las obras
 export const getObras = async (currentPage: number, pageSize: number ) => {

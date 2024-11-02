@@ -5,6 +5,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Auth from './layout/Auth';
 import Admin from './layout/Admin';
 import Public from './layout/Public';
+import User from './layout/User';
 import theme from './theme/theme';
 
 function App() {
@@ -39,6 +40,8 @@ function App() {
                 />
               }
             />
+            <Route path="/user/*" element={<User />} />
+        
            <Route
               path="/*"
               element={
