@@ -99,11 +99,11 @@ export default function ObrasPublic () {
                         cursor: 'pointer', 
                         },
                      }}
-                      borderWidth={2}  borderColor={"secundaryHover"} bgColor={"#F4F6FF"}>
+                      borderWidth={2}  borderColor={"secundaryHover"} bgColor={"#FFFFFF"}>
         
                         <CardBody borderRadius={10} w="100%" display="flex" flexDirection={"column"} h="auto" >
-                          <Box position="relative" display="flex" justifyContent="center" alignItems="center" w="100%"  mb={4} >
-                            <Box width="100%"  borderWidth={1} borderColor={"secundaryHover"}>
+                          <Box position="relative" display="flex" justifyContent="center" alignItems="center" w="100%"  mb={2} >
+                            <Box width="100%" borderWidth={1} borderColor={"secundaryHover"}>
                               <ImageGallery items={images}
                                 showThumbnails={false}  //desactivo las miniaturas
                                 showPlayButton={false}  // desactivo el boton de play
