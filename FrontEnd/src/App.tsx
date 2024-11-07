@@ -7,6 +7,7 @@ import Admin from './layout/Admin';
 import Public from './layout/Public';
 import User from './layout/User';
 import theme from './theme/theme';
+import Vote from  './layout/Vote';
 
 function App() {
   useEffect(() => {
@@ -20,6 +21,7 @@ function App() {
       <BrowserRouter>
         <Routes>
            <Route path="/auth/*" element={<Auth />} />
+           <Route path="/voting/" element={<Vote />} />  
            <Route path="/admin/*" element={<Admin />} />
            <Route
               path="/admin/"

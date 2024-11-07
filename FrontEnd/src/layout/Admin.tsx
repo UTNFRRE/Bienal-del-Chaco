@@ -22,6 +22,7 @@ export default function Admin() {
       </Box>
       <Box pt="20" ml="7px">
         {element}
+        
       </Box>
     </Box>
   );
