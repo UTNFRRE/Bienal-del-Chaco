@@ -94,7 +94,7 @@
 }
 
 .card:hover .cube {
-    transform: rotateX(90deg);
+    transform: rotateX(90deg)f
 }
 
 .side {
@@ -112,6 +112,3 @@
     transform: rotateX(-90deg) translate3d(0, 0, 0em);
 }
 
-.front {
-    transform: translate3d(0, 0, 1em);
-}
