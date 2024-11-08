@@ -12,6 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { getEscultores } from '../../../API/Escultores';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface Escultor {
   id: number;
@@ -20,10 +21,33 @@ interface Escultor {
   foto: string;
 }
 
-function Escultoress() {
+
+function Escultoress () {
+
+  const navigate = useNavigate(); 
+
   const handleCardClick = (id: number) => {
-    //history.push(`/escultores/${id}`);
-  };
+    navigate(`/public/escultores/${id}`);
+  }
+  
+   
+    const [Escultores, setEscultores] = useState<Escultor[]>([]);
+    useEffect(() => {
+      const fetchEscultores = async () => {
+        try {
+          const data = await getEscultores();
+          console.log(data);
+          setEscultores(data);
+        } catch (error) {
+          console.error('Error en el fetch de Escultores:', error);
+        }
+      };
+    
+      fetchEscultores();
+    }, []);
+
+  return (
+<Container maxWidth="100vw" width="100vw" height="100vh" centerContent>
 
   //Modifique para conincide los tipos entre el file Obras y el tipo Obra
   const [Escultores, setEscultores] = useState<Escultor[]>([]);
