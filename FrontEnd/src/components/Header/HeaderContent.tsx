@@ -13,6 +13,7 @@ import imgLogo from '../icons/pagina.png';
 import logoUser from '../icons/logo-user.png';
 import { NavContent } from '../NavBar/NavContent';
 import MovileNav from '../NavBar/MobileNav';
+import {useNavigate} from 'react-router-dom';
 
 interface NavContentProps {
   LINK_ITEMS: { title: string; url: string; rol: string }[];
@@ -20,6 +21,12 @@ interface NavContentProps {
 }
 
 export function HeaderContent({ LINK_ITEMS, user }: NavContentProps) {
+
+  const navigate = useNavigate();
+  const handleButton = () => {
+    navigate('/auth/');
+  }
+
   return (
     <Flex
       as="header"
@@ -70,6 +77,19 @@ export function HeaderContent({ LINK_ITEMS, user }: NavContentProps) {
               <MenuItem>Cerrar sesión</MenuItem>
             </MenuList>
           </Menu>
+        )}
+        {!user && (
+          <Button
+            bg="transparent"
+            color="white"
+            border="1px"
+            borderColor="white"
+            _hover={{ bg: 'white', color: 'black' }}
+            _active={{ bg: 'white', color: 'black' }}
+            onClick={handleButton}
+          >
+            Iniciar sesión
+          </Button>
         )}
       </Flex>
     </Flex>
