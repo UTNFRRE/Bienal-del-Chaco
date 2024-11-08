@@ -14,7 +14,6 @@ import {
   Image,
 } from '@chakra-ui/react';
 import { EditIcon, DeleteIcon, AddIcon, SearchIcon } from '@chakra-ui/icons';
-import TEscultores from '../../API/TEscultores';
 import { useState, useEffect } from 'react';
 import { useDisclosure } from '@chakra-ui/react';
 import ModalConfirmar from '../Modal/ConfirmarCambios';
@@ -440,12 +439,12 @@ function TablaEscultores() {
         onClose={onCloseAdd}
         confirmar={handleConfirmarAdd}
       />
-      {/* <ModalEditarEscultor
+      <ModalEditarEscultor
         isOpen={isOpenEdit}
         onClose={onCloseEdit}
         confirmar={handleConfirmarEdit}
         escultor={EscultorElegido}
-        /> */}
+      />
     </>
   );
 }

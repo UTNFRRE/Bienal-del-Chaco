@@ -24,7 +24,6 @@ import { useDisclosure } from '@chakra-ui/react';
 import ModalConfirmar from '../Modal/ConfirmarCambios';
 import ModalAgregarEvento from '../Modal/AgregarEvento';
 import ModalEditarEvento from '../Modal/EditarEvento';
-import { SiTheregister } from 'react-icons/si';
 
 // Agregar paginacion
 // La parte de filtrado robe de por ahi, asi que ignoren nms eso por ahora

@@ -33,7 +33,7 @@ export default [
       ],
       '@typescript-eslint/prefer-as-const': 'warn',
       '@typescript-eslint/no-unused-vars': 'warn',
-      '@typescript-eslint/no-explicit-any': 'warn',
+      // '@typescript-eslint/no-explicit-any': 'warn',
       'no-extra-semi': 'warn',
       'no-mixed-spaces-and-tabs': 'warn',
     },
