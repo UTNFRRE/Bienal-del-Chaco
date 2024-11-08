@@ -9,8 +9,14 @@ import {
 } from '@chakra-ui/react';
 import ImagenFondo from '../components/icons/login2.png';
 import Logo from '../components/icons/pagina.png';
+import { useNavigate } from 'react-router-dom';
 
 export default function LoginPage() {
+  const navigate = useNavigate();
+  const handleLogin = () => {
+    // Aquí puedes agregar la lógica de autenticación si es necesario
+    navigate('/admin/eventos');
+  };
   return (
     <Box
       w="100vh"
@@ -134,6 +140,7 @@ export default function LoginPage() {
               borderColor="white"
               fontWeight="500"
               letterSpacing="1px"
+              onClick={handleLogin}
               _hover={{ bg: '#747264' }}
             >
               Acceder
