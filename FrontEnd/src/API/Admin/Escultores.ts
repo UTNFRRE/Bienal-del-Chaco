@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5232'; // Reemplaza con la URL de tu backend
+const API_URL = 'https://bienalbackapi.azurewebsites.net'; // Reemplaza con la URL de tu backend
 
 //Obtener un escultor
 export const getEscultor = async () => {
