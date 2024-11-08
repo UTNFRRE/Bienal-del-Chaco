@@ -12,7 +12,6 @@ const Card = () => {
                 <div style={{ display: 'flex' }} className="data">
                 <div className="text">
                     <label className="text_m">Obra</label>
-                    
                 </div>
             </div>
             <span title="Acceder a la lista (Temas)">Mas information</span>

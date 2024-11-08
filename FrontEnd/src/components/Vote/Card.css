@@ -4,7 +4,7 @@
     display: flex;
     flex-direction: column;
     background: rgba(255,255,255,0.1);
-    box-shadow: 0 25px 45px rgba(0,0,0,.2);
+    box-shadow: 13px 8px 82px 12px  rgba(0,0,0,.2);
     border: 2px solid rgba(90, 86, 86, 0.5);
     border-right: 2px solid rgba(112, 108, 108, 0.5);
     border-bottom: 2px solid rgba(112, 108, 108, 0.5);
@@ -12,7 +12,7 @@
     border-radius: 50px;
     gap: 1rem; /* Aumenta el gap para más espacio entre elementos */
     width: 25em; /* Aumenta el ancho dexla tarjeta */
-    height: auto; /* Ajusta la altura automáticamente según el contenido */
+    height: 70vh; /* Ajusta la altura automáticamente según el contenido */
 }
 
 .card:hover
@@ -78,6 +78,7 @@
     transition: 0.2s ease-in-out;
     opacity: 0;
     cursor: pointer;
+    padding-top: 6vh;
 }
 
 .card_data span:hover {
@@ -92,6 +93,8 @@
 }
 
 .text_m {
+    display: flex;
+    padding-top: 3vh;
     font-size: 1.6em; /* Aumenta el tamaño del texto principal */
 }
 
