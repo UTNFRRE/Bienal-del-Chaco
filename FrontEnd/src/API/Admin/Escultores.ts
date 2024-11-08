@@ -15,9 +15,9 @@ export const getEscultorById = async (id: string) => {
 };
 
 //Obtener un escultor
-export const getEscultor = async () => {
+export const getEscultor = async (currentPage: number, pageSize:number, filter:string) => {
   try {
-    const response = await fetch(`${API_URL}/escultoresAdmin`);
+    const response = await fetch(`${API_URL}/Escultor?pageNumber=${currentPage}&pageSize=${pageSize}&busqueda=${filter}`);
     if (response.ok) {
       const data = await response.json(); //lo convierto a formato jason
       return data; //lo muestro
