@@ -1,7 +1,5 @@
-import TablaEscultores from "../../components/Escultores/TablaEscultores";
+import TablaEscultores from '../../components/Escultores/TablaEscultores';
 
 export default function Escultores() {
-    return (
-        <TablaEscultores />
-    );
+  return <TablaEscultores />;
 }
