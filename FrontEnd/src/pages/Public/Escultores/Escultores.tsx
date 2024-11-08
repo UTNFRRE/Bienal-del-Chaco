@@ -47,25 +47,6 @@ function Escultoress () {
     }, []);
 
   return (
-<Container maxWidth="100vw" width="100vw" height="100vh" centerContent>
-
-  //Modifique para conincide los tipos entre el file Obras y el tipo Obra
-  const [Escultores, setEscultores] = useState<Escultor[]>([]);
-  useEffect(() => {
-    const fetchEscultores = async () => {
-      try {
-        const data = await getEscultores();
-        console.log(data);
-        setEscultores(data);
-      } catch (error) {
-        console.error('Error en el fetch de Escultores:', error);
-      }
-    };
-
-    fetchEscultores();
-  }, []);
-
-  return (
     <Container maxWidth="100vw" width="100vw" height="100vh" centerContent>
       <Grid
         templateColumns="repeat(auto-fit, minmax(250px, 1fr))"

@@ -31,8 +31,11 @@ function App() {
             element={<Navigate replace to="/public/eventos" />}
           />
           <Route path="/user/*" element={<User />} />
-
-          <Route path="/*" element={<Navigate replace to="/auth/" />} />
+          <Route
+            path="/user/"
+            element={<Navigate replace to="/user/eventos" />}
+          />
+          <Route path="/*" element={<Navigate replace to="/user/" />} />
         </Routes>
       </BrowserRouter>
     </ChakraProvider>
