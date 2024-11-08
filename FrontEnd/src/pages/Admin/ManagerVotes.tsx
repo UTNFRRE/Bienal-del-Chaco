@@ -5,6 +5,7 @@ import { BsQrCode } from "react-icons/bs";
 
 const ManagerVotes = () => {
     const [hover, setHover] = useState(false);
+    const [hover1, setHover1] = useState(false);
 
     return (
             <Flex
@@ -15,7 +16,7 @@ const ManagerVotes = () => {
                 gap={5}
             >
                 <Button
-                colorScheme="blue"
+                bg="#1E2A5E"
                 variant="solid"
                 width="14vw"
                 height='8vh'
@@ -25,7 +26,8 @@ const ManagerVotes = () => {
                 transition="all 0.3s ease"
                 display="flex"
                 alignItems="center"
-                justifyContent="center">
+                justifyContent="center"
+                _hover={{bg: "#2b345b"}}>
                     <Flex
                         transition="opacity 0.4s ease"
                         opacity={hover ? 0 : 1}
@@ -41,27 +43,29 @@ const ManagerVotes = () => {
                     </Flex>
                 </Button>
                 <Button
-                colorScheme="blue"
+                bg="#1E2A5E"
                 variant="solid"
                 width="14vw"
                 height='8vh'
                 p={4}
-                onMouseEnter={() => setHover(true)}
-                onMouseLeave={() => setHover(false)}
+                onMouseEnter={() => setHover1(true)}
+                onMouseLeave={() => setHover1(false)}
                 transition="all 0.3s ease"
                 display="flex"
                 alignItems="center"
-                justifyContent="center">
+                justifyContent="center"
+                _hover={{bg: "#2b345b"}}
+                >
                     <Flex
                         transition="opacity 0.4s ease"
-                        opacity={hover ? 0 : 1}
+                        opacity={hover1 ? 0 : 1}
                         position="absolute"
                     >
                         <BsQrCode />
                     </Flex>
                     <Flex
                         transition="opacity 0.4s ease"
-                        opacity={hover ? 1 : 0}
+                        opacity={hover1 ? 1 : 0}
                     >
                         <Text>Generar QR</Text>
                     </Flex>
