@@ -1,8 +1,7 @@
-import { Grid, GridItem, Image, Text, Box } from '@chakra-ui/react'
+import { Grid, GridItem, Image, Text, Box } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import React from 'react';
-
 import { getEscultorById } from '../../../API/Admin/Escultores';
 import { getObraByEscultor } from '../../../API/Admin/Obras';
 
@@ -120,6 +119,5 @@ const EscultorDetail = () => {
 
 
     );
-
 };
 export default EscultorDetail;

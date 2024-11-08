@@ -19,38 +19,20 @@ function App() {
     <ChakraProvider theme={theme}>
       <BrowserRouter>
         <Routes>
-           <Route path="/auth/*" element={<Auth />} />
-           <Route path="/admin/*" element={<Admin />} />
-           <Route
-              path="/admin/"
-              element={
-                <Navigate
-                  replace
-                  to='/admin/escultores' 
-                />
-              }
-            />
-           <Route path="/public/*" element={<Public />} />
-           <Route
-              path="/public/"
-              element={
-                <Navigate
-                  replace
-                  to='/public/eventos' 
-                />
-              }
-            />
-            <Route path="/user/*" element={<User />} />
-        
-           <Route
-              path="/*"
-              element={
-                <Navigate
-                  replace
-                  to='/auth/' 
-                />
-              }
-            />
+          <Route path="/auth/*" element={<Auth />} />
+          <Route path="/admin/*" element={<Admin />} />
+          <Route
+            path="/admin/"
+            element={<Navigate replace to="/admin/escultores" />}
+          />
+          <Route path="/public/*" element={<Public />} />
+          <Route
+            path="/public/"
+            element={<Navigate replace to="/public/eventos" />}
+          />
+          <Route path="/user/*" element={<User />} />
+
+          <Route path="/*" element={<Navigate replace to="/auth/" />} />
         </Routes>
       </BrowserRouter>
     </ChakraProvider>

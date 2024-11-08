@@ -1,4 +1,3 @@
-
 import {
   Flex,
   IconButton,
@@ -13,14 +12,14 @@ import {
   VStack,
   Link,
 } from '@chakra-ui/react';
-import { FiMenu } from 'react-icons/fi'; 
+import { FiMenu } from 'react-icons/fi';
 import NavItem from './NavItem';
 
 interface NavContentProps {
-  LINK_ITEMS: { title: string; url: string; rol:string }[];
+  LINK_ITEMS: { title: string; url: string; rol: string }[];
 }
 
-export default function MobileNav({LINK_ITEMS}:NavContentProps) {
+export default function MobileNav({ LINK_ITEMS }: NavContentProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -44,7 +43,9 @@ export default function MobileNav({LINK_ITEMS}:NavContentProps) {
         <DrawerOverlay />
         <DrawerContent maxW="250px">
           <DrawerCloseButton />
-          <DrawerHeader bg="black" color="white">Menú</DrawerHeader>
+          <DrawerHeader bg="black" color="white">
+            Menú
+          </DrawerHeader>
           <DrawerBody bg="linear-gradient(to right, #000000, #434343)">
             <VStack align="start">
               {LINK_ITEMS.map((link, index) => (
