@@ -1,6 +1,7 @@
 import { Box, Image, Container, Text, Heading , Stack, Card, CardBody, Grid, GridItem} from '@chakra-ui/react'
 import { getEscultores } from '../../../API/Escultores';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface Escultor {
   id: number;
@@ -12,11 +13,13 @@ interface Escultor {
 
 function Escultoress () {
 
+  const navigate = useNavigate(); 
+
   const handleCardClick = (id: number) => {
-    //history.push(`/escultores/${id}`);
+    navigate(`/public/escultores/${id}`);
   }
   
-    //Modifique para conincide los tipos entre el file Obras y el tipo Obra
+   
     const [Escultores, setEscultores] = useState<Escultor[]>([]);
     useEffect(() => {
       const fetchEscultores = async () => {
