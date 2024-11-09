@@ -88,9 +88,10 @@ export default function ObrasPublic() {
       alignItems={'center'}
       flexDirection={'column'}
       flex={1}
+      pb={10}
     >
       <Box
-        w={'110%'}
+        w={'100%'}
         minHeight={'40vh'} 
         display={'flex'}
         mb={2}
@@ -106,17 +107,18 @@ export default function ObrasPublic() {
           <Button
             variant="light"
           >
-            Actuales
+            En excibición
           </Button>
           <Button
             variant="light"
           >
-            Pasadas
+            Anteriores
           </Button>
          </Flex>
          </Flex>
       </Box>
       {obras && (
+        <Flex pl={10} pr={10}>
         <Masonry
           breakpointCols={breakpointColumnsObj}
           className="my-masonry-grid"
@@ -148,9 +150,8 @@ export default function ObrasPublic() {
                   w={'100%'}
                   justifyContent={'center'}
                   flexDirection={'column'}
-                  // position={index === 0 ? "absolute" : "relative"} // La primera tarjeta es absoluta
-                  top={index <= 2 ? "-30px" : "auto"} // Ajusta la posición de la primera tarjeta
-                  zIndex={index <= 2 ? 1 : "auto"} // Asegúrate de que la primera tarjeta esté por encima
+                  top={index <= 2 ? "-30px" : "auto"} 
+                  zIndex={index <= 2 ? 1 : "auto"} 
                 >
                     <Box
                       position="relative"
@@ -230,8 +231,9 @@ export default function ObrasPublic() {
             );
           })}
         </Masonry>
+        </Flex>
       )}
-      <Box w={'100%'}>
+      <Box w={'100%'} mr={20}>
         <Flex justifyContent="flex-end" mt={4} gap={1}>
           <IconButton
             aria-label="Previous Page"

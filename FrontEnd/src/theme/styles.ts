@@ -15,6 +15,8 @@ export const globalStyles = {
     secundaryBg: '#F4F6FF',
     secundary: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
     secundaryHover: '#B4B4B8', //Usado para los bordes grises
+    azul: '#0B192C',
+    beige: '#CDC2A5',
   },
   styles: {
     global: (props: StyleFunctionProps) => ({
