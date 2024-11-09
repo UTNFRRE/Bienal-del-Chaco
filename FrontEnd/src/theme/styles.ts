@@ -19,7 +19,7 @@ export const globalStyles = {
   styles: {
     global: (props: StyleFunctionProps) => ({
       body: {
-        bg: '#EEEEEE', //color de fondo de la pagina completa
+        bg: '#E4E0E1', //color de fondo de la pagina completa
         fontFamily: "'Roboto', sans-serif",
       },
       html: {

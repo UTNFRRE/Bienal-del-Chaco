@@ -31,7 +31,6 @@ export function HeaderContent({ LINK_ITEMS, user }: NavContentProps) {
     <Flex
       as="header"
       borderBottom="1px"
-      borderColor="gray.300"
       w="100%"
       pos="fixed"
       pl="30px"

@@ -53,8 +53,8 @@ const theme = extendTheme({
         },
         light: {
           background: 'transparent',
-          color: '#022855',
-          border: '1px solid #022855',
+          color: '#CDC2A5',
+          border: '1px solid #CDC2A5',
           _hover: {
             bg: '#º  ',
             background: '#e9eef4',
