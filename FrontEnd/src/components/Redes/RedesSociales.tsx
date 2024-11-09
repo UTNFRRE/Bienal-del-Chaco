@@ -4,7 +4,7 @@ import './RedesSociales.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 function RedesSociales() {
-    const currentUrl = window.location.href;
+  const currentUrl = window.location.href;
   return (
     <Flex className="wrapper" w="fit-content">
       <IconButton
@@ -17,10 +17,10 @@ function RedesSociales() {
         borderWidth={1}
         borderColor="#3b5998"
         bg="white"
-        h="3.125rem" 
+        h="3.125rem"
         w="3.925rem"
         color="#3b5998"
-        _hover={{ bg: "white", color: "white" }}
+        _hover={{ bg: 'white', color: 'white' }}
       />
       <IconButton
         as="a"
@@ -32,10 +32,10 @@ function RedesSociales() {
         borderWidth={1}
         borderColor="#1da1f2"
         bg="white"
-        h="3.125rem" 
+        h="3.125rem"
         w="3.925rem"
         color="#1da1f2"
-        _hover={{ bg: "white", color: "white" }}
+        _hover={{ bg: 'white', color: 'white' }}
       />
       <IconButton
         as="a"
@@ -45,12 +45,12 @@ function RedesSociales() {
         icon={<FaInstagram />}
         className="icon instagram"
         borderWidth={1}
-        borderColor='#e1306c'
+        borderColor="#e1306c"
         bg="white"
-        h="3.125rem" 
+        h="3.125rem"
         w="3.925rem"
-        color='#e1306c'
-        _hover={{ bg: "white", color: "white" }}
+        color="#e1306c"
+        _hover={{ bg: 'white', color: 'white' }}
       />
       <IconButton
         as="a"
@@ -62,10 +62,10 @@ function RedesSociales() {
         borderWidth={1}
         borderColor="#25d366"
         bg="white"
-        h="3.125rem" 
+        h="3.125rem"
         w="3.925rem"
         color="#25d366"
-        _hover={{ bg: "white", color: "white" }}
+        _hover={{ bg: 'white', color: 'white' }}
       />
     </Flex>
   );

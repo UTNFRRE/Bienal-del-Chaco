@@ -2,8 +2,8 @@ import Escultoress from './pages/Public/Escultores/Escultores';
 import EscultorDetail from './pages/Public/Escultores/EscultorDetalle';
 import ErrorPage from './pages/Error404';
 import Eventos from './pages/Admin/Eventos';
-import EventoDetalle  from './pages/Public/Eventos/EventoDetalle';
-import EventoDetalle2  from './pages/Public/Eventos/EventoDetalle2';
+import EventoDetalle from './pages/Public/Eventos/EventoDetalle';
+import EventoDetalle2 from './pages/Public/Eventos/EventoDetalle2';
 import EventosPublic from './pages/Public/Eventos/Eventos';
 import Escultores from './pages/Admin/Escultores';
 import ObrasPublic from './pages/Public/Obras/Obras';
@@ -12,7 +12,6 @@ import ObrasAdmin from './pages/Admin/Obras/ObrasAd';
 import ManagerVotes from './pages/Admin/ManagerVotes';
 
 const routes = [
- 
   {
     path: 'escultores',
     element: <Escultores />,
@@ -73,7 +72,7 @@ const routes = [
     title: '',
     rol: 'public',
   },
-  {	
+  {
     path: 'obras/:id', // Se agrega el id de la obra
     element: <ObraDetail />,
     title: '',
