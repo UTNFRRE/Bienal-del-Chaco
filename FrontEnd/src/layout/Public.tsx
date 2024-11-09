@@ -22,7 +22,7 @@ export default function Public() {
       <Box pos="relative" zIndex="10">
         <Header LINK_ITEMS={LINK_ITEMS} user={false} />
       </Box>
-      <Box p="10" pt="20">
+      <Box pt="20">
         {element}
       </Box>
     </Box>
