@@ -1,5 +1,5 @@
 import imagenFondo from '../components/icons/login2.png';
-import {Box, Image, Input, Flex, Heading, FormControl, Button} from  '@chakra-ui/react';
+import {Box,Flex} from  '@chakra-ui/react';
 import Card from '../components/Vote/Card';
 import Boton from '../components/Vote/Button';
 
