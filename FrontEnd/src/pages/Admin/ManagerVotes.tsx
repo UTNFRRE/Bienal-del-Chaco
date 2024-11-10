@@ -1,4 +1,5 @@
-import { Box, Flex } from '@chakra-ui/react';
+import { Box, Flex, Tabs, TabList, Tab, TabPanels, TabPanel } from '@chakra-ui/react';
+import {useState} from 'react';
 import CreateVoteButton from "../../components/Vote/CreateVoteButton"; //Boton para crear votacion
 import QrButton from "../../components/Vote/QrButton" //Boton para generar QR
 import EdicionesMenu from '../../components/Vote/EdicionesMenu';
@@ -7,7 +8,7 @@ import PieChart from '../../components/Charts/PieChart';
 import BarChart from '../../components/Charts/BarChart';
 
 const ManagerVotes = () => {
-    
+    const [chart, setChart] = useState<string | null>("first")
 
     return (
         <>
@@ -53,12 +54,24 @@ const ManagerVotes = () => {
                         alignItems="center"
                         justifyContent="center"
                     >
-                        <Box height="100%" width="40%" backgroundColor="white">
+                        <Box height="100%" width="40%" >
                             <DataTable />
                         </Box>
-                        <Box height="100%" width="60%" backgroundColor="red" flexDirection="column" >
-                            <Flex width="100%" height="7%" backgroundColor="yellow"></Flex>
-                            <Flex width="100%" height="93%" backgroundColor="green"></Flex>
+                        <Box height="100%" width="60%"  >
+                                                        <Tabs index={chart === "first" ? 0 : 1} onChange={(index) => setChart(index === 0 ? "first" : "second")}>
+                                <TabList>
+                                    <Tab>Circular</Tab>
+                                    <Tab>Barras</Tab>
+                                </TabList>
+                                <TabPanels >
+                                    <TabPanel height="100%" >
+                                        <PieChart />
+                                    </TabPanel>
+                                    <TabPanel>
+                                        <BarChart />
+                                    </TabPanel>
+                                </TabPanels>
+                            </Tabs>
                         </Box>
                     </Box>
                 </Flex>

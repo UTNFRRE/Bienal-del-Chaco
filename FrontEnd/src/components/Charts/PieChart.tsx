@@ -1,11 +1,25 @@
-import obras from '../../API/ObrasVote';
-import {Pie} from 'react-chartjs-2';
-import {Chart as ChartJS, Tooltip, ArcElement} from 'chart.js';
 
+import obras from '../../API/ObrasVote';
+import { Pie } from 'react-chartjs-2';
+import { Chart as ChartJS, Tooltip, ArcElement } from 'chart.js';
+
+// Registramos los elementos necesarios para Chart.js
 ChartJS.register(Tooltip, ArcElement);
 
-const PieChart =  () => {
-    const options = {};
+const PieChart = () => {
+    const options = {
+        responsive: true, // Hace que el gráfico sea responsive
+        maintainAspectRatio: false, // Permite que el gráfico cambie su aspecto al redimensionar
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    // Personaliza el tooltip si es necesario
+                    label: (context: any) => `${context.label}: ${context.raw} votos`
+                }
+            }
+        }
+    };
+
     const data = {
         labels: obras.map((item) => item.nombreObra),
         datasets: [
@@ -26,9 +40,13 @@ const PieChart =  () => {
             },
         ],
     };
-    return(
-        <Pie options={options} data={data} />
-    )
-}
+
+    return (
+        <div style={{ position: 'relative', width: '100%', height: '55vh' }}>
+            {/* El gráfico tomará todo el tamaño disponible en el contenedor */}
+            <Pie options={options} data={data} />
+        </div>
+    );
+};
 
 export default PieChart;
