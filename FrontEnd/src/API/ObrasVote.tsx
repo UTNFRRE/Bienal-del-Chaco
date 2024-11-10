@@ -22,6 +22,7 @@ const obras = [
         "edicion": 2019
     },
     
+    
 ];
 
 export default obras;

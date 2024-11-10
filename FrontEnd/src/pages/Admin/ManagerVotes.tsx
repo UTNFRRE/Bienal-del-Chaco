@@ -57,14 +57,16 @@ const ManagerVotes = () => {
                         borderWidth={1}
                         borderColor={"secundaryHover"}
                         display="flex"
-                        height="100%"
+                        height={{base: "auto", md: "75vh"}}
                         alignItems="center"
                         justifyContent="center"
+                        flexDirection={{base: "column", md: "row"}}
+                        position="absolute"
                     >
-                        <Box height="100%" width="40%">
+                        <Box height="100%" width={{md:"40%", base:"100%"}}>
                             <DataTable  />
                         </Box>
-                        <Box height="100%" width="60%">
+                        <Box  height="100%" width="60%">
                             <Tabs index={chart === "first" ? 0 : 1} onChange={(index) => setChart(index === 0 ? "first" : "second")}>
                                 <TabList>
                                     <Tab>Circular</Tab>
