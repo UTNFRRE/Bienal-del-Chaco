@@ -3,7 +3,7 @@ import { Box, Flex, Tabs, TabList, Tab, TabPanels, TabPanel } from '@chakra-ui/r
 import { useState } from 'react';
 import CreateVoteButton from "../../components/Vote/CreateVoteButton";
 import QrButton from "../../components/Vote/QrButton";
-import EdicionesMenu from '../../components/Vote/EdicionesMenu';
+// import EdicionesMenu from '../../components/Vote/EdicionesMenu';
 import DataTable from '../../components/Vote/DataTable';
 import PieChart from '../../components/Charts/PieChart';
 import BarChart from '../../components/Charts/BarChart';
@@ -28,9 +28,10 @@ const ManagerVotes = () => {
                     width="100vw"
                     height='10vh'
                     justifyContent='space-between'>
-                    <Box position='absolute' zIndex={1} display="flex" width="10vw" top='13%' justifyContent="center" alignItems="center" ml={{ base: 2, md: 4 }}>
+                    {/* Yoel dijo que sacara esto :( ) */}
+                    {/* <Box position='absolute' zIndex={1} display="flex" width="10vw" top='13%' justifyContent="center" alignItems="center" ml={{ base: 2, md: 4 }}>
                         <EdicionesMenu />
-                    </Box>
+                    </Box> */}
                     <Flex
                         zIndex={0}
                         width="100vw"
