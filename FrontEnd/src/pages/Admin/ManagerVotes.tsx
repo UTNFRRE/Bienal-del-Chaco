@@ -3,6 +3,8 @@ import CreateVoteButton from "../../components/Vote/CreateVoteButton"; //Boton p
 import QrButton from "../../components/Vote/QrButton" //Boton para generar QR
 import EdicionesMenu from '../../components/Vote/EdicionesMenu';
 import DataTable from '../../components/Vote/DataTable';
+import PieChart from '../../components/Charts/PieChart';
+import BarChart from '../../components/Charts/BarChart';
 
 const ManagerVotes = () => {
     
@@ -54,7 +56,10 @@ const ManagerVotes = () => {
                         <Box height="100%" width="40%" backgroundColor="white">
                             <DataTable />
                         </Box>
-                        <Box height="100%" width="60%" backgroundColor="red"></Box>
+                        <Box height="100%" width="60%" backgroundColor="red" flexDirection="column" >
+                            <Flex width="100%" height="7%" backgroundColor="yellow"></Flex>
+                            <Flex width="100%" height="93%" backgroundColor="green"></Flex>
+                        </Box>
                     </Box>
                 </Flex>
             </Flex>
