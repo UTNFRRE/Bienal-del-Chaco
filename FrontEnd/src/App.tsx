@@ -6,6 +6,7 @@ import Auth from './layout/Auth';
 import Admin from './layout/Admin';
 import Public from './layout/Public';
 import User from './layout/User';
+import Register from './layout/Registro';
 import theme from './theme/theme';
 
 function App() {
@@ -19,7 +20,8 @@ function App() {
     <ChakraProvider theme={theme}>
       <BrowserRouter>
         <Routes>
-          <Route path="/auth/*" element={<Auth />} />
+          <Route path="/auth/" element={<Auth />}/>
+          <Route path="/registro/" element={<Register />} />
           <Route path="/admin/*" element={<Admin />} />
           <Route
             path="/admin/"
