@@ -2,35 +2,33 @@ import { Flex, Heading, SimpleGrid, Text } from '@chakra-ui/react';
 //import Eventos from '../../../API/Admin/Eventos';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getEventos } from '../../../API/Public/EventosPu';
+import { getProximosEventos } from '../../../API/Public/EventosPu';
 
 interface Evento {
-  id: number;
-  nombre: string;
-  fecha: string;
-  lugar: string;
-  descripcion: string;
-  tematica: string;
+    id: number,
+    nombre: string,
+    fecha: string,
+    lugar: string,
+    descripcion: string,
+    tematica: string,
 }
 
 export const ProximosEventos = () => {
   const [eventos, setEventos] = useState<Evento[]>([]); // Array de eventos
   const navigate = useNavigate();
 
-  // Cargar los eventos al montar el componente
-  useEffect(() => {
-    const fetchEventos = async () => {
-      try {
-        const eventosData = await getEventos(); // Obtener eventos desde la API
-        setEventos(eventosData);
-      } catch (error) {
-        console.error('Error al cargar los eventos:', error);
-      }
-    };
-    fetchEventos();
-  }, []);
+    useEffect(() => {
+        const fetchEventos = async () => {
+            try {
+                const eventosData = await getProximosEventos(); // Obtener eventos desde la API
+                setEventos(eventosData);
+            } catch (error) {
+                console.error('Error al cargar los eventos:', error);
+            }
+        };
+        fetchEventos();
+    }, []);
 
-  //const navigate = useNavigate();
 
   const handleCardClick = (id: number) => {
     navigate(`/public/eventos/${id}`);
