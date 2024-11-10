@@ -1,8 +1,8 @@
-import { Text, Box, Flex } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 import CreateVoteButton from "../../components/Vote/CreateVoteButton"; //Boton para crear votacion
 import QrButton from "../../components/Vote/QrButton" //Boton para generar QR
-
 import EdicionesMenu from '../../components/Vote/EdicionesMenu';
+import DataTable from '../../components/Vote/DataTable';
 
 const ManagerVotes = () => {
     
@@ -13,6 +13,7 @@ const ManagerVotes = () => {
                 alignItems="center"
                 justifyContent="center"
                 flexDirection="column"
+                overflowX="hidden"
             >
                 <Flex
                     width="100vw"
@@ -29,7 +30,6 @@ const ManagerVotes = () => {
                         align="center"
                         gap={4}
                     >
-                        
                         <CreateVoteButton />{/* Boton para crear votacion */} 
                         <QrButton /> {/* Boton para generar QR */}
                     </Flex>
@@ -44,10 +44,17 @@ const ManagerVotes = () => {
                         bg="secundaryBg"
                         p={6}
                         w="95vw"
-                        borderWidth={1}
+                        borderWidth={1} 
                         borderColor={"secundaryHover"}
+                        display="flex"
+                        height="100%"
+                        alignItems="center"
+                        justifyContent="center"
                     >
-                        <Text>Tabla de Votaciones</Text>
+                        <Box height="100%" width="40%" backgroundColor="white">
+                            <DataTable />
+                        </Box>
+                        <Box height="100%" width="60%" backgroundColor="red"></Box>
                     </Box>
                 </Flex>
             </Flex>
