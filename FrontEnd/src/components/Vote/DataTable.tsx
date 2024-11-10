@@ -5,10 +5,16 @@ import Obras from '../../API/ObrasVote';
 const DataTable = ( ) => {
     // Define los datos que se van a mostrar en la tabla
     const [porcentaje,setPorcentaje] = useState <{[key:number]: number}> ({});
+    const [sortedObras, setSortedObras] = useState(Obras);
+
 
     useEffect(() => {
-        const totalVotes = Obras.reduce((sum, item)=> sum + item.CantVotos, 0);
-        const porcentajes = Obras.reduce((acc, item)=>{
+        // Ordenar las obras de mayor a menor según su cantidad de votos
+        const sorted = [...Obras].sort((a, b) => b.CantVotos - a.CantVotos);
+        setSortedObras(sorted);
+
+        const totalVotes = sortedObras.reduce((sum, item)=> sum + item.CantVotos, 0);
+        const porcentajes = sortedObras.reduce((acc, item)=>{
             acc[item.id] = (item.CantVotos / totalVotes) * 100;
             return acc;
         }, {} as {[key: number]: number});
@@ -25,7 +31,7 @@ const DataTable = ( ) => {
                 </Tr>
             </Thead>
             <Tbody>
-                {Obras.map((item) => (
+                {sortedObras.map((item) => (
                     <Tr key={item.id} _hover={{ bg: 'gray.100' }}>
                         <Td>{item.nombreObra}</Td>
                         <Td>{item.CantVotos}</Td>
