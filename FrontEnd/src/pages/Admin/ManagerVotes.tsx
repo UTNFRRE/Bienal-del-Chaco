@@ -7,26 +7,15 @@ import EdicionesMenu from '../../components/Vote/EdicionesMenu';
 import DataTable from '../../components/Vote/DataTable';
 import PieChart from '../../components/Charts/PieChart';
 import BarChart from '../../components/Charts/BarChart';
-import obras from '../../API/ObrasVote';
 
-// Define la interfaz Obra
-interface Obra {
-  id: number;
-  fotos: string;
-  nombreObra: string;
-  cantVotos: number;
-  edicion: number;
-}
+
+
 
 const ManagerVotes = () => {
     const [chart, setChart] = useState<string | null>("first");
-    const [filteredObras, setFilteredObras] = useState<Obra[]>(obras); // Estado tipado para las obras filtradas
 
     // Define el tipo de obrasDeEdicion como un array de Obra
-    const handleEditionChange = (obrasDeEdicion: Obra[]) => {
-        setFilteredObras(obrasDeEdicion); // Actualiza el estado con las obras filtradas
-    };
-
+    
     return (
         <>
             <Flex
@@ -40,7 +29,7 @@ const ManagerVotes = () => {
                     height='10vh'
                     justifyContent='space-between'>
                     <Box position='absolute' zIndex={1} display="flex" width="10vw" top='13%' justifyContent="center" alignItems="center" ml={{ base: 2, md: 4 }}>
-                        <EdicionesMenu onChangeEdition={handleEditionChange} />
+                        <EdicionesMenu />
                     </Box>
                     <Flex
                         zIndex={0}
@@ -72,7 +61,7 @@ const ManagerVotes = () => {
                         justifyContent="center"
                     >
                         <Box height="100%" width="40%">
-                            <DataTable obras={filteredObras} />
+                            <DataTable  />
                         </Box>
                         <Box height="100%" width="60%">
                             <Tabs index={chart === "first" ? 0 : 1} onChange={(index) => setChart(index === 0 ? "first" : "second")}>
@@ -82,10 +71,10 @@ const ManagerVotes = () => {
                                 </TabList>
                                 <TabPanels>
                                     <TabPanel height="100%">
-                                        <PieChart obras={filteredObras} />
+                                        <PieChart  />
                                     </TabPanel>
                                     <TabPanel>
-                                        <BarChart obras={filteredObras} />
+                                        <BarChart/>
                                     </TabPanel>
                                 </TabPanels>
                             </Tabs>

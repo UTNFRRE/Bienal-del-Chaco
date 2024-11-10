@@ -2,7 +2,7 @@ import { Table, Thead, Tbody, Tr, Th, Td } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import Obras from '../../API/ObrasVote';
 
-const DataTable = () => {
+const DataTable = ( ) => {
     // Define los datos que se van a mostrar en la tabla
     const [porcentaje,setPorcentaje] = useState <{[key:number]: number}> ({});
 

@@ -9,25 +9,11 @@ import {
 } from "@chakra-ui/react";
 import obras from '../../API/ObrasVote';
 
-interface Obra {
-  id: number;
-  fotos: string;
-  nombreObra: string;
-  cantVotos: number;
-  edicion: number;
-}
 
-interface EdicionesMenuProps {
-  onChangeEdition: (obrasDeEdicion: Obra[]) => void;
-}
 
-const EdicionesMenu = ({ onChangeEdition }: EdicionesMenuProps) => {
+const EdicionesMenu = () => {
 
-  const handleEdicionSelect = (edicion: number) => {
-    // Filtra las obras por la edición seleccionada
-    const obrasDeEdicion = obras.filter(obra => obra.edicion === edicion);
-    onChangeEdition(obrasDeEdicion); // Llama al callback con las obras filtradas
-  };
+ 
 
   // Crear un array con los años únicos de la propiedad "edicion" de las obras
   const years = Array.from(new Set(obras.map((obra) => obra.edicion)));
@@ -39,7 +25,7 @@ const EdicionesMenu = ({ onChangeEdition }: EdicionesMenuProps) => {
       </MenuButton>
       <MenuList>
         {years.map((year) => (
-          <MenuItem key={year} onClick={() => handleEdicionSelect(year)}>
+          <MenuItem key={year}>
             Bienal {year}
           </MenuItem>
         ))}
