@@ -1,25 +1,28 @@
 // ManagerVotes.js
 import { Box, Flex, Tabs, TabList, Tab, TabPanels, TabPanel } from '@chakra-ui/react';
 import { useState } from 'react';
-import CreateVoteButton from "../../components/Vote/CreateVoteButton"; // Botón para crear votación
-import QrButton from "../../components/Vote/QrButton"; // Botón para generar QR
+import CreateVoteButton from "../../components/Vote/CreateVoteButton";
+import QrButton from "../../components/Vote/QrButton";
 import EdicionesMenu from '../../components/Vote/EdicionesMenu';
 import DataTable from '../../components/Vote/DataTable';
 import PieChart from '../../components/Charts/PieChart';
 import BarChart from '../../components/Charts/BarChart';
 import obras from '../../API/ObrasVote';
 
+// Define la interfaz Obra
+interface Obra {
+  id: number;
+  fotos: string;
+  nombreObra: string;
+  cantVotos: number;
+  edicion: number;
+}
+
 const ManagerVotes = () => {
     const [chart, setChart] = useState<string | null>("first");
-    const [filteredObras, setFilteredObras] = useState(obras); // Estado para las obras filtradas
+    const [filteredObras, setFilteredObras] = useState<Obra[]>(obras); // Estado tipado para las obras filtradas
 
-    // Maneja el cambio de edición
-    interface Obra {
-        id: number;
-        title: string;
-        // Add other properties as needed
-    }
-
+    // Define el tipo de obrasDeEdicion como un array de Obra
     const handleEditionChange = (obrasDeEdicion: Obra[]) => {
         setFilteredObras(obrasDeEdicion); // Actualiza el estado con las obras filtradas
     };
@@ -47,8 +50,8 @@ const ManagerVotes = () => {
                         align="center"
                         gap={4}
                     >
-                        <CreateVoteButton /> {/* Botón para crear votación */}
-                        <QrButton /> {/* Botón para generar QR */}
+                        <CreateVoteButton />
+                        <QrButton />
                     </Flex>
                 </Flex>
                 <Flex
@@ -69,7 +72,7 @@ const ManagerVotes = () => {
                         justifyContent="center"
                     >
                         <Box height="100%" width="40%">
-                            <DataTable obras={filteredObras} /> {/* Pasa las obras filtradas a DataTable */}
+                            <DataTable obras={filteredObras} />
                         </Box>
                         <Box height="100%" width="60%">
                             <Tabs index={chart === "first" ? 0 : 1} onChange={(index) => setChart(index === 0 ? "first" : "second")}>
@@ -79,10 +82,10 @@ const ManagerVotes = () => {
                                 </TabList>
                                 <TabPanels>
                                     <TabPanel height="100%">
-                                        <PieChart obras={filteredObras} /> {/* Gráfico de torta con obras filtradas */}
+                                        <PieChart obras={filteredObras} />
                                     </TabPanel>
                                     <TabPanel>
-                                        <BarChart obras={filteredObras} /> {/* Gráfico de barras con obras filtradas */}
+                                        <BarChart obras={filteredObras} />
                                     </TabPanel>
                                 </TabPanels>
                             </Tabs>
