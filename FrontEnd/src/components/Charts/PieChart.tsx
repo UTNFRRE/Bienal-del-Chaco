@@ -1,10 +1,10 @@
 
 import obras from '../../API/ObrasVote';
 import { Pie } from 'react-chartjs-2';
-import { Chart as ChartJS, Tooltip, ArcElement } from 'chart.js';
+import { Chart as ChartJS, Tooltip, ArcElement, Title} from 'chart.js';
 
 // Registramos los elementos necesarios para Chart.js
-ChartJS.register(Tooltip, ArcElement);
+ChartJS.register(Tooltip, ArcElement, Title);
 
 const PieChart = () => {
     const options = {
@@ -36,7 +36,7 @@ const PieChart = () => {
                     'rgba(54, 162, 235, 1)',
                     'rgba(255, 206, 86, 1)',
                 ],
-                hoverOffset: 4,
+                hoverOffset: 4, // Aumenta el tamaño del sector al hacer hover
             },
         ],
     };

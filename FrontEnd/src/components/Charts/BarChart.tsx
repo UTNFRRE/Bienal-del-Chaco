@@ -47,7 +47,7 @@ const BarChart = () => {
         labels: obras.map((item) => item.nombreObra),
         datasets: [
             {
-                label: 'Votos',
+                label: 'Bienal edicion 2019',
                 data: obras.map((item) => porcentaje[item.id]),
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
