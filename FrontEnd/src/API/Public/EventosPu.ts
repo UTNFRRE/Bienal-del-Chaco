@@ -18,9 +18,6 @@ export const getProximosEventos = async () => {
         throw new Error('Network error: ' + error);
 
     }
-  } catch (error) {
-    throw new Error('Network error: ' + error);
-  }
 };
 
 
