@@ -5,38 +5,40 @@ import { Flex } from '@chakra-ui/react';
 import EventosDia from './EventosDia';
 import { ProximosEventos } from './ProximosEventos';
 
-
 type ValuePiece = Date | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 export default function EventosPublic() {
+  const [date, setDate] = useState<Date | null>(null);
 
-    const [date, setDate] = useState<Date | null>(null);
+  const handleClick = (value: Date) => {
+    setDate(value);
+  };
 
-    const handleClick = ( value: Date) => {
-        setDate(value);
-    }
+  useEffect(() => {
+    setDate(new Date());
+  }, []);
 
-    useEffect(() => {
-        setDate(new Date());
-    }, []);
+  const [value, onChange] = useState<Value>(new Date());
 
-    const [value, onChange] = useState<Value>(new Date());
-
-    return (
-        <Flex direction={"column"} gap={10}>
-            <Flex direction={"column"}> 
-                <ProximosEventos />
-            </Flex>
-            <Flex justifyContent={"space-around"}  direction={"row"}>
-                <Flex>
-                <Calendar onChange={onChange} value={value} onClickDay={(value) => handleClick(value)}/>
-                </Flex>
-                <Flex>
-                    <EventosDia dia={date} />
-                </Flex>
-            </Flex>
+  return (
+    <Flex direction={'column'} gap={10}>
+      <Flex direction={'column'}>
+        <ProximosEventos />
+      </Flex>
+      <Flex justifyContent={'space-around'} direction={'row'}>
+        <Flex>
+          <Calendar
+            onChange={onChange}
+            value={value}
+            onClickDay={(value) => handleClick(value)}
+          />
         </Flex>
-    )
+        <Flex>
+          <EventosDia dia={date} />
+        </Flex>
+      </Flex>
+    </Flex>
+  );
 }
