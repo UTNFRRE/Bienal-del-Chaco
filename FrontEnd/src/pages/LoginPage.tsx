@@ -6,11 +6,14 @@ import {
   Heading,
   FormControl,
   Button,
+  Link,
 } from '@chakra-ui/react';
 import ImagenFondo from '../components/icons/login2.png';
 import Logo from '../components/icons/pagina.png';
+import { useNavigate } from 'react-router-dom';
 
 export default function LoginPage() {
+  const navigate = useNavigate();
   return (
     <Box
       w="100vh"
@@ -122,13 +125,13 @@ export default function LoginPage() {
                 />
               </FormControl>
             </Box>
+            <Box flexDirection={'column'} w={'100%'}>
             <Button
               fontSize="15px"
               type="submit"
               bg="#3C3D37"
               w="100%"
               h="42"
-              // mt="18%"
               color="white"
               borderWidth={1}
               borderColor="white"
@@ -138,6 +141,20 @@ export default function LoginPage() {
             >
               Acceder
             </Button>
+                <Box
+                color="black"
+                fontSize="15px"
+                fontWeight="500"
+                letterSpacing="1px"
+                textAlign="center"
+                mt="5%"
+                textDecoration="underline"
+                _hover={{ color: '#747264' }}
+                onClick={() => navigate('/registro')}
+                >
+                Registrarse
+                </Box>
+            </Box>
           </Flex>
         </Flex>
       </Box>
