@@ -25,7 +25,7 @@ const PieChart = () => {
         datasets: [
             {
                 label: 'Votos',
-                data: obras.map((item) => item.CantVotos),
+                data: obras.map((item) => item.PromedioPuntuacion),
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',

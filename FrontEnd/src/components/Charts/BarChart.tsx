@@ -16,9 +16,9 @@ const BarChart = () => {
     const [porcentaje, setPorcentaje] = useState<{ [key: number]: number }>({});
 
     useEffect(() => {
-        const totalVotes = obras.reduce((sum, item) => sum + item.CantVotos, 0);
+        const totalVotes = obras.reduce((sum, item) => sum + item.PromedioPuntuacion, 0);
         const porcentajes = obras.reduce((acc, item) => {
-            acc[item.id] = (item.CantVotos / totalVotes) * 100;
+            acc[item.id] = (item.PromedioPuntuacion / totalVotes) * 100;
             return acc;
         }, {} as { [key: number]: number });
         setPorcentaje(porcentajes);

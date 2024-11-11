@@ -1,10 +1,23 @@
 import imagenFondo from '../components/icons/login2.png';
-import {Box,Flex} from  '@chakra-ui/react';
+import {Box,Flex, Button} from  '@chakra-ui/react';
 import Card from '../components/Vote/Card';
 import Boton from '../components/Vote/Button';
+import {useState} from 'react';
 
 
 function Voted (){
+
+    const [puntaje,setPuntaje] = useState<Number | null >(0);
+
+    const handlePuntajeChange = (rating: Number) => {
+        setPuntaje(rating);
+    }
+
+    const handlePuntuacion = ()=>{
+        console.log("Puntaje Votacion:" + puntaje);
+        window.location.reload();//Simulo que reinicio todo pq se envio el input
+    }
+
     return (
         <Box
             w="100vh"
@@ -36,7 +49,10 @@ function Voted (){
                    
                 >
                     <Card />
-                    <Boton />
+                    <Box display="flex" alignItems="center" justifyContent="space-between"  flexDirection="column" width="30%" height="15%" >
+                        <Boton onRatingChange={handlePuntajeChange} />
+                        <Button colorScheme='blue' onClick={handlePuntuacion}>Votar</Button>
+                    </Box>
                 </Flex> 
 
             </Box>
