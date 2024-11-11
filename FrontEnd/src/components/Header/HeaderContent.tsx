@@ -10,6 +10,7 @@ import {
   Avatar,
   MenuOptionGroup,
   MenuItemOption,
+  useDisclosure,
 } from '@chakra-ui/react';
 import imgLogo from '../icons/pagina.png';
 import { NavContent } from '../NavBar/NavContent';
@@ -18,6 +19,10 @@ import {useNavigate} from 'react-router-dom';
 import { getEdiciones } from '../../API/Ediciones';
 import { useEffect, useState } from 'react';
 import { useEdicion } from '../../EdicionContexto';
+import { AddIcon } from '@chakra-ui/icons';
+import NuevoElementoModal from '../Modal/NuevaEdicion';
+import { addEdicion } from '../../API/Ediciones';
+import { useToast } from '@chakra-ui/react';
 
 interface NavContentProps {
   LINK_ITEMS: { title: string; url: string; rol: string }[];
@@ -29,8 +34,27 @@ export function HeaderContent({ LINK_ITEMS, user }: NavContentProps) {
   const navigate = useNavigate();
   const { edicion, setEdicion } = useEdicion();
   const [ediciones, setEdiciones] = useState<any[]>([]);
+  const [refresh, setRefresh] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const showToast = useToast();
   const handleButton = () => {
     navigate('/auth/');
+  }
+  const handleConfirmar = async (año: string, fechaInicio: string, fechaFin: string) => {
+    try {
+      await addEdicion(año, fechaInicio, fechaFin);
+      showToast({
+        title: 'Registro exitoso',
+        description: 'Edicion creada correctamente.',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
+      setRefresh(!refresh);
+    } catch (error) {
+      console.error('Error en el fetch de ediciones:', error);
+    }
+    onClose();
   }
   useEffect(() => {
       const getEdicionesData = async () => {
@@ -38,7 +62,7 @@ export function HeaderContent({ LINK_ITEMS, user }: NavContentProps) {
         setEdiciones(data);
       }
       getEdicionesData();
-  }, []);
+  }, [refresh]);
 
   return (
     <Flex
@@ -80,9 +104,18 @@ export function HeaderContent({ LINK_ITEMS, user }: NavContentProps) {
             <MenuOptionGroup defaultValue='2024' type='radio'
               onChange={(value) => setEdicion(Array.isArray(value) ? value[0] : value)}>
               {ediciones.map((edicionn) => (
-                <MenuItemOption key={edicionn.año} value={edicionn.año.toString()}>{edicionn.año.toString()}</MenuItemOption>
+          <MenuItemOption 
+            key={edicionn.año} 
+            value={edicionn.año.toString()}
+            _checked={{ bg: 'gray.500', color: 'white' }}
+          >
+            {edicionn.año.toString()}
+          </MenuItemOption>
               ))}
             </MenuOptionGroup>
+            <MenuItem icon={<AddIcon />} onClick={onOpen}>
+              Nueva
+            </MenuItem>
             </MenuList>
         </Menu>
         </Flex>
@@ -120,6 +153,7 @@ export function HeaderContent({ LINK_ITEMS, user }: NavContentProps) {
           </Button>
         )}
       </Flex>
+      <NuevoElementoModal isOpen={isOpen} onClose={onClose} confirmar={handleConfirmar}/>
     </Flex>
   );
 }
