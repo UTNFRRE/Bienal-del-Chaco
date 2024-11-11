@@ -1,10 +1,10 @@
 const API_URL = 'http://localhost:5232';
 
 // Obtener todas las obras
-export const getObras = async (currentPage: number, pageSize: number) => {
+export const getObras = async (currentPage: number, pageSize: number, edicion:string) => {
   try {
     const response = await fetch(
-      `${API_URL}/Esculturas/GetAllLite?pageNumber=${currentPage}&pageSize=${pageSize}`
+      `${API_URL}/Esculturas/GetAll?pageNumber=${currentPage}&pageSize=${pageSize}&AnioEdicion=${edicion}`
     );
     if (response.ok) {
       const data = await response.json();
