@@ -14,6 +14,8 @@ import { getEscultores } from '../../../API/Escultores';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+
+
 interface Escultor {
   id: number;
   nombre: string;
@@ -21,6 +23,13 @@ interface Escultor {
   foto: string;
 }
 
+const json: Escultor[] = [
+  {
+      id:1,
+      nombre: "Juan",
+      pais: "Argentina",
+      foto: "https://www.bienaldelchaco.org/2024/wp-content/uploads/2024/04/Foto-Luis-Bernardi.png"
+  }];
 
 function Escultoress () {
 
@@ -33,6 +42,9 @@ function Escultoress () {
    
     const [Escultores, setEscultores] = useState<Escultor[]>([]);
     useEffect(() => {
+      setEscultores(json);
+    }, []);
+   /* useEffect(() => {
       const fetchEscultores = async () => {
         try {
           const data = await getEscultores();
@@ -44,7 +56,7 @@ function Escultoress () {
       };
     
       fetchEscultores();
-    }, []);
+    }, []); */
 
   return (
     <Container maxWidth="100vw" width="100vw" height="100vh" centerContent>
