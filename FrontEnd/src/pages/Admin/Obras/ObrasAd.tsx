@@ -166,7 +166,8 @@ function TablaObras() {
           autor,
           paisAutor,
           descripcion,
-          imagen
+          imagen,
+          edicion
         );
         setRefresh(!refresh);
       } catch (error) {
@@ -203,7 +204,8 @@ function TablaObras() {
             autor,
             paisAutor,
             descripcion,
-            imagenes
+            imagenes,
+            edicion
           );
         }
         setRefresh(!refresh);
