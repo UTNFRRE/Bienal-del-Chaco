@@ -109,6 +109,7 @@ export function HeaderContent({ LINK_ITEMS, user }: NavContentProps) {
           <Button
             bg="transparent"
             color="white"
+            mt={'1%'}
             border="1px"
             borderColor="white"
             _hover={{ bg: 'white', color: 'black' }}

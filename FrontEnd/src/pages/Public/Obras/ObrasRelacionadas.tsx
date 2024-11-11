@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Box, Flex, Text, Heading, Divider, Card, SimpleGrid } from '@chakra-ui/react';
 import ImageGallery from 'react-image-gallery';
 import { useNavigate } from 'react-router-dom';
+import { useEdicion } from '../../../EdicionContexto';
 
 import './Mansory.css';
 import Masonry from 'react-masonry-css';
@@ -27,11 +28,12 @@ const ObrasRelacionadas: React.FC<ObrasRelacionadasProps> = ({ esculturaId }) =>
 
     const [obras, setObras] = useState<Obra[]>([]);
     const navigate = useNavigate(); // para poder navegar entre paginas
+    const {edicion} = useEdicion();
 
     useEffect(() => {
     const fetchObras = async () => {
         try {
-          const response = await getObras(1, 10);
+          const response = await getObras(1, 10, edicion);
           setObras(response);
         } catch (error) {
           console.error('Error en el fetch de obras:', error);
