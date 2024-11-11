@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Modal,
   ModalOverlay,
@@ -28,6 +28,13 @@ const NuevoElementoModal: React.FC<NuevoElementoModalProps> = ({ isOpen, onClose
     const [año, setAño] = useState('');
     const [fechaInicio, setFechaInicio] = useState('');
     const [fechaFin, setFechaFin] = useState('');
+
+    useEffect(() => {
+        setAño('');
+        setFechaInicio('');
+        setFechaFin('');
+    }, [isOpen]);
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -40,7 +47,7 @@ const NuevoElementoModal: React.FC<NuevoElementoModalProps> = ({ isOpen, onClose
                   <Input
                     placeholder=""
                     size="md"
-                    variant="flushed"
+                    variant="filled"
                     borderWidth={1}
                     flex={1}
                     value={año}

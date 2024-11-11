@@ -50,6 +50,7 @@ export function HeaderContent({ LINK_ITEMS, user }: NavContentProps) {
         duration: 5000,
         isClosable: true,
       });
+      setEdicion(año);
       setRefresh(!refresh);
     } catch (error) {
       console.error('Error en el fetch de ediciones:', error);
