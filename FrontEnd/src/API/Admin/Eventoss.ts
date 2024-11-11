@@ -2,9 +2,9 @@ const API_URL = 'http://localhost:5232';
 
 //Obtener todos los eventos
 
-export const getEventos = async () => {
+export const getEventos = async (edicion: string) => {
   try {
-    const response = await fetch(`${API_URL}/Eventos`);
+    const response = await fetch(`${API_URL}/Eventos?AnioEdicion=${edicion}`);
     if (response.ok) {
       const data = await response.json();
       return data;
@@ -25,10 +25,10 @@ export const addEvento = async (
   Descripcion: string,
   Tematica: string,
   longitud: number,
-  latitud: number
+  latitud: number,
+  edicion: string
 ) => {
   const formData = new FormData();
-  formData.append('Id', '0'); // No se si esta bien el Id,
   formData.append('Nombre', Nombre);
   formData.append('Fecha', Fecha);
   formData.append('Lugar', Lugar);
@@ -36,6 +36,7 @@ export const addEvento = async (
   formData.append('Tematica', Tematica);
   formData.append('longitud', longitud.toString().replace('.', ','));
   formData.append('latitud', latitud.toString().replace('.', ','));
+  formData.append('EdicionAño', edicion);
 
   try {
     const response = await fetch(`${API_URL}/Eventos`, {
