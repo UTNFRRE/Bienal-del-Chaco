@@ -32,23 +32,26 @@ export const getEscultor = async (currentPage: number, pageSize:number, filter:s
 //Agregar un nuevo escultor
 export const addEscultor = async (
   nombre: string,
+  pais: string,
+  contacto: string,
+  fechaNacimiento: string,
+  lugarNacimiento: string,
+  premios: string,
+  edicionAño: string,
   foto: File,
-  Pais: string,
-  contacto: string
 ) => {
-  const Apellido = 'Marain';
-  const DNI = '45000000';
-  const Email = 'usuario@gmail.com';
-  const Contraseña = '12345';
   const formData = new FormData();
+
   formData.append('Nombre', nombre);
-  formData.append('Apellido', Apellido);
-  formData.append('DNI', DNI);
-  formData.append('Pais', Pais);
-  formData.append('Email', Email);
-  formData.append('Contraseña', Contraseña);
-  formData.append('Telefono', contacto);
-  formData.append('Imagen', foto);
+  formData.append('Apellido', 'Lopez Soto');
+  formData.append('DNI', '12345678');
+  formData.append('Pais', pais);
+  formData.append('Contacto', contacto);
+  formData.append('FechaNacimiento', fechaNacimiento);
+  formData.append('LugarNacimiento', lugarNacimiento);
+  formData.append('Premios', premios);
+  formData.append('EdicionAño', edicionAño);
+  formData.append('Foto', foto);
 
   try {
     const response = await fetch(`${API_URL}/Escultor`, {
@@ -67,27 +70,46 @@ export const addEscultor = async (
 };
 
 // Editar un escultor existente
+
 export const editEscultor = async (
-  id: string,
-  Nombre: string,
+  escultorId: string,
+  nombre: string,
+  pais: string,
+  contacto: string,
   fechaNacimiento: string,
   lugarNacimiento: string,
   premios: string,
-  obras: string,
-  foto: File | string
+  edicionAño: string,
+  foto: File | string,
 ) => {
   const formData = new FormData();
-  formData.append('Id', id);
-  formData.append('Nombre', Nombre);
-  formData.append('FechaNacimiento', fechaNacimiento);
-  formData.append('LugarNacimiento', lugarNacimiento);
-  formData.append('Premios', premios);
-  formData.append('Obras', obras);
-  formData.append('Foto', foto);
-
+  var method = '';
+  if (typeof foto === 'string') {
+    formData.append('Id', escultorId);
+    formData.append('Nombre', nombre);
+    formData.append('Pais', pais);
+    formData.append('EdicionAño', edicionAño);
+    formData.append('Contacto', contacto);
+    formData.append('FechaNacimiento', fechaNacimiento);
+    formData.append('LugarNacimiento', lugarNacimiento);
+    formData.append('Premios', premios);
+    formData.append('Foto', foto);
+  method = 'PATCH';
+  } else {
+    formData.append('Id', escultorId);
+    formData.append('Nombre', nombre);
+    formData.append('Pais', pais);
+    formData.append('Contacto', contacto);
+    formData.append('FechaNacimiento', fechaNacimiento);
+    formData.append('LugarNacimiento', lugarNacimiento);
+    formData.append('Premios', premios);
+    formData.append('Foto', foto);
+    method = 'PUT';
+  }
+  console.log(method);
   try {
-    const response = await fetch(`${API_URL}/Escultores/${id}`, {
-      method: 'PUT',
+    const response = await fetch(`${API_URL}/Escultores/${escultorId}`, {
+      method: `${method}`,
       body: formData,
     });
     if (response.ok) {

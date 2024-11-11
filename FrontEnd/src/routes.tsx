@@ -9,6 +9,7 @@ import Escultores from './pages/Admin/Escultores';
 import ObrasPublic from './pages/Public/Obras/Obras';
 import ObraDetail from './pages/Public/Obras/ObraDetalle';
 import ObrasAdmin from './pages/Admin/Obras/ObrasAd';
+import ManagerVotes from './pages/Admin/ManagerVotes';
 
 const routes = [
   {
@@ -33,6 +34,12 @@ const routes = [
     path: 'obras',
     element: <ObrasAdmin />,
     title: 'Obras',
+    rol: 'admin',
+  },
+  {
+    path: 'vote',
+    element: <ManagerVotes />,
+    title: 'Votaciones',
     rol: 'admin',
   },
   {
