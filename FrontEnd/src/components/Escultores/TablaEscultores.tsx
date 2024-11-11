@@ -38,7 +38,7 @@ interface Escultor {
   fechaNacimiento: string;
   lugarNacimiento: string;
   premios: string;
-  foto: string;
+  foto: string ;
 }
 
 function TablaEscultores() {
@@ -146,13 +146,17 @@ function TablaEscultores() {
 
   const handleConfirmarAdd = async (
     nombre: string,
-    foto: File,
-    Pais: string,
-    contacto: string
+    foto : File,
+    pais: string,
+    contacto: string,
+    fechaNacimiento: string,
+    lugarNacimiento: string,
+    premios: string,
+    edicionAño: string
   ) => {
     const PostEscultor = async () => {
       try {
-        await addEscultor(nombre, foto, Pais, contacto);
+        await addEscultor(nombre, pais, contacto, fechaNacimiento, lugarNacimiento, premios, edicionAño, foto);
         setRefresh(!refresh);
       } catch (error) {
         console.error('Error en el fetch de escultores:', error);
@@ -190,24 +194,28 @@ function TablaEscultores() {
   //   };
 
   const handleConfirmarEdit = async (
-    Nombre: string,
+    foto: string | File,
+    nombre: string,
+    pais: string,
+    contacto: string,
     fechaNacimiento: string,
     lugarNacimiento: string,
     premios: string,
-    obras: string,
-    foto: File | string
-  ) => {
+    edicionAño: string
+  ): Promise<void> => {
     const PutEscultor = async () => {
       try {
         if (EscultorElegido) {
           await editEscultor(
             EscultorElegido.id.toString(),
-            Nombre,
+            nombre,
+            pais,
+            contacto,
             fechaNacimiento,
             lugarNacimiento,
             premios,
-            obras,
-            foto
+            edicionAño,
+            foto,
           );
         }
       } catch (error) {
