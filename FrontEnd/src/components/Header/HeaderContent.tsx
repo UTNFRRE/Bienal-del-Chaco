@@ -73,8 +73,8 @@ export function HeaderContent({ LINK_ITEMS, user }: NavContentProps) {
         <Spacer display={{ base: 'flex', md: 'none' }} />
         <Flex alignItems={'center'} mt={'1%'}>
         <Menu>
-            <MenuButton as={Button} colorScheme={'grey.700'}>
-              Edicion
+            <MenuButton as={Button} colorScheme={'white'} border="1px" borderColor="white">
+             {edicion}
             </MenuButton>
             <MenuList>
             <MenuOptionGroup defaultValue='2024' type='radio'
