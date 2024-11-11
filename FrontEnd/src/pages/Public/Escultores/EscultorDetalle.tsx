@@ -28,7 +28,54 @@ interface Escultor {
     imagenes: string;
   }
 
+  const json: Escultor = 
+    {
+      id: 1,
+      nombre: "Juan",
+      apellido:"Bernardi",
+      dni:"34343434",
+      pais: "Argentina",
+      telefono:"2222222",
+      //fechaNacimiento: string;
+      //lugarNacimiento:string;
+      //premios: string;
+      //foto:string;
+      biografia:"Un pelado hincha de boca",
+      foto:"https://www.bienaldelchaco.org/2024/wp-content/uploads/2024/04/Foto-Luis-Bernardi.png"
+    };
  
+    const json2: Obra[] = [
+      {
+        id:1,
+        nombre: "La Mona Pija",
+        descripcion: "Una obra de arte",
+        imagenes: "https://pxcdn.ellitoral.com.ar/litoral/072024/1721955500242.jpg?cw=1200&ch=1172"
+      },
+      {
+        id:1,
+        nombre: "La Mona Pija",
+        descripcion: "Una obra de arte",
+        imagenes: "https://pxcdn.ellitoral.com.ar/litoral/072024/1721955500242.jpg?cw=1200&ch=1172"
+      },
+      {
+        id:1,
+        nombre: "La Mona Pija",
+        descripcion: "Una obra de arte",
+        imagenes: "https://pxcdn.ellitoral.com.ar/litoral/072024/1721955500242.jpg?cw=1200&ch=1172"
+      },
+      {
+        id:1,
+        nombre: "La Mona Pija",
+        descripcion: "Una obra de arte",
+        imagenes: "https://pxcdn.ellitoral.com.ar/litoral/072024/1721955500242.jpg?cw=1200&ch=1172"
+      },
+      {
+        id:1,
+        nombre: "La Mona Pija",
+        descripcion: "Una obra de arte",
+        imagenes: "https://pxcdn.ellitoral.com.ar/litoral/072024/1721955500242.jpg?cw=1200&ch=1172"
+      }
+    ];
 
 const EscultorDetail = () => {
     const { id } = useParams<{ id: string }>();
@@ -44,8 +91,11 @@ const EscultorDetail = () => {
         foto: '',
       });
 
-
-
+      useEffect(() => {
+        setEscultor(json);
+        setObra(json2);
+      }, []);
+/*
       useEffect (() => {
         const fetchEscultorById = async (id?: string) => {
         try {
@@ -62,7 +112,7 @@ const EscultorDetail = () => {
       }
       fetchEscultorById(id);
       }, [id]);
-
+*/
   
     return (
         <Grid w={"100%"} h={"100vh"} templateColumns={"1fr 1fr"} templateRows={"1fr 1fr"} border={"3px solid black"} >
@@ -84,10 +134,16 @@ const EscultorDetail = () => {
 
                  </Box>
   </GridItem>
-              {obra.map((o) => {
+              
+            <GridItem backgroundColor={"lightgreen"}>
+                <Text> Premios </Text>
+            </GridItem>
+
+            
+       {obra.map((o) => {
                 return (
                   <React.Fragment key={o.id}> 
-            <GridItem backgroundColor={"lightblue"}>  
+            <GridItem backgroundColor={"lightblue"} colSpan={2} display="flex" alignItems="center" justifyContent={"center"}>  
               <Box display="flex" alignItems="center" w={"100%"} h={"100%"}>
 
               <Box w={"45%"} h={"60%"} p={8}> 
@@ -102,16 +158,11 @@ const EscultorDetail = () => {
 
                 </Box>
             </GridItem>
-
-
-
-            <GridItem backgroundColor={"lightgreen"} colSpan={2} display="flex" alignItems="center" justifyContent={"center"}>
-                <Text> Premios </Text>
-            </GridItem>
             
             </React.Fragment>
                 )
           })}
+          
 
 
 
