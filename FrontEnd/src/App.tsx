@@ -8,6 +8,7 @@ import Public from './layout/Public';
 import User from './layout/User';
 import Register from './layout/Registro';
 import theme from './theme/theme';
+import Vote from  './layout/Vote';
 
 function App() {
   useEffect(() => {
@@ -20,24 +21,39 @@ function App() {
     <ChakraProvider theme={theme}>
       <BrowserRouter>
         <Routes>
-          <Route path="/auth/" element={<Auth />}/>
-          <Route path="/registro/" element={<Register />} />
-          <Route path="/admin/*" element={<Admin />} />
-          <Route
-            path="/admin/"
-            element={<Navigate replace to="/admin/escultores" />}
-          />
-          <Route path="/public/*" element={<Public />} />
-          <Route
-            path="/public/"
-            element={<Navigate replace to="/public/eventos" />}
-          />
-          <Route path="/user/*" element={<User />} />
-          <Route
-            path="/user/"
-            element={<Navigate replace to="/user/eventos" />}
-          />
-          <Route path="/*" element={<Navigate replace to="/public/" />} />
+           <Route path="/auth/*" element={<Auth />} />
+           <Route path="/voting/" element={<Vote />} />  
+           <Route path="/admin/*" element={<Admin />} />
+           <Route
+              path="/admin/"
+              element={
+                <Navigate
+                  replace
+                  to='/admin/escultores' 
+                />
+              }
+            />
+           <Route path="/public/*" element={<Public />} />
+           <Route
+              path="/public/"
+              element={
+                <Navigate
+                  replace
+                  to='/public/eventos' 
+                />
+              }
+            />
+            <Route path="/user/*" element={<User />} />
+        
+           <Route
+              path="/*"
+              element={
+                <Navigate
+                  replace
+                  to='/auth/' 
+                />
+              }
+            />
         </Routes>
       </BrowserRouter>
     </ChakraProvider>
