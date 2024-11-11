@@ -13,8 +13,7 @@ import {
 import { getEscultores } from '../../../API/Escultores';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-
+import { useEdicion } from '../../../EdicionContexto';
 
 interface Escultor {
   id: number;
@@ -34,20 +33,19 @@ const json: Escultor[] = [
 function Escultoress () {
 
   const navigate = useNavigate(); 
+  const { edicion } = useEdicion();
 
   const handleCardClick = (id: number) => {
     navigate(`/public/escultores/${id}`);
   }
   
    
-    const [Escultores, setEscultores] = useState<Escultor[]>([]);
+   const [Escultores, setEscultores] = useState<Escultor[]>([]);
+  
     useEffect(() => {
-      setEscultores(json);
-    }, []);
-   /* useEffect(() => {
       const fetchEscultores = async () => {
         try {
-          const data = await getEscultores();
+          const data = await getEscultores(edicion);
           console.log(data);
           setEscultores(data);
         } catch (error) {
@@ -56,7 +54,7 @@ function Escultoress () {
       };
     
       fetchEscultores();
-    }, []); */
+    }, [edicion]);
 
   return (
     <Container maxWidth="100vw" width="100vw" height="100vh" centerContent>

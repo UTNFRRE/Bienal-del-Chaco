@@ -26,6 +26,7 @@ import {
 } from '@chakra-ui/icons';
 import { useState, useEffect } from 'react';
 import { useDisclosure } from '@chakra-ui/react';
+import { useEdicion } from '../../../EdicionContexto';
 
 import AgregarObra from '../../../components/Modal/AgregarObra';
 import ModalConfirmar from '../../../components/Modal/ConfirmarCambios';
@@ -56,6 +57,7 @@ function TablaObras() {
   const [filteredObras, setFilteredObras] = useState<Obra[]>([]);
   const [obraElegida, setObraElegida] = useState<Obra | null>(null);
   const [refresh, setRefresh] = useState(false);
+  const {edicion} = useEdicion();
 
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(10); // Cantidad de obras por página
@@ -95,7 +97,7 @@ function TablaObras() {
   useEffect(() => {
     const fetchObras = async () => {
       try {
-        const data = await getObras(currentPage, pageSize);
+        const data = await getObras(currentPage, pageSize, edicion);
         console.log(data);
         setObras(data);
         setFilteredObras(data);
@@ -105,7 +107,7 @@ function TablaObras() {
     };
 
     fetchObras();
-  }, [refresh, currentPage, pageSize]);
+  }, [refresh, currentPage, pageSize, edicion]);
 
   // useEffect(() => {
   //   setFilteredObras(
@@ -164,7 +166,8 @@ function TablaObras() {
           autor,
           paisAutor,
           descripcion,
-          imagen
+          imagen,
+          edicion
         );
         setRefresh(!refresh);
       } catch (error) {
@@ -201,7 +204,8 @@ function TablaObras() {
             autor,
             paisAutor,
             descripcion,
-            imagenes
+            imagenes,
+            edicion
           );
         }
         setRefresh(!refresh);

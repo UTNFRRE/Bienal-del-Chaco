@@ -8,12 +8,16 @@ import {
   Button,
   Spacer,
   Avatar,
+  MenuOptionGroup,
+  MenuItemOption,
 } from '@chakra-ui/react';
 import imgLogo from '../icons/pagina.png';
-import logoUser from '../icons/logo-user.png';
 import { NavContent } from '../NavBar/NavContent';
 import MovileNav from '../NavBar/MobileNav';
 import {useNavigate} from 'react-router-dom';
+import { getEdiciones } from '../../API/Ediciones';
+import { useEffect, useState } from 'react';
+import { useEdicion } from '../../EdicionContexto';
 
 interface NavContentProps {
   LINK_ITEMS: { title: string; url: string; rol: string }[];
@@ -23,9 +27,18 @@ interface NavContentProps {
 export function HeaderContent({ LINK_ITEMS, user }: NavContentProps) {
 
   const navigate = useNavigate();
+  const { edicion, setEdicion } = useEdicion();
+  const [ediciones, setEdiciones] = useState<any[]>([]);
   const handleButton = () => {
     navigate('/auth/');
   }
+  useEffect(() => {
+      const getEdicionesData = async () => {
+        const data = await getEdiciones();
+        setEdiciones(data);
+      }
+      getEdicionesData();
+  }, []);
 
   return (
     <Flex
@@ -58,6 +71,21 @@ export function HeaderContent({ LINK_ITEMS, user }: NavContentProps) {
           <MovileNav LINK_ITEMS={LINK_ITEMS} />
         </Flex>
         <Spacer display={{ base: 'flex', md: 'none' }} />
+        <Flex alignItems={'center'} mt={'1%'}>
+        <Menu>
+            <MenuButton as={Button} colorScheme={'white'} border="1px" borderColor="white">
+             {edicion}
+            </MenuButton>
+            <MenuList>
+            <MenuOptionGroup defaultValue='2024' type='radio'
+              onChange={(value) => setEdicion(Array.isArray(value) ? value[0] : value)}>
+              {ediciones.map((edicionn) => (
+                <MenuItemOption key={edicionn.año} value={edicionn.año.toString()}>{edicionn.año.toString()}</MenuItemOption>
+              ))}
+            </MenuOptionGroup>
+            </MenuList>
+        </Menu>
+        </Flex>
         {user && (
           <Menu>
             <MenuButton
@@ -81,6 +109,7 @@ export function HeaderContent({ LINK_ITEMS, user }: NavContentProps) {
           <Button
             bg="transparent"
             color="white"
+            mt={'1%'}
             border="1px"
             borderColor="white"
             _hover={{ bg: 'white', color: 'black' }}

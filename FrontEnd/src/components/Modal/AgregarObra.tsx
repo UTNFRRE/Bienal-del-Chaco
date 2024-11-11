@@ -20,6 +20,7 @@ import { useState, useEffect } from 'react';
 import { getEscultores } from '../../API/Admin/Obras';
 import DropZone from '../ZonaCarga/ZonaCarga';
 import Escultores from '../../API/Escultores';
+import { EdicionProvider, useEdicion } from '../../EdicionContexto';
 
 interface ModalProps {
   isOpen: boolean;
@@ -31,7 +32,7 @@ interface ModalProps {
     autor: number,
     paisAutor: string,
     descripcion: string,
-    imagen: File
+    imagen: File,
   ) => void;
 }
 
@@ -51,13 +52,14 @@ function AgregarObra({ isOpen, onClose, confirmar }: ModalProps) {
   const [descripcion, setDescripcion] = useState('');
   const [fecha, setFecha] = useState('');
   const [Escultoress, setEscultoress] = useState<Escultor[]>([]);
+  const {edicion} = useEdicion();
 
   const [listaEscultores, setListaEscultores] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchEscultores = async () => {
       try {
-        const data = await getEscultores();
+        const data = await getEscultores(edicion);
         setEscultoress(data);
         const nombresEscultores = Escultoress.map((escultor) => ({
           id: escultor.id,

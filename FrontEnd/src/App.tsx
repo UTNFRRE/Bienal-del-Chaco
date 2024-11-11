@@ -2,6 +2,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 // import { useAuth } from './Context';
+import { EdicionProvider } from './EdicionContexto';
 import Auth from './layout/Auth';
 import Admin from './layout/Admin';
 import Public from './layout/Public';
@@ -19,6 +20,7 @@ function App() {
 
   return (
     <ChakraProvider theme={theme}>
+      <EdicionProvider>
       <BrowserRouter>
         <Routes>
            <Route path="/auth/*" element={<Auth />} />
@@ -56,6 +58,7 @@ function App() {
             />
         </Routes>
       </BrowserRouter>
+      </EdicionProvider>
     </ChakraProvider>
   );
 }

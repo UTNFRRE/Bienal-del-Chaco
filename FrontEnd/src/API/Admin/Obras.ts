@@ -1,10 +1,11 @@
 const API_URL = 'http://localhost:5232';
+import { useEdicion } from "../../EdicionContexto";
 
 // Obtener todas las obras
-export const getObras = async (currentPage: number, pageSize: number) => {
+export const getObras = async (currentPage: number, pageSize: number, edicion:string) => {
   try {
     const response = await fetch(
-      `${API_URL}/Esculturas/GetAllLite?pageNumber=${currentPage}&pageSize=${pageSize}`
+      `${API_URL}/Esculturas/GetAll?pageNumber=${currentPage}&pageSize=${pageSize}&AnioEdicion=${edicion}`
     );
     if (response.ok) {
       const data = await response.json();
@@ -25,7 +26,8 @@ export const addObra = async (
   autor: number,
   paisAutor: string,
   descripcion: string,
-  imagen: File
+  imagen: File,
+  edicion: string
 ) => {
   const formData = new FormData();
   formData.append('Nombre', titulo);
@@ -34,6 +36,7 @@ export const addObra = async (
   formData.append('EscultorID', autor.toString());
   formData.append('FechaCreacion', fecha);
   formData.append('Tematica', tematica);
+  formData.append('EdicionAño', edicion);
 
   try {
     const response = await fetch(`${API_URL}/Esculturas`, {
@@ -60,7 +63,8 @@ export const editObra = async (
   autor: number,
   paisAutor: string,
   descripcion: string,
-  imagen: File | string
+  imagen: File | string,
+  edicion:string
 ) => {
   const formData = new FormData();
   var method = '';
@@ -78,6 +82,7 @@ export const editObra = async (
     formData.append('EscultorID', autor.toString());
     formData.append('FechaCreacion', fecha);
     formData.append('Tematica', tematica);
+    formData.append('EdicionAño', edicion);
     method = 'PUT';
   }
 
@@ -128,9 +133,9 @@ export const getObraById = async (id: string) => {
 };
 
 // Obtener todos los escultores
-export const getEscultores = async () => {
+export const getEscultores = async (edicion:string) => {
   try {
-    const response = await fetch(`${API_URL}/Escultor/api/escultoresPublic`);
+    const response = await fetch(`${API_URL}/Escultor/api/escultoresPublic?AnioEdicion=${edicion}`);
     if (response.ok) {
       const data = await response.json();
       return data;

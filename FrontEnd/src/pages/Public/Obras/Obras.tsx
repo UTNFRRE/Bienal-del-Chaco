@@ -13,6 +13,7 @@ import {
 import { useState, useEffect } from 'react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useEdicion } from '../../../EdicionContexto';
 
 import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
@@ -37,6 +38,7 @@ interface Obra {
 export default function ObrasPublic() {
   const [obras, setObras] = useState<Obra[]>([]);
   const navigate = useNavigate(); // para poder navegar entre paginas
+  const {edicion} = useEdicion();
 
   // La idea es agregar un paginado, ya que la cantidad de obras puede ser muy grande, agrego un paginado de 9 en 9
   // Los request se van a ir haciendo de a 9, y se va a ir mostrando de a 9, tdv no funciona pq no esta la api
@@ -49,7 +51,7 @@ export default function ObrasPublic() {
   useEffect(() => {
     const fetchObras = async () => {
       try {
-        const response = await getObras(currentPage, pageSize);
+        const response = await getObras(currentPage, pageSize, edicion);
         setObras(response);
         setTotalCount(response.length);
       } catch (error) {
@@ -57,7 +59,7 @@ export default function ObrasPublic() {
       }
     };
     fetchObras();
-  }, [currentPage, pageSize]);
+  }, [currentPage, pageSize, edicion]);
 
   const handlePreviousPage = () => {
     if (currentPage > 1) {

@@ -20,6 +20,7 @@ import ModalConfirmar from '../Modal/ConfirmarCambios';
 import ModalAgregarEscultor from '../Modal/AgregarEscultor';
 import ModalEditarEscultor from '../Modal/EditarEscultor';
 import { ArrowLeftIcon, ArrowRightIcon } from '@chakra-ui/icons';
+import { useEdicion } from '../../EdicionContexto';
 
 import {
   getEscultor,
@@ -50,6 +51,7 @@ function TablaEscultores() {
   const [totalPages, setTotalPages] = useState(2);
   const [filter, setFilter] = useState('');
   const [showInput, setShowInput] = useState(false);
+  const {edicion} = useEdicion();
 
   // isopen, onopen y onclose son funciones que se usan para abrir y cerrar cada modal
   const {
@@ -71,7 +73,7 @@ function TablaEscultores() {
   useEffect(() => {
     const fetchEscultores = async () => {
       try {
-        const data = await getEscultor(currentPage, pageSize, filter);
+        const data = await getEscultor(currentPage, pageSize, filter, edicion);
         console.log(data);
         setEscultores(data);
       } catch (error) {
@@ -80,7 +82,7 @@ function TablaEscultores() {
     };
 
     fetchEscultores();
-  }, [refresh, currentPage, pageSize, filter]);
+  }, [refresh, currentPage, pageSize, filter, edicion]);
 
   const handlePreviousPage = () => {
     if (currentPage > 1) {
