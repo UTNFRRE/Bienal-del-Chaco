@@ -11,8 +11,9 @@ import {
     Image,
     Select
 } from '@chakra-ui/react';
-import obras from '../../API/ObrasVote'
-import {useState} from 'react';
+import {useState,useEffect} from 'react';
+import {getObras} from '../../API/Admin/Obras';
+import {useEdicion} from '../../EdicionContexto'
 
 interface QRProps {
 
@@ -22,7 +23,41 @@ interface QRProps {
 
 }
 
+interface Obras {
+    esculturaId: number,
+    nombre: string,
+    tematica: string,
+    descripcion: string,
+    escultorId: number,
+    fechaCreacion: string,
+    esculturNombre: string,
+    escultorPais: string,
+    imagenes: string[],
+    promedioVotos: number
+}
+
+
     const QR = ({isOpen,onClose}:QRProps) => {
+
+        const [obras,setObras] = useState<Obras[]>([]);
+        const [refresh, setRefresh] = useState(false);
+        const [pageNumber] = useState(10);
+        const [currentPage] = useState(1);
+        const {edicion} = useEdicion();
+
+        useEffect(() => {
+            const fetchObras = async () => {
+                try{
+                    const datos = await getObras(currentPage, pageNumber, edicion);
+                    setObras(datos);
+                    setRefresh(!refresh);
+                } catch(error){
+                    console.log("error al solicitar obras",error);
+                }
+            };
+            fetchObras();
+        },[edicion,])
+
 
         const [obra,setObra] = useState<number>(0);
         const [showQR, setShowQR] = useState(false);
@@ -49,8 +84,8 @@ interface QRProps {
                                 onChange={(e) =>setObra(Number(e.target.value))}
                             >
                                 {obras.map((o) => (
-                                    <option key={o.id} value={o.id}>
-                                        {o.nombreObra}
+                                    <option key={o.esculturaId} value={o.esculturaId}>
+                                        {o.nombre}
                                     </option>
                                 ))}
                             </Select>
