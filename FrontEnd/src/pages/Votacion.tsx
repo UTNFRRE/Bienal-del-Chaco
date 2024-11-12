@@ -15,7 +15,7 @@ function Voted (){
 
     const handlePuntuacion = ()=>{
         console.log("Puntaje Votacion:" + puntaje);
-        window.location.reload();//Simulo que reinicio todo pq se envio el input
+       // window.location.reload();//Simulo que reinicio todo pq se envio el input
     }
 
     return (
