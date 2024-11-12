@@ -29,22 +29,21 @@ import {
   editEscultor,
 } from '../../API/Admin/Escultores';
 
+
 interface Escultor {
-  id: number;
+  escultorId: string;
   nombre: string;
-  apellido: string;
-  dni: string;
-  pais: string;
-  telefono: string;
   fechaNacimiento: string;
   lugarNacimiento: string;
   premios: string;
+  pais: string;
+  telefono:string;
   foto: string ;
 }
 
 function TablaEscultores() {
   const [Escultores, setEscultores] = useState<Escultor[]>([]);
-  const [EscultorElegido, setEscultorElegido] = useState<Escultor>();
+  const [EscultorElegido, setEscultorElegido] = useState<Escultor| null>(null);
   const [refresh, setRefresh] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(10); // Cantidad de obras por página
@@ -69,6 +68,7 @@ function TablaEscultores() {
     onOpen: onOpenEdit,
     onClose: onCloseEdit,
   } = useDisclosure();
+
 
   useEffect(() => {
     const fetchEscultores = async () => {
@@ -105,60 +105,48 @@ function TablaEscultores() {
     onOpenDelete();
   };
 
-  //const handleConfirmarDelete = async () => {
-  //    setEscultores((prevEscultores) =>
-  //        prevEscultores.filter((m) => m !== EscultorElegido)
-  //     );
-
-  //    onCloseDelete();
+  // const handleConfirmarDelete = async () => {
+  //   if (!EscultorElegido || EscultorElegido.EscultorId === undefined) {
+  //     console.error('EscultorElegido o EscultorId no está definido');
+  //     return;
+  //   }
+  //   try {
+  //     await deleteEscultor(EscultorElegido.EscultorId);
+  //     setRefresh(!refresh);
+  //   } catch (error) {
+  //     console.error('Error en el fetch de escultores:', error);
+  //   } finally {
+  //     onCloseDelete();
+  //   }
   // };
 
   const handleConfirmarDelete = async () => {
     const DeleteEscultor = async () => {
       try {
         if (EscultorElegido) {
-          await deleteEscultor(EscultorElegido.id.toString());
+          await deleteEscultor(EscultorElegido.escultorId);
           setRefresh(!refresh);
         }
       } catch (error) {
         console.error('Error en el fetch de escultores:', error);
       }
-    };
-    DeleteEscultor();
-    onCloseDelete();
   };
-
-  // const handleConfirmarAdd = async (foto:string, nombre:string, pais:string, contacto:string, fechaNacimiento:string, lugarNacimiento:string, premios:string) => {
-  // Aca se hace el llamado a la funcion de la api que agrega un escultor
-  // Agregar el escultor al json
-  //setEscultores((prevEscultores) => [
-  //  ...prevEscultores,
-  //  {
-  //      foto: foto,
-  //      nombre: nombre,
-  //      pais: pais,
-  //      contacto: contacto,
-  //      fechaNacimiento: fechaNacimiento,
-  //      lugarNacimiento: lugarNacimiento,
-  //      premios: premios,
-  //  },
-  //  ]);
-  //  onCloseAdd();
-  //    };
+  DeleteEscultor();
+  onCloseDelete();
+  };
 
   const handleConfirmarAdd = async (
     nombre: string,
-    foto : File,
-    pais: string,
-    contacto: string,
     fechaNacimiento: string,
     lugarNacimiento: string,
     premios: string,
-    edicionAño: string
+    pais: string,
+    telefono: string,
+    foto : File,
   ) => {
     const PostEscultor = async () => {
       try {
-        await addEscultor(nombre, pais, contacto, fechaNacimiento, lugarNacimiento, premios, edicionAño, foto);
+        await addEscultor(nombre, pais, telefono, fechaNacimiento, lugarNacimiento, premios, edicion, foto);
         setRefresh(!refresh);
       } catch (error) {
         console.error('Error en el fetch de escultores:', error);
@@ -168,7 +156,7 @@ function TablaEscultores() {
     onCloseAdd();
   };
 
-  const handleEditar = (escultor: any) => {
+  const handleEditar = (escultor: Escultor) => {
     setEscultorElegido(escultor);
     onOpenEdit();
   };
@@ -196,27 +184,26 @@ function TablaEscultores() {
   //   };
 
   const handleConfirmarEdit = async (
-    foto: string | File,
     nombre: string,
-    pais: string,
-    contacto: string,
     fechaNacimiento: string,
     lugarNacimiento: string,
     premios: string,
-    edicionAño: string
+    pais: string,
+    telefono: string,
+    foto : string | File,
   ): Promise<void> => {
     const PutEscultor = async () => {
       try {
         if (EscultorElegido) {
           await editEscultor(
-            EscultorElegido.id.toString(),
+            EscultorElegido.escultorId,
             nombre,
             pais,
-            contacto,
+            telefono,
             fechaNacimiento,
             lugarNacimiento,
             premios,
-            edicionAño,
+            edicion,
             foto,
           );
         }
