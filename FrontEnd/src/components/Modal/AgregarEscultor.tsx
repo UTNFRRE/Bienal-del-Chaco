@@ -14,16 +14,21 @@ import {
   FormLabel,
   FormControl,
 } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ZonaCarga from '../ZonaCarga/ZonaCarga';
+
 interface ModalComponentProps {
   isOpen: boolean;
   onClose: () => void;
   confirmar: (
     nombre: string,
     foto: File,
-    Pais: string,
-    contacto: string
+    pais: string,
+    contacto: string,
+    fechaNacimiento: string,
+    lugarNacimiento: string,
+    premios: string,
+    edicionAño: string
   ) => void;
 }
 
@@ -32,9 +37,10 @@ export default function ModalAgregarEscultor({
   onClose,
   confirmar,
 }: ModalComponentProps) {
-  const [foto, setFoto] = useState<File>();
+  const [foto, setFoto] = useState<File | null>(null); ///
   const [nombre, setNombre] = useState('');
-  const [Pais, setPais] = useState('');
+  const [pais, setPais] = useState('');
+  const [edicionAño, setEdicion] = useState('');
   const [contacto, setContacto] = useState('');
   const [fechaNacimiento, setFechaNacimiento] = useState('');
   const [lugarNacimiento, setLugarNacimiento] = useState('');
@@ -43,6 +49,7 @@ export default function ModalAgregarEscultor({
   // const handleFotoChange = (fotoData: string) => {
   //     setFoto(fotoData);
   // };
+
   const handleFilesChange = (files: File[]) => {
     setFoto(files[0]);
     console.log('La imagen es' + files[0]);
@@ -50,7 +57,7 @@ export default function ModalAgregarEscultor({
   // Función para manejar la confirmación
   const handleConfirmar = () => {
     if (foto) {
-      confirmar(nombre, foto, Pais, contacto);
+      confirmar(nombre, foto, pais, contacto, fechaNacimiento, lugarNacimiento, premios, edicionAño);
     }
     onClose();
   };
@@ -58,12 +65,13 @@ export default function ModalAgregarEscultor({
   const isFormValid = () => {
     return (
       nombre.trim() !== '' &&
-      Pais.trim() !== '' &&
+      pais.trim() !== '' &&
       contacto.trim() !== '' &&
       fechaNacimiento.trim() !== '' &&
       lugarNacimiento.trim() !== '' &&
       premios.trim() !== '' &&
-      foto
+      edicionAño.trim() !== '' &&
+      foto 
     );
   };
 
@@ -93,11 +101,24 @@ export default function ModalAgregarEscultor({
                     placeholder=""
                     size="md"
                     variant="Unstyled"
-                    width={500}
+                    width={315}
                     borderWidth={1}
                     flex={1}
                     value={nombre}
                     onChange={(e) => setNombre(e.target.value)}
+                  />
+                </Box>
+                <Box>
+                  <FormLabel mb={0}>Edicion</FormLabel>
+                  <Input
+                    placeholder=""
+                    size="md"
+                    variant="Unstyled"
+                    borderWidth={1}
+                    width={315}
+                    flex={1}
+                    value={edicionAño}
+                    onChange={(e) => setEdicion(e.target.value)}
                   />
                 </Box>
               </Stack>
@@ -111,7 +132,7 @@ export default function ModalAgregarEscultor({
                     borderWidth={1}
                     width={315}
                     flex={1}
-                    value={Pais}
+                    value={pais}
                     onChange={(e) => setPais(e.target.value)}
                   />
                 </Box>

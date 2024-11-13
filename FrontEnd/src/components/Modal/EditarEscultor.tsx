@@ -21,13 +21,14 @@ interface ModalComponentProps {
   isOpen: boolean;
   onClose: () => void;
   confirmar: (
-    fotoPreview: string,
+    foto: string | File,
     nombre: string,
     pais: string,
     contacto: string,
     fechaNacimiento: string,
     lugarNacimiento: string,
-    premios: string
+    premios: string,
+    edicionAño: string,
   ) => void;
   escultor: any;
 }
@@ -44,13 +45,14 @@ export default function ModalEditarEscultor({
 
   const handleconfirmar = () => {
     confirmar(
-      foto || '',
+      foto || '',     
       nombre,
       pais,
       contacto,
       fechaNacimiento,
       lugarNacimiento,
-      premios
+      premios,
+      edicionAño
     );
     onClose();
   };
@@ -62,7 +64,8 @@ export default function ModalEditarEscultor({
       contacto.trim() !== '' &&
       fechaNacimiento.trim() !== '' &&
       lugarNacimiento.trim() !== '' &&
-      (premios ? premios.toString().trim() !== '' : true)
+      (premios ? premios.toString().trim() !== '' : true) &&
+      edicionAño.trim() !== ''
     );
   };
 
@@ -73,6 +76,7 @@ export default function ModalEditarEscultor({
   const [fechaNacimiento, setFechaNacimiento] = useState('');
   const [lugarNacimiento, setLugarNacimiento] = useState('');
   const [premios, setPremios] = useState('');
+  const [edicionAño, setEdicion] = useState('');
 
   useEffect(() => {
     if (escultor) {
@@ -83,6 +87,7 @@ export default function ModalEditarEscultor({
       setFechaNacimiento(escultor.fechaNacimiento);
       setLugarNacimiento(escultor.lugarNacimiento);
       setPremios(escultor.premios);
+      setEdicion(escultor.edicionAño);
     }
   }, [escultor]);
 
@@ -101,16 +106,29 @@ export default function ModalEditarEscultor({
             <Stack gap={7}>
               <Stack direction="row" gap={5} w="100%">
                 <Box>
-                  <FormLabel mb={1}>Nombre</FormLabel>
+                  <FormLabel mb={1}>Nombre y Apellido</FormLabel>
                   <Input
                     placeholder=""
                     size="md"
                     variant="Unstyled"
-                    width={650}
+                    width={315}
                     borderWidth={1}
                     flex={1}
                     value={nombre}
                     onChange={(e) => setNombre(e.target.value)}
+                  />
+                </Box>
+                <Box>
+                  <FormLabel mb={0}>Edicion</FormLabel>
+                  <Input
+                    placeholder=""
+                    size="md"
+                    variant="Unstyled"
+                    borderWidth={1}
+                    width={315}
+                    flex={1}
+                    value={edicionAño}
+                    onChange={(e) => setEdicion(e.target.value)}
                   />
                 </Box>
               </Stack>
