@@ -69,6 +69,7 @@ export const AddUser = async (
         if (response.ok) {
           const data = await response.json();
           Cookies.set('IdUser', data.id);
+          Cookies.get('IdUser');
         return;
         } else {
         throw new Error('Error en la respuesta del servidor');
@@ -77,6 +78,7 @@ export const AddUser = async (
         throw new Error('Network error: ' + error);
     }
   };
+
   
 
 

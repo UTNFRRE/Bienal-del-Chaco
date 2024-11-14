@@ -14,8 +14,10 @@ import { FaFacebook, FaTwitter, FaInstagram, FaWhatsapp } from 'react-icons/fa';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import RedesSocialesLight from '../../../components/Redes/RedesSocialesLight';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { getObraById } from '../../../API/Admin/Obras';
+import Cookies from 'js-cookie';
 import ObrasRelacionadas from './ObrasRelacionadas';
 //import {useHistory} from 'react-router-dom';
 
@@ -34,6 +36,7 @@ interface Obra {
 
 const ObraDetail = () => {
 
+  const userId = Cookies.get('IdUser');
   const { id } = useParams<{ id: string }>(); // Se obtiene el id de la obra de la url
   const [images, setImages] = useState<any[]>([]);
   const [obra, setObra] = useState<Obra>({
@@ -48,6 +51,7 @@ const ObraDetail = () => {
     imagenes: '',
   });
 
+  const navigate = useNavigate();
   const [isDisabled, setIsDisabled] = useState (false);
 
   // Aca con el id se debe hacer el fecth a la api para traer la obra con todos los datos
@@ -67,10 +71,10 @@ const ObraDetail = () => {
     //setIsDisabled(true); // ACA EL PARA DESACTIVAR EL BOTON SI EL USUARIO YA VOTO
   }, [id]);
 
-  //const history = useHistory();
   
   const handleVotarClick = () => {
-    console.log("camilo")
+    navigate(`/public/voting/${id}/${userId}`);
+    //console.log(userId);
   };
 
   useEffect(() => {

@@ -30,7 +30,7 @@ function App() {
         <Routes>
            <Route path="/auth/*" element={<Auth />} />
             <Route path="/registro" element={<Register />} />
-           {/* <Route path="/voting/" element={<Vote />} />   */}
+  
            <Route path="/public/*" element={<Public />} />
            {isAuthenticated && (
            <Route path="/admin/*" element={<Admin />} /> )}

@@ -10,6 +10,8 @@ import ObrasPublic from './pages/Public/Obras/Obras';
 import ObraDetail from './pages/Public/Obras/ObraDetalle';
 import ObrasAdmin from './pages/Admin/Obras/ObrasAd';
 import ManagerVotes from './pages/Admin/ManagerVotes';
+import Voted from  './pages/Votacion';
+import { RiOilLine } from 'react-icons/ri';
 
 const routes = [
   {
@@ -78,6 +80,12 @@ const routes = [
     title: '',
     rol: 'public',
   },
+  {
+    path: 'voting/:id/:userId',
+    element: <Voted />,
+    title: '',
+    rol: 'public',
+  }
 ];
 
 export default routes;
