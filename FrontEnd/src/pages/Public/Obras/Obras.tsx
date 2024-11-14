@@ -97,12 +97,12 @@ export default function ObrasPublic() {
         minHeight={'40vh'} 
         display={'flex'}
         mb={2}
-        backgroundColor="#0B192C"
+        backgroundColor="#0B192C" 
         alignItems={'center'}
         position={'relative'}
       >
           <Flex direction={'column'} ml={'5%'}>
-         <Heading color={'#CDC2A5'} fontSize={45}>
+         <Heading color={'#CDC2A5'} fontSize={45}> 
             Obras
          </Heading>
          <Flex gap={3} mt={3}>

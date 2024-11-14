@@ -10,7 +10,7 @@ function Voted (){
     const [puntaje,setPuntaje] = useState<Number | null >(0);
 
     const handlePuntajeChange = (rating: Number) => {
-        setPuntaje(rating);
+        setPuntaje(rating); //rating   
     }
 
     const handlePuntuacion = ()=>{
@@ -26,8 +26,7 @@ function Voted (){
             overflow="hidden"
         >
             <Box
-                bgImage={{base: '', lg: `url(${imagenFondo})`}}
-                bgColor={{base: '', lg: 'transparent'}}
+                bgColor={{base: '#0B192C', lg: '#0B192C'}}
                 //background={{base: 'linear-gradient(to bottom, black, rgba(0, 0, 0, 0.7))'}}
                 w="100%"
                 h="100%"
@@ -51,7 +50,24 @@ function Voted (){
                     <Card />
                     <Box display="flex" alignItems="center" justifyContent="space-between"  flexDirection="column" width="30%" height="15%" >
                         <Boton onRatingChange={handlePuntajeChange} />
-                        <Button colorScheme='blue' onClick={handlePuntuacion}>Votar</Button>
+                        <Button 
+                            p={5}
+                            colorScheme='#0B192C' 
+                            border='2px' 
+                            borderColor='#CDC2A5' 
+                            onClick={handlePuntuacion}
+                            color="#cdc2a5"
+                            fontSize= "1.3em"
+                            sx={{
+                                _hover: {
+                                    transform: 'scale(1.1)',
+                                    bg: '#142e51', // Cambia el colorScheme al hacer hover
+                                },
+                                transition: 'transform 0.2s',
+                            }}
+                        >
+                            Votar
+                        </Button>
                     </Box>
                 </Flex> 
 
