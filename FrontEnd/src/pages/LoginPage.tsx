@@ -47,6 +47,11 @@ export default function LoginPage() {
       });
     } finally {
       setIsLoading(false);
+      if (account === 'admin@admin.com') {
+        navigate('/admin/escultores');
+      } else {
+        navigate('/user/escultores');
+      };
     }
   };
   return (

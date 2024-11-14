@@ -20,19 +20,22 @@ function App() {
   const { isAuthenticated, rolUser } = useAuth();
   const isAdmin = rolUser.includes('admin@admin.com') 
   const isUser = !rolUser.includes('admin@admin.com');
-
+  console.log('El rol es: ' + rolUser);
+  console.log('isAdmin: ' + isAdmin);
+  console.log('isUser: ' + isUser);
   return (
     <ChakraProvider theme={theme}>
         <EdicionProvider>
           <BrowserRouter>
         <Routes>
            <Route path="/auth/*" element={<Auth />} />
+            <Route path="/registro" element={<Register />} />
            {/* <Route path="/voting/" element={<Vote />} />   */}
            <Route path="/public/*" element={<Public />} />
-           {isAuthenticated && isAdmin && (
+           {isAuthenticated && (
            <Route path="/admin/*" element={<Admin />} /> )}
             { isAuthenticated && isUser && (
-              <Route path="/user/*" element={<User />} /> )}
+            <Route path="/user/*" element={<User />} /> )}
         
         <Route
             path="/*"

@@ -53,8 +53,8 @@ export default function Registro() {
       }
   
       const register = async () => {
-        try {
-          await AddUser(fullName, username, email, password, birthDate);
+          const response = await AddUser(fullName, username, email, password, birthDate);
+          if (response.ok) {
           toast({
             title: 'Registro exitoso',
             description: 'Usuario registrado correctamente.',
@@ -63,7 +63,7 @@ export default function Registro() {
             isClosable: true,
           });
           navigate('/auth/');
-        } catch (error) {
+        } else  {
           toast({
             title: 'Error',
             description: 'Error al registrar el usuario.',
@@ -71,7 +71,7 @@ export default function Registro() {
             duration: 5000,
             isClosable: true,
           });
-        }
+        };
       };
       register();
     };
