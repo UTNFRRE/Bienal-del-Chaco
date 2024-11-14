@@ -22,7 +22,7 @@ import Masonry from 'react-masonry-css';
 
 import { getObras } from '../../../API/Admin/Obras';
 import { ArrowLeftIcon, ArrowRightIcon } from '@chakra-ui/icons';
-
+import Rating from '../../../components/Obras/Rating';
 interface Obra {
   esculturaId: number;
   nombre: string;
@@ -247,7 +247,7 @@ export default function ObrasPublic() {
                       <Box onClick={() => handleCardClick(obra.esculturaId)}>
                         <Text noOfLines={3}>{obra.descripcion}</Text>
                         <Text>Puntuacion:</Text>
-                        <div className="ratingP">
+                        {/* <div className="ratingP">
                           <input value="5" name="rate" id="star5" type="radio" disabled checked={votos[obra.esculturaId] === 5} />
                           <label title="text" htmlFor="star5"></label>
                           <input value="4" name="rate" id="star4" type="radio" disabled checked={votos[obra.esculturaId] === 4} />
@@ -258,7 +258,8 @@ export default function ObrasPublic() {
                           <label title="text" htmlFor="star2"></label>
                           <input value="1" name="rate" id="star1" type="radio" disabled checked={votos[obra.esculturaId] === 1} />
                           <label title="text" htmlFor="star1"></label>
-                       </div>
+                       </div> */}
+                        <Rating rating={obra.promedioVotos} />
                       </Box>
                     </Box>
                   

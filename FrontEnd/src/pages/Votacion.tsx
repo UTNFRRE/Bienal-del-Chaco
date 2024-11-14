@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getObraById } from '../API/Admin/Obras';
 import { addVoto } from '../API/Public/Votacion';
+import { useToast } from '@chakra-ui/react';
 
 interface Obra {
     esculturaId: number;
@@ -24,6 +25,7 @@ function Voted() {
     const { userId } = useParams<{ userId: string }>();
     const [obra, setObra] = useState<Obra | null>(null);
     const [puntaje, setPuntaje] = useState<number>(0);
+    const toast = useToast();
 
     useEffect(() => {
         const fetchObraById = async (id?: string) => {
@@ -52,9 +54,22 @@ function Voted() {
 
         try {
             await addVoto(userId, obra.esculturaId, puntaje);
+            toast({
+                title: 'Exito',
+                description: 'Voto registrado correctamente',
+                status: 'success',
+                duration: 5000,
+                isClosable: true,});
             console.log("Voto registrado correctamente");
         } catch (error) {
             console.error('Error en el envío de la votación:', error);
+            toast({
+                title: 'Error',
+                description: 'Error al registrar el voto',
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+            });
         }
     };
 
