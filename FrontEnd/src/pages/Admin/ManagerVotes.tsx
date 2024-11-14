@@ -8,9 +8,8 @@ import DataTable from '../../components/Vote/DataTable';
 import PieChart from '../../components/Charts/PieChart';
 import BarChart from '../../components/Charts/BarChart';
 
-import obras  from '../../API/ObrasVote';
-// import { useEdicion } from '../../EdicionContexto';
-// import { getObras } from '../../API/Admin/Obras';
+import { useEdicion } from '../../EdicionContexto';
+import { getObras } from '../../API/Admin/Obras';
 
 
 interface Obra {
@@ -30,33 +29,26 @@ const ManagerVotes = () => {
     const [chart, setChart] = useState<string | null>("first");
     const [Obras, setObras] = useState<Obra[]>([]);
 
-    // setObras(obras);
+    //variable para llamar a la API
+    const [refresh, setRefresh] = useState(false);
+    const [currentPage] = useState(1);
+    const [pageNumber] = useState(10);
+    const {edicion} = useEdicion();
+
     useEffect(() => {
-        setObras(obras);
-    }, []);
-
-
-
-    // variable para llamar a la API
-    // const [refresh, setRefresh] = useState(false);
-    // const [currentPage] = useState(1);
-    // const [pageNumber] = useState(10);
-    // const {edicion} = useEdicion();
-
-    // useEffect(() => {
-    //     const fetchObras = async () => {
-    //         try{
-    //             const datos = await getObras(currentPage, pageNumber, edicion);
-    //             console.log(datos);
-    //             setObras(datos);
-    //             setRefresh(!refresh);
-    //         } catch(error){
-    //             console.log("error al solicitar obras",error);
-    //         }
-    //     };
-    //     fetchObras();
+        const fetchObras = async () => {
+            try{
+                const datos = await getObras(currentPage, pageNumber, edicion);
+                console.log(datos);
+                setObras(datos);
+                setRefresh(!refresh);
+            } catch(error){
+                console.log("error al solicitar obras",error);
+            }
+        };
+        fetchObras();
         
-    // }, [edicion,]);
+    }, [edicion]);
 
 
     //Llamario a la API
