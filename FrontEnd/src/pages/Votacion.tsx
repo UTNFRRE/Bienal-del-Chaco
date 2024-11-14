@@ -65,7 +65,7 @@ function Voted() {
             console.error('Error en el envío de la votación:', error);
             toast({
                 title: 'Error',
-                description: 'Error al registrar el voto',
+                description: 'Error al registrar el voto, ya ha votado por esta obra',
                 status: 'error',
                 duration: 5000,
                 isClosable: true,

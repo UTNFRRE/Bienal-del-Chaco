@@ -66,7 +66,7 @@ const ObraDetail = () => {
     <Box display="flex" flexDirection="column" w="100%">
       {obra && (
         <Flex direction="column" w="100%">
-          <Box w="100%" minHeight="33vh" backgroundColor="#0B192C">
+          <Box w="100%" minHeight="33vh"  textAlign={'center'} backgroundColor="#0B192C">
             <Heading color="#CDC2A5" fontSize="5xl">{obra.nombre}</Heading>
             <RedesSocialesLight />
           </Box>
@@ -87,6 +87,9 @@ const ObraDetail = () => {
               <Button onClick={handleVotarClick} isDisabled={isDisabled}>Votar</Button>
             </Box>
           </Flex>
+          <Box mt={4} mb={4} w={'100%'} bg={'azul'}  p={10}>
+            <Text color={'beige'} fontSize={26}>Obras relacionadas</Text>
+          </Box>
           <ObrasRelacionadas esculturaId={obra.esculturaId} />
         </Flex>
       )}

@@ -29,11 +29,12 @@ const ObrasRelacionadas: React.FC<ObrasRelacionadasProps> = ({ esculturaId }) =>
     const [obras, setObras] = useState<Obra[]>([]);
     const navigate = useNavigate(); // para poder navegar entre paginas
     const {edicion} = useEdicion();
+    const filter = ''
 
     useEffect(() => {
     const fetchObras = async () => {
         try {
-          const response = await getObras(1, 10, edicion);
+          const response = await getObras(1, 10, edicion, filter);
           setObras(response);
         } catch (error) {
           console.error('Error en el fetch de obras:', error);
