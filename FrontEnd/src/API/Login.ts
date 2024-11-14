@@ -44,17 +44,11 @@ export const AddUser = async (
     Password: string,
     DateBirth: string,
     ) => {
-    const formData = new FormData();
-    formData.append('UserName', UserName);
-    formData.append('Email', Email);
-    formData.append('Password', Password);
-    formData.append('FullName', FullName);
-    formData.append('DateOfBirth', DateBirth);
     
     try {
-        const response = await fetch(`${API_URL}/Usuarios/create`, {
+        const response = await fetch(`${API_URL}/register`, {
         method: 'POST',
-        body: formData,
+        body: JSON.stringify({ email: Email, password: Password }),
         });
         if (response.ok) {
         const data = await response.json();
@@ -68,11 +62,14 @@ export const AddUser = async (
     };
 
 export const getUserInfo = async () => {
+    const token = Cookies.get('access_token');
     try {
         const response = await fetch(`${API_URL}/users/info`, {
         method: 'GET',
-         headers: {
-            Authorization: `Bearer ${Cookies.get('access_token')}`,
+        // credentials: 'include',
+        headers: {
+           'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
         },
         });
         if (response.ok) {
@@ -82,8 +79,10 @@ export const getUserInfo = async () => {
         Cookies.set('Email', data.email);
 
         return data;
-        }
-        throw new Error('Error en la respuesta del servidor');
+        } else {
+            const errorResponse = await response.json();
+            throw new Error(JSON.stringify(errorResponse));
+        };
     } catch (error) {
         throw new Error('Network error: ' + error);
     }

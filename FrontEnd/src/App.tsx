@@ -31,36 +31,24 @@ function App() {
            <Route path="/public/*" element={<Public />} />
            {isAuthenticated && isAdmin && (
            <Route path="/admin/*" element={<Admin />} /> )}
-           {/* <Route
-              path="/admin/"
-              element={
-                <Navigate
-                  replace
-                  to='/admin/escultores' 
-                />
-              }
-            /> */}
-           <Route
-              path="/public/"
-              element={
-                <Navigate
-                  replace
-                  to='/public/eventos' 
-                />
-              }
-            />
             { isAuthenticated && isUser && (
               <Route path="/user/*" element={<User />} /> )}
         
-            <Route
-              path="/*"
-              element={
-                <Navigate
-                  replace
-                  to='/public/' 
-                />
-              }
-            /> 
+        <Route
+            path="/*"
+            element={
+              <Navigate
+                replace
+                to={
+                  isAuthenticated
+                    ? isAdmin
+                      ? '/admin/escultores'
+                      : isUser? '/user/escultores' : '/public/eventos'
+                    : '/public/eventos'
+                }
+          />
+        }
+        />
         </Routes>
       </BrowserRouter>
       </EdicionProvider>

@@ -7,6 +7,7 @@ import {
   FormControl,
   Button,
   Link,
+  Spinner,
 } from '@chakra-ui/react';
 import ImagenFondo from '../components/icons/login2.png';
 import Logo from '../components/icons/pagina.png';
@@ -21,10 +22,11 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [account, setAccount] = useState('');
   const showToast = useToast();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async () => {
     // e.preventDefault();
-    // setIsLoading(true);
+    setIsLoading(true);
     try {
       await onLogin(password, account); 
       showToast({
@@ -44,7 +46,7 @@ export default function LoginPage() {
         isClosable: true,
       });
     } finally {
-      // setIsLoading(false);
+      setIsLoading(false);
     }
   };
   return (
@@ -129,6 +131,10 @@ export default function LoginPage() {
                     borderColor: '#003063',
                     boxShadow: 'none',
                   }}
+                  _autofill={{
+                    backgroundColor: 'black',
+                    color: 'white',
+                  }}
                   _hover={{ borderColor: '0f183f' }}
                   // value={username}
                   onChange={(e) => setAccount(e.target.value)}
@@ -152,6 +158,10 @@ export default function LoginPage() {
                     borderColor: '#003063',
                     boxShadow: 'none',
                   }}
+                  _autofill={{
+                    backgroundColor: 'black',
+                    color: 'white',
+                  }}
                   _hover={{ borderColor: '0f183f' }}
                   // value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -173,7 +183,7 @@ export default function LoginPage() {
               _hover={{ bg: '#747264' }}
               onClick={handleSubmit}
             >
-              Acceder
+              {isLoading ? <Spinner size="sm" /> : 'Acceder'}
             </Button>
                 <Box
                 color="black"
