@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react';
 
 import { getObraById } from '../../../API/Admin/Obras';
 import ObrasRelacionadas from './ObrasRelacionadas';
+//import {useHistory} from 'react-router-dom';
 
 
 interface Obra {
@@ -66,9 +67,10 @@ const ObraDetail = () => {
     //setIsDisabled(true); // ACA EL PARA DESACTIVAR EL BOTON SI EL USUARIO YA VOTO
   }, [id]);
 
-
+  //const history = useHistory();
+  
   const handleVotarClick = () => {
-    console.log('VOTAR');
+    console.log("camilo")
   };
 
   useEffect(() => {

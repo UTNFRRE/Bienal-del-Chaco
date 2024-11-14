@@ -1,8 +1,21 @@
-import imagenFondo from '../components/icons/login2.png';
 import {Box,Flex, Button} from  '@chakra-ui/react';
 import Card from '../components/Vote/Card';
 import Boton from '../components/Vote/Button';
 import {useState} from 'react';
+
+
+interface Obra {
+    esculturaId: number,
+    nombre: string,
+    tematica: string,
+    descripcion: string,
+    escultorId: number,
+    fechaCreacion: string,
+    esculturNombre: string,
+    escultorPais: string,
+    imagenes: string[],
+    promedioVotos: number
+}
 
 
 function Voted (){
@@ -17,6 +30,7 @@ function Voted (){
         console.log("Puntaje Votacion:" + puntaje);
        // window.location.reload();//Simulo que reinicio todo pq se envio el input
     }
+
 
     return (
         <Box
