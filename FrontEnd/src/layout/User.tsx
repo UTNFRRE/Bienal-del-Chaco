@@ -22,7 +22,7 @@ export default function User() {
       <Box pos="relative" zIndex="10">
         <Header LINK_ITEMS={LINK_ITEMS} user={true} />
       </Box>
-      <Box p="10" pt="20">
+      <Box pt="20">
         {element}
       </Box>
     </Box>

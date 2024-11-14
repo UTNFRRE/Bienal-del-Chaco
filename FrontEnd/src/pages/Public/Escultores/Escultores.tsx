@@ -24,14 +24,14 @@ interface Escultor {
   pais: string;
   foto: string;
 }
-
+/*
 const json: Escultor[] = [
   {
       id:1,
       nombre: "Juan",
       pais: "Argentina",
       foto: "https://www.bienaldelchaco.org/2024/wp-content/uploads/2024/04/Foto-Luis-Bernardi.png"
-  }];
+  }];*/
 
 function Escultoress () {
 
@@ -200,6 +200,7 @@ return (
         position="relative"
         zIndex={5} // Para que esté sobre la caja azul
         top="-20%" // Ajusta este valor para superponer las tarjetas más arriba de la caja azul
+
       >
         {Escultores.map((escultor) => (
           <GridItem key={escultor.id} //w="100%" h="100%" 
@@ -237,14 +238,18 @@ return (
                 mt={0}
                 bg="white"
                 width="100%"
+
                 height="100%" // Ajusta el alto de la sección de texto al 30%
                 direction="row"
                 justifyContent="space-between"
                 alignItems="center"
                 flex={1}
                 //maxHeight={'27%'}
+                 onClick={() => handleCardClick(escultor.id)}>
               >
+   
                 <Stack direction="column" ml="5%" spacing={0}>
+
                   <Text
                     whiteSpace="pre-line"
                     fontSize="18px"
