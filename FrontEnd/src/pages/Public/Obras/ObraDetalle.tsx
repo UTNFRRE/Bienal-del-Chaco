@@ -7,6 +7,7 @@ import {
   Flex,
   IconButton,
   ButtonGroup,
+  Button
 } from '@chakra-ui/react';
 import ImageGallery from 'react-image-gallery';
 import { FaFacebook, FaTwitter, FaInstagram, FaWhatsapp } from 'react-icons/fa';
@@ -44,6 +45,8 @@ const ObraDetail = () => {
     imagenes: '',
   });
 
+  const [isDisabled, setIsDisabled] = useState (false);
+
   // Aca con el id se debe hacer el fecth a la api para traer la obra con todos los datos
   // Por ahora me hago un json
   useEffect(() => {
@@ -58,6 +61,7 @@ const ObraDetail = () => {
       }
     };
     fetchObraById(id);
+    setIsDisabled(true); // ACA EL PARA DESACTIVAR EL BOTON SI EL USUARIO YA VOTO
   }, [id]);
 
   useEffect(() => {
@@ -152,6 +156,29 @@ const ObraDetail = () => {
               <Text textAlign={'left'} mt={6} ml={4}>
                 {obra.descripcion}
               </Text>
+              <Box width='100%' display="flex" justifyContent="center">
+                <Button 
+                  width='30%'
+                  p={5}
+                  bg='#0B192C' 
+                  border='2px' 
+                  borderColor='#CDC2A5' 
+                  onClick={() => console.log('Votar')}
+                  color="#cdc2a5"
+                  fontSize= "1.3em"
+                  isDisabled={isDisabled}
+
+                  sx={{
+                      _hover: {
+                          transform: 'scale(1.1)',
+                          bg: '#142e51', // Cambia el colorScheme al hacer hover
+                      },
+                      transition: 'transform 0.2s',
+                  }}
+                  >            
+                    Votar
+                  </Button>
+              </Box>
             </Box>
           </Box>
           </Box>

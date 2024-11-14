@@ -225,6 +225,8 @@ export default function ObrasPublic() {
                       />
                       <Box onClick={() => handleCardClick(obra.esculturaId)}>
                       <Text noOfLines={3}>{obra.descripcion}</Text>
+                      <Text>Puntuacion:</Text>
+                      <Text>Dos estrellas</Text>
                       </Box>
                     </Box>
                   
