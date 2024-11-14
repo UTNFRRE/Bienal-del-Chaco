@@ -78,6 +78,8 @@ export default function ObrasPublic() {
       return acc;
       }, {} as { [key: number]: number });
       setVotos(truncPromedioVotos);
+
+      console.log(obras)
   },[obras]);
 
   const handlePreviousPage = () => {

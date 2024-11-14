@@ -1,26 +1,13 @@
-import { useParams } from 'react-router-dom';
-import {
-  Box,
-  Heading,
-  Text,
-  Image,
-  Flex,
-  IconButton,
-  ButtonGroup,
-  Button
-} from '@chakra-ui/react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Box, Heading, Text, Image, Flex, Button } from '@chakra-ui/react';
 import ImageGallery from 'react-image-gallery';
-import { FaFacebook, FaTwitter, FaInstagram, FaWhatsapp } from 'react-icons/fa';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import RedesSocialesLight from '../../../components/Redes/RedesSocialesLight';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-
 import { getObraById } from '../../../API/Admin/Obras';
 import Cookies from 'js-cookie';
 import ObrasRelacionadas from './ObrasRelacionadas';
-//import {useHistory} from 'react-router-dom';
-
+import { HeadVotos } from '../../../API/Public/Votacion';
 
 interface Obra {
   esculturaId: number;
@@ -35,183 +22,73 @@ interface Obra {
 }
 
 const ObraDetail = () => {
-
   const userId = Cookies.get('IdUser');
-  const { id } = useParams<{ id: string }>(); // Se obtiene el id de la obra de la url
-  const [images, setImages] = useState<any[]>([]);
-  const [obra, setObra] = useState<Obra>({
-    esculturaId: 0,
-    nombre: '',
-    tematica: '',
-    descripcion: '',
-    fechaCreacion: '',
-    escultorNombre: '',
-    escultorPais: '',
-    escultorImagen: '',
-    imagenes: '',
-  });
-
+  const { id } = useParams<{ id: string }>();
+  const [obra, setObra] = useState<Obra | null>(null);
+  const [isDisabled, setIsDisabled] = useState(false);
   const navigate = useNavigate();
-  const [isDisabled, setIsDisabled] = useState (false);
 
-  // Aca con el id se debe hacer el fecth a la api para traer la obra con todos los datos
-  // Por ahora me hago un json
   useEffect(() => {
-    const fetchObraById = async (id?: string) => {
+    const fetchObraById = async () => {
+      if (!id) return;
       try {
-        if (!id) return;
         const data = await getObraById(id);
         setObra(data);
-        console.log(data);
       } catch (error) {
         console.error('Error en el fetch de la obra:', error);
       }
     };
-    fetchObraById(id);
-    //setIsDisabled(true); // ACA EL PARA DESACTIVAR EL BOTON SI EL USUARIO YA VOTO
+    fetchObraById();
   }, [id]);
 
-  
+  useEffect(() => {
+    const fetchHeadVotos = async () => {
+      if (!userId || !obra) return;
+      try {
+        const response = await HeadVotos(userId, obra.esculturaId);
+        if (response.ok) {
+          setIsDisabled(true); // Deshabilita el botón si la API responde con 200
+        }
+      } catch (error) {
+        console.error('Error en la verificación de votos:', error);
+      }
+    };
+    if (obra) {
+      fetchHeadVotos();
+    }
+  }, [obra, userId]);
+
   const handleVotarClick = () => {
     navigate(`/public/voting/${id}/${userId}`);
-    //console.log(userId);
   };
 
-  useEffect(() => {
-    if (obra) {
-      const images = [
-        {
-          original: obra.imagenes,
-          thumbnail: obra.imagenes,
-        },
-      ];
-      setImages(images);
-    }
-  }, [obra]);
   return (
-    <Box
-      display={'flex'}
-      flexDirection={{ base: 'column', md: 'row', lg: 'row' }}
-      w={'100%'}
-    >
+    <Box display="flex" flexDirection="column" w="100%">
       {obra && (
-        <Flex direction={'column'}
-        justifyContent={'center'}
-        w={'100%'}>
-            <Box
-              w={'100%'}
-              minHeight={'33vh'} 
-              display={'flex'}
-              mb={2}
-              backgroundColor="#0B192C"
-              alignItems={'center'}
-              position={'relative'}
-              justifyContent={'space-around'}
-            >
-              <Heading ml={'7%'} color={'#CDC2A5'} fontSize={'5xl'}>
-                {obra.nombre}
-              </Heading>
-              <Flex>
-                <RedesSocialesLight />
-              </Flex>
-            </Box>
-          <Box
-            display="flex"
-            justifyContent={'space-between'}
-            w={{ base: '100%', md: '100%', lg: '100%' }}
-            flexDirection={'row'}
-          >
-            <Box p={4} 
-             top={"-35px"} 
-             position="relative"
-             zIndex={1}
-             >
-              <ImageGallery
-                items={images}
-                showPlayButton={true} // desactivo el boton de play
-                autoPlay={true} //activo para que arranquen solas
-                slideInterval={5000} //cada cuanto cambia, 4seg
-              />
-            </Box>
-            <Box
-              w={{ base: '100%', md: '100%', lg: '30%' }}
-              display="flex"
-              flexDirection={'column'}
-              mt={1}
-              mr={10}
-              className="Informacion"
-            >
-            <Flex gap="4" alignItems="center" 
-            justifyContent={'center'} mt={8}>
-              <Image
-                src={obra.escultorImagen}
-                boxSize="90px"
-                borderRadius="full"
-                borderWidth={1}
-                borderColor="azul"
-                borderStyle="solid"
-              />
-              <Box>
-                <Heading size="sm">{obra.escultorNombre}</Heading>
-                <Text as="i">{obra.escultorPais}</Text>
-              </Box>
-            </Flex>
-            <Box
-              mt={6}
-              display={'flex'}
-              textAlign={'right'}
-              flexDirection={'column'}
-              marginLeft={'auto'}
-              w={'100%'}
-            >
-              <Text as="em">Bajo la tematica {obra.tematica}</Text>
-              <Text as="em">Creada el {obra.fechaCreacion}</Text>
-              <Text textAlign={'left'} mt={6} ml={4}>
-                {obra.descripcion}
-              </Text>
-              <Box width='100%' display="flex" justifyContent="center">
-                <Button 
-                  width='30%'
-                  p={5}
-                  bg='#0B192C' 
-                  border='2px' 
-                  borderColor='#CDC2A5' 
-                  onClick={handleVotarClick}
-                  color="#cdc2a5"
-                  fontSize= "1.3em"
-                  isDisabled={isDisabled}
-
-                  sx={{
-                      _hover: {
-                          transform: 'scale(1.1)',
-                          bg: '#142e51', // Cambia el colorScheme al hacer hover
-                      },
-                      transition: 'transform 0.2s',
-                  }}
-                  >            
-                    Votar
-                  </Button>
-                  
-              </Box>
-            </Box>
+        <Flex direction="column" w="100%">
+          <Box w="100%" minHeight="33vh" backgroundColor="#0B192C">
+            <Heading color="#CDC2A5" fontSize="5xl">{obra.nombre}</Heading>
+            <RedesSocialesLight />
           </Box>
-          </Box>
-          <Flex direction={'column'}>
-            <Flex bg={'azul'} color={'beige'} w={'100%'} textAlign={'start'}
-            h={'15vh'}
-            mb={4}
-            alignItems={'center'}
-            >
-              <Text fontSize={24} ml={5} fontWeight={'bold'}>
-              Obras Relacionadas
-              </Text>
-            </Flex> 
-            <Flex>
-              <ObrasRelacionadas esculturaId={obra.esculturaId} />
-            </Flex>
+          <Flex justifyContent="space-between">
+            <ImageGallery
+              items={[{ original: obra.imagenes, thumbnail: obra.imagenes }]}
+              showPlayButton
+              autoPlay
+              slideInterval={5000}
+            />
+            <Box>
+              <Image src={obra.escultorImagen} boxSize="90px" borderRadius="full" />
+              <Heading size="sm">{obra.escultorNombre}</Heading>
+              <Text as="i">{obra.escultorPais}</Text>
+              <Text>Bajo la temática {obra.tematica}</Text>
+              <Text>Creada el {obra.fechaCreacion}</Text>
+              <Text>{obra.descripcion}</Text>
+              <Button onClick={handleVotarClick} isDisabled={isDisabled}>Votar</Button>
+            </Box>
           </Flex>
+          <ObrasRelacionadas esculturaId={obra.esculturaId} />
         </Flex>
-        
       )}
     </Box>
   );
