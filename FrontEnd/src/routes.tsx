@@ -10,6 +10,11 @@ import ObrasPublic from './pages/Public/Obras/Obras';
 import ObraDetail from './pages/Public/Obras/ObraDetalle';
 import ObrasAdmin from './pages/Admin/Obras/ObrasAd';
 import ManagerVotes from './pages/Admin/ManagerVotes';
+import Voted from  './pages/Votacion';
+import { RiOilLine } from 'react-icons/ri';
+import obras from './API/ObrasVote';
+import ObraDetail2 from './pages/Public/Obras/ObraDetalle2';
+import ObrasPublic2 from './pages/Public/Obras/Obras2';
 
 const routes = [
   {
@@ -77,6 +82,24 @@ const routes = [
     element: <ObraDetail />,
     title: '',
     rol: 'public',
+  },
+  {
+    path: 'voting/:id/:userId',
+    element: <Voted />,
+    title: '',
+    rol: 'public',
+  },
+  {
+    path: 'obras',
+    element: <ObrasPublic2 />,
+    title: 'Obras',
+    rol: 'user',
+  },
+  {
+    path: 'obras/:id', // Se agrega el id de la obra
+    element: <ObraDetail2 />,
+    title: '',
+    rol: 'user',
   },
 ];
 

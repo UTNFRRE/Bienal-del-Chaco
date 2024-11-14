@@ -21,7 +21,7 @@ interface Obra {
   imagenes: string;
 }
 
-const ObraDetail = () => {
+const ObraDetail2 = () => {
   const userId = Cookies.get('IdUser');
   const { id } = useParams<{ id: string }>();
   const [obra, setObra] = useState<Obra | null>(null);
@@ -84,7 +84,6 @@ const ObraDetail = () => {
               <Text>Bajo la temática {obra.tematica}</Text>
               <Text>Creada el {obra.fechaCreacion}</Text>
               <Text>{obra.descripcion}</Text>
-              <Button onClick={handleVotarClick} isDisabled={isDisabled}>Votar</Button>
             </Box>
           </Flex>
           <ObrasRelacionadas esculturaId={obra.esculturaId} />
@@ -94,4 +93,4 @@ const ObraDetail = () => {
   );
 };
 
-export default ObraDetail;
+export default ObraDetail2;

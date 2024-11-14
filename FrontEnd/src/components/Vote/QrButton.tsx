@@ -3,9 +3,24 @@ import { useState } from 'react';
 import QR from "../Modal/QRGenerator";
 import { BsQrCode } from "react-icons/bs";
 
+interface Obras {
+    esculturaId: number,
+    nombre: string,
+    tematica: string,
+    descripcion: string,
+    escultorId: number,
+    fechaCreacion: string,
+    esculturNombre: string,
+    escultorPais: string,
+    imagenes: string[],
+    promedioVotos: number
+}
 
+interface QrProps {
+    data: Obras[];
+}
 
-const QrButton = () => {
+const QrButton: React.FC <QrProps> = ({data}) => {
 
     const { 
         isOpen: isOpenQr, 
@@ -48,7 +63,8 @@ const QrButton = () => {
                     </Button>
                     <QR 
                     isOpen={isOpenQr} 
-                    onClose={onCloseQr} />
+                    onClose={onCloseQr}
+                    data={data} />
         </>
     )
 }

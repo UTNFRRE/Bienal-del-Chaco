@@ -1,18 +1,17 @@
 import './Button.css';
-import {useState} from 'react';
+import { useState } from 'react';
 
 interface BotonProps {
-    onRatingChange: (rating: Number) => void;
+    onRatingChange: (rating: number) => void; // Cambié `Number` a `number`
 }
 
 const Boton: React.FC<BotonProps> = ({ onRatingChange }) => {
+    const [rating, setRating] = useState<number>(0); // Cambié `number | null` a `number`
 
-    const [rating, setRating] = useState<number | null>(0);
-
-    const handleChange = (event:  React.ChangeEvent<HTMLInputElement>) =>{
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newRating = Number(event.target.value);
         setRating(newRating);
-        onRatingChange(newRating);
+        onRatingChange(newRating); // Llama a onRatingChange con `number`
     }
 
     return (
@@ -30,7 +29,6 @@ const Boton: React.FC<BotonProps> = ({ onRatingChange }) => {
                 <label title="text" htmlFor="star1"></label>
             </div>
         </>  
-
     )
 }
 

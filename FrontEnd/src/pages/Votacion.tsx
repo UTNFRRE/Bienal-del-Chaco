@@ -1,22 +1,77 @@
-import imagenFondo from '../components/icons/login2.png';
-import {Box,Flex, Button} from  '@chakra-ui/react';
+import { Box, Flex, Button } from '@chakra-ui/react';
 import Card from '../components/Vote/Card';
 import Boton from '../components/Vote/Button';
-import {useState} from 'react';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { getObraById } from '../API/Admin/Obras';
+import { addVoto } from '../API/Public/Votacion';
+import { useToast } from '@chakra-ui/react';
 
+interface Obra {
+    esculturaId: number;
+    nombre: string;
+    tematica: string;
+    descripcion: string;
+    escultorId: number;
+    fechaCreacion: string;
+    esculturNombre: string;
+    escultorPais: string;
+    imagenes: string;
+    promedioVotos: number;
+}
 
-function Voted (){
+function Voted() {
+    const { id } = useParams<{ id: string }>();
+    const { userId } = useParams<{ userId: string }>();
+    const [obra, setObra] = useState<Obra | null>(null);
+    const [puntaje, setPuntaje] = useState<number>(0);
+    const toast = useToast();
 
-    const [puntaje,setPuntaje] = useState<Number | null >(0);
+    useEffect(() => {
+        const fetchObraById = async (id?: string) => {
+            try {
+                if (!id) return;
+                const data = await getObraById(id);
+                setObra(data);
+                console.log(data);
+            } catch (error) {
+                console.error('Error en el fetch de la obra:', error);
+            }
+        };
+        fetchObraById(id);
+    }, [id]);
 
-    const handlePuntajeChange = (rating: Number) => {
+    const handlePuntajeChange = (rating: number) => {
         setPuntaje(rating);
-    }
+    };
 
-    const handlePuntuacion = ()=>{
-        console.log("Puntaje Votacion:" + puntaje);
-        window.location.reload();//Simulo que reinicio todo pq se envio el input
-    }
+    const handlePuntuacion = async () => {
+        // Verificación de valores antes de hacer la llamada
+        if (!userId || !obra?.esculturaId || puntaje === 0) {
+            console.error("Faltan valores para la votación:", { userId, esculturaId: obra?.esculturaId, puntaje });
+            return; // Salir si falta algún valor
+        }
+
+        try {
+            await addVoto(userId, obra.esculturaId, puntaje);
+            toast({
+                title: 'Exito',
+                description: 'Voto registrado correctamente',
+                status: 'success',
+                duration: 5000,
+                isClosable: true,});
+            console.log("Voto registrado correctamente");
+        } catch (error) {
+            console.error('Error en el envío de la votación:', error);
+            toast({
+                title: 'Error',
+                description: 'Error al registrar el voto',
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+            });
+        }
+    };
 
     return (
         <Box
@@ -26,9 +81,7 @@ function Voted (){
             overflow="hidden"
         >
             <Box
-                bgImage={{base: '', lg: `url(${imagenFondo})`}}
-                bgColor={{base: '', lg: 'transparent'}}
-                //background={{base: 'linear-gradient(to bottom, black, rgba(0, 0, 0, 0.7))'}}
+                bgColor={{ base: '#0B192C', lg: '#0B192C' }}
                 w="100%"
                 h="100%"
                 bgSize="cover"
@@ -46,18 +99,33 @@ function Voted (){
                     h="100%"
                     flexDirection="column"
                     justifyContent="space-around"
-                   
                 >
-                    <Card />
-                    <Box display="flex" alignItems="center" justifyContent="space-between"  flexDirection="column" width="30%" height="15%" >
+                    {obra && <Card data={obra} />}
+                    <Box display="flex" alignItems="center" justifyContent="space-between" flexDirection="column" width="30%" height="15%">
                         <Boton onRatingChange={handlePuntajeChange} />
-                        <Button colorScheme='blue' onClick={handlePuntuacion}>Votar</Button>
+                        <Button
+                            p={5}
+                            colorScheme='#0B192C'
+                            border='2px'
+                            borderColor='#CDC2A5'
+                            onClick={handlePuntuacion}
+                            color="#cdc2a5"
+                            fontSize="1.3em"
+                            sx={{
+                                _hover: {
+                                    transform: 'scale(1.1)',
+                                    bg: '#142e51',
+                                },
+                                transition: 'transform 0.2s',
+                            }}
+                        >
+                            Votar
+                        </Button>
                     </Box>
-                </Flex> 
-
+                </Flex>
             </Box>
         </Box>
-    )
+    );
 }
 
 export default Voted;

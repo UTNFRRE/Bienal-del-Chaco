@@ -11,18 +11,34 @@ import {
     Image,
     Select
 } from '@chakra-ui/react';
-import obras from '../../API/ObrasVote'
 import {useState} from 'react';
+
+interface Obras {
+    esculturaId: number,
+    nombre: string,
+    tematica: string,
+    descripcion: string,
+    escultorId: number,
+    fechaCreacion: string,
+    esculturNombre: string,
+    escultorPais: string,
+    imagenes: string[],
+    promedioVotos: number
+}
+
 
 interface QRProps {
 
     isOpen: boolean;
 
     onClose: () => void;
+    
+    data: Obras[];
 
 }
 
-    const QR = ({isOpen,onClose}:QRProps) => {
+
+    const QR: React.FC<QRProps> = ({isOpen,onClose,data}) => {
 
         const [obra,setObra] = useState<number>(0);
         const [showQR, setShowQR] = useState(false);
@@ -48,9 +64,9 @@ interface QRProps {
                                 placeholder="Selecciona una obra"
                                 onChange={(e) =>setObra(Number(e.target.value))}
                             >
-                                {obras.map((o) => (
-                                    <option key={o.id} value={o.id}>
-                                        {o.nombreObra}
+                                {data.map((o) => (
+                                    <option key={o.esculturaId} value={o.esculturaId}>
+                                        {o.nombre}
                                     </option>
                                 ))}
                             </Select>

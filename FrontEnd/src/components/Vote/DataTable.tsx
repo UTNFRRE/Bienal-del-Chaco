@@ -1,26 +1,47 @@
 import { Table, Thead, Tbody, Tr, Th, Td } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
-import Obras from '../../API/ObrasVote';
 
-const DataTable = ( ) => {
+
+
+interface Obra {
+    esculturaId: number,
+    nombre: string,
+    tematica: string,
+    descripcion: string,
+    escultorId: number,
+    fechaCreacion: string,
+    esculturNombre: string,
+    escultorPais: string,
+    imagenes: string[],
+    promedioVotos: number
+}
+
+interface DataTableProps{
+    data: Obra[];
+}
+
+const DataTable : React.FC<DataTableProps> = ({data} ) => {
     // Define los datos que se van a mostrar en la tabla
     const [porcentaje,setPorcentaje] = useState <{[key:number]: number}> ({});
-    const [sortedObras, setSortedObras] = useState(Obras);
-
+    const [sortedObras, setSortedObras] = useState(data);
+    const [refresh, setRefresh] = useState(false);
+    
 
     useEffect(() => {
         // Ordenar las obras de mayor a menor según su cantidad de votos
-        const sorted = [...Obras].sort((a, b) => b.PromedioPuntuacion - a.PromedioPuntuacion);
+        const sorted = [...data].sort((a, b) => b.promedioVotos - a.promedioVotos);
         setSortedObras(sorted);
+        setRefresh(!refresh);
+    }, [data]);
 
-        const totalVotes = sortedObras.reduce((sum, item)=> sum + item.PromedioPuntuacion, 0);
+    useEffect(() => {
+        const totalVotes = sortedObras.reduce((sum, item)=> sum + item.promedioVotos, 0);
         const porcentajes = sortedObras.reduce((acc, item)=>{
-            acc[item.id] = (item.PromedioPuntuacion / totalVotes) * 100;
+            acc[item.esculturaId] = (item.promedioVotos / totalVotes) * 100;
             return acc;
         }, {} as {[key: number]: number});
-        setPorcentaje(porcentajes);
-    }, []);
-
+        setPorcentaje(porcentajes)
+    }, [refresh]);
     return (
         <Table size="sm">
             <Thead>
@@ -31,20 +52,29 @@ const DataTable = ( ) => {
                 </Tr>
             </Thead>
             <Tbody>
-                {sortedObras.map((item) => (
-                    <Tr key={item.id} _hover={{ bg: 'gray.100' }}>
-                        <Td>{item.nombreObra}</Td>
-                        <Td>{item.PromedioPuntuacion}</Td>
-                        <Td>{porcentaje[item.id]?.toFixed(2)}</Td>
+                {data.length === 0 ? (
+                    <Tr>
+                        <Td colSpan={3} textAlign="center">No hay esculturas</Td>
                     </Tr>
-                ))}
-                <Tr>
-                    <Td>Total</Td>
-                    <Td>{Obras.reduce((sum, item) => sum + item.PromedioPuntuacion, 0)}</Td>
-                    <Td>100</Td>
-                </Tr>
+                ) : (
+                    <>
+                        {sortedObras.map((item) => (
+                            <Tr key={item.esculturaId} _hover={{ bg: 'gray.100' }}>
+                                <Td>{item.nombre}</Td>
+                                <Td>{item.promedioVotos}</Td>
+                                <Td>{porcentaje[item.esculturaId]?.toFixed(2)}</Td>
+                            </Tr>
+                        ))}
+                        <Tr>
+                            <Td>Total</Td>
+                            <Td>{data.reduce((sum, item) => sum + item.promedioVotos, 0)}</Td>
+                            <Td>100</Td>
+                        </Tr>
+                    </>
+                )}
             </Tbody>
         </Table>
+
     );
 }
 

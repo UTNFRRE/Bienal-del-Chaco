@@ -8,21 +8,42 @@ import {
     Tooltip,
     Legend,
 } from 'chart.js';
-import obras from '../../API/ObrasVote';
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 import { useState, useEffect } from 'react';
 
-const BarChart = () => {
+
+
+interface Obra {
+    esculturaId: number,
+    nombre: string,
+    tematica: string,
+    descripcion: string,
+    escultorId: number,
+    fechaCreacion: string,
+    esculturNombre: string,
+    escultorPais: string,
+    imagenes: string[],
+    promedioVotos: number
+}
+
+interface BarChartProps {
+    dato: Obra[];
+}
+
+
+const BarChart: React.FC <BarChartProps> = ({dato}) => {
     const [porcentaje, setPorcentaje] = useState<{ [key: number]: number }>({});
 
+
+
     useEffect(() => {
-        const totalVotes = obras.reduce((sum, item) => sum + item.PromedioPuntuacion, 0);
-        const porcentajes = obras.reduce((acc, item) => {
-            acc[item.id] = (item.PromedioPuntuacion / totalVotes) * 100;
+        const totalVotes = dato.reduce((sum, item) => sum + item.promedioVotos, 0);
+        const porcentajes = dato.reduce((acc, item) => {
+            acc[item.esculturaId] = (item.promedioVotos / totalVotes) * 100;
             return acc;
         }, {} as { [key: number]: number });
         setPorcentaje(porcentajes);
-    }, []);
+    }, [dato]);
 
     // Definir las opciones del gráfico
     const options = {
@@ -44,11 +65,11 @@ const BarChart = () => {
 
     // Datos para el gráfico
     const data = {
-        labels: obras.map((item) => item.nombreObra),
+        labels: dato.map((item) => item.nombre),
         datasets: [
             {
                 label: 'Bienal edicion 2019',
-                data: obras.map((item) => porcentaje[item.id]),
+                data: dato.map((item) => porcentaje[item.esculturaId]),
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',

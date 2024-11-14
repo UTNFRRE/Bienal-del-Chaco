@@ -22,7 +22,7 @@ import Masonry from 'react-masonry-css';
 
 import { getObras } from '../../../API/Admin/Obras';
 import { ArrowLeftIcon, ArrowRightIcon } from '@chakra-ui/icons';
-
+import Rating from '../../../components/Obras/Rating';
 interface Obra {
   esculturaId: number;
   nombre: string;
@@ -33,6 +33,7 @@ interface Obra {
   escultorPais: string;
   escultorImagen: string;
   imagenes: string;
+  promedioVotos: number;
 }
 
 export default function ObrasPublic() {
@@ -47,6 +48,9 @@ export default function ObrasPublic() {
   const [totalPages, setTotalPages] = useState(2);
   const [totalCount, setTotalCount] = useState(0);
 
+  const [votos, setVotos] = useState<{ [key: number]: number }>({}); // Guarda los votos de cada obra truncados PARA LAS ESTRELLAS
+
+
   // Aca va el request a la api, cada vez que cambian el limite y el offset vuelvo a hacer el request para esos valores
   useEffect(() => {
     const fetchObras = async () => {
@@ -59,8 +63,25 @@ export default function ObrasPublic() {
         console.error('Error en el fetch de obras:', error);
       }
     };
-    fetchObras();
+    fetchObras();   
   }, [currentPage, pageSize, edicion]);
+
+  useEffect(() => {
+     //Trunco el promedioVotos de obras
+     const truncPromedioVotos = obras.reduce((acc, obra) => {
+      acc[obra.esculturaId] = Math.trunc(obra.promedioVotos);
+
+      //corrijo si el promedio se pasa de 5 (por algun mongolico)
+      if(acc[obra.promedioVotos] > 5){
+        acc[obra.promedioVotos] = 5;
+      }
+
+      return acc;
+      }, {} as { [key: number]: number });
+      setVotos(truncPromedioVotos);
+
+      console.log(obras)
+  },[obras]);
 
   const handlePreviousPage = () => {
     if (currentPage > 1) {
@@ -98,12 +119,12 @@ export default function ObrasPublic() {
         minHeight={'40vh'} 
         display={'flex'}
         mb={2}
-        backgroundColor="#0B192C"
+        backgroundColor="#0B192C" 
         alignItems={'center'}
         position={'relative'}
       >
           <Flex direction={'column'} ml={'5%'}>
-         <Heading color={'#CDC2A5'} fontSize={45}>
+         <Heading color={'#CDC2A5'} fontSize={45}> 
             Obras
          </Heading>
          {/* <Flex gap={3} mt={3}>
@@ -225,7 +246,21 @@ export default function ObrasPublic() {
                         size={'2x1'}
                       />
                       <Box onClick={() => handleCardClick(obra.esculturaId)}>
-                      <Text noOfLines={3}>{obra.descripcion}</Text>
+                        <Text noOfLines={3}>{obra.descripcion}</Text>
+                        <Text>Puntuacion:</Text>
+                        {/* <div className="ratingP">
+                          <input value="5" name="rate" id="star5" type="radio" disabled checked={votos[obra.esculturaId] === 5} />
+                          <label title="text" htmlFor="star5"></label>
+                          <input value="4" name="rate" id="star4" type="radio" disabled checked={votos[obra.esculturaId] === 4} />
+                          <label title="text" htmlFor="star4"></label>
+                          <input value="3" name="rate" id="star3" type="radio" disabled checked={votos[obra.esculturaId] === 3} />
+                          <label title="text" htmlFor="star3"></label>
+                          <input value="2" name="rate" id="star2" type="radio" disabled checked={votos[obra.esculturaId] === 2} />
+                          <label title="text" htmlFor="star2"></label>
+                          <input value="1" name="rate" id="star1" type="radio" disabled checked={votos[obra.esculturaId] === 1} />
+                          <label title="text" htmlFor="star1"></label>
+                       </div> */}
+                        <Rating rating={obra.promedioVotos} />
                       </Box>
                     </Box>
                   
@@ -233,6 +268,7 @@ export default function ObrasPublic() {
               </React.Fragment>
             );
           })}
+
         </Masonry>
         </Flex>
       )}
