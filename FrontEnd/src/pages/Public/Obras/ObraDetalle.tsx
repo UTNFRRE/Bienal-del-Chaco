@@ -18,6 +18,7 @@ import { useEffect, useState } from 'react';
 import { getObraById } from '../../../API/Admin/Obras';
 import ObrasRelacionadas from './ObrasRelacionadas';
 
+
 interface Obra {
   esculturaId: number;
   nombre: string;
@@ -31,6 +32,7 @@ interface Obra {
 }
 
 const ObraDetail = () => {
+
   const { id } = useParams<{ id: string }>(); // Se obtiene el id de la obra de la url
   const [images, setImages] = useState<any[]>([]);
   const [obra, setObra] = useState<Obra>({
@@ -61,8 +63,13 @@ const ObraDetail = () => {
       }
     };
     fetchObraById(id);
-    setIsDisabled(true); // ACA EL PARA DESACTIVAR EL BOTON SI EL USUARIO YA VOTO
+    //setIsDisabled(true); // ACA EL PARA DESACTIVAR EL BOTON SI EL USUARIO YA VOTO
   }, [id]);
+
+
+  const handleVotarClick = () => {
+    console.log('VOTAR');
+  };
 
   useEffect(() => {
     if (obra) {
@@ -163,7 +170,7 @@ const ObraDetail = () => {
                   bg='#0B192C' 
                   border='2px' 
                   borderColor='#CDC2A5' 
-                  onClick={() => console.log('Votar')}
+                  onClick={handleVotarClick}
                   color="#cdc2a5"
                   fontSize= "1.3em"
                   isDisabled={isDisabled}
@@ -178,6 +185,7 @@ const ObraDetail = () => {
                   >            
                     Votar
                   </Button>
+                  
               </Box>
             </Box>
           </Box>

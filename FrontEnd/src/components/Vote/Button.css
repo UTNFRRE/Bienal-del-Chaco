@@ -20,7 +20,7 @@
 .rating > input:checked ~ label:hover,
 .rating > input:checked ~ label:hover ~ label,
 .rating > label:hover ~ input:checked ~ label {
-  color: #a6997a;
+  color: #c3b79b;
 }
 
 .rating:not(:checked) > label:hover,

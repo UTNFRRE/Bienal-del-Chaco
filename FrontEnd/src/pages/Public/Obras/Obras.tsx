@@ -62,10 +62,12 @@ export default function ObrasPublic() {
         console.error('Error en el fetch de obras:', error);
       }
     };
-    fetchObras();
+    fetchObras();   
+  }, [currentPage, pageSize, edicion]);
 
-    //Trunco el promedioVotos de obras
-    const truncPromedioVotos = obras.reduce((acc, obra) => {
+  useEffect(() => {
+     //Trunco el promedioVotos de obras
+     const truncPromedioVotos = obras.reduce((acc, obra) => {
       acc[obra.esculturaId] = Math.trunc(obra.promedioVotos);
 
       //corrijo si el promedio se pasa de 5 (por algun mongolico)
@@ -74,12 +76,9 @@ export default function ObrasPublic() {
       }
 
       return acc;
-    }, {} as { [key: number]: number });
-    setVotos(truncPromedioVotos);
-
-
-    
-  }, [currentPage, pageSize, edicion]);
+      }, {} as { [key: number]: number });
+      setVotos(truncPromedioVotos);
+  },[obras]);
 
   const handlePreviousPage = () => {
     if (currentPage > 1) {
@@ -244,9 +243,20 @@ export default function ObrasPublic() {
                         size={'2x1'}
                       />
                       <Box onClick={() => handleCardClick(obra.esculturaId)}>
-                      <Text noOfLines={3}>{obra.descripcion}</Text>
-                      <Text>Puntuacion:</Text>
-                      <Text>{votos[obra.esculturaId]}</Text>
+                        <Text noOfLines={3}>{obra.descripcion}</Text>
+                        <Text>Puntuacion:</Text>
+                        <div className="ratingP">
+                          <input value="5" name="rate" id="star5" type="radio" disabled checked={votos[obra.esculturaId] === 5} />
+                          <label title="text" htmlFor="star5"></label>
+                          <input value="4" name="rate" id="star4" type="radio" disabled checked={votos[obra.esculturaId] === 4} />
+                          <label title="text" htmlFor="star4"></label>
+                          <input value="3" name="rate" id="star3" type="radio" disabled checked={votos[obra.esculturaId] === 3} />
+                          <label title="text" htmlFor="star3"></label>
+                          <input value="2" name="rate" id="star2" type="radio" disabled checked={votos[obra.esculturaId] === 2} />
+                          <label title="text" htmlFor="star2"></label>
+                          <input value="1" name="rate" id="star1" type="radio" disabled checked={votos[obra.esculturaId] === 1} />
+                          <label title="text" htmlFor="star1"></label>
+                       </div>
                       </Box>
                     </Box>
                   
@@ -254,6 +264,7 @@ export default function ObrasPublic() {
               </React.Fragment>
             );
           })}
+
         </Masonry>
         </Flex>
       )}
