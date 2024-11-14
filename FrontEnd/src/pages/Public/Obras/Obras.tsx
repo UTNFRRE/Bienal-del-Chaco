@@ -51,7 +51,8 @@ export default function ObrasPublic() {
   useEffect(() => {
     const fetchObras = async () => {
       try {
-        const response = await getObras(currentPage, pageSize, edicion);
+        const filter=''
+        const response = await getObras(currentPage, pageSize, edicion, filter);
         setObras(response);
         setTotalCount(response.length);
       } catch (error) {
