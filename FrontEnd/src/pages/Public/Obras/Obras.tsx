@@ -33,6 +33,7 @@ interface Obra {
   escultorPais: string;
   escultorImagen: string;
   imagenes: string;
+  promedioVotos: number;
 }
 
 export default function ObrasPublic() {
@@ -47,6 +48,9 @@ export default function ObrasPublic() {
   const [totalPages, setTotalPages] = useState(2);
   const [totalCount, setTotalCount] = useState(0);
 
+  const [votos, setVotos] = useState<{ [key: number]: number }>({}); // Guarda los votos de cada obra truncados PARA LAS ESTRELLAS
+
+
   // Aca va el request a la api, cada vez que cambian el limite y el offset vuelvo a hacer el request para esos valores
   useEffect(() => {
     const fetchObras = async () => {
@@ -59,6 +63,22 @@ export default function ObrasPublic() {
       }
     };
     fetchObras();
+
+    //Trunco el promedioVotos de obras
+    const truncPromedioVotos = obras.reduce((acc, obra) => {
+      acc[obra.esculturaId] = Math.trunc(obra.promedioVotos);
+
+      //corrijo si el promedio se pasa de 5 (por algun mongolico)
+      if(acc[obra.promedioVotos] > 5){
+        acc[obra.promedioVotos] = 5;
+      }
+
+      return acc;
+    }, {} as { [key: number]: number });
+    setVotos(truncPromedioVotos);
+
+
+    
   }, [currentPage, pageSize, edicion]);
 
   const handlePreviousPage = () => {
@@ -226,7 +246,7 @@ export default function ObrasPublic() {
                       <Box onClick={() => handleCardClick(obra.esculturaId)}>
                       <Text noOfLines={3}>{obra.descripcion}</Text>
                       <Text>Puntuacion:</Text>
-                      <Text>Dos estrellas</Text>
+                      <Text>{votos[obra.esculturaId]}</Text>
                       </Box>
                     </Box>
                   
