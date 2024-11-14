@@ -1,8 +1,8 @@
 const API_URL = 'http://localhost:5232';
 
-export const getProximosEventos = async () => {
+export const getProximosEventos = async (edicion: string) => {
     try {
-        const response = await fetch(`${API_URL}/Eventos/next`,
+        const response = await fetch(`${API_URL}/Eventos/next?AnioEdicion=${edicion}`,
             {
                 method: 'GET',
             }

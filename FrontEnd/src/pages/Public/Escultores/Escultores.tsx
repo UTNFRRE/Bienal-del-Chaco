@@ -21,14 +21,14 @@ interface Escultor {
   pais: string;
   foto: string;
 }
-
+/*
 const json: Escultor[] = [
   {
       id:1,
       nombre: "Juan",
       pais: "Argentina",
       foto: "https://www.bienaldelchaco.org/2024/wp-content/uploads/2024/04/Foto-Luis-Bernardi.png"
-  }];
+  }];*/
 
 function Escultoress () {
 
@@ -57,6 +57,8 @@ function Escultoress () {
     }, [edicion]);
 
   return (
+
+    
     <Container maxWidth="100vw" width="100vw" height="100vh" centerContent>
       <Grid
         templateColumns="repeat(auto-fit, minmax(250px, 1fr))"
@@ -118,7 +120,7 @@ function Escultoress () {
                 maxHeight={'27%'}
                 direction={'row'}
                 justifyContent={'space-between'}
-              >
+                onClick={() => handleCardClick(escultor.id)}>
                 <Stack direction={'column'}>
                   <Text
                     ml={'22px'}
