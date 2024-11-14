@@ -58,7 +58,8 @@ function TablaObras() {
   const [obraElegida, setObraElegida] = useState<Obra | null>(null);
   const [refresh, setRefresh] = useState(false);
   const {edicion} = useEdicion();
-
+  const [filter, setFilter] = useState('');
+  const [showInput, setShowInput] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(10); // Cantidad de obras por página
   const [totalPages, setTotalPages] = useState(2);
@@ -79,58 +80,29 @@ function TablaObras() {
     onClose: onCloseDelete,
   } = useDisclosure();
 
-  const [filters, setFilters] = useState({
-    id: '',
-    nombre: '',
-    tematica: '',
-    descripcion: '',
-    escultor: '',
-    fechaCreacion: '',
-    escultorPais: '',
-    escultorImagen: '',
-    imagenes: [''],
-  });
-
-  const [mostrarFiltros, setMostrarFiltros] = useState(false);
 
   //Modifique para conincide los tipos entre el file Obras y el tipo Obra
   useEffect(() => {
     const fetchObras = async () => {
       try {
-        const data = await getObras(currentPage, pageSize, edicion);
+        const data = await getObras(currentPage, pageSize, edicion, filter);
         console.log(data);
         setObras(data);
-        setFilteredObras(data);
       } catch (error) {
         console.error('Error en el fetch de obras:', error);
       }
     };
 
     fetchObras();
-  }, [refresh, currentPage, pageSize, edicion]);
-
-  // useEffect(() => {
-  //   setFilteredObras(
-  //     obras.filter((obra) =>
-  //       obra.id.toLowerCase().includes(filters.id.toLowerCase()) &&
-  //       obra.nombre.toLowerCase().includes(filters.nombre.toLowerCase()) &&
-  //       obra.descripcion.toLowerCase().includes(filters.descripcion.toLowerCase()) &&
-  //       obra.escultor.toLowerCase().includes(filters.escultor.toLowerCase())
-  //     )
-  //   );
-  // }, [filters, obras]);
-
-  // const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { name, value } = e.target;
-  //   setFilters({
-  //     ...filters,
-  //     [name]: value,
-  //   });
-  // };
+  }, [refresh, currentPage, pageSize, edicion, filter]);
 
   const handleDelete = (obra: Obra) => {
     setObraElegida(obra);
     onOpenDelete();
+  };
+
+  const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFilter(event.target.value);
   };
 
   const handleConfirmarDelete = async () => {
@@ -233,7 +205,7 @@ function TablaObras() {
   return (
     <>
       <Flex alignItems="center" flexDirection="column">
-        <Flex justifyContent="center" mb={4} mt={4} gap={4}>
+        <Flex justifyContent="center" w={"50%"} mb={4} mt={4} gap={4}>
           <Button
             variant="bienal"
             leftIcon={<AddIcon />}
@@ -242,14 +214,26 @@ function TablaObras() {
           >
             Agregar Obra
           </Button>
-          <Button
-            variant="bienal"
-            onClick={() => setMostrarFiltros(!mostrarFiltros)}
-            leftIcon={<SearchIcon />}
-            borderRadius={3}
-          >
-            {mostrarFiltros ? 'Ocultar Filtros' : 'Filtrar'}
-          </Button>
+          <IconButton
+          aria-label="Buscar"
+          icon={<SearchIcon />}
+          variant="bienal"
+          onClick={() => setShowInput(!showInput)}
+          />
+          {showInput && (
+          <Input
+            type="text"
+            value={filter}
+            onChange={handleFilterChange}
+            placeholder="Buscar por Titulo, Tematica o Descripcion..."
+            w={"60%"}
+            borderColor={"secundaryHover"}
+            borderWidth={1}
+            backgroundColor={"secundaryBg"}
+            variant={"outline"}
+            mb={4}
+          />
+          )}
         </Flex>
         <Box
           overflowX="auto"
@@ -269,39 +253,6 @@ function TablaObras() {
                 size="sm"
               >
                 <Thead>
-                  {/* {mostrarFiltros && (
-                    <Tr>
-                      <Th></Th>
-                      <Th>
-                        <Input
-                          variant='flushed'
-                          placeholder="Filtrar por título"
-                          name="titulo"
-                          value={filters.nombre}
-                          onChange={handleFilterChange}
-                        />
-                      </Th>
-                      <Th>
-                        <Input
-                          variant='flushed'
-                          placeholder="Filtrar por descripción"
-                          name="descripcion"
-                          value={filters.descripcion}
-                          onChange={handleFilterChange}
-                        />
-                      </Th>
-                      <Th>
-                        <Input
-                          variant='flushed'
-                          placeholder="Filtrar por Escultor"
-                          name="escultor"
-                          value={filters.escultor}
-                          onChange={handleFilterChange}
-                        />
-                      </Th>
-                      <Th></Th>
-                    </Tr>
-                  )} */}
 
                   <Tr mt={8}>
                     <Th textAlign="center" fontSize={15}>
@@ -322,7 +273,7 @@ function TablaObras() {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {filteredObras.map((obra, index) => (
+                  {obras.map((obra, index) => (
                     <Tr key={index} mt={1} mb={1} p={1}>
                       <Td
                         textAlign="center"

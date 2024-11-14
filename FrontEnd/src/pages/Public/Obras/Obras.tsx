@@ -55,7 +55,8 @@ export default function ObrasPublic() {
   useEffect(() => {
     const fetchObras = async () => {
       try {
-        const response = await getObras(currentPage, pageSize, edicion);
+        const filter=''
+        const response = await getObras(currentPage, pageSize, edicion, filter);
         setObras(response);
         setTotalCount(response.length);
       } catch (error) {
@@ -126,7 +127,7 @@ export default function ObrasPublic() {
          <Heading color={'#CDC2A5'} fontSize={45}> 
             Obras
          </Heading>
-         <Flex gap={3} mt={3}>
+         {/* <Flex gap={3} mt={3}>
           <Button
             variant="light"
           >
@@ -137,7 +138,7 @@ export default function ObrasPublic() {
           >
             Anteriores
           </Button>
-         </Flex>
+         </Flex> */}
          </Flex>
       </Box>
       {obras && (

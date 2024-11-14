@@ -43,15 +43,27 @@ const EventosDia: React.FC<{dia: Date | null}> = ({ dia }) => {
         day: 'numeric'
     });
 
+    function formatFecha(fecha: string) {
+        const date = new Date(fecha);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}-${month}-${year}`;
+    }
+    
+
     return (
         <Flex  direction={"column"}>
-        <Heading mb={4} mt={4} padding={2} fontSize={25}>Eventos del {formattedDate}</Heading>
+        <Heading mb={4} mt={4} padding={2} fontSize={25} color={'#0B192C'}>Eventos del {formattedDate}</Heading>
             <SimpleGrid columns={1} spacing={7}>
                 {eventos.length === 0 ? (<Text textAlign="center" fontSize="lg">No hay eventos este dia</Text>) : (
                 eventos.map((evento) => (
                     <Flex direction={"column"} key={evento.id} 
-                        bg={'secundary'} 
+                        marginLeft={"6%"}
+                        bg="linear-gradient(120deg, #b4b4b8 60%, #dfe1e6 80%)"
+                        //bg={'secundary'} 
                         p={4} 
+                        maxWidth={"85%"}
                         borderRadius={3} 
                         borderWidth={1} borderColor={'secundaryHover'}
                         sx={{
@@ -62,8 +74,8 @@ const EventosDia: React.FC<{dia: Date | null}> = ({ dia }) => {
                             },
                         }}
                         onClick={() => handleCardClick(evento.id)}>
-                        <Text color={"principal"} fontWeight={600} fontSize={30}>{evento.nombre}</Text>
-                        <Text fontSize={17}>{evento.fecha}</Text>
+                        <Text fontWeight={600} fontSize={30} color={'#0B192C'}>{evento.nombre}</Text>
+                        <Text fontSize={17}>{formatFecha(evento.fecha)}</Text>
                         <Text fontSize={17}>{evento.lugar}</Text>
                     </Flex> 
                 ))
