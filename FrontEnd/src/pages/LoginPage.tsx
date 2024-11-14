@@ -7,13 +7,53 @@ import {
   FormControl,
   Button,
   Link,
+  Spinner,
 } from '@chakra-ui/react';
 import ImagenFondo from '../components/icons/login2.png';
 import Logo from '../components/icons/pagina.png';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../LoginContexto';
+import { useToast } from '@chakra-ui/react';
+import { useState } from 'react';
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const { onLogin } = useAuth();
+  const [password, setPassword] = useState('');
+  const [account, setAccount] = useState('');
+  const showToast = useToast();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async () => {
+    // e.preventDefault();
+    setIsLoading(true);
+    try {
+      await onLogin(password, account); 
+      showToast({
+        title: 'Bienvenido',
+        description: 'Inicio de sesion exitoso',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
+    } catch (error) {
+      console.error('Network error', error);
+      showToast({
+        title: 'Error',
+        description: 'Inicio de sesion fallido',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    } finally {
+      setIsLoading(false);
+      if (account === 'admin@admin.com') {
+        navigate('/admin/escultores');
+      } else {
+        navigate('/user/escultores');
+      };
+    }
+  };
   return (
     <Box
       w="100vh"
@@ -96,9 +136,13 @@ export default function LoginPage() {
                     borderColor: '#003063',
                     boxShadow: 'none',
                   }}
+                  _autofill={{
+                    backgroundColor: 'black',
+                    color: 'white',
+                  }}
                   _hover={{ borderColor: '0f183f' }}
                   // value={username}
-                  // onChange={(e) => setUsername(e.target.value)}
+                  onChange={(e) => setAccount(e.target.value)}
                 />
                 <Input
                   borderRadius="3"
@@ -119,9 +163,13 @@ export default function LoginPage() {
                     borderColor: '#003063',
                     boxShadow: 'none',
                   }}
+                  _autofill={{
+                    backgroundColor: 'black',
+                    color: 'white',
+                  }}
                   _hover={{ borderColor: '0f183f' }}
                   // value={password}
-                  // onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </FormControl>
             </Box>
@@ -138,8 +186,9 @@ export default function LoginPage() {
               fontWeight="500"
               letterSpacing="1px"
               _hover={{ bg: '#747264' }}
+              onClick={handleSubmit}
             >
-              Acceder
+              {isLoading ? <Spinner size="sm" /> : 'Acceder'}
             </Button>
                 <Box
                 color="black"
