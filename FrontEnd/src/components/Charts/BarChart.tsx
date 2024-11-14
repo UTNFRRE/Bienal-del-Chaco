@@ -10,8 +10,7 @@ import {
 } from 'chart.js';
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 import { useState, useEffect } from 'react';
-import { getObras} from '../../API/Admin/Obras';
-import {useEdicion} from '../../EdicionContexto'
+
 
 
 interface Obra {
@@ -27,37 +26,24 @@ interface Obra {
     promedioVotos: number
 }
 
+interface BarChartProps {
+    dato: Obra[];
+}
 
-const BarChart = () => {
+
+const BarChart: React.FC <BarChartProps> = ({dato}) => {
     const [porcentaje, setPorcentaje] = useState<{ [key: number]: number }>({});
-    const [obras, setObras] = useState<Obra[]>([]);
-    const [refresh, setRefresh] = useState(false);
-    const [currentPage] = useState(1);
-    const [pageNumber] = useState(10);
-    const {edicion} = useEdicion();
+
+
 
     useEffect(() => {
-        const fetchObras = async () => {
-            try {
-                const datos = await getObras(currentPage, pageNumber, edicion);
-                setObras(datos);
-                setRefresh(!refresh);
-            } catch (error) {
-                console.log("error al solicitar obras", error);
-            }
-        };
-        fetchObras();
-    },[edicion,])
-
-    useEffect(() => {
-        const totalVotes = obras.reduce((sum, item) => sum + item.promedioVotos, 0);
-        const porcentajes = obras.reduce((acc, item) => {
+        const totalVotes = dato.reduce((sum, item) => sum + item.promedioVotos, 0);
+        const porcentajes = dato.reduce((acc, item) => {
             acc[item.esculturaId] = (item.promedioVotos / totalVotes) * 100;
             return acc;
         }, {} as { [key: number]: number });
         setPorcentaje(porcentajes);
-        setRefresh(!refresh);
-    }, [refresh,edicion,]);
+    }, [dato]);
 
     // Definir las opciones del gráfico
     const options = {
@@ -79,11 +65,11 @@ const BarChart = () => {
 
     // Datos para el gráfico
     const data = {
-        labels: obras.map((item) => item.nombre),
+        labels: dato.map((item) => item.nombre),
         datasets: [
             {
                 label: 'Bienal edicion 2019',
-                data: obras.map((item) => porcentaje[item.esculturaId]),
+                data: dato.map((item) => porcentaje[item.esculturaId]),
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',

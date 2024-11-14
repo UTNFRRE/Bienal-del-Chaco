@@ -1,8 +1,6 @@
 import { Table, Thead, Tbody, Tr, Th, Td } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 
-import {useEdicion} from '../../EdicionContexto'
-import { getObras } from '../../API/Admin/Obras';
 
 
 interface Obra {
@@ -18,47 +16,32 @@ interface Obra {
     promedioVotos: number
 }
 
-const DataTable = ( ) => {
+interface DataTableProps{
+    data: Obra[];
+}
+
+const DataTable : React.FC<DataTableProps> = ({data} ) => {
     // Define los datos que se van a mostrar en la tabla
     const [porcentaje,setPorcentaje] = useState <{[key:number]: number}> ({});
-    const [Obras, setObras] = useState<Obra[]>([]);
-    const [sortedObras, setSortedObras] = useState(Obras);
+    const [sortedObras, setSortedObras] = useState(data);
     const [refresh, setRefresh] = useState(false);
-    const [currentPage] = useState(1);
-    const [pageNumber] = useState(10);
-    const {edicion} = useEdicion();
-
-    //Llamada a la API para obtener los datos de las obras
-    useEffect(() => {
-        const fetchObras = async () => {
-            try{
-                const datos = await getObras(currentPage, pageNumber, edicion);
-                console.log(datos);
-                setObras(datos);
-                setRefresh(!refresh);
-            } catch(error){
-                console.log("error al solicitar obras",error);
-            }
-        };
-        fetchObras();
-        
-    }, [edicion,]);
-
+    
 
     useEffect(() => {
         // Ordenar las obras de mayor a menor según su cantidad de votos
-        const sorted = [...Obras].sort((a, b) => b.promedioVotos - a.promedioVotos);
+        const sorted = [...data].sort((a, b) => b.promedioVotos - a.promedioVotos);
         setSortedObras(sorted);
+        setRefresh(!refresh);
+    }, [data]);
 
+    useEffect(() => {
         const totalVotes = sortedObras.reduce((sum, item)=> sum + item.promedioVotos, 0);
         const porcentajes = sortedObras.reduce((acc, item)=>{
             acc[item.esculturaId] = (item.promedioVotos / totalVotes) * 100;
             return acc;
         }, {} as {[key: number]: number});
-        setPorcentaje(porcentajes);
-        setRefresh(!refresh);
-    }, [edicion,refresh,]);
-
+        setPorcentaje(porcentajes)
+    }, [refresh]);
     return (
         <Table size="sm">
             <Thead>
@@ -69,7 +52,7 @@ const DataTable = ( ) => {
                 </Tr>
             </Thead>
             <Tbody>
-                {Obras.length === 0 ? (
+                {data.length === 0 ? (
                     <Tr>
                         <Td colSpan={3} textAlign="center">No hay esculturas</Td>
                     </Tr>
@@ -84,13 +67,14 @@ const DataTable = ( ) => {
                         ))}
                         <Tr>
                             <Td>Total</Td>
-                            <Td>{Obras.reduce((sum, item) => sum + item.promedioVotos, 0)}</Td>
+                            <Td>{data.reduce((sum, item) => sum + item.promedioVotos, 0)}</Td>
                             <Td>100</Td>
                         </Tr>
                     </>
                 )}
             </Tbody>
         </Table>
+
     );
 }
 

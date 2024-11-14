@@ -1,28 +1,49 @@
 const obras = [
-    // Edición 2019
     {
-        "id": 1,
-        "fotos": "https://example.com/obra1_foto1.jpg",
-        "nombreObra": "Obra 1",
-        "PromedioPuntuacion": 3,
-        "edicion": 2019
+        "esculturaId": 1,
+        "nombre": "Escultura 1",
+        "tematica": "Abstracto",
+        "descripcion": "Una escultura abstracta de gran tamaño.",
+        "escultorId": 101,
+        "fechaCreacion": "2019-01-15",
+        "esculturNombre": "Juan Pérez",
+        "escultorPais": "España",
+        "imagenes": [
+            "https://example.com/escultura1_foto1.jpg",
+            "https://example.com/escultura1_foto2.jpg"
+        ],
+        "promedioVotos": 4.2
     },
     {
-        "id": 2,
-        "fotos": "https://example.com/obra2_foto1.jpg",
-        "nombreObra": "Obra 2",
-        "PromedioPuntuacion": 4,
-        "edicion": 2019
+        "esculturaId": 2,
+        "nombre": "Escultura 2",
+        "tematica": "Figurativo",
+        "descripcion": "Una escultura figurativa de bronce.",
+        "escultorId": 102,
+        "fechaCreacion": "2020-05-20",
+        "esculturNombre": "María López",
+        "escultorPais": "México",
+        "imagenes": [
+            "https://example.com/escultura2_foto1.jpg",
+            "https://example.com/escultura2_foto2.jpg"
+        ],
+        "promedioVotos": 4.8
     },
     {
-        "id": 3,
-        "fotos": "https://example.com/obra3_foto1.jpg",
-        "nombreObra": "Obra 3",
-        "PromedioPuntuacion": 4.5,
-        "edicion": 2019
-    },
-    
-    
+        "esculturaId": 3,
+        "nombre": "Escultura 3",
+        "tematica": "Minimalista",
+        "descripcion": "Una escultura minimalista de mármol.",
+        "escultorId": 103,
+        "fechaCreacion": "2018-11-10",
+        "esculturNombre": "Carlos García",
+        "escultorPais": "Argentina",
+        "imagenes": [
+            "https://example.com/escultura3_foto1.jpg",
+            "https://example.com/escultura3_foto2.jpg"
+        ],
+        "promedioVotos": 4.5
+    }
 ];
 
 export default obras;

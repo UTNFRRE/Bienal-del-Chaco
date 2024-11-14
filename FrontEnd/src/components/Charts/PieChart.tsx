@@ -1,9 +1,7 @@
 
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, Tooltip, ArcElement, Title} from 'chart.js';
-import {getObras} from '../../API/Admin/Obras';
-import { useEffect,useState } from 'react';
-import {useEdicion} from '../../EdicionContexto'
+
 
 // Registramos los elementos necesarios para Chart.js
 ChartJS.register(Tooltip, ArcElement, Title);
@@ -21,26 +19,12 @@ interface Obras {
     promedioVotos: number
 }
 
-const PieChart = () => {
+interface PieChartProps {
+    dato: Obras[];
+}
 
-    const [obras, setObras] = useState<Obras[]>([]);
-    const [refresh, setRefresh] = useState(false);
-    const [currentPage] = useState(1);
-    const [pageNumber] = useState(10);
-    const {edicion} = useEdicion();
+const PieChart: React.FC<PieChartProps> = ({dato}) => {
 
-    useEffect(()=>{
-        const fecthObras = async () => {
-            try{
-                const datos = await getObras(currentPage, pageNumber, edicion);
-                setObras(datos);
-                setRefresh(!refresh);
-            } catch(error){
-                console.log("error al solicitar obras",error);
-            }
-        };
-        fecthObras();
-    },[edicion,refresh,]);
 
     const options = {
         responsive: true, // Hace que el gráfico sea responsive
@@ -56,11 +40,11 @@ const PieChart = () => {
     };
 
     const data = {
-        labels: obras.map((item) => item.nombre),
+        labels: dato.map((item) => item.nombre),
         datasets: [
             {
                 label: 'Votos',
-                data: obras.map((item) => item.promedioVotos),
+                data: dato.map((item) => item.promedioVotos),
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
