@@ -4,6 +4,7 @@ import Boton from '../components/Vote/Button';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getObraById } from '../API/Admin/Obras';
+import { addVoto } from '../API/Public/Votacion';
 
 interface Obra {
     esculturaId: number;
@@ -24,7 +25,6 @@ function Voted() {
     const [obra, setObra] = useState<Obra | null>(null);
     const [puntaje, setPuntaje] = useState<number>(0);
 
-
     useEffect(() => {
         const fetchObraById = async (id?: string) => {
             try {
@@ -43,9 +43,19 @@ function Voted() {
         setPuntaje(rating);
     };
 
-    const handlePuntuacion = () => {
-        console.log("Puntaje Votacion:", puntaje);
-        console.log(obra);
+    const handlePuntuacion = async () => {
+        // Verificación de valores antes de hacer la llamada
+        if (!userId || !obra?.esculturaId || puntaje === 0) {
+            console.error("Faltan valores para la votación:", { userId, esculturaId: obra?.esculturaId, puntaje });
+            return; // Salir si falta algún valor
+        }
+
+        try {
+            await addVoto(userId, obra.esculturaId, puntaje);
+            console.log("Voto registrado correctamente");
+        } catch (error) {
+            console.error('Error en el envío de la votación:', error);
+        }
     };
 
     return (
@@ -75,7 +85,7 @@ function Voted() {
                     flexDirection="column"
                     justifyContent="space-around"
                 >
-                    {obra && <Card data={obra} />} {/* Renderiza Card solo si obra tiene un valor */}
+                    {obra && <Card data={obra} />}
                     <Box display="flex" alignItems="center" justifyContent="space-between" flexDirection="column" width="30%" height="15%">
                         <Boton onRatingChange={handlePuntajeChange} />
                         <Button
