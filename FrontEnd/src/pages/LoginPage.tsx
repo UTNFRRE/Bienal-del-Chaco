@@ -11,9 +11,42 @@ import {
 import ImagenFondo from '../components/icons/login2.png';
 import Logo from '../components/icons/pagina.png';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../LoginContexto';
+import { useToast } from '@chakra-ui/react';
+import { useState } from 'react';
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const { onLogin } = useAuth();
+  const [password, setPassword] = useState('');
+  const [account, setAccount] = useState('');
+  const showToast = useToast();
+
+  const handleSubmit = async () => {
+    // e.preventDefault();
+    // setIsLoading(true);
+    try {
+      await onLogin(password, account); 
+      showToast({
+        title: 'Bienvenido',
+        description: 'Inicio de sesion exitoso',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
+    } catch (error) {
+      console.error('Network error', error);
+      showToast({
+        title: 'Error',
+        description: 'Inicio de sesion fallido',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    } finally {
+      // setIsLoading(false);
+    }
+  };
   return (
     <Box
       w="100vh"
@@ -98,7 +131,7 @@ export default function LoginPage() {
                   }}
                   _hover={{ borderColor: '0f183f' }}
                   // value={username}
-                  // onChange={(e) => setUsername(e.target.value)}
+                  onChange={(e) => setAccount(e.target.value)}
                 />
                 <Input
                   borderRadius="3"
@@ -121,7 +154,7 @@ export default function LoginPage() {
                   }}
                   _hover={{ borderColor: '0f183f' }}
                   // value={password}
-                  // onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </FormControl>
             </Box>
@@ -138,6 +171,7 @@ export default function LoginPage() {
               fontWeight="500"
               letterSpacing="1px"
               _hover={{ bg: '#747264' }}
+              onClick={handleSubmit}
             >
               Acceder
             </Button>
