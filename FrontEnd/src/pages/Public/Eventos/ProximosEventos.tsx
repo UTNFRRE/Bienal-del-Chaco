@@ -3,6 +3,7 @@ import { Flex, Heading, SimpleGrid, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getProximosEventos } from '../../../API/Public/EventosPu';
+import { useEdicion } from '../../../EdicionContexto';
 
 interface Evento {
     id: number,
@@ -16,18 +17,19 @@ interface Evento {
 export const ProximosEventos = () => {
   const [eventos, setEventos] = useState<Evento[]>([]); // Array de eventos
   const navigate = useNavigate();
+  const {edicion} = useEdicion();
 
     useEffect(() => {
         const fetchEventos = async () => {
             try {
-                const eventosData = await getProximosEventos(); // Obtener eventos desde la API
+                const eventosData = await getProximosEventos(edicion); // Obtener eventos desde la API
                 setEventos(eventosData);
             } catch (error) {
                 console.error('Error al cargar los eventos:', error);
             }
         };
         fetchEventos();
-    }, []);
+    }, [edicion]);
 
 
   const handleCardClick = (id: number) => {
@@ -35,7 +37,7 @@ export const ProximosEventos = () => {
   };
 
   return (
-    <Flex direction={'column'}>
+    <Flex direction={'column'} ml={10}>
       <Heading mb={4} mt={4}>
         Proximos Eventos
       </Heading>
