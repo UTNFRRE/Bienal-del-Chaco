@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5232';
+const API_URL = 'https://bienalbackapi.azurewebsites.net';
 
 //Obtenemos todos los escultores
 export const getEscultores = async (edicion: string) => {
