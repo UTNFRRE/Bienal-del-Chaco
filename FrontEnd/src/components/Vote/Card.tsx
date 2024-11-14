@@ -9,10 +9,10 @@ interface Obra {
     fechaCreacion: string;
     esculturNombre: string;
     escultorPais: string;
-    imagenes: string[];
+    imagenes: string;
     promedioVotos: number;
 }
-
+import {Image} from '@chakra-ui/react'
 interface ObraProp {
     data: Obra;
 }
@@ -22,7 +22,14 @@ const Card: React.FC<ObraProp> = ({ data }) => {
         <div className="card">
             <div className="card_form">
                 <span>{data.esculturNombre}</span>
-                <img src={data.imagenes[0]} alt="Obra" /> {/* Sin comillas alrededor de `data.imagenes[0]` */}
+                <Image
+                src={data.imagenes}
+                boxSize="90px"
+                borderRadius="full"
+                borderWidth={1}
+                borderColor="azul"
+                borderStyle="solid"
+              />
             </div>
             <div className="card_data">
                 <div style={{ display: 'flex' }} className="data">

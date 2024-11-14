@@ -14,7 +14,7 @@ interface Obra {
     fechaCreacion: string;
     esculturNombre: string;
     escultorPais: string;
-    imagenes: string[];
+    imagenes: string;
     promedioVotos: number;
 }
 
