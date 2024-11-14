@@ -2,10 +2,10 @@ const API_URL = 'http://localhost:5232';
 import { useEdicion } from "../../EdicionContexto";
 
 // Obtener todas las obras
-export const getObras = async (currentPage: number, pageSize: number, edicion:string) => {
+export const getObras = async (currentPage: number, pageSize: number, edicion:string, busqueda: string) => {
   try {
     const response = await fetch(
-      `${API_URL}/Esculturas/GetAll?pageNumber=${currentPage}&pageSize=${pageSize}&AnioEdicion=${edicion}`
+      `${API_URL}/Esculturas/GetAll?pageNumber=${currentPage}&pageSize=${pageSize}&AnioEdicion=${edicion}&busqueda=${busqueda}`
     );
     if (response.ok) {
       const data = await response.json();

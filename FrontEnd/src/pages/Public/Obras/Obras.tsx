@@ -105,7 +105,7 @@ export default function ObrasPublic() {
          <Heading color={'#CDC2A5'} fontSize={45}>
             Obras
          </Heading>
-         <Flex gap={3} mt={3}>
+         {/* <Flex gap={3} mt={3}>
           <Button
             variant="light"
           >
@@ -116,7 +116,7 @@ export default function ObrasPublic() {
           >
             Anteriores
           </Button>
-         </Flex>
+         </Flex> */}
          </Flex>
       </Box>
       {obras && (
