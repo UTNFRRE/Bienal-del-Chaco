@@ -19,6 +19,7 @@ import {
 import { useEffect, useState } from 'react';
 import DropZone from '../ZonaCarga/ZonaCarga';
 import { getEscultores } from '../../API/Admin/Obras';
+import { useEdicion } from '../../EdicionContexto';
 
 interface Escultor {
   id: number;
@@ -52,6 +53,7 @@ function ModificarObra({ isOpen, onClose, confirmar, obra }: ModalProps) {
   const [descripcion, setDescripcion] = useState('');
   const [fecha, setFecha] = useState('');
   const [Escultoress, setEscultoress] = useState<Escultor[]>([]);
+  const {edicion} = useEdicion();
 
   const handleConfirmar = () => {
     confirmar(
@@ -88,7 +90,7 @@ function ModificarObra({ isOpen, onClose, confirmar, obra }: ModalProps) {
     }
     const fetchEscultores = async () => {
       try {
-        const data = await getEscultores();
+        const data = await getEscultores(edicion);
         setEscultoress(data);
         const nombresEscultores = Escultoress.map((escultor) => ({
           id: escultor.id,

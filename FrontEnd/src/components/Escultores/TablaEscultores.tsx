@@ -19,6 +19,8 @@ import { useDisclosure } from '@chakra-ui/react';
 import ModalConfirmar from '../Modal/ConfirmarCambios';
 import ModalAgregarEscultor from '../Modal/AgregarEscultor';
 import ModalEditarEscultor from '../Modal/EditarEscultor';
+import { ArrowLeftIcon, ArrowRightIcon } from '@chakra-ui/icons';
+import { useEdicion } from '../../EdicionContexto';
 
 import {
   getEscultor,
@@ -27,22 +29,28 @@ import {
   editEscultor,
 } from '../../API/Admin/Escultores';
 
+
 interface Escultor {
-  id: number;
+  escultorId: string;
   nombre: string;
   fechaNacimiento: string;
   lugarNacimiento: string;
   premios: string;
-  foto: string;
   pais: string;
-  contacto: string;
+  telefono:string;
+  foto: string ;
 }
 
 function TablaEscultores() {
-  const [escultores, setEscultores] = useState<Escultor[]>([]);
-  const [filteredEscultor, setFilteredEscultor] = useState<Escultor[]>([]);
-  const [EscultorElegido, setEscultorElegido] = useState<Escultor>();
+  const [Escultores, setEscultores] = useState<Escultor[]>([]);
+  const [EscultorElegido, setEscultorElegido] = useState<Escultor| null>(null);
   const [refresh, setRefresh] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize] = useState(10); // Cantidad de obras por página
+  const [totalPages, setTotalPages] = useState(2);
+  const [filter, setFilter] = useState('');
+  const [showInput, setShowInput] = useState(false);
+  const {edicion} = useEdicion();
 
   // isopen, onopen y onclose son funciones que se usan para abrir y cerrar cada modal
   const {
@@ -61,54 +69,35 @@ function TablaEscultores() {
     onClose: onCloseEdit,
   } = useDisclosure();
 
-  const [filters, setFilters] = useState({
-    foto: '',
-    nombre: '',
-    pais: '',
-    contacto: '',
-    fechaNacimiento: '',
-    lugarNacimiento: '',
-    premios: '',
-  });
-  const [MostrarFiltros, setMostrarFiltros] = useState(false);
 
   useEffect(() => {
     const fetchEscultores = async () => {
       try {
-        const data = await getEscultor();
+        const data = await getEscultor(currentPage, pageSize, filter, edicion);
         console.log(data);
         setEscultores(data);
-        setFilteredEscultor(data);
       } catch (error) {
         console.error('Error en el fetch de escultores:', error);
       }
     };
 
     fetchEscultores();
-  }, [refresh]);
+  }, [refresh, currentPage, pageSize, filter, edicion]);
 
-  //  useEffect(() => {
-  //    setFilteredEscultor(
-  //      escultores.filter(escultor =>
-  //          escultor.foto.toLowerCase().includes(filters.foto.toLowerCase()) &&
-  //          escultor.nombre.toLowerCase().includes(filters.nombre.toLowerCase()) &&
-  //          escultor.pais.toLowerCase().includes(filters.pais.toLowerCase()) &&
-  //          escultor.contacto.toLowerCase().includes(filters.contacto.toLowerCase()) &&
-  //          escultor.fechaNacimiento.toLowerCase().includes(filters.fechaNacimiento.toLowerCase()) &&
-  //          escultor.lugarNacimiento.toLowerCase().includes(filters.lugarNacimiento.toLowerCase()) &&
-  //          (Array.isArray(escultor.premios) ? escultor.premios.join(', ') :
-  //          (escultor.premios || '')).toLowerCase().includes(filters.premios.toLowerCase())
-  //      )
-  //      );
-  //  }, [filters, escultores]);
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
-  // funcion para manejar los cambios en los filtros
-  const handleFilterChange = (e: any) => {
-    const { name, value } = e.target;
-    setFilters({
-      ...filters,
-      [name]: value,
-    });
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFilter(event.target.value);
   };
 
   const handleDelete = (escultor: Escultor) => {
@@ -116,56 +105,48 @@ function TablaEscultores() {
     onOpenDelete();
   };
 
-  //const handleConfirmarDelete = async () => {
-  //    setEscultores((prevEscultores) =>
-  //        prevEscultores.filter((m) => m !== EscultorElegido)
-  //     );
-
-  //    onCloseDelete();
+  // const handleConfirmarDelete = async () => {
+  //   if (!EscultorElegido || EscultorElegido.EscultorId === undefined) {
+  //     console.error('EscultorElegido o EscultorId no está definido');
+  //     return;
+  //   }
+  //   try {
+  //     await deleteEscultor(EscultorElegido.EscultorId);
+  //     setRefresh(!refresh);
+  //   } catch (error) {
+  //     console.error('Error en el fetch de escultores:', error);
+  //   } finally {
+  //     onCloseDelete();
+  //   }
   // };
 
   const handleConfirmarDelete = async () => {
     const DeleteEscultor = async () => {
       try {
         if (EscultorElegido) {
-          await deleteEscultor(EscultorElegido.id.toString());
+          await deleteEscultor(EscultorElegido.escultorId);
           setRefresh(!refresh);
         }
       } catch (error) {
         console.error('Error en el fetch de escultores:', error);
       }
-    };
-    DeleteEscultor();
-    onCloseDelete();
   };
-
-  // const handleConfirmarAdd = async (foto:string, nombre:string, pais:string, contacto:string, fechaNacimiento:string, lugarNacimiento:string, premios:string) => {
-  // Aca se hace el llamado a la funcion de la api que agrega un escultor
-  // Agregar el escultor al json
-  //setEscultores((prevEscultores) => [
-  //  ...prevEscultores,
-  //  {
-  //      foto: foto,
-  //      nombre: nombre,
-  //      pais: pais,
-  //      contacto: contacto,
-  //      fechaNacimiento: fechaNacimiento,
-  //      lugarNacimiento: lugarNacimiento,
-  //      premios: premios,
-  //  },
-  //  ]);
-  //  onCloseAdd();
-  //    };
+  DeleteEscultor();
+  onCloseDelete();
+  };
 
   const handleConfirmarAdd = async (
     nombre: string,
-    foto: File,
-    Pais: string,
-    contacto: string
+    fechaNacimiento: string,
+    lugarNacimiento: string,
+    premios: string,
+    pais: string,
+    telefono: string,
+    foto : File,
   ) => {
     const PostEscultor = async () => {
       try {
-        await addEscultor(nombre, foto, Pais, contacto);
+        await addEscultor(nombre, pais, telefono, fechaNacimiento, lugarNacimiento, premios, edicion, foto);
         setRefresh(!refresh);
       } catch (error) {
         console.error('Error en el fetch de escultores:', error);
@@ -175,7 +156,7 @@ function TablaEscultores() {
     onCloseAdd();
   };
 
-  const handleEditar = (escultor: any) => {
+  const handleEditar = (escultor: Escultor) => {
     setEscultorElegido(escultor);
     onOpenEdit();
   };
@@ -203,24 +184,37 @@ function TablaEscultores() {
   //   };
 
   const handleConfirmarEdit = async (
-    Nombre: string,
+    nombre: string,
     fechaNacimiento: string,
     lugarNacimiento: string,
     premios: string,
-    obras: string,
-    foto: File | string
-  ) => {
+    pais: string,
+    telefono: string,
+    foto : string | File,
+  ): Promise<void> => {
     const PutEscultor = async () => {
       try {
         if (EscultorElegido) {
           await editEscultor(
-            EscultorElegido.id.toString(),
-            Nombre,
+            EscultorElegido.escultorId,
+            nombre,
+            pais,
+            telefono,
             fechaNacimiento,
             lugarNacimiento,
             premios,
-            obras,
-            foto
+            edicion,
+            foto,
+          );
+          
+          const fotoUrl = typeof foto === 'string' ? foto : foto.name;
+
+          setEscultores(prevEscultores =>
+            prevEscultores.map(escultor =>
+              escultor.escultorId === EscultorElegido.escultorId
+                ? { ...escultor, nombre, pais, telefono, fechaNacimiento, lugarNacimiento, premios, foto:fotoUrl }
+                : escultor
+            )
           );
         }
       } catch (error) {
@@ -231,10 +225,53 @@ function TablaEscultores() {
     onCloseEdit();
   };
 
+  // const handleConfirmarEdit = async (
+  //   nombre: string,
+  //   fechaNacimiento: string,
+  //   lugarNacimiento: string,
+  //   premios: string,
+  //   pais: string,
+  //   telefono: string,
+  //   foto: string | File,
+  // ): Promise<void> => {
+  //   const PutEscultor = async () => {
+  //     try {
+  //       if (EscultorElegido) {
+  //         const updatedEscultor = await editEscultor(
+  //           EscultorElegido.escultorId,
+  //           nombre,
+  //           pais,
+  //           telefono,
+  //           fechaNacimiento,
+  //           lugarNacimiento,
+  //           premios,
+  //           edicion,
+  //           foto,
+  //         );
+  
+  //         const nuevaFoto = typeof foto === 'string' ? foto : updatedEscultor.fotoUrl;
+  
+  //         setEscultores(prevEscultores =>
+  //           prevEscultores.map(escultor =>
+  //             escultor.escultorId === EscultorElegido.escultorId
+  //               ? { ...escultor, nombre, pais, telefono, fechaNacimiento, lugarNacimiento, premios, foto: nuevaFoto }
+  //               : escultor
+  //           )
+  //         );
+  //         setRefresh(!refresh); 
+  //       }
+  //     } catch (error) {
+  //       console.error('Error en el fetch de escultores:', error);
+  //     }
+  //   };
+  //   PutEscultor();
+  //   onCloseEdit();
+  // };
+
   return (
     <>
       <Flex alignItems="center" justifyContent="center" flexDirection="column">
-        <Flex justifyContent="center" mb={4} mt={4} gap={4}>
+        <Flex justifyContent="center" mb={4} mt={4} gap={4} w={"50%"}>
           <Button
             variant="bienal"
             leftIcon={<AddIcon />}
@@ -243,99 +280,43 @@ function TablaEscultores() {
           >
             Agregar Escultor
           </Button>
-          <Button
-            variant="bienal"
-            onClick={() => setMostrarFiltros(!MostrarFiltros)}
-            leftIcon={<SearchIcon />}
-            borderRadius={3}
-          >
-            {MostrarFiltros ? 'Ocultar Filtros' : 'Filtrar'}
-          </Button>
+          <IconButton
+          aria-label="Buscar"
+          icon={<SearchIcon />}
+          variant="bienal"
+          onClick={() => setShowInput(!showInput)}
+          />
+          {showInput && (
+          <Input
+            type="text"
+            value={filter}
+            onChange={handleFilterChange}
+            placeholder="Buscar por Nombre y Apellido, DNI o Pais..."
+            w={"60%"}
+            borderColor={"secundaryHover"}
+            borderWidth={1}
+            backgroundColor={"secundaryBg"}
+            variant={"outline"}
+            mb={4}
+          />
+          )}
         </Flex>
         <Box
           bg="secundaryBg"
           p={5}
           boxShadow="md"
-          w="87%"
+          w="80%"
           borderWidth={1}
           borderColor={'secundaryHover'}
         >
-          {escultores.length > 0 ? (
+          {Escultores.length > 0 ? (
             <Box overflowX="auto" w={'100%'}>
               <Table
                 style={{ width: '100%' }}
                 colorScheme="secundaryBg"
                 width="100%"
               >
-                {' '}
-                {/*variant="striped"*/}
                 <Thead>
-                  {/* Si MostrarFiltros es verdadero entonces... */}
-                  {MostrarFiltros && (
-                    <Tr>
-                      <Th></Th>
-                      <Th>
-                        <Input
-                          variant="flushed"
-                          fontSize={13}
-                          placeholder="Filtrar por nombre"
-                          name="nombre"
-                          value={filters.nombre}
-                          onChange={handleFilterChange}
-                        />
-                      </Th>
-                      <Th>
-                        <Input
-                          variant="flushed"
-                          fontSize={13}
-                          placeholder="Filtrar por pais"
-                          name="pais"
-                          value={filters.pais}
-                          onChange={handleFilterChange}
-                        />
-                      </Th>
-                      <Th>
-                        <Input
-                          variant="flushed"
-                          fontSize={13}
-                          placeholder="Filtrar por contacto"
-                          name="contacto"
-                          value={filters.contacto}
-                          onChange={handleFilterChange}
-                        />
-                      </Th>
-                      <Th>
-                        <Input
-                          variant="flushed"
-                          fontSize={13}
-                          placeholder="Filtrar por fechaNacimiento"
-                          name="fechaNacimiento"
-                          value={filters.fechaNacimiento}
-                          onChange={handleFilterChange}
-                        />
-                      </Th>
-                      <Th>
-                        <Input
-                          variant="flushed"
-                          fontSize={13}
-                          placeholder="Filtrar por lugarNacimiento"
-                          name="lugarNacimiento"
-                          value={filters.lugarNacimiento}
-                          onChange={handleFilterChange}
-                        />
-                      </Th>
-                      <Th>
-                        <Input
-                          variant="flushed"
-                          fontSize={13}
-                          placeholder="Filtrar por premios"
-                          name="premios"
-                          value={filters.premios}
-                          onChange={handleFilterChange}
-                        />
-                      </Th>
-                    </Tr>
-                  )}
                   <Tr mt={8}>
                     <Th p={2} textAlign="center" fontSize={13} width="10%">
                       Foto
@@ -364,7 +345,7 @@ function TablaEscultores() {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {filteredEscultor.map((escultor, index) => (
+                  {Escultores.map((escultor, index) => (
                     <Tr key={index}>
                       <Td p={2} textAlign="center">
                         <Image
@@ -384,7 +365,7 @@ function TablaEscultores() {
                         {escultor.pais}
                       </Td>
                       <Td p={2} textAlign="center" fontSize={14}>
-                        {escultor.contacto}
+                        {escultor.telefono}
                       </Td>
                       <Td p={2} textAlign="center" fontSize={14}>
                         {escultor.fechaNacimiento}
@@ -426,7 +407,27 @@ function TablaEscultores() {
             <Text>No hay datos disponibles</Text>
           )}
         </Box>
-      </Flex>
+          <Box w={'80%'}>
+              <Flex justifyContent="flex-end" mt={4} gap={1}>
+                <IconButton
+                  aria-label="Previous Page"
+                  icon={<ArrowLeftIcon />}
+                  variant="bienal"
+                  borderRadius={3}
+                  onClick={() => handlePreviousPage()}
+                  isDisabled={currentPage === 1}
+                />
+                <IconButton
+                  aria-label="Next Page"
+                  icon={<ArrowRightIcon />}
+                  variant="bienal"
+                  borderRadius={3}
+                  onClick={() => handleNextPage()}
+                  isDisabled={currentPage === totalPages}
+                />
+              </Flex>
+            </Box>
+        </Flex>
       {/* Al final del flex principal se agregan las tags de los modal */}
       <ModalConfirmar
         isOpen={isOpenDelete}

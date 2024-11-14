@@ -2,7 +2,7 @@
   width: 700px;
   height: auto;
   max-width: 100%;
-  background: #f4f6ff;
+  background: #dfe1e6;
   border: 1px solid #a0a096;
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.125em;
@@ -153,13 +153,13 @@
 }
 
 .react-calendar__tile--active {
-  background: #084b8d;
+  background: #0B192C;
   color: white;
 }
 
 .react-calendar__tile--active:enabled:hover,
 .react-calendar__tile--active:enabled:focus {
-  background: #084b8d;
+  background: #0B192C;
 }
 
 .react-calendar--selectRange .react-calendar__tile--hover {

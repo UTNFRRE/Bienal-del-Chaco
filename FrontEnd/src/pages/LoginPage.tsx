@@ -6,16 +6,54 @@ import {
   Heading,
   FormControl,
   Button,
+  Link,
+  Spinner,
 } from '@chakra-ui/react';
 import ImagenFondo from '../components/icons/login2.png';
 import Logo from '../components/icons/pagina.png';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../LoginContexto';
+import { useToast } from '@chakra-ui/react';
+import { useState } from 'react';
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const handleLogin = () => {
-    // Aquí puedes agregar la lógica de autenticación si es necesario
-    navigate('/admin/eventos');
+  const { onLogin } = useAuth();
+  const [password, setPassword] = useState('');
+  const [account, setAccount] = useState('');
+  const showToast = useToast();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async () => {
+    // e.preventDefault();
+    setIsLoading(true);
+    try {
+      await onLogin(password, account); 
+      showToast({
+        title: 'Bienvenido',
+        description: 'Inicio de sesion exitoso',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
+    } catch (error) {
+      console.error('Network error', error);
+      showToast({
+        title: 'Error',
+        description: 'Inicio de sesion fallido',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    } finally {
+      setIsLoading(false);
+      if (account === 'admin@admin.com') {
+        navigate('/admin/escultores');
+      } else {
+        navigate('/user/escultores');
+      };
+    }
+
   };
   return (
     <Box
@@ -99,9 +137,13 @@ export default function LoginPage() {
                     borderColor: '#003063',
                     boxShadow: 'none',
                   }}
+                  _autofill={{
+                    backgroundColor: 'black',
+                    color: 'white',
+                  }}
                   _hover={{ borderColor: '0f183f' }}
                   // value={username}
-                  // onChange={(e) => setUsername(e.target.value)}
+                  onChange={(e) => setAccount(e.target.value)}
                 />
                 <Input
                   borderRadius="3"
@@ -122,19 +164,23 @@ export default function LoginPage() {
                     borderColor: '#003063',
                     boxShadow: 'none',
                   }}
+                  _autofill={{
+                    backgroundColor: 'black',
+                    color: 'white',
+                  }}
                   _hover={{ borderColor: '0f183f' }}
                   // value={password}
-                  // onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </FormControl>
             </Box>
+            <Box flexDirection={'column'} w={'100%'}>
             <Button
               fontSize="15px"
               type="submit"
               bg="#3C3D37"
               w="100%"
               h="42"
-              // mt="18%"
               color="white"
               borderWidth={1}
               borderColor="white"
@@ -142,9 +188,24 @@ export default function LoginPage() {
               letterSpacing="1px"
               onClick={handleLogin}
               _hover={{ bg: '#747264' }}
+              onClick={handleSubmit}
             >
-              Acceder
+              {isLoading ? <Spinner size="sm" /> : 'Acceder'}
             </Button>
+                <Box
+                color="black"
+                fontSize="15px"
+                fontWeight="500"
+                letterSpacing="1px"
+                textAlign="center"
+                mt="5%"
+                textDecoration="underline"
+                _hover={{ color: '#747264' }}
+                onClick={() => navigate('/registro')}
+                >
+                Registrarse
+                </Box>
+            </Box>
           </Flex>
         </Flex>
       </Box>

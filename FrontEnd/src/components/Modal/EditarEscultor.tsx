@@ -15,80 +15,77 @@ import {
   FormControl,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import ZonaCargaEscultor from '../ZonaCarga/ZonaCargaEscultor';
-
+import DropZone from '../ZonaCarga/ZonaCarga';
 interface ModalComponentProps {
   isOpen: boolean;
   onClose: () => void;
   confirmar: (
-    fotoPreview: string,
     nombre: string,
-    pais: string,
-    contacto: string,
     fechaNacimiento: string,
     lugarNacimiento: string,
-    premios: string
+    premios: string,
+    pais: string,
+    telefono: string,
+    foto: string | File,
   ) => void;
   escultor: any;
 }
 
-export default function ModalEditarEscultor({
-  isOpen,
-  onClose,
-  confirmar,
-  escultor,
-}: ModalComponentProps) {
-  const handleFotoChange = (fotoData: string) => {
-    setFoto(fotoData);
-  };
+function ModalEditarEscultor({isOpen, onClose,confirmar,escultor}: ModalComponentProps) {
+
 
   const handleconfirmar = () => {
     confirmar(
-      foto || '',
       nombre,
-      pais,
-      contacto,
       fechaNacimiento,
       lugarNacimiento,
-      premios
+      premios,
+      pais,
+      telefono,
+      foto || '', 
     );
+    setNombre('');
+    setPais('');
+    setTelefono('');
+    setFechaNacimiento('');
+    setLugarNacimiento('');
+    setPremios('');
     onClose();
   };
 
-  const isFormValid = () => {
-    return (
-      nombre.trim() !== '' &&
-      pais.trim() !== '' &&
-      contacto.trim() !== '' &&
-      fechaNacimiento.trim() !== '' &&
-      lugarNacimiento.trim() !== '' &&
-      (premios ? premios.toString().trim() !== '' : true)
-    );
-  };
-
-  const [foto, setFoto] = useState<string | null>(null);
+  const [foto, setFoto] = useState<string | File>('');
+  const [imagenPrev, setImagenPrev] = useState<string>('');
   const [nombre, setNombre] = useState('');
   const [pais, setPais] = useState('');
-  const [contacto, setContacto] = useState('');
+  const [telefono, setTelefono] = useState('');
   const [fechaNacimiento, setFechaNacimiento] = useState('');
   const [lugarNacimiento, setLugarNacimiento] = useState('');
   const [premios, setPremios] = useState('');
+  //const {edicion} = useEdicion();
+  //const [edicionAño, setEdicion] = useState('');
 
   useEffect(() => {
     if (escultor) {
       setNombre(escultor.nombre);
       setPais(escultor.pais);
-      setContacto(escultor.contacto);
-      setFoto(escultor.foto);
+      setTelefono(escultor.telefono);
       setFechaNacimiento(escultor.fechaNacimiento);
       setLugarNacimiento(escultor.lugarNacimiento);
       setPremios(escultor.premios);
+      setImagenPrev(`${escultor.foto}?${new Date().getTime()}`); //Se agrega marca de tiempo, pq sino la imagen queda en cache del navegador
+      setFoto(escultor.foto);
+      //setEdicion(escultor.edicionAño);
     }
   }, [escultor]);
 
   if (!escultor) {
     return null;
   }
+
+  const handleFilesChange = (files: File[]) => {
+    setFoto(files[0]);
+    console.log('La imagen es' + files[0]);
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -101,12 +98,12 @@ export default function ModalEditarEscultor({
             <Stack gap={7}>
               <Stack direction="row" gap={5} w="100%">
                 <Box>
-                  <FormLabel mb={1}>Nombre</FormLabel>
+                  <FormLabel mb={1}>Nombre y Apellido</FormLabel>
                   <Input
                     placeholder=""
                     size="md"
                     variant="Unstyled"
-                    width={650}
+                    width={370}
                     borderWidth={1}
                     flex={1}
                     value={nombre}
@@ -137,8 +134,8 @@ export default function ModalEditarEscultor({
                     width={315}
                     borderWidth={1}
                     flex={1}
-                    value={contacto}
-                    onChange={(e) => setContacto(e.target.value)}
+                    value={telefono}
+                    onChange={(e) => setTelefono(e.target.value)}
                   />
                 </Box>
               </Stack>
@@ -187,21 +184,22 @@ export default function ModalEditarEscultor({
                   />
                 </Box>
               </Stack>
-
-              <ZonaCargaEscultor
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+              <DropZone
                 maxFiles={1}
-                handleFotoChange={handleFotoChange}
+                fileUploads={imagenPrev}
+                onFilesChange={handleFilesChange}
               />
+              </div>
             </Stack>
           </FormControl>
         </ModalBody>
         <ModalFooter mt={6}>
           <Button
-            colorScheme="blue"
             mr={3}
             onClick={handleconfirmar}
             size="sm"
-            isDisabled={!isFormValid()}
+            variant={'bienal'}
           >
             Guardar Cambios
           </Button>
@@ -213,3 +211,5 @@ export default function ModalEditarEscultor({
     </Modal>
   );
 }
+
+export default ModalEditarEscultor;

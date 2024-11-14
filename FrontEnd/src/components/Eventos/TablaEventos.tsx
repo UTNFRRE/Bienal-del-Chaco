@@ -21,6 +21,7 @@ import {
 } from '../../API/Admin/Eventoss';
 import { useState, useEffect } from 'react';
 import { useDisclosure } from '@chakra-ui/react';
+import { useEdicion } from '../../EdicionContexto';
 import ModalConfirmar from '../Modal/ConfirmarCambios';
 import ModalAgregarEvento from '../Modal/AgregarEvento';
 import ModalEditarEvento from '../Modal/EditarEvento';
@@ -30,9 +31,9 @@ import ModalEditarEvento from '../Modal/EditarEvento';
 
 function TablaEventos() {
   const [eventos, setEventos] = useState<any[]>([]); //se usa una variable de estado para guardar los eventos, esta variable es del tipo any (objeto)
-  const [filteredEventos, setFilteredEventos] = useState<any[]>([]);
   const [EventoElegido, setEventoElegido] = useState<any>(); //se usa una variable de estado para guardar el evento que se quiere eliminar o editar
   const [refresh, setRefresh] = useState(false);
+  const {edicion} = useEdicion();
 
   // isopen, onopen y onclose son funciones que se usan para abrir y cerrar cada modal
   const {
@@ -51,55 +52,30 @@ function TablaEventos() {
     onClose: onCloseEdit,
   } = useDisclosure();
 
-  const [filters, setFilters] = useState({
-    nombre: '',
-    lugar: '',
-    tematica: '',
-    descripcion: '',
-    fecha: '',
-  });
-  const [MostrarFiltros, setMostrarFiltros] = useState(false);
+
 
   useEffect(() => {
     const fetchEventos = async () => {
       try {
-        const data = await getEventos(); // se hace la solicitud a la api para obtener los eventos
+        const data = await getEventos(edicion); // se hace la solicitud a la api para obtener los eventos
         console.log(data);
         setEventos(data);
-        setFilteredEventos(data);
       } catch (error) {
         console.error('Error fetching eventos:', error);
       }
     };
 
     fetchEventos();
-  }, [refresh]);
+  }, [refresh, edicion]);
 
-  // filtros
-  useEffect(() => {
-    setFilteredEventos(
-      eventos.filter(
-        (evento) =>
-          evento.nombre.toLowerCase().includes(filters.nombre.toLowerCase()) &&
-          evento.lugar.toLowerCase().includes(filters.lugar.toLowerCase()) &&
-          evento.tematica
-            .toLowerCase()
-            .includes(filters.tematica.toLowerCase()) &&
-          evento.descripcion
-            .toLowerCase()
-            .includes(filters.descripcion.toLowerCase()) &&
-          evento.fecha.toLowerCase().includes(filters.fecha.toLowerCase())
-      )
-    );
-  }, [filters, eventos]);
 
-  // funcion para manejar los cambios en los filtros
-  const handleFilterChange = (e: any) => {
-    const { name, value } = e.target;
-    setFilters({
-      ...filters,
-      [name]: value,
-    });
+  const formatDate = (dateString: string): string => {
+    const options: Intl.DateTimeFormatOptions = {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    };
+    return new Date(dateString).toLocaleDateString('es-ES', options);
   };
 
   const truncateText = (text: string, maxLength: number) => {
@@ -141,20 +117,7 @@ function TablaEventos() {
     longitud: number,
     latitud: number
   ) => {
-    // Aca se hace el llamado a la funcion de la api que agrega un evento
-    // Agregar el evento al json
-    // setEventos((prevEventos) => [
-    //   ...prevEventos,
-    //   {
-    //     id: prevEventos.length + 1,
-    //     nombre: nombre,
-    //     lugar: lugar,
-    //     tematica: tematica,
-    //     descripcion: descripcion,
-    //     fecha: fecha,
-    //   },
-    // ]);
-
+  
     const PostEvento = async () => {
       try {
         await addEvento(
@@ -164,7 +127,8 @@ function TablaEventos() {
           descripcion,
           tematica,
           longitud,
-          latitud
+          latitud,
+          edicion
         );
         setRefresh(!refresh);
       } catch (error) {
@@ -189,22 +153,6 @@ function TablaEventos() {
     longitud: number,
     latitud: number
   ) => {
-    // Aca se hace el llamado a la funcion de la api que edita un evento
-    // Editar el evento en el json
-    // setEventos((prevEventos) =>
-    //   prevEventos.map((m) =>
-    //     m.id === EventoElegido.id
-    //       ? {
-    //           ...m,
-    //           nombre: nombre,
-    //           lugar: lugar,
-    //           tematica: tematica,
-    //           descripcion: descripcion,
-    //           fecha: fecha,
-    //         }
-    //       : m
-    //   )
-    // );
 
     const PutEvento = async () => {
       try {
@@ -242,15 +190,7 @@ function TablaEventos() {
           >
             Agregar Evento
           </Button>
-          {/* Al hacer click niego lo que tenia showfilters, la excpresion de abajo es un condicional simple en js */}
-          <Button
-            variant="bienal"
-            onClick={() => setMostrarFiltros(!MostrarFiltros)}
-            leftIcon={<SearchIcon />}
-            borderRadius={3}
-          >
-            {MostrarFiltros ? 'Ocultar Filtros' : 'Filtrar'}
-          </Button>
+          
         </Flex>
         <Box
           // borderWidth="1px"
@@ -268,58 +208,6 @@ function TablaEventos() {
             <Box overflowX="auto" w={'100%'}>
               <Table variant="striped" colorScheme="secundaryBg" width="100%">
                 <Thead>
-                  {/* Si MostrarFiltros es verdadero entonces... */}
-                  {MostrarFiltros && (
-                    <Tr>
-                      <Th>
-                        <Input
-                          variant="flushed"
-                          placeholder="Filtrar por Nombre"
-                          name="nombre"
-                          value={filters.nombre}
-                          onChange={handleFilterChange}
-                        />
-                      </Th>
-                      <Th>
-                        <Input
-                          variant="flushed"
-                          placeholder="Filtrar por Lugar"
-                          name="lugar"
-                          value={filters.lugar}
-                          onChange={handleFilterChange}
-                        />
-                      </Th>
-                      <Th>
-                        <Input
-                          variant="flushed"
-                          placeholder="Filtrar por Tematica"
-                          name="tematica"
-                          value={filters.tematica}
-                          onChange={handleFilterChange}
-                        />
-                      </Th>
-                      <Th>
-                        <Input
-                          variant="flushed"
-                          placeholder="Filtrar por Descripcion"
-                          name="descripcion"
-                          value={filters.descripcion}
-                          onChange={handleFilterChange}
-                        />
-                      </Th>
-                      <Th>
-                        <Input
-                          variant="flushed"
-                          placeholder="Filtrar por Fecha"
-                          name="fecha"
-                          type="date"
-                          value={filters.fecha}
-                          onChange={handleFilterChange}
-                        />
-                      </Th>
-                      <Th></Th>
-                    </Tr>
-                  )}
                   <Tr mt={6}>
                     <Th textAlign="center">Nombre</Th>
                     <Th textAlign="center">Lugar</Th>
@@ -332,7 +220,7 @@ function TablaEventos() {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {filteredEventos.map((evento, index) => (
+                  {eventos.map((evento, index) => (
                     <Tr key={index}>
                       <Td textAlign="center">{evento.nombre}</Td>
                       <Td textAlign="center">{evento.lugar}</Td>
@@ -340,7 +228,7 @@ function TablaEventos() {
                       <Td textAlign="center">
                         {truncateText(evento.descripcion, 40)}
                       </Td>
-                      <Td textAlign="center">{evento.fecha}</Td>
+                      <Td textAlign="center">{formatDate(evento.fecha)}</Td>
                       <Td>
                         <Flex
                           gap={2}

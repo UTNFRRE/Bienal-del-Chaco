@@ -1,9 +1,9 @@
 const API_URL = 'https://bienalbackapi.azurewebsites.net';
 
 //Obtenemos todos los escultores
-export const getEscultores = async () => {
+export const getEscultores = async (edicion: string) => {
   try {
-    const response = await fetch(`${API_URL}/Escultor/api/escultoresPublic`);
+    const response = await fetch(`${API_URL}/Escultor/api/escultoresPublic?AnioEdicion=${edicion}`);
     if (response.ok) {
       const data = await response.json();
       return data;

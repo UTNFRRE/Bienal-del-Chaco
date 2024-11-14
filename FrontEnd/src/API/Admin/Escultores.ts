@@ -1,9 +1,23 @@
 const API_URL = 'https://bienalbackapi.azurewebsites.net'; // Reemplaza con la URL de tu backend
 
-//Obtener un escultor
-export const getEscultor = async () => {
+export const getEscultorById = async (id: string) => {
   try {
-    const response = await fetch(`${API_URL}/escultoresAdmin`);
+      const response = await fetch(`${API_URL}/Escultor/${id}`);
+      if (response.ok) {
+          const data = await response.json();
+          return data;
+        } else {
+          throw new Error('Error en la respuesta del servidor');
+        }
+  } catch (error) {
+        throw new Error('Network error: ' + error);
+  }
+};
+
+//Obtener un escultor
+export const getEscultor = async (currentPage: number, pageSize:number, filter:string, edicion: string) => {
+  try {
+    const response = await fetch(`${API_URL}/Escultor?pageNumber=${currentPage}&pageSize=${pageSize}&AnioEdicion=${edicion}&busqueda=${filter}`);
     if (response.ok) {
       const data = await response.json(); //lo convierto a formato jason
       return data; //lo muestro
@@ -18,23 +32,27 @@ export const getEscultor = async () => {
 //Agregar un nuevo escultor
 export const addEscultor = async (
   nombre: string,
+  pais: string,
+  telefono: string,
+  fechaNacimiento: string,
+  lugarNacimiento: string,
+  premios: string,
+  edicionAño: string,
   foto: File,
-  Pais: string,
-  contacto: string
 ) => {
-  const Apellido = 'Marain';
-  const DNI = '45000000';
-  const Email = 'usuario@gmail.com';
-  const Contraseña = '12345';
   const formData = new FormData();
+
   formData.append('Nombre', nombre);
-  formData.append('Apellido', Apellido);
-  formData.append('DNI', DNI);
-  formData.append('Pais', Pais);
-  formData.append('Email', Email);
-  formData.append('Contraseña', Contraseña);
-  formData.append('Telefono', contacto);
+  formData.append('Apellido', 'Lopez Soto');
+  formData.append('DNI', '12345678');  
+  formData.append('FechaNacimiento', fechaNacimiento);
+  formData.append('LugarNacimiento', lugarNacimiento);
+  formData.append('Premios', premios);
+  formData.append('Pais', pais);
+  formData.append('Telefono', telefono);
+  formData.append('Biografia', 'Biografia');
   formData.append('Imagen', foto);
+  formData.append('EdicionAño', edicionAño);
 
   try {
     const response = await fetch(`${API_URL}/Escultor`, {
@@ -53,27 +71,98 @@ export const addEscultor = async (
 };
 
 // Editar un escultor existente
+
+// export const editEscultor = async (
+//   escultorId: string,
+//   nombre: string,
+//   pais: string,
+//   contacto: string,
+//   fechaNacimiento: string,
+//   lugarNacimiento: string,
+//   premios: string,
+//   edicionAño: string,
+//   foto: File | string,
+// ) => {
+//   const formData = new FormData();
+//   var method = '';
+//   if (typeof foto === 'string') {
+//     formData.append('Nombre', nombre);    
+//     formData.append('FechaNacimiento', fechaNacimiento);
+//     formData.append('LugarNacimiento', lugarNacimiento);
+//     formData.append('Premios', premios);
+//     formData.append('Pais', pais);
+//     formData.append('Telefono', contacto);
+//   method = 'PATCH';
+//   } else {
+//     formData.append('Nombre', nombre);
+//     formData.append('Apellido', 'Lopez Soto');
+//     formData.append('DNI', '12345678');    
+//     formData.append('FechaNacimiento', fechaNacimiento);
+//     formData.append('LugarNacimiento', lugarNacimiento);
+//     formData.append('Premios', premios);
+//     formData.append('Pais', pais);
+//     formData.append('Telefono', contacto);
+//     formData.append('Biografia', 'Biografia');
+//     formData.append('Imagen', foto);
+//     formData.append('EdicionAño', edicionAño);
+//     method = 'PUT';
+//   }
+//   console.log(method);
+//   try {
+//     const response = await fetch(`${API_URL}/Escultor/${escultorId}`, {
+//       method: `${method}`,
+//       body: formData,
+//     });
+//     if (response.ok) {
+//       const data = await response.json();
+//       return { fotoUrl: data.fotoUrl };
+//     } else {
+//       throw new Error('Error en la respuesta del servidor');
+//     }
+//   } catch (error) {
+//     throw new Error('Network error: ' + error);
+//   }
+// };
+
 export const editEscultor = async (
-  id: string,
-  Nombre: string,
+  escultorId: string,
+  nombre: string,
+  pais: string,
+  contacto: string,
   fechaNacimiento: string,
   lugarNacimiento: string,
   premios: string,
-  obras: string,
-  foto: File | string
+  edicionAño: string,
+  foto: File | string,
 ) => {
   const formData = new FormData();
-  formData.append('Id', id);
-  formData.append('Nombre', Nombre);
-  formData.append('FechaNacimiento', fechaNacimiento);
-  formData.append('LugarNacimiento', lugarNacimiento);
-  formData.append('Premios', premios);
-  formData.append('Obras', obras);
-  formData.append('Foto', foto);
-
+  var method = '';
+  if (typeof foto === 'string') {
+    formData.append('Nombre', nombre);    
+    formData.append('FechaNacimiento', fechaNacimiento);
+    formData.append('LugarNacimiento', lugarNacimiento);
+    formData.append('Premios', premios);
+    formData.append('Pais', pais);
+    formData.append('Telefono', contacto);
+  method = 'PATCH';
+  } else {
+    formData.append('Nombre', nombre);
+    formData.append('Apellido', 'Lopez Soto');
+    formData.append('DNI', '12345678');    
+    formData.append('FechaNacimiento', fechaNacimiento);
+    formData.append('LugarNacimiento', lugarNacimiento);
+    formData.append('Premios', premios);
+    formData.append('Pais', pais);
+    formData.append('Telefono', contacto);
+    formData.append('Biografia', 'Biografia');
+    formData.append('Imagen', foto);
+    formData.append('EdicionAño', edicionAño);
+    method = 'PUT';
+  }
+  console.log(method);
   try {
-    const response = await fetch(`${API_URL}/Escultores/${id}`, {
-      method: 'PUT',
+    const response = await fetch(`${API_URL}/Escultor/${escultorId}`, {
+      method: `${method}`,
       body: formData,
     });
     if (response.ok) {
@@ -86,8 +175,9 @@ export const editEscultor = async (
   }
 };
 
+
 // Eliminar un escultor
-export const deleteEscultor = async (id: string) => {
+export const deleteEscultor = async (id: string)  => {
   try {
     const response = await fetch(`${API_URL}/Escultor/${id}`, {
       method: 'DELETE',

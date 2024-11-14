@@ -11,10 +11,11 @@ import {
 import ImageGallery from 'react-image-gallery';
 import { FaFacebook, FaTwitter, FaInstagram, FaWhatsapp } from 'react-icons/fa';
 import 'react-image-gallery/styles/css/image-gallery.css';
-import RedesSociales from '../../../components/Redes/RedesSociales';
+import RedesSocialesLight from '../../../components/Redes/RedesSocialesLight';
 import { useEffect, useState } from 'react';
 
 import { getObraById } from '../../../API/Admin/Obras';
+import ObrasRelacionadas from './ObrasRelacionadas';
 
 interface Obra {
   esculturaId: number;
@@ -72,22 +73,42 @@ const ObraDetail = () => {
   }, [obra]);
   return (
     <Box
-      p={0}
       display={'flex'}
       flexDirection={{ base: 'column', md: 'row', lg: 'row' }}
+      w={'100%'}
     >
       {obra && (
-        <>
+        <Flex direction={'column'}
+        justifyContent={'center'}
+        w={'100%'}>
+            <Box
+              w={'100%'}
+              minHeight={'33vh'} 
+              display={'flex'}
+              mb={2}
+              backgroundColor="#0B192C"
+              alignItems={'center'}
+              position={'relative'}
+              justifyContent={'space-around'}
+            >
+              <Heading ml={'7%'} color={'#CDC2A5'} fontSize={'5xl'}>
+                {obra.nombre}
+              </Heading>
+              <Flex>
+                <RedesSocialesLight />
+              </Flex>
+            </Box>
           <Box
             display="flex"
-            w={{ base: '100%', md: '100%', lg: '70%' }}
-            flexDirection={'column'}
-            className="Galeria"
+            justifyContent={'space-between'}
+            w={{ base: '100%', md: '100%', lg: '100%' }}
+            flexDirection={'row'}
           >
-            <Heading mt={5} mb={5} fontSize={'5xl'}>
-              {obra.nombre}
-            </Heading>
-            <Box borderWidth={2} borderColor={'secundaryHover'} p={2}>
+            <Box p={4} 
+             top={"-35px"} 
+             position="relative"
+             zIndex={1}
+             >
               <ImageGallery
                 items={images}
                 showPlayButton={true} // desactivo el boton de play
@@ -95,31 +116,28 @@ const ObraDetail = () => {
                 slideInterval={5000} //cada cuanto cambia, 4seg
               />
             </Box>
-          </Box>
-          <Box
-            w={{ base: '100%', md: '100%', lg: '30%' }}
-            display="flex"
-            flexDirection={'column'}
-            gap={0}
-            mt={1}
-            className="Informacion"
-          >
-            <Flex gap="4" alignItems="center" justifyContent={'center'} mt={8}>
+            <Box
+              w={{ base: '100%', md: '100%', lg: '30%' }}
+              display="flex"
+              flexDirection={'column'}
+              mt={1}
+              mr={10}
+              className="Informacion"
+            >
+            <Flex gap="4" alignItems="center" 
+            justifyContent={'center'} mt={8}>
               <Image
                 src={obra.escultorImagen}
                 boxSize="90px"
                 borderRadius="full"
-                borderWidth={2}
-                borderColor="secundaryHover"
+                borderWidth={1}
+                borderColor="azul"
                 borderStyle="solid"
               />
               <Box>
                 <Heading size="sm">{obra.escultorNombre}</Heading>
                 <Text as="i">{obra.escultorPais}</Text>
               </Box>
-            </Flex>
-            <Flex justifyContent={'center'} mt={6}>
-              <RedesSociales />
             </Flex>
             <Box
               mt={6}
@@ -136,7 +154,23 @@ const ObraDetail = () => {
               </Text>
             </Box>
           </Box>
-        </>
+          </Box>
+          <Flex direction={'column'}>
+            <Flex bg={'azul'} color={'beige'} w={'100%'} textAlign={'start'}
+            h={'15vh'}
+            mb={4}
+            alignItems={'center'}
+            >
+              <Text fontSize={24} ml={5} fontWeight={'bold'}>
+              Obras Relacionadas
+              </Text>
+            </Flex> 
+            <Flex>
+              <ObrasRelacionadas esculturaId={obra.esculturaId} />
+            </Flex>
+          </Flex>
+        </Flex>
+        
       )}
     </Box>
   );
