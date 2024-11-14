@@ -11,17 +11,7 @@ import {
     Image,
     Select
 } from '@chakra-ui/react';
-import {useState,useEffect} from 'react';
-import {getObras} from '../../API/Admin/Obras';
-import {useEdicion} from '../../EdicionContexto'
-
-interface QRProps {
-
-    isOpen: boolean;
-
-    onClose: () => void;
-
-}
+import {useState} from 'react';
 
 interface Obras {
     esculturaId: number,
@@ -37,27 +27,18 @@ interface Obras {
 }
 
 
-    const QR = ({isOpen,onClose}:QRProps) => {
+interface QRProps {
 
-        const [obras,setObras] = useState<Obras[]>([]);
-        const [refresh, setRefresh] = useState(false);
-        const [pageNumber] = useState(10);
-        const [currentPage] = useState(1);
-        const {edicion} = useEdicion();
+    isOpen: boolean;
 
-        useEffect(() => {
-            const fetchObras = async () => {
-                try{
-                    const datos = await getObras(currentPage, pageNumber, edicion);
-                    setObras(datos);
-                    setRefresh(!refresh);
-                } catch(error){
-                    console.log("error al solicitar obras",error);
-                }
-            };
-            fetchObras();
-        },[edicion,])
+    onClose: () => void;
+    
+    data: Obras[];
 
+}
+
+
+    const QR: React.FC<QRProps> = ({isOpen,onClose,data}) => {
 
         const [obra,setObra] = useState<number>(0);
         const [showQR, setShowQR] = useState(false);
@@ -83,7 +64,7 @@ interface Obras {
                                 placeholder="Selecciona una obra"
                                 onChange={(e) =>setObra(Number(e.target.value))}
                             >
-                                {obras.map((o) => (
+                                {data.map((o) => (
                                     <option key={o.esculturaId} value={o.esculturaId}>
                                         {o.nombre}
                                     </option>

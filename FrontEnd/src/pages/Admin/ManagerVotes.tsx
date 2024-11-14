@@ -9,7 +9,6 @@ import PieChart from '../../components/Charts/PieChart';
 import BarChart from '../../components/Charts/BarChart';
 
 import obras  from '../../API/ObrasVote';
-import { use } from 'framer-motion/client';
 // import { useEdicion } from '../../EdicionContexto';
 // import { getObras } from '../../API/Admin/Obras';
 
@@ -36,8 +35,7 @@ const ManagerVotes = () => {
         setObras(obras);
     }, []);
 
-    console.log("Obras");
-    console.log(Obras);
+
 
     // variable para llamar a la API
     // const [refresh, setRefresh] = useState(false);
@@ -90,7 +88,7 @@ const ManagerVotes = () => {
                         gap={4}
                     >
                         <CreateVoteButton />
-                        <QrButton />
+                        <QrButton data={Obras} />
                     </Flex>
                 </Flex>
                 <Flex
