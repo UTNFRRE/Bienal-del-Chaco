@@ -206,6 +206,16 @@ function TablaEscultores() {
             edicion,
             foto,
           );
+          
+          const fotoUrl = typeof foto === 'string' ? foto : foto.name;
+
+          setEscultores(prevEscultores =>
+            prevEscultores.map(escultor =>
+              escultor.escultorId === EscultorElegido.escultorId
+                ? { ...escultor, nombre, pais, telefono, fechaNacimiento, lugarNacimiento, premios, foto:fotoUrl }
+                : escultor
+            )
+          );
         }
       } catch (error) {
         console.error('Error en el fetch de escultores:', error);
@@ -214,6 +224,49 @@ function TablaEscultores() {
     PutEscultor();
     onCloseEdit();
   };
+
+  // const handleConfirmarEdit = async (
+  //   nombre: string,
+  //   fechaNacimiento: string,
+  //   lugarNacimiento: string,
+  //   premios: string,
+  //   pais: string,
+  //   telefono: string,
+  //   foto: string | File,
+  // ): Promise<void> => {
+  //   const PutEscultor = async () => {
+  //     try {
+  //       if (EscultorElegido) {
+  //         const updatedEscultor = await editEscultor(
+  //           EscultorElegido.escultorId,
+  //           nombre,
+  //           pais,
+  //           telefono,
+  //           fechaNacimiento,
+  //           lugarNacimiento,
+  //           premios,
+  //           edicion,
+  //           foto,
+  //         );
+  
+  //         const nuevaFoto = typeof foto === 'string' ? foto : updatedEscultor.fotoUrl;
+  
+  //         setEscultores(prevEscultores =>
+  //           prevEscultores.map(escultor =>
+  //             escultor.escultorId === EscultorElegido.escultorId
+  //               ? { ...escultor, nombre, pais, telefono, fechaNacimiento, lugarNacimiento, premios, foto: nuevaFoto }
+  //               : escultor
+  //           )
+  //         );
+  //         setRefresh(!refresh); 
+  //       }
+  //     } catch (error) {
+  //       console.error('Error en el fetch de escultores:', error);
+  //     }
+  //   };
+  //   PutEscultor();
+  //   onCloseEdit();
+  // };
 
   return (
     <>
