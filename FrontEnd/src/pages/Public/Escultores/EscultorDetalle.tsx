@@ -1,9 +1,16 @@
-import { Grid, GridItem, Image, Text, Box } from '@chakra-ui/react';
+import { Grid, GridItem, CardBody, Stack, Image, Card,Flex, Divider, Heading,Text, Box } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import React from 'react';
+import RedesSocialesLight from '../../../components/Redes/RedesSocialesLight';
+import ImageGallery from 'react-image-gallery';
+import '../Obras/Mansory.css';
+import Masonry from 'react-masonry-css';
+import { useNavigate } from 'react-router-dom';
+
 import { getEscultorById } from '../../../API/Admin/Escultores';
 import { getObraByEscultor } from '../../../API/Admin/Obras';
+
 
 
 interface Escultor {
@@ -28,58 +35,19 @@ interface Escultor {
     imagenes: string;
   }
 
-  const json: Escultor = 
-    {
-      id: 1,
-      nombre: "Juan",
-      apellido:"Bernardi",
-      dni:"34343434",
-      pais: "Argentina",
-      telefono:"2222222",
-      //fechaNacimiento: string;
-      //lugarNacimiento:string;
-      //premios: string;
-      //foto:string;
-      biografia:"Un pelado hincha de boca",
-      foto:"https://www.bienaldelchaco.org/2024/wp-content/uploads/2024/04/Foto-Luis-Bernardi.png"
-    };
- 
-    const json2: Obra[] = [
-      {
-        id:1,
-        nombre: "La Mona Pija",
-        descripcion: "Una obra de arte",
-        imagenes: "https://pxcdn.ellitoral.com.ar/litoral/072024/1721955500242.jpg?cw=1200&ch=1172"
-      },
-      {
-        id:1,
-        nombre: "La Mona Pija",
-        descripcion: "Una obra de arte",
-        imagenes: "https://pxcdn.ellitoral.com.ar/litoral/072024/1721955500242.jpg?cw=1200&ch=1172"
-      },
-      {
-        id:1,
-        nombre: "La Mona Pija",
-        descripcion: "Una obra de arte",
-        imagenes: "https://pxcdn.ellitoral.com.ar/litoral/072024/1721955500242.jpg?cw=1200&ch=1172"
-      },
-      {
-        id:1,
-        nombre: "La Mona Pija",
-        descripcion: "Una obra de arte",
-        imagenes: "https://pxcdn.ellitoral.com.ar/litoral/072024/1721955500242.jpg?cw=1200&ch=1172"
-      },
-      {
-        id:1,
-        nombre: "La Mona Pija",
-        descripcion: "Una obra de arte",
-        imagenes: "https://pxcdn.ellitoral.com.ar/litoral/072024/1721955500242.jpg?cw=1200&ch=1172"
-      }
-    ];
 
 const EscultorDetail = () => {
+  const [images, setImages] = useState<any[]>([]);
+  const navigate = useNavigate();
     const { id } = useParams<{ id: string }>();
-    const [obra, setObra] = useState<Obra[]>([]);
+    const [obra, setObra] = useState<Obra[]>([
+      {
+        id:0,
+        nombre: '',
+        descripcion: '',
+        imagenes: '',
+      }
+    ]);
     const [escultor, setEscultor] = useState<Escultor>({
         id:  0,
         nombre:  '',
@@ -91,11 +59,6 @@ const EscultorDetail = () => {
         foto: '',
       });
 
-      useEffect(() => {
-        setEscultor(json);
-        setObra(json2);
-      }, []);
-/*
       useEffect (() => {
         const fetchEscultorById = async (id?: string) => {
         try {
@@ -112,10 +75,218 @@ const EscultorDetail = () => {
       }
       fetchEscultorById(id);
       }, [id]);
-*/
+
+      const handleCardClick = (id: number) => {
+        navigate(`/public/obras/${id}`);
+    };
+
+      useEffect(() => {
+        if (escultor) {
+          const images = [
+            {
+              original: escultor.foto,
+              thumbnail: escultor.foto,
+            },
+          ];
+          setImages(images);
+        }
+      }, [obra]);
   
     return (
-        <Grid w={"100%"} h={"100vh"} templateColumns={"1fr 1fr"} templateRows={"1fr 1fr"} border={"3px solid black"} >
+      <Box
+      display={'flex'}
+      flexDirection={{ base: 'column', md: 'row', lg: 'row' }}
+      w={'100%'}
+    >
+      {escultor && (
+        <Flex direction={'column'}
+        justifyContent={'center'}
+        w={'100%'}>
+            <Box
+              w={'100%'}
+              minHeight={'33vh'} 
+              display={'flex'}
+              mb={2}
+              backgroundColor="#0B192C"
+              alignItems={'center'}
+              position={'relative'}
+              justifyContent={'space-around'}
+            >
+              <Heading ml={'7%'} color={'#CDC2A5'} fontSize={'5xl'}>
+                {escultor.nombre}
+              </Heading>
+              <Flex>
+                <RedesSocialesLight />
+              </Flex>
+            </Box>
+          <Box
+            display="flex"
+            justifyContent={'space-between'}
+            w={{ base: '100%', md: '100%', lg: '100%' }}
+            flexDirection={'row'}
+          >
+            <Box p={4} 
+             top={"-35px"} 
+             position="relative"
+             zIndex={1}
+             >
+              
+              <ImageGallery
+                items={images}
+                showPlayButton={true} // desactivo el boton de play
+                autoPlay={true} //activo para que arranquen solas
+                slideInterval={5000} //cada cuanto cambia, 4seg
+              />
+              
+            </Box>
+            <Box
+              w={{ base: '100%', md: '100%', lg: '30%' }}
+              display="flex"
+              flexDirection={'column'}
+              mt={1}
+              mr={10}
+              className="Informacion"
+            >
+            <Flex gap="4" alignItems="center" 
+            justifyContent={'center'} mt={8}>
+              
+              <Box>
+                <Heading size="sm">{escultor.nombre}</Heading>
+                <Heading size="sm">{escultor.apellido}</Heading>
+                <Text as="i">{escultor.dni}</Text>
+                <Text as="i">{escultor.pais}</Text>
+                <Text as="i">{escultor.telefono}</Text>
+                <Text as="i">{escultor.biografia}</Text>
+              </Box>
+            </Flex>
+            <Box
+              mt={6}
+              display={'flex'}
+              textAlign={'right'}
+              flexDirection={'column'}
+              marginLeft={'auto'}
+              w={'100%'}
+            >
+              {/*
+              <Text as="em">Bajo la tematica {obra.tematica}</Text>
+              <Text as="em">Creada el {obra.fechaCreacion}</Text>
+              <Text textAlign={'left'} mt={6} ml={4}>
+                {obra.descripcion}
+              </Text>
+              */}
+            </Box>
+          </Box>
+          </Box>
+          <Flex direction={'column'}>
+            <Flex bg={'azul'} color={'beige'} w={'100%'} textAlign={'start'}
+            h={'15vh'}
+            mb={4}
+            alignItems={'center'}
+            >
+              <Text fontSize={24} ml={5} fontWeight={'bold'}>
+              Obras 
+              </Text>
+            </Flex> 
+            <Flex maxW={"100%"} w={"100%"}>
+
+            {obra.map((o) => {
+                return (
+                  <GridItem  p={4} w="25%" h="85%" mr={'30px'} mb={'50px'}>
+            <Card
+              outline="2px solid #b4b4b8"
+              bg="linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)"
+              w="100%"
+              h="100%"
+              className="my-box"
+              borderRadius={3}
+              sx={{
+                transition: 'transform 0.3s ease',
+                '&:hover': {
+                  transform: 'scale(1.05)',
+                  cursor: 'pointer',
+                },
+              }}
+            >
+              <CardBody
+                h={'70%'}
+                w={'100%'}
+                display="flex"
+                p={0}
+                justifyContent="center"
+                alignItems="center"
+                onClick={() => handleCardClick(o.id)}
+              >
+                <Stack
+                  h={'100%'}
+                  w={'100%'}
+                  borderRadius={3}
+                  borderWidth={2}
+                  borderColor={'darkgray'}
+                >
+                  <Image
+                    src={o.imagenes}
+                    m={0}
+                    w={'100%'}
+                    h={'100%'}
+                    borderRadius={3}
+                  />
+                </Stack>
+              </CardBody>
+
+              <Stack
+                mt={0}
+                bg="white"
+                width="100%"
+                height="30%"
+                maxHeight={'27%'}
+                direction={'row'}
+                justifyContent={'space-between'}
+              >
+                <Stack direction={'column'}>
+                  <Text
+                    ml={'22px'}
+                    mt={'5px'}
+                    whiteSpace="pre-line"
+                    fontSize="18px"
+                    lineHeight="1.2"
+                    bg="black"
+                    bgClip="text"
+                    fontWeight="bold"
+                  >
+                    {o.nombre}
+                  </Text>
+                  <Text ml={'22px'} as="i" fontSize="17px" color="black">
+                    {o.descripcion}
+                  </Text>
+                </Stack>
+                {/* <Image src={escultor.bandera} width="60px" height="40px" mr={"11px"} mt={"20px"}/> */}
+              </Stack>
+            </Card>
+          </GridItem>
+                )
+          })}
+
+
+
+
+            </Flex>
+            
+        
+          </Flex>
+        </Flex>
+        
+      )}
+    </Box>
+
+
+    );
+};
+export default EscultorDetail;
+
+
+{/*
+  
+  <Grid w={"100%"} h={"100vh"} templateColumns={"1fr 1fr"} templateRows={"1fr 1fr"} border={"3px solid black"} >
             <GridItem backgroundColor={"lightyellow"}>
                 <Box display="flex" alignItems="center" w={"100%"} h={"100%"}>
      
@@ -135,9 +306,7 @@ const EscultorDetail = () => {
                  </Box>
   </GridItem>
               
-            <GridItem backgroundColor={"lightgreen"}>
-                <Text> Premios </Text>
-            </GridItem>
+            
 
             
        {obra.map((o) => {
@@ -168,7 +337,5 @@ const EscultorDetail = () => {
 
         </Grid>
 
-
-    );
-};
-export default EscultorDetail;
+  
+  */}
