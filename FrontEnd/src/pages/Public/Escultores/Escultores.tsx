@@ -42,7 +42,6 @@ function Escultoress () {
     navigate(`/public/escultores/${id}`);
   }
   
-  
   const [Escultores, setEscultores] = useState<Escultor[]>([]);
   
     useEffect(() => {
@@ -151,7 +150,6 @@ function Escultoress () {
 
 return (
     <Container maxWidth="100vw" width="100vw" height="100vh" centerContent 
-    //bg="#0B192C" 
     paddingY="%5" 
     paddingX="2%" 
     mx="auto"
@@ -159,17 +157,16 @@ return (
     >
     <Box 
     width="110%"
-    height="200%"
+    height="40%"
     bg="#0B192C"
-    //display="flex"
+    display="flex"
     position="relative"
     zIndex={-5} // Esto asegura que esté detrás de los escultores
     paddingX="5vw" // Añade un espacio en los lados para que no toque los bordes
     left="-3vw"
     top="0" 
     >
-    <Heading as="h1" size="xl" color={'#CDC2A5'} fontSize={45} 
-    // alignSelf="flex-start" ml="1%" 
+    <Heading as="h1" size="xl" color={'#CDC2A5'} fontSize={45}  
     mb={0} mt={8}
     >
       Escultores
@@ -177,7 +174,7 @@ return (
     </Box>
     <Box 
     width="110%"
-    height="200%"
+    height="50%"
     bg="#0B192C"
     //display="flex"
     position="relative"
@@ -202,7 +199,7 @@ return (
         //spacing={10}
         position="relative"
         zIndex={5} // Para que esté sobre la caja azul
-        top="-130px" // Ajusta este valor para superponer las tarjetas más arriba de la caja azul
+        top="-20%" // Ajusta este valor para superponer las tarjetas más arriba de la caja azul
       >
         {Escultores.map((escultor) => (
           <GridItem key={escultor.id} //w="100%" h="100%" 
@@ -210,8 +207,6 @@ return (
             <Card
               outline="2px solid #b4b4b8"
               bg="linear-gradient(135deg, #a1b3cf 50%, #172d4a 90%)"
-              //w="85%"
-              //h="100%"
               w="90%"
               h="90%"
               className="my-box"
@@ -228,7 +223,6 @@ return (
                 h='80%'
                 w='100%'
                 display="flex"
-                //p={0}
                 borderColor="#b4b4b8"
                 onClick={() => handleCardClick(escultor.id)}  // Mueve el onClick al Stack
                 >
