@@ -246,7 +246,6 @@ return (
                 flex={1}
                 //maxHeight={'27%'}
                  onClick={() => handleCardClick(escultor.id)}>
-              >
    
                 <Stack direction="column" ml="5%" spacing={0}>
 
