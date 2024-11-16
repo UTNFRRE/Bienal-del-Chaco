@@ -6,16 +6,16 @@ import routes from '../routes';
 import Header from '../components/Header/Header';
 
 export default function User() {
-  const publicRoutes = routes.filter((route) => route.rol !== 'admin');
-  const element = useRoutes(publicRoutes);
-  const LINK_ITEMS_ = publicRoutes
+  const userRoutes = routes.filter((route) => route.rol !== 'admin' && route.rol !== 'public');
+  const element = useRoutes(userRoutes);
+  const LINK_ITEMS_ = userRoutes
     .filter((route) => route.title && route.rol && route.path)
     .map((route) => ({
       title: route.title!,
       url: route.path,
       rol: route.rol!,
     }));
-  const LINK_ITEMS = LINK_ITEMS_.filter((link) => link.rol === 'public');
+  const LINK_ITEMS = LINK_ITEMS_.filter((link) => link.rol === 'user');
 
   return (
     <Box minH="100vh">

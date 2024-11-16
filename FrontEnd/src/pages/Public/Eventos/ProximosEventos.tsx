@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getProximosEventos } from '../../../API/Public/EventosPu';
 import { useEdicion } from '../../../EdicionContexto';
+import { useAuth } from '../../../LoginContexto';
 
 interface Evento {
     id: number,
@@ -18,6 +19,7 @@ export const ProximosEventos = () => {
   const [eventos, setEventos] = useState<Evento[]>([]); // Array de eventos
   const navigate = useNavigate();
   const {edicion} = useEdicion();
+  const {rolUser} = useAuth();
 
     useEffect(() => {
         const fetchEventos = async () => {
@@ -33,7 +35,11 @@ export const ProximosEventos = () => {
 
 
   const handleCardClick = (id: number) => {
+    if (rolUser !== '') {
+    navigate(`/user/eventos/${id}`);
+    } else {
     navigate(`/public/eventos/${id}`);
+    }
   };
 
   function formatFecha(fecha: string) {

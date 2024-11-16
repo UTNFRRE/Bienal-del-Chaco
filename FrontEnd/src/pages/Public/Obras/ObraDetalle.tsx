@@ -1,21 +1,14 @@
-import { useParams } from 'react-router-dom';
-import {
-  Box,
-  Heading,
-  Text,
-  Image,
-  Flex,
-  IconButton,
-  ButtonGroup,
-} from '@chakra-ui/react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Box, Heading, Text, Image, Flex, Button } from '@chakra-ui/react';
 import ImageGallery from 'react-image-gallery';
-import { FaFacebook, FaTwitter, FaInstagram, FaWhatsapp } from 'react-icons/fa';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import RedesSocialesLight from '../../../components/Redes/RedesSocialesLight';
 import { useEffect, useState } from 'react';
-
 import { getObraById } from '../../../API/Admin/Obras';
+import Cookies from 'js-cookie';
 import ObrasRelacionadas from './ObrasRelacionadas';
+import { HeadVotos } from '../../../API/Public/Votacion';
+import { useAuth } from '../../../LoginContexto';
 
 interface Obra {
   esculturaId: number;
@@ -30,35 +23,43 @@ interface Obra {
 }
 
 const ObraDetail = () => {
-  const { id } = useParams<{ id: string }>(); // Se obtiene el id de la obra de la url
+  const userId = Cookies.get('IdUser');
+  const { id } = useParams<{ id: string }>();
+  const [obra, setObra] = useState<Obra | null>(null);
   const [images, setImages] = useState<any[]>([]);
-  const [obra, setObra] = useState<Obra>({
-    esculturaId: 0,
-    nombre: '',
-    tematica: '',
-    descripcion: '',
-    fechaCreacion: '',
-    escultorNombre: '',
-    escultorPais: '',
-    escultorImagen: '',
-    imagenes: '',
-  });
+  const [isDisabled, setIsDisabled] = useState(false);
+  const navigate = useNavigate();
+  const { rolUser } = useAuth();
 
-  // Aca con el id se debe hacer el fecth a la api para traer la obra con todos los datos
-  // Por ahora me hago un json
   useEffect(() => {
-    const fetchObraById = async (id?: string) => {
+    const fetchObraById = async () => {
+      if (!id) return;
       try {
-        if (!id) return;
         const data = await getObraById(id);
         setObra(data);
-        console.log(data);
       } catch (error) {
         console.error('Error en el fetch de la obra:', error);
       }
     };
-    fetchObraById(id);
+    fetchObraById();
   }, [id]);
+
+  useEffect(() => {
+    const fetchHeadVotos = async () => {
+      if (!userId || !obra) return;
+      try {
+        const response = await HeadVotos(userId, obra.esculturaId);
+        if (response.ok) {
+          setIsDisabled(true); // Deshabilita el botón si la API responde con 200
+        }
+      } catch (error) {
+        console.error('Error en la verificación de votos:', error);
+      }
+    };
+    if (obra) {
+      fetchHeadVotos();
+    }
+  }, [obra, userId]);
 
   useEffect(() => {
     if (obra) {
@@ -71,33 +72,39 @@ const ObraDetail = () => {
       setImages(images);
     }
   }, [obra]);
+
+  const handleVotarClick = () => {
+    navigate(`/user/voting/${id}/${userId}`);
+  };
+
   return (
     <Box
-      display={'flex'}
-      flexDirection={{ base: 'column', md: 'row', lg: 'row' }}
-      w={'100%'}
-    >
-      {obra && (
-        <Flex direction={'column'}
-        justifyContent={'center'}
-        w={'100%'}>
-            <Box
-              w={'100%'}
-              minHeight={'33vh'} 
-              display={'flex'}
-              mb={2}
-              backgroundColor="#0B192C"
-              alignItems={'center'}
-              position={'relative'}
-              justifyContent={'space-around'}
-            >
-              <Heading ml={'7%'} color={'#CDC2A5'} fontSize={'5xl'}>
-                {obra.nombre}
-              </Heading>
-              <Flex>
-                <RedesSocialesLight />
-              </Flex>
-            </Box>
+    display={'flex'}
+    flexDirection={{ base: 'column', md: 'row', lg: 'row' }}
+    w={'100%'}
+  >
+    {obra && (
+      <Flex direction={'column'}
+      justifyContent={'center'}
+      w={'100%'}>
+          <Box
+            w={'100%'}
+            minHeight={'33vh'} 
+            display={'flex'}
+            mb={2}
+            backgroundColor="#0B192C"
+            alignItems={'center'}
+            position={'relative'}
+            justifyContent={'space-around'}
+          >
+            <Heading ml={'7%'} color={'#CDC2A5'} fontSize={'5xl'}>
+              {obra.nombre}
+            </Heading>
+            <Flex>
+              <RedesSocialesLight />
+            </Flex>
+          </Box>
+
           <Box
             display="flex"
             justifyContent={'space-between'}
@@ -152,6 +159,10 @@ const ObraDetail = () => {
               <Text textAlign={'left'} mt={6} ml={4}>
                 {obra.descripcion}
               </Text>
+              {isDisabled && <Text>Ya has votado por esta obra</Text>}
+              { rolUser !== '' && !isDisabled &&
+              <Button onClick={handleVotarClick} isDisabled={isDisabled}>Votar</Button>
+              }
             </Box>
           </Box>
           </Box>

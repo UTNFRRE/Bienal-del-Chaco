@@ -1,6 +1,6 @@
 // ManagerVotes.js
 import { Box, Flex, Tabs, TabList, Tab, TabPanels, TabPanel } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useState, useEffect} from 'react';
 import CreateVoteButton from "../../components/Vote/CreateVoteButton";
 import QrButton from "../../components/Vote/QrButton";
 // import EdicionesMenu from '../../components/Vote/EdicionesMenu';
@@ -8,11 +8,50 @@ import DataTable from '../../components/Vote/DataTable';
 import PieChart from '../../components/Charts/PieChart';
 import BarChart from '../../components/Charts/BarChart';
 
+import { useEdicion } from '../../EdicionContexto';
+import { getObras } from '../../API/Admin/Obras';
 
 
+interface Obra {
+    esculturaId: number,
+    nombre: string,
+    tematica: string,
+    descripcion: string,
+    escultorId: number,
+    fechaCreacion: string,
+    esculturNombre: string,
+    escultorPais: string,
+    imagenes: string[],
+    promedioVotos: number
+}
 
 const ManagerVotes = () => {
     const [chart, setChart] = useState<string | null>("first");
+    const [Obras, setObras] = useState<Obra[]>([]);
+
+    //variable para llamar a la API
+    const [refresh, setRefresh] = useState(false);
+    const [currentPage] = useState(1);
+    const [pageNumber] = useState(10);
+    const {edicion} = useEdicion();
+
+    useEffect(() => {
+        const fetchObras = async () => {
+            try{
+                const datos = await getObras(currentPage, pageNumber, edicion);
+                console.log(datos);
+                setObras(datos);
+                setRefresh(!refresh);
+            } catch(error){
+                console.log("error al solicitar obras",error);
+            }
+        };
+        fetchObras();
+        
+    }, [edicion]);
+
+
+    //Llamario a la API
 
     // Define el tipo de obrasDeEdicion como un array de Obra
     
@@ -41,7 +80,7 @@ const ManagerVotes = () => {
                         gap={4}
                     >
                         <CreateVoteButton />
-                        <QrButton />
+                        <QrButton data={Obras} />
                     </Flex>
                 </Flex>
                 <Flex
@@ -64,7 +103,7 @@ const ManagerVotes = () => {
                         position="absolute"
                     >
                         <Box height="100%" width={{md:"40%", base:"100%"}}>
-                            <DataTable  />
+                             <DataTable data={Obras} /> 
                         </Box>
                         <Box  height="100%" width="60%">
                             <Tabs index={chart === "first" ? 0 : 1} onChange={(index) => setChart(index === 0 ? "first" : "second")}>
@@ -74,10 +113,10 @@ const ManagerVotes = () => {
                                 </TabList>
                                 <TabPanels>
                                     <TabPanel height="100%">
-                                        <PieChart  />
+                                        <PieChart dato={Obras} />
                                     </TabPanel>
                                     <TabPanel>
-                                        <BarChart/>
+                                        <BarChart dato={Obras}/>
                                     </TabPanel>
                                 </TabPanels>
                             </Tabs>
