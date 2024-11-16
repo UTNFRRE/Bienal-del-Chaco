@@ -38,7 +38,7 @@ const ManagerVotes = () => {
     useEffect(() => {
         const fetchObras = async () => {
             try{
-                const datos = await getObras(currentPage, pageNumber, edicion);
+                const datos = await getObras(currentPage, pageNumber, edicion,'');
                 console.log(datos);
                 setObras(datos);
                 setRefresh(!refresh);
@@ -48,7 +48,7 @@ const ManagerVotes = () => {
         };
         fetchObras();
         
-    }, [edicion]);
+    }, [edicion,]);
 
 
     //Llamario a la API
