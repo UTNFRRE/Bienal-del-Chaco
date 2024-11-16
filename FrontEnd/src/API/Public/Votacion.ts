@@ -38,12 +38,7 @@ export const HeadVotos = async(
             method: 'HEAD',
         });
 
-        if (response.ok) {
-            return response;
-        } else {
-            return response;
-            throw new Error('Error en la respuesta del servidor');
-        }
+       return response;
     } catch (error) {
         throw new Error('Network error: ' + error);
     }
