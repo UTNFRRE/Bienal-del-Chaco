@@ -17,6 +17,7 @@ import { getEscultores } from '../../../API/Escultores';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useEdicion } from '../../../EdicionContexto';
+import { useAuth } from '../../../LoginContexto';
 
 interface Escultor {
   id: number;
@@ -37,9 +38,14 @@ function Escultoress () {
 
   const navigate = useNavigate(); 
   const { edicion } = useEdicion();
+  const { rolUser } = useAuth();
 
   const handleCardClick = (id: number) => {
+    if (rolUser !== '') {
+      navigate(`/user/escultores/${id}`);
+    } else {
     navigate(`/public/escultores/${id}`);
+    }
   }
   
   const [Escultores, setEscultores] = useState<Escultor[]>([]);

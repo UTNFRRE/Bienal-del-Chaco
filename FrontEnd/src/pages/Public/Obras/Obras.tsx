@@ -23,6 +23,7 @@ import Masonry from 'react-masonry-css';
 import { getObras } from '../../../API/Admin/Obras';
 import { ArrowLeftIcon, ArrowRightIcon } from '@chakra-ui/icons';
 import Rating from '../../../components/Obras/Rating';
+import { useAuth } from '../../../LoginContexto';
 interface Obra {
   esculturaId: number;
   nombre: string;
@@ -40,6 +41,7 @@ export default function ObrasPublic() {
   const [obras, setObras] = useState<Obra[]>([]);
   const navigate = useNavigate(); // para poder navegar entre paginas
   const {edicion} = useEdicion();
+  const {rolUser} = useAuth();
 
   // La idea es agregar un paginado, ya que la cantidad de obras puede ser muy grande, agrego un paginado de 9 en 9
   // Los request se van a ir haciendo de a 9, y se va a ir mostrando de a 9, tdv no funciona pq no esta la api
@@ -96,7 +98,13 @@ export default function ObrasPublic() {
   };
 
   const handleCardClick = (id: number) => {
+    if (rolUser !== '') {
+      console.log('rolUser', rolUser);
+      navigate(`/user/obras/${id}`);
+    } else {
+    console.log('rolUserPublico', rolUser);
     navigate(`/public/obras/${id}`);
+    }
   };
 
   const breakpointColumnsObj = {

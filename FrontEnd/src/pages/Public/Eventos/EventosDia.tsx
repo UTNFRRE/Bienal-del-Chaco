@@ -3,6 +3,7 @@ import {Flex, Heading, Text, SimpleGrid} from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getEventosDia } from '../../../API/Public/EventosPu';
+import { useAuth } from '../../../LoginContexto';
 interface EventosDiaProps {
     id: number,
     nombre: string,
@@ -16,6 +17,7 @@ interface EventosDiaProps {
 const EventosDia: React.FC<{dia: Date | null}> = ({ dia }) => {
     const [eventos, setEventos] = useState<EventosDiaProps[]>([]); // Array de eventos
     const navigate = useNavigate();
+    const {rolUser} = useAuth();
 
     useEffect(() => {
         const fetchEventos = async () => {
@@ -34,7 +36,11 @@ const EventosDia: React.FC<{dia: Date | null}> = ({ dia }) => {
     }, [dia]);
 
     const handleCardClick = (id: number) => {
-        navigate(`/public/eventos/${id}`);
+        if (rolUser !== '') {
+            navigate(`/user/eventos/${id}`);
+            } else {
+            navigate(`/public/eventos/${id}`);
+        }
     };
 
     const formattedDate = dia?.toLocaleDateString('es-ES', {

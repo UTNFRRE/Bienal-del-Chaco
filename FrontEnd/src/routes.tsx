@@ -13,8 +13,6 @@ import ManagerVotes from './pages/Admin/ManagerVotes';
 import Voted from  './pages/Votacion';
 import { RiOilLine } from 'react-icons/ri';
 import obras from './API/ObrasVote';
-import ObraDetail2 from './pages/Public/Obras/ObraDetalle2';
-import ObrasPublic2 from './pages/Public/Obras/Obras2';
 
 const routes = [
   {
@@ -54,16 +52,34 @@ const routes = [
     rol: 'public',
   },
   {
+    path: 'escultores',
+    element: <Escultoress />,
+    title: 'Escultores',
+    rol: 'user',
+  },
+  {
     path: 'eventos',
     element: <EventosPublic />,
     title: 'Eventos',
     rol: 'public',
   },
   {
+    path: 'eventos',
+    element: <EventosPublic />,
+    title: 'Eventos',
+    rol: 'user',
+  },
+  {
     path: 'eventos/:id',
     element: <EventoDetalle2 />,
     title: '',
     rol: 'public',
+  },
+  {
+    path: 'eventos/:id',
+    element: <EventoDetalle2 />,
+    title: '',
+    rol: 'user',
   },
   {
     path: 'obras',
@@ -78,6 +94,12 @@ const routes = [
     rol: 'public',
   },
   {
+    path: 'escultores/:id',
+    element: <EscultorDetail />,
+    title: '',
+    rol: 'user',
+  },
+  {
     path: 'obras/:id', // Se agrega el id de la obra
     element: <ObraDetail />,
     title: '',
@@ -87,17 +109,17 @@ const routes = [
     path: 'voting/:id/:userId',
     element: <Voted />,
     title: '',
-    rol: 'public',
+    rol: 'user',
   },
   {
     path: 'obras',
-    element: <ObrasPublic2 />,
+    element: <ObrasPublic/>,
     title: 'Obras',
     rol: 'user',
   },
   {
     path: 'obras/:id', // Se agrega el id de la obra
-    element: <ObraDetail2 />,
+    element: <ObraDetail />,
     title: '',
     rol: 'user',
   },

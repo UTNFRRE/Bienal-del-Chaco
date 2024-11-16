@@ -32,20 +32,16 @@ export const HeadVotos = async(
     userId: string,
     esculturaId: number,
 ) => {
-    const formData = new FormData();
-    formData.append('userId', userId);
-    formData.append('esculturaId', esculturaId.toString()); // Convertir a string
 
     try {
-        const response = await fetch(`${API_URL}/Votos`, {
+        const response = await fetch(`${API_URL}/Votos?userid=${userId}&esculturaid=${esculturaId}`, {
             method: 'HEAD',
-            body: formData,
         });
 
         if (response.ok) {
-            const data = await response.json();
-            return data;
+            return response;
         } else {
+            return response;
             throw new Error('Error en la respuesta del servidor');
         }
     } catch (error) {

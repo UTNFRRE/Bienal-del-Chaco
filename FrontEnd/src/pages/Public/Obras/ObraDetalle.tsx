@@ -8,6 +8,7 @@ import { getObraById } from '../../../API/Admin/Obras';
 import Cookies from 'js-cookie';
 import ObrasRelacionadas from './ObrasRelacionadas';
 import { HeadVotos } from '../../../API/Public/Votacion';
+import { useAuth } from '../../../LoginContexto';
 
 interface Obra {
   esculturaId: number;
@@ -27,6 +28,7 @@ const ObraDetail = () => {
   const [obra, setObra] = useState<Obra | null>(null);
   const [isDisabled, setIsDisabled] = useState(false);
   const navigate = useNavigate();
+  const { rolUser } = useAuth();
 
   useEffect(() => {
     const fetchObraById = async () => {
@@ -59,7 +61,7 @@ const ObraDetail = () => {
   }, [obra, userId]);
 
   const handleVotarClick = () => {
-    navigate(`/public/voting/${id}/${userId}`);
+    navigate(`/user/voting/${id}/${userId}`);
   };
 
   return (
@@ -84,7 +86,10 @@ const ObraDetail = () => {
               <Text>Bajo la temática {obra.tematica}</Text>
               <Text>Creada el {obra.fechaCreacion}</Text>
               <Text>{obra.descripcion}</Text>
+              {isDisabled && <Text>Ya has votado por esta obra</Text>}
+              { rolUser !== '' && !isDisabled &&
               <Button onClick={handleVotarClick} isDisabled={isDisabled}>Votar</Button>
+              }
             </Box>
           </Flex>
           <Box mt={4} mb={4} w={'100%'} bg={'azul'}  p={10}>
