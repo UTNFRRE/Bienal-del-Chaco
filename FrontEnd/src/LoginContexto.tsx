@@ -20,9 +20,8 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const onLogin = async (password: string, account: string) => {
     try {
       await FetchLogin(password, account);
-      await getUserId(account);
-      setRolUser(account);
-    // setRolUser(JSON.parse(localStorage.getItem('userRol') || '[]'));
+      const data = await getUserId(account);
+      setRolUser(data.roleName);
       setIsAuthenticated(true);
       
     } catch (error) {
@@ -38,17 +37,12 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const onLogout = () => {
-    console.log('logout');
     
     // Verificar y eliminar cookies
     const cookiesToRemove = [
-      'tokennn',
+      'access_token',
       'refresh_token',
-      'access_expiration',
-      'refresh_expiration',
-      'username',
-      'dni',
-      'full_name',
+      'IdUser',
     ];
   
     cookiesToRemove.forEach(cookie => {
@@ -59,6 +53,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         console.log(`Cookie ${cookie} no encontrada`);
       }
     });
+
+    setIsAuthenticated(false);
+    setRolUser('');
   
   };
 

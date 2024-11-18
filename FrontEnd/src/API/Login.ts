@@ -65,12 +65,11 @@ export const AddUser = async (
 
   export const getUserId = async (email: string) => {
     try {
-        const response = await fetch(`${API_URL}/users/${email}`);
+        const response = await fetch(`${API_URL}/Usuarios/InfoUsuario?email=${email}`);
         if (response.ok) {
           const data = await response.json();
-          Cookies.set('IdUser', data.id);
-          Cookies.get('IdUser');
-        return;
+          Cookies.set('IdUser', data.userId);
+        return data;
         } else {
         throw new Error('Error en la respuesta del servidor');
         }
