@@ -9,6 +9,7 @@ import {
   Button,
   IconButton,
   Divider,
+  Input,
 } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import React from 'react';
@@ -21,7 +22,7 @@ import './Mansory.css';
 import Masonry from 'react-masonry-css';
 
 import { getObras } from '../../../API/Admin/Obras';
-import { ArrowLeftIcon, ArrowRightIcon } from '@chakra-ui/icons';
+import { ArrowLeftIcon, ArrowRightIcon, SearchIcon } from '@chakra-ui/icons';
 import Rating from '../../../components/Obras/Rating';
 import { useAuth } from '../../../LoginContexto';
 interface Obra {
@@ -49,6 +50,8 @@ export default function ObrasPublic() {
   const [pageSize] = useState(10); // Cantidad de obras por página
   const [totalPages, setTotalPages] = useState(2);
   const [totalCount, setTotalCount] = useState(0);
+  const [filter, setFilter] = useState('');
+  const [showInput, setShowInput] = useState(false)
 
   const [votos, setVotos] = useState<{ [key: number]: number }>({}); // Guarda los votos de cada obra truncados PARA LAS ESTRELLAS
 
@@ -57,7 +60,6 @@ export default function ObrasPublic() {
   useEffect(() => {
     const fetchObras = async () => {
       try {
-        const filter=''
         const response = await getObras(currentPage, pageSize, edicion, filter);
         setObras(response);
         setTotalCount(response.length);
@@ -66,7 +68,7 @@ export default function ObrasPublic() {
       }
     };
     fetchObras();   
-  }, [currentPage, pageSize, edicion]);
+  }, [currentPage, pageSize, edicion, filter]);
 
   useEffect(() => {
      //Trunco el promedioVotos de obras
@@ -97,6 +99,10 @@ export default function ObrasPublic() {
     }
   };
 
+  const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFilter(event.target.value);
+  };
+
   const handleCardClick = (id: number) => {
     if (rolUser !== '') {
       console.log('rolUser', rolUser);
@@ -112,6 +118,7 @@ export default function ObrasPublic() {
     1100: 2,
     700: 1,
   };
+
 
   return (
     <Box
@@ -131,24 +138,38 @@ export default function ObrasPublic() {
         alignItems={'center'}
         position={'relative'}
       >
-          <Flex direction={'column'} ml={'5%'}>
+        <Flex alignItems={'center'} justifyContent={'space-between'} w={'100%'} direction={'row'} ml={'5%'} mr={'5%'}>
          <Heading color={'#CDC2A5'} fontSize={45}> 
             Obras
          </Heading>
-         {/* <Flex gap={3} mt={3}>
-          <Button
-            variant="light"
-          >
-            En excibición
-          </Button>
-          <Button
-            variant="light"
-          >
-            Anteriores
-          </Button>
-         </Flex> */}
+        <Box position="relative" display="flex" alignItems="center" borderWidth={1} borderColor={'beige'}>
+          <IconButton
+            aria-label="Buscar"
+            icon={<SearchIcon />}
+            variant="outline"
+            color={'beige'}
+            borderColor={"#0B192C"}
+            onMouseEnter={() => setShowInput(true)}
+            onMouseLeave={() => setShowInput(false)}
+          />
+          {showInput && (
+            <Input
+              type="text"
+              value={filter}
+              onChange={handleFilterChange}
+              placeholder="Buscar por Titulo, Tematica o Descripcion..."
+              w={"100%"}
+              borderColor={'#0B192C'}
+              backgroundColor={"#0B192C"}
+             // color={'beige'}
+              variant={"outline"}
+              onMouseEnter={() => setShowInput(true)}
+              onMouseLeave={() => setShowInput(false)}
+            />
+          )}
+        </Box>
          </Flex>
-      </Box>
+    </Box>
       {obras && (
         <Flex pl={10} pr={10}>
         <Masonry
