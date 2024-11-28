@@ -19,8 +19,6 @@ import {
   DeleteIcon,
   AddIcon,
   SearchIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
   ArrowLeftIcon,
   ArrowRightIcon,
 } from '@chakra-ui/icons';
@@ -55,7 +53,6 @@ interface Obra {
 
 function TablaObras() {
   const [obras, setObras] = useState<Obra[]>([]);
-  const [filteredObras, setFilteredObras] = useState<Obra[]>([]);
   const [obraElegida, setObraElegida] = useState<Obra | null>(null);
   const [refresh, setRefresh] = useState(false);
   const {edicion} = useEdicion();

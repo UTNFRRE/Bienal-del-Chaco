@@ -2,13 +2,13 @@ import Escultoress from './pages/Public/Escultores/Escultores';
 import EscultorDetail from './pages/Public/Escultores/EscultorDetalle';
 import ErrorPage from './pages/Error404';
 import Eventos from './pages/Admin/Eventos';
-import EventoDetalle from './pages/Public/Eventos/EventoDetalle';
 import EventoDetalle2 from './pages/Public/Eventos/EventoDetalle2';
 import EventosPublic from './pages/Public/Eventos/Eventos';
 import Escultores from './pages/Admin/Escultores';
 import ObrasPublic from './pages/Public/Obras/Obras';
 import ObraDetail from './pages/Public/Obras/ObraDetalle';
 import ObrasAdmin from './pages/Admin/Obras/ObrasAd';
+import TablaObrasQR from './pages/VerQR/VerQR';
 import ManagerVotes from './pages/Admin/ManagerVotes';
 import Voted from  './pages/Votacion';
 import { RiOilLine } from 'react-icons/ri';
@@ -44,6 +44,12 @@ const routes = [
     element: <ManagerVotes />,
     title: 'Votaciones',
     rol: 'admin',
+  },
+  {
+    path: 'obras',
+    element: <TablaObrasQR />,
+    title: 'ObrasQR',
+    rol: 'empleado'
   },
   {
     path: 'escultores',

@@ -5,6 +5,7 @@ import { EdicionProvider } from './EdicionContexto';
 import { useAuth } from './LoginContexto';
 import Auth from './layout/Auth';
 import Admin from './layout/Admin';
+import Empleado from './layout/Empleado';
 import Public from './layout/Public';
 import User from './layout/User';
 import Register from './layout/Registro';
@@ -19,6 +20,7 @@ function App() {
   const { isAuthenticated, rolUser } = useAuth();
   const isAdmin = rolUser.includes('admin') 
   const isUser = rolUser.includes('user');
+  const isEmpleado = rolUser.includes('empleado');
  
   return (
     <ChakraProvider theme={theme}>
@@ -32,7 +34,8 @@ function App() {
            <Route path="/admin/*" element={<Admin />} /> )}
             {isAuthenticated && isUser && (
             <Route path="/user/*" element={<User />} /> )}
-        
+            {isAuthenticated && isEmpleado && (
+            <Route path="/empleado/*" element={<Empleado />} /> )}
         <Route
             path="/*"
             element={
@@ -42,8 +45,9 @@ function App() {
                   isAuthenticated
                     ? isAdmin
                       ? '/admin/escultores'
-                      : isUser? '/user/escultores' : '/public/eventos'
-                    : '/public/eventos'
+                      : isUser ? '/user/escultores' 
+                      : isEmpleado ? '/empleado/obras' : '/auth/'
+                    : '/auth/'
                 }
           />
         }

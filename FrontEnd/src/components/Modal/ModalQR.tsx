@@ -32,7 +32,7 @@ const ModalQR: React.FC<QRProps> = ({isOpen,onClose, urlcodigo, obra}) => {
 
     return (
         <>
-            <Modal isOpen={isOpen} onClose={onClose}>
+            <Modal isOpen={isOpen} onClose={onClose} size={"full"}>
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader>QR para {obra}</ModalHeader>
