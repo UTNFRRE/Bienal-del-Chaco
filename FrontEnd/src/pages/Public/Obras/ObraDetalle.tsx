@@ -128,24 +128,47 @@ const ObraDetail = () => {
               display="flex"
               flexDirection={'column'}
               mt={1}
-              mr={10}
+             
               className="Informacion"
             >
-            <Flex gap="4" alignItems="center" 
-            justifyContent={'center'} mt={8}>
-              <Image
-                src={obra.escultorImagen}
-                boxSize="90px"
-                borderRadius="full"
-                borderWidth={1}
-                borderColor="azul"
-                borderStyle="solid"
-              />
-              <Box>
-                <Heading size="sm">{obra.escultorNombre}</Heading>
-                <Text as="i">{obra.escultorPais}</Text>
-              </Box>
-            </Flex>
+            <Flex
+                gap="4"
+                alignItems="center"
+                justifyContent="center"
+                mt={8}
+              
+                position="relative"
+              >
+                <Box
+                  position="absolute"
+                  left="0"
+                  top="0"
+                  bottom="0"
+                  bgColor="azul"
+                  borderTopLeftRadius="full"
+                  borderBottomLeftRadius="full"
+                  overflow="hidden"
+                  width="calc(100% - 70px)"
+                  ml="70px"
+                />
+                <Image
+                  src={obra.escultorImagen}
+                  boxSize="90px"
+                  borderRadius="full"
+                  borderWidth={1}
+                  borderColor="azul"
+                  borderStyle="solid"
+                  zIndex={1}
+                />
+                <Box zIndex={1} pl="4">
+                  <Heading size="sm" color="beige">
+                    {obra.escultorNombre}
+                  </Heading>
+                  <Text as="i" color="beige">
+                    {obra.escultorPais}
+                  </Text>
+                </Box>
+              </Flex>
             <Box
               mt={6}
               display={'flex'}

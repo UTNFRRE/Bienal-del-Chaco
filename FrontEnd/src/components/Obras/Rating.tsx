@@ -33,7 +33,7 @@ function Rating({ rating }: RatingProps) {
               <BsStarFill
                 key={i}
                 style={{ marginLeft: '1' }}
-                color={i < rating ? 'teal.500' : 'gray.300'}
+                color={i < rating ? '#CDC2A5' : 'gray.300'}
               />
             );
           }

@@ -264,10 +264,17 @@ export default function ObrasPublic() {
                       p={3}
                       onClick={() => handleCardClick(obra.esculturaId)}
                     >
-                      <Heading fontFamily={'Times New Roman'}>
-                        {obra.nombre}
-                      </Heading>
-                      <Text as={'kbd'}>{obra.escultorNombre}</Text>
+                      <Flex direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
+                          <Flex direction={'column'}>
+                            <Heading fontFamily={'Times New Roman'}>
+                              {obra.nombre}
+                            </Heading>
+                            <Text as={'kbd'}>{obra.escultorNombre}</Text>
+                          </Flex>
+                            <Flex mr={5} transform="scale(1.5)">
+                              <Rating rating={votos[obra.esculturaId]} />
+                            </Flex>
+                      </Flex>
                       <Divider
                         mt={1}
                         mb={1}
@@ -276,20 +283,6 @@ export default function ObrasPublic() {
                       />
                       <Box onClick={() => handleCardClick(obra.esculturaId)}>
                         <Text noOfLines={3}>{obra.descripcion}</Text>
-                        <Text>Puntuacion:</Text>
-                        {/* <div className="ratingP">
-                          <input value="5" name="rate" id="star5" type="radio" disabled checked={votos[obra.esculturaId] === 5} />
-                          <label title="text" htmlFor="star5"></label>
-                          <input value="4" name="rate" id="star4" type="radio" disabled checked={votos[obra.esculturaId] === 4} />
-                          <label title="text" htmlFor="star4"></label>
-                          <input value="3" name="rate" id="star3" type="radio" disabled checked={votos[obra.esculturaId] === 3} />
-                          <label title="text" htmlFor="star3"></label>
-                          <input value="2" name="rate" id="star2" type="radio" disabled checked={votos[obra.esculturaId] === 2} />
-                          <label title="text" htmlFor="star2"></label>
-                          <input value="1" name="rate" id="star1" type="radio" disabled checked={votos[obra.esculturaId] === 1} />
-                          <label title="text" htmlFor="star1"></label>
-                       </div> */}
-                        <Rating rating={obra.promedioVotos} />
                       </Box>
                     </Box>
                   
