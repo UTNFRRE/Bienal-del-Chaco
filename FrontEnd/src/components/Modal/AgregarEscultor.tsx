@@ -13,9 +13,10 @@ import {
   Box,
   FormLabel,
   FormControl,
+  Flex,
 } from '@chakra-ui/react';
 import { useState } from 'react';
-import ZonaCarga from '../ZonaCarga/ZonaCarga';
+import DropZone from '../ZonaCarga/ZonaCarga';
 
 interface ModalComponentProps {
   isOpen: boolean;
@@ -94,21 +95,18 @@ export default function ModalAgregarEscultor({
         <ModalBody>
           <FormControl isRequired>
             <Stack gap={7}>
-              <Stack direction="row" gap={5} w="100%">
-                <Box>
+                <Box w={"100%"}>
                   <FormLabel mb={0}>Nombre y Apellido</FormLabel>
                   <Input
                     placeholder=""
                     size="md"
                     variant="Unstyled"
-                    width={370}
                     borderWidth={1}
                     flex={1}
                     value={nombre}
                     onChange={(e) => setNombre(e.target.value)}
                   />
                 </Box>
-              </Stack>
               <Stack direction="row" gap={5} w="100%">
                 <Box>
                   <FormLabel mb={0}>Pais</FormLabel>
@@ -181,10 +179,9 @@ export default function ModalAgregarEscultor({
                   />
                 </Box>
               </Stack>
-              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-              <ZonaCarga maxFiles={1} onFilesChange={handleFilesChange} />{' '}
-              </div>
-              {/* Limita a 1 una foto */}
+              <Flex justify={"center"} >
+                <DropZone maxFiles={1} onFilesChange={handleFilesChange} />
+              </Flex>
             </Stack>
           </FormControl>
         </ModalBody>
