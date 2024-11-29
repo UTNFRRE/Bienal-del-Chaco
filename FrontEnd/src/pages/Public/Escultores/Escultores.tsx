@@ -1,6 +1,5 @@
 import {
   Box,
-  Flex,
   Input,
   Image,
   Container,
@@ -9,7 +8,6 @@ import {
   Stack,
   Card,
   CardBody,
-  IconButton,
   SimpleGrid,
   Heading,
   //Grid,
@@ -26,7 +24,7 @@ import { useAuth } from '../../../LoginContexto';
 import { ArrowLeftIcon, ArrowRightIcon, SearchIcon } from '@chakra-ui/icons';
 
 interface Escultor {
-  id: number;
+  escultorId: number;
   nombre: string;
   pais: string;
   foto: string;
@@ -41,7 +39,9 @@ function Escultoress () {
   const [showInput, setShowInput] = useState(false)
   const [filter, setFilter] = useState('');
   const [pageNumber, setpageNumber] = useState(1);
-  const [pageSize] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize] = useState(10); // Cantidad de obras por página
+  const [totalPages, setTotalPages] = useState(2);
 
 
 
@@ -113,6 +113,17 @@ return (
 
           
           
+         <Box position="relative" display="flex" alignItems="center" borderWidth={1} borderColor={'beige'}>
+          <IconButton
+            aria-label="Buscar"
+            icon={<SearchIcon />}
+            variant="outline"
+            color={'beige'}
+            borderColor={"#0B192C"}
+            onMouseEnter={() => setShowInput(true)}
+            onMouseLeave={() => setShowInput(false)}
+          />
+          {showInput && (
             <Input
               type="text"
               value={filter}
@@ -123,7 +134,11 @@ return (
               backgroundColor={"#0B192C"}
              // color={'beige'}
               variant={"outline"}
+              onMouseEnter={() => setShowInput(true)}
+              onMouseLeave={() => setShowInput(false)}
             />
+          )}
+        </Box>
           
         
          </Flex>
@@ -141,7 +156,7 @@ return (
 
       >
         {Escultores.map((escultor) => (
-          <GridItem key={escultor.id} //w="100%" h="100%" 
+          <GridItem key={escultor.escultorId} //w="100%" h="100%" 
           w="270px" h="340px" mr={'100px'}>
             <Card
               outline="2px solid #b4b4b8"
@@ -163,7 +178,7 @@ return (
                 w='100%'
                 display="flex"
                 borderColor="#b4b4b8"
-                onClick={() => handleCardClick(escultor.id)}  // Mueve el onClick al Stack
+                onClick={() => handleCardClick(escultor.escultorId)}  // Mueve el onClick al Stack
                 >
                 <Image
                   src={escultor.foto}
@@ -183,7 +198,7 @@ return (
                 alignItems="center"
                 flex={1}
                 //maxHeight={'27%'}
-                 onClick={() => handleCardClick(escultor.id)}>
+                 onClick={() => handleCardClick(escultor.escultorId)}>
    
                 <Stack direction="column" ml="5%" spacing={0}>
 
