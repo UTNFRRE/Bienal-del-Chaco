@@ -112,7 +112,7 @@ const routes = [
     rol: 'public',
   },
   {
-    path: 'voting/:id/:userId',
+    path: 'voting/:id/:token',
     element: <Voted />,
     title: '',
     rol: 'user',

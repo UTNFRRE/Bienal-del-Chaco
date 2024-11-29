@@ -1,12 +1,12 @@
 const API_URL = 'http://localhost:5232';
+import useCookies from 'js-cookie';
 
 export const addVoto = async (
-    userId: string,
     esculturaId: number,
     puntuacion: number,
 ) => {
     
-    
+    const userId = useCookies.get('IdUser');
     try {
         const response = await fetch(`${API_URL}/Votos`, {
             method: 'POST',
