@@ -37,9 +37,9 @@ const ManagerVotes = () => {
 
     useEffect(() => {
         const fetchObras = async () => {
-            const filter = ''
+            
             try{
-                const datos = await getObras(currentPage, pageNumber, edicion, filter);
+                const datos = await getObras(currentPage, pageNumber, edicion,'');
                 console.log(datos);
                 setObras(datos);
                 setRefresh(!refresh);
@@ -49,7 +49,7 @@ const ManagerVotes = () => {
         };
         fetchObras();
         
-    }, [edicion]);
+    }, [edicion,]);
 
 
     //Llamario a la API
@@ -99,7 +99,7 @@ const ManagerVotes = () => {
                         flexDirection={{base: "column", md: "row"}}
                         position="absolute"
                     >
-                        <Box height="100%" width={{md:"40%", base:"100%"}}>
+                        <Box height="100%" pr={4} width={{md:"40%", base:"100%"}}>
                              <DataTable data={Obras} /> 
                         </Box>
                         <Box  height="100%" width="60%">
