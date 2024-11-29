@@ -9,6 +9,7 @@ import Cookies from 'js-cookie';
 import ObrasRelacionadas from './ObrasRelacionadas';
 import { HeadVotos } from '../../../API/Public/Votacion';
 import { useAuth } from '../../../LoginContexto';
+import { useEdicion } from '../../../EdicionContexto';
 import { WarningIcon } from '@chakra-ui/icons';
 
 interface Obra {
@@ -32,6 +33,7 @@ const ObraDetail = () => {
   const [token, setToken] = useState<string | null>(null);
   const navigate = useNavigate();
   const { rolUser } = useAuth();
+  const {votacionHabilitada} = useEdicion();
 
   useEffect(() => {
     const fetchObraById = async () => {
@@ -204,9 +206,14 @@ const ObraDetail = () => {
             {isDisabled && <Flex alignItems={'center'} p={2} gap={2} bgColor={'azul'} color={'beige'}>
               <WarningIcon color={'beige'} />
               Ya has votado por esta obra
-              </Flex>}
+            </Flex>}
+
+            {!votacionHabilitada && <Flex alignItems={'center'} p={2} gap={2} bgColor={'azul'} color={'beige'}>
+              <WarningIcon color={'beige'} />
+              La votación se encuentra cerrada
+            </Flex>}
             
-            { rolUser !== '' && !isDisabled &&
+            { rolUser !== '' && !isDisabled && votacionHabilitada &&
               <Button onClick={handleVotarClick} isDisabled={isDisabled} variant={'bienal'}>Votar</Button>
             }
             </Flex>

@@ -36,3 +36,38 @@ export const addEdicion = async (anio: string, fechaInicio: string, fechaFin:str
     throw new Error('Network error: ' + error);
   }
 };
+
+export const EditVotacion = async (id: string, valor: boolean) => {
+  const formData = new FormData();
+  formData.append('VotacionHabilitada', valor.toString());
+  try {
+    const response = await fetch(`${API_URL}/Edicion/${id}`, {
+      method: 'PATCH',
+      body: formData,
+    });
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      throw new Error('Error en la respuesta del servidor');
+    }
+  } catch (error) {
+    throw new Error('Network error: ' + error);
+  }
+}
+
+export const GetVotacion = async (id: string) => {
+  try {
+    const response = await fetch(`${API_URL}/Edicion/${id}`, {
+      method: 'GET',
+    });
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      throw new Error('Error en la respuesta del servidor');
+    }
+  } catch (error) {
+    throw new Error('Network error: ' + error);
+  }
+}
