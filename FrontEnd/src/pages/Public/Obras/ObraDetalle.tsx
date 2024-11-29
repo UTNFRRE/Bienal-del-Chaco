@@ -91,16 +91,21 @@ const ObraDetail = () => {
             w={'100%'}
             minHeight={'33vh'} 
             display={'flex'}
-            mb={2}
+            mb={-5}
             backgroundColor="#0B192C"
-            alignItems={'center'}
+            //alignItems={'center'}
             position={'relative'}
             justifyContent={'space-around'}
           >
-            <Heading ml={'7%'} color={'#CDC2A5'} fontSize={'5xl'}>
+            <Heading 
+            ml={'4%'} color={'#CDC2A5'} fontSize={'5xl'}
+            marginRight={'auto'}
+            mt={'3%'}
+            
+            >
               {obra.nombre}
             </Heading>
-            <Flex>
+            <Flex position={'relative'} mt={'3%'} marginRight={'8%'}>
               <RedesSocialesLight />
             </Flex>
           </Box>
@@ -112,19 +117,25 @@ const ObraDetail = () => {
             flexDirection={'row'}
           >
             <Box p={4} 
-             top={"-35px"} 
-             position="relative"
-             zIndex={1}
-             >
+              top={"-10%"} 
+              position="relative"
+              zIndex={1}
+              maxWidth={{ base: '100%', md: '100%', lg: '65%' }}
+              width="auto" // Ajusta el ancho automáticamente
+              height="auto"
+              ml={'1%'}
+            >
               <ImageGallery
                 items={images}
                 showPlayButton={true} // desactivo el boton de play
                 autoPlay={true} //activo para que arranquen solas
+                additionalClass="image-gallery"
                 slideInterval={5000} //cada cuanto cambia, 4seg
+                
               />
             </Box>
             <Box
-              w={{ base: '100%', md: '100%', lg: '30%' }}
+              w={{ base: '100%', md: '100%', lg: '35%' }}
               display="flex"
               flexDirection={'column'}
               mt={1}
@@ -134,7 +145,7 @@ const ObraDetail = () => {
                   gap="4"
                   alignItems="center"
                   justifyContent="center"
-                  mt={8}
+                  mt={9}
                   position="relative"
                 >
                   <Box
@@ -169,7 +180,7 @@ const ObraDetail = () => {
                     </Text>
                   </Box>
                 </Flex>
-            <Box
+            {/* <Box
               mt={16}
               mr={'20px'}
               display={'flex'}
@@ -178,7 +189,7 @@ const ObraDetail = () => {
               marginLeft={'auto'}
               w={'80%'}
             >
-              <Text as="em">Bajo la tematica {obra.tematica}</Text>
+              <Text as="em"> {obra.tematica}</Text>
               <Text as="em">Creada el {obra.fechaCreacion}</Text>
               <Text textAlign={'left'} mt={6} ml={4}>
                 {obra.descripcion}
@@ -187,6 +198,42 @@ const ObraDetail = () => {
               { rolUser !== '' && !isDisabled &&
               <Button onClick={handleVotarClick} isDisabled={isDisabled}>Votar</Button>
               }
+            </Box> */}
+            <Box
+              mt={'18%'}
+              mr={'6%'}
+              display={'flex'}
+              textAlign={'right'}
+              flexDirection={'column'}
+              marginLeft={'auto'}
+              w={'90%'}
+              //bg="#0B192C" // Fondo azul
+              p={4} // Padding para el contenido
+              borderRadius="2" // Bordes redondeados
+
+
+              //color: '#d9d8d7' 
+
+            >
+              <Text as="em" color="azul" fontWeight="bold" textAlign={'left'}>
+                Título: <span style={ { fontWeight: 'normal' }}>{obra.tematica}</span>
+              </Text>
+              <Text as="em" color="azul" fontWeight="bold" mt={3} textAlign={'left'}>
+                <span style={{ fontWeight: 'normal' }}>Creada el</span>
+                <span style={{ fontWeight: 'bold' }}> {obra.fechaCreacion}</span>
+              </Text>
+              <Text textAlign="center" color="azul" fontWeight="bold" mt={6}>
+                Descripción
+              </Text>
+              <Text textAlign="justify" mt={2} ml={4} color="azul" mb={2}>
+              {obra.descripcion}
+              </Text>
+              {isDisabled && <Text color="red">Ya has votado por esta obra</Text>}
+              {rolUser !== '' && !isDisabled && (
+                <Button onClick={handleVotarClick} isDisabled={isDisabled} mt={4}>
+                  Votar
+                </Button>
+              )}
             </Box>
           </Box>
           </Box>

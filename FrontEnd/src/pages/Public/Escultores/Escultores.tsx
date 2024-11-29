@@ -6,7 +6,7 @@ import {
   //Heading,
   Stack,
   Card,
-  CardBody,
+  //CardBody,
   SimpleGrid,
   Heading,
   //Grid,
@@ -25,14 +25,7 @@ interface Escultor {
   pais: string;
   foto: string;
 }
-/*
-const json: Escultor[] = [
-  {
-      id:1,
-      nombre: "Juan",
-      pais: "Argentina",
-      foto: "https://www.bienaldelchaco.org/2024/wp-content/uploads/2024/04/Foto-Luis-Bernardi.png"
-  }];*/
+
 
 function Escultoress () {
 
@@ -63,95 +56,6 @@ function Escultoress () {
     
       fetchEscultores();
     }, [edicion]);
-
-//   return (
-//     <Container maxWidth="100vw" width="100vw" height="100vh" centerContent>
-//       <Grid
-//         templateColumns="repeat(auto-fit, minmax(250px, 1fr))"
-//         gap={10}
-//         w={'90%'}
-//         h={'100%'}
-//         justifyItems="center"
-//         alignItems="center"
-//         mt={6}
-//       >
-//         {Escultores.map((escultor) => (
-//           <GridItem w="270px" h="340px" mr={'100px'}>
-//             <Card
-//               outline="2px solid #b4b4b8"
-//               bg="linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)"
-//               w="110%"
-//               h="105%"
-//               className="my-box"
-//               borderRadius={3}
-//               sx={{
-//                 transition: 'transform 0.3s ease',
-//                 '&:hover': {
-//                   transform: 'scale(1.05)',
-//                   cursor: 'pointer',
-//                 },
-//               }}
-//             >
-//               <CardBody
-//                 h={'100%'}
-//                 w={'100%'}
-//                 display="flex"
-//                 p={0}
-//                 justifyContent="center"
-//                 alignItems="center"
-//                 onClick={() => handleCardClick(escultor.id)}
-//               >
-//                 <Stack
-//                   h={'240px'}
-//                   w={'263px'}
-//                   borderRadius={3}
-//                   borderWidth={2}
-//                   borderColor={'darkgray'}
-//                 >
-//                   <Image
-//                     src={escultor.foto}
-//                     m={0}
-//                     w={'100%'}
-//                     h={'100%'}
-//                     borderRadius={3}
-//                   />
-//                 </Stack>
-//               </CardBody>
-
-//               <Stack
-//                 mt={0}
-//                 bg="white"
-//                 width="100%"
-//                 height="90px"
-//                 maxHeight={'27%'}
-//                 direction={'row'}
-//                 justifyContent={'space-between'}
-//               >
-//                 <Stack direction={'column'}>
-//                   <Text
-//                     ml={'22px'}
-//                     mt={'5px'}
-//                     whiteSpace="pre-line"
-//                     fontSize="18px"
-//                     lineHeight="1.2"
-//                     bg="black"
-//                     bgClip="text"
-//                     fontWeight="bold"
-//                   >
-//                     {escultor.nombre}
-//                   </Text>
-//                   <Text ml={'22px'} as="i" fontSize="17px" color="black">
-//                     {escultor.pais}
-//                   </Text>
-//                 </Stack>
-//                 {/* <Image src={escultor.bandera} width="60px" height="40px" mr={"11px"} mt={"20px"}/> */}
-//               </Stack>
-//             </Card>
-//           </GridItem>
-//         ))}
-//       </Grid>
-//     </Container>
-//   );
 
 
 return (

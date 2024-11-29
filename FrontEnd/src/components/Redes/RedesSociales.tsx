@@ -1,7 +1,7 @@
 import { Flex, IconButton } from '@chakra-ui/react';
 import { FaFacebook, FaTwitter, FaInstagram, FaWhatsapp } from 'react-icons/fa';
 import './RedesSociales.css';
-import '@fortawesome/fontawesome-free/css/all.min.css';
+//import '@fortawesome/fontawesome-free/css/all.min.css';
 
 function RedesSociales() {
   const currentUrl = window.location.href;
