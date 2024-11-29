@@ -186,7 +186,6 @@ export default function LoginPage() {
               borderColor="white"
               fontWeight="500"
               letterSpacing="1px"
-              onClick={handleLogin}
               _hover={{ bg: '#747264' }}
               onClick={handleSubmit}
             >
