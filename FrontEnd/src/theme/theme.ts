@@ -38,10 +38,10 @@ const theme = extendTheme({
           },
         }),
         bienal: {
-          bg: 'principal',
-          color: 'white',
+          bg: 'azul',
+          color: 'beige',
           _hover: {
-            bg: 'principalHover',
+            bg: 'principal',
           },
         },
         delete: {

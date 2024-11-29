@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { Box, Heading, Text, Image, Flex, Button } from '@chakra-ui/react';
+import { Box, Heading, Text, Image, Flex, Button, AlertIcon } from '@chakra-ui/react';
 import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import RedesSocialesLight from '../../../components/Redes/RedesSocialesLight';
@@ -9,6 +9,7 @@ import Cookies from 'js-cookie';
 import ObrasRelacionadas from './ObrasRelacionadas';
 import { HeadVotos } from '../../../API/Public/Votacion';
 import { useAuth } from '../../../LoginContexto';
+import { WarningIcon } from '@chakra-ui/icons';
 
 interface Obra {
   esculturaId: number;
@@ -28,6 +29,7 @@ const ObraDetail = () => {
   const [obra, setObra] = useState<Obra | null>(null);
   const [images, setImages] = useState<any[]>([]);
   const [isDisabled, setIsDisabled] = useState(false);
+  const [token, setToken] = useState<string | null>(null);
   const navigate = useNavigate();
   const { rolUser } = useAuth();
 
@@ -62,6 +64,10 @@ const ObraDetail = () => {
   }, [obra, userId]);
 
   useEffect(() => {
+    setToken('aaaaa')
+  }, []);
+
+  useEffect(() => {
     if (obra) {
       const images = [
         {
@@ -74,7 +80,7 @@ const ObraDetail = () => {
   }, [obra]);
 
   const handleVotarClick = () => {
-    navigate(`/user/voting/${id}/${userId}`);
+    navigate(`/user/voting/${id}/${token}`);
   };
 
   return (
@@ -97,7 +103,7 @@ const ObraDetail = () => {
             position={'relative'}
             justifyContent={'space-around'}
           >
-            <Heading ml={'7%'} color={'#CDC2A5'} fontSize={'5xl'}>
+            <Heading ml={'7%'} color={'#CDC2A5'} fontSize={'5xl'} fontFamily={"Jost"}>
               {obra.nombre}
             </Heading>
             <Flex>
@@ -170,24 +176,40 @@ const ObraDetail = () => {
                   </Box>
                 </Flex>
             <Box
-              mt={16}
-              mr={'20px'}
+              mt={20}
               display={'flex'}
               textAlign={'right'}
               flexDirection={'column'}
               marginLeft={'auto'}
+              fontFamily={'Barlow'}
+              fontSize={19}
               w={'80%'}
+              color={'azul'}
             >
-              <Text as="em">Bajo la tematica {obra.tematica}</Text>
-              <Text as="em">Creada el {obra.fechaCreacion}</Text>
-              <Text textAlign={'left'} mt={6} ml={4}>
+              <Text as="em" mr={3}>Bajo la tematica {obra.tematica}</Text>
+              <Text as="em" mr={3}>Creada el {obra.fechaCreacion}</Text>
+              <Text textAlign={'left'} mt={6} >
                 {obra.descripcion}
               </Text>
-              {isDisabled && <Text>Ya has votado por esta obra</Text>}
-              { rolUser !== '' && !isDisabled &&
-              <Button onClick={handleVotarClick} isDisabled={isDisabled}>Votar</Button>
-              }
             </Box>
+            <Flex 
+             textAlign={'right'}
+             flexDirection={'column'}
+             marginLeft={'auto'}
+             fontFamily={'Barlow'}
+             fontSize={19}
+             w={'80%'}
+             color={'azul'}
+             mt={20}>
+            {isDisabled && <Flex alignItems={'center'} p={2} gap={2} bgColor={'azul'} color={'beige'}>
+              <WarningIcon color={'beige'} />
+              Ya has votado por esta obra
+              </Flex>}
+            
+            { rolUser !== '' && !isDisabled &&
+              <Button onClick={handleVotarClick} isDisabled={isDisabled} variant={'bienal'}>Votar</Button>
+            }
+            </Flex>
           </Box>
           </Box>
           <Flex direction={'column'}>

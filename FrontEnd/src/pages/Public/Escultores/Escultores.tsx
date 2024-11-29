@@ -14,6 +14,8 @@ import {
   Heading,
   //Grid,
   GridItem,
+  IconButton,
+  Flex,
   //Center,
 } from '@chakra-ui/react';
 import { getEscultores } from '../../../API/Escultores';
@@ -50,6 +52,18 @@ function Escultoress () {
     navigate(`/public/escultores/${id}`);
     }
   }
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
   
   const [Escultores, setEscultores] = useState<Escultor[]>([]);
   
@@ -194,6 +208,26 @@ return (
           </GridItem>
         ))}
       </SimpleGrid>
+      {/* <Box w={'100%'} mr={20}>
+        <Flex justifyContent="flex-end" mt={4} gap={1}>
+          <IconButton
+            aria-label="Previous Page"
+            icon={<ArrowLeftIcon />}
+            variant="bienal"
+            borderRadius={3}
+            onClick={() => handlePreviousPage()}
+            isDisabled={currentPage === 1}
+          />
+          <IconButton
+            aria-label="Next Page"
+            icon={<ArrowRightIcon />}
+            variant="bienal"
+            borderRadius={3}
+            onClick={() => handleNextPage()}
+            isDisabled={currentPage === totalPages}
+          />
+        </Flex>
+      </Box> */}
     </Container>
   );}
 

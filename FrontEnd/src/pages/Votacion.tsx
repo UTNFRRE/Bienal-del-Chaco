@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import { getObraById } from '../API/Admin/Obras';
 import { addVoto } from '../API/Public/Votacion';
 import { useToast } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 
 interface Obra {
     esculturaId: number;
@@ -22,7 +23,8 @@ interface Obra {
 
 function Voted() {
     const { id } = useParams<{ id: string }>();
-    const { userId } = useParams<{ userId: string }>();
+    const { token } = useParams<{ token: string }>();
+    const navigate = useNavigate();
     const [obra, setObra] = useState<Obra | null>(null);
     const [puntaje, setPuntaje] = useState<number>(0);
     const toast = useToast();
@@ -46,14 +48,12 @@ function Voted() {
     };
 
     const handlePuntuacion = async () => {
-        // Verificación de valores antes de hacer la llamada
-        if (!userId || !obra?.esculturaId || puntaje === 0) {
-            console.error("Faltan valores para la votación:", { userId, esculturaId: obra?.esculturaId, puntaje });
-            return; // Salir si falta algún valor
+        if ( !obra?.esculturaId || puntaje === 0) {
+            return; 
         }
 
         try {
-            await addVoto(userId, obra.esculturaId, puntaje);
+            await addVoto(obra.esculturaId, puntaje);
             toast({
                 title: 'Exito',
                 description: 'Voto registrado correctamente',
@@ -71,6 +71,7 @@ function Voted() {
                 isClosable: true,
             });
         }
+        navigate('/user/obras');
     };
 
     return (
@@ -111,6 +112,7 @@ function Voted() {
                             onClick={handlePuntuacion}
                             color="#cdc2a5"
                             fontSize="1.3em"
+                            isDisabled={puntaje === 0 || !obra}
                             sx={{
                                 _hover: {
                                     transform: 'scale(1.1)',
