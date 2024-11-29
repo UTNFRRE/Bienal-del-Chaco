@@ -46,8 +46,8 @@ function App() {
                     ? isAdmin
                       ? '/admin/escultores'
                       : isUser ? '/user/escultores' 
-                      : isEmpleado ? '/empleado/obras' : '/auth/'
-                    : '/auth/'
+                      : isEmpleado ? '/empleado/obras' : '/public/obras'
+                    : '/public/obras'
                 }
           />
         }
