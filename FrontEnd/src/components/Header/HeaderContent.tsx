@@ -19,6 +19,7 @@ import {useNavigate} from 'react-router-dom';
 import { getEdiciones } from '../../API/Ediciones';
 import { useEffect, useState } from 'react';
 import { useEdicion } from '../../EdicionContexto';
+import { useAuth } from '../../LoginContexto';
 import { AddIcon } from '@chakra-ui/icons';
 import NuevoElementoModal from '../Modal/NuevaEdicion';
 import { addEdicion } from '../../API/Ediciones';
@@ -33,6 +34,7 @@ export function HeaderContent({ LINK_ITEMS, user }: NavContentProps) {
 
   const navigate = useNavigate();
   const { edicion, setEdicion } = useEdicion();
+  const {onLogout} = useAuth();
   const [ediciones, setEdiciones] = useState<any[]>([]);
   const [refresh, setRefresh] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -135,7 +137,7 @@ export function HeaderContent({ LINK_ITEMS, user }: NavContentProps) {
               <MenuItem color="gray" pointerEvents="none">
                 Ver Perfil
               </MenuItem>
-              <MenuItem>Cerrar sesión</MenuItem>
+              <MenuItem onClick={() => onLogout()}>Cerrar sesión</MenuItem>
             </MenuList>
           </Menu>
         )}

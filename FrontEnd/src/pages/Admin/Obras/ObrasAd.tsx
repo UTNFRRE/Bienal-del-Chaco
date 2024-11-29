@@ -19,11 +19,10 @@ import {
   DeleteIcon,
   AddIcon,
   SearchIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
   ArrowLeftIcon,
   ArrowRightIcon,
 } from '@chakra-ui/icons';
+import { BsQrCode } from "react-icons/bs";
 import { useState, useEffect } from 'react';
 import { useDisclosure } from '@chakra-ui/react';
 import { useEdicion } from '../../../EdicionContexto';
@@ -31,7 +30,7 @@ import { useEdicion } from '../../../EdicionContexto';
 import AgregarObra from '../../../components/Modal/AgregarObra';
 import ModalConfirmar from '../../../components/Modal/ConfirmarCambios';
 import ModificarObra from '../../../components/Modal/ModificarObra';
-import Obras from '../../../API/Public/Obras'; // Simulación de API con datos de obras.
+import  ModalQR  from '../../../components/Modal/ModalQR';
 
 import {
   getObras,
@@ -54,7 +53,6 @@ interface Obra {
 
 function TablaObras() {
   const [obras, setObras] = useState<Obra[]>([]);
-  const [filteredObras, setFilteredObras] = useState<Obra[]>([]);
   const [obraElegida, setObraElegida] = useState<Obra | null>(null);
   const [refresh, setRefresh] = useState(false);
   const {edicion} = useEdicion();
@@ -78,6 +76,11 @@ function TablaObras() {
     isOpen: isOpenDelete,
     onOpen: onOpenDelete,
     onClose: onCloseDelete,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenQR,
+    onOpen: onOpenQR,
+    onClose: onCloseQR,
   } = useDisclosure();
 
 
@@ -202,6 +205,11 @@ function TablaObras() {
     }
   };
 
+  const handleQR = (obra: Obra) => {
+    setObraElegida(obra);
+    onOpenQR();
+  };
+
   return (
     <>
       <Flex alignItems="center" flexDirection="column">
@@ -312,6 +320,13 @@ function TablaObras() {
                             borderRadius={3}
                             onClick={() => handleDelete(obra)}
                           />
+                          <IconButton
+                            aria-label="QR"
+                            icon={<BsQrCode />}
+                            variant="bienal"
+                            borderRadius={3}
+                            onClick={() => handleQR(obra)}
+                          />
                         </Flex>
                       </Td>
                     </Tr>
@@ -361,6 +376,12 @@ function TablaObras() {
         onClose={onCloseDelete}
         texto={`¿Está seguro que desea eliminar la obra ${obraElegida?.nombre}?`}
         confirmar={handleConfirmarDelete}
+      />
+      <ModalQR
+        isOpen={isOpenQR}
+        onClose={onCloseQR}
+        obra={obraElegida?.nombre || ''}
+        urlcodigo={`https://github.com/UTNFRRE/Bienal-del-Chaco`}
       />
     </>
   );

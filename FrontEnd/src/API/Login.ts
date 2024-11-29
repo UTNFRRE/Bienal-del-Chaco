@@ -53,8 +53,8 @@ export const AddUser = async (
         body: JSON.stringify({ email, password }),
         });
         if (response.ok) {
-        const data = await response.json();
-        return data;
+        await AddRoltoUser(email, 'user'); 
+        return ;
         } else {
         throw new Error('Error en la respuesta del servidor');
         }
@@ -63,14 +63,33 @@ export const AddUser = async (
     }
     };
 
+  export const AddRoltoUser = async (
+    email: string,
+    roleName: string,
+    ) => {
+    
+    try {
+        const response = await fetch(`${API_URL}/api/Roles/AsignarRol?email=${email}&rolename=${roleName}`, {
+        method: 'POST',
+        });
+        if (response.ok) {
+        const data = await response.json();
+        return data;
+        } else {
+        throw new Error('Error en la respuesta del servidor');
+        }
+    } catch (error) {
+        throw new Error('Network error: ' + error);
+    }
+  }  ;
+
   export const getUserId = async (email: string) => {
     try {
-        const response = await fetch(`${API_URL}/users/${email}`);
+        const response = await fetch(`${API_URL}/Usuarios/InfoUsuario?email=${email}`);
         if (response.ok) {
           const data = await response.json();
-          Cookies.set('IdUser', data.id);
-          Cookies.get('IdUser');
-        return;
+          Cookies.set('IdUser', data.userId);
+        return data;
         } else {
         throw new Error('Error en la respuesta del servidor');
         }
@@ -78,36 +97,3 @@ export const AddUser = async (
         throw new Error('Network error: ' + error);
     }
   };
-
-  
-
-
-export const getUserInfo = async () => {
-    // const token = Cookies.get('.AspNetCore.Identity.Application');
-    const token = Cookies.get('access_token');
-    console.log('El token es:')
-    console.log(token);
-    try {
-        const response = await fetch(`${API_URL}/users/info`, {
-        method: 'GET',
-        // credentials: 'include',
-        headers: {
-          //  'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        });
-        if (response.ok) {
-        const data = await response.json();
-
-        Cookies.set('IdUser', data.id);
-        Cookies.set('Email', data.email);
-
-        return data;
-        } else {
-            const errorResponse = await response.json();
-            throw new Error(JSON.stringify(errorResponse));
-        };
-    } catch (error) {
-        throw new Error('Network error: ' + error);
-    }
-} 

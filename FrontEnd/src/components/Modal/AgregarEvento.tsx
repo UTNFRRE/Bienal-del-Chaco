@@ -14,7 +14,6 @@ import {
   Box,
   FormLabel,
   FormControl,
-  InputProps,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 
@@ -186,12 +185,6 @@ export default function ModalAgregarEvento({
                 />
               </Box>
             </Stack>
-            {latitud && longitud && (
-              <Box>
-                <Text>Latitud: {latitud}</Text>
-                <Text>Longitud: {longitud}</Text>
-              </Box>
-            )}
           </FormControl>
         </ModalBody>
         <ModalFooter mt={6}>

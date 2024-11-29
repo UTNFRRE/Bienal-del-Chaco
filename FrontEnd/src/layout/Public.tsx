@@ -6,7 +6,7 @@ import routes from '../routes';
 import Header from '../components/Header/Header';
 
 export default function Public() {
-  const publicRoutes = routes.filter((route) => route.rol !== 'admin' && route.rol !== 'user');
+  const publicRoutes = routes.filter((route) => route.rol !== 'admin' && route.rol !== 'user' && route.rol !== 'empleado');
   const element = useRoutes(publicRoutes);
   const LINK_ITEMS_ = publicRoutes
     .filter((route) => route.title && route.rol && route.path)
