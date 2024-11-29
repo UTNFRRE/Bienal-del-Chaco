@@ -161,7 +161,7 @@ export default function ObrasPublic() {
               w={"100%"}
               borderColor={'#0B192C'}
               backgroundColor={"#0B192C"}
-             // color={'beige'}
+              color={'beige'}
               variant={"outline"}
               onMouseEnter={() => setShowInput(true)}
               onMouseLeave={() => setShowInput(false)}

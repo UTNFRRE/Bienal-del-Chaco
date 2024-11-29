@@ -164,15 +164,12 @@ const EscultorDetail = () => {
   p={4}
   ml={0}
 >
-<Heading size="md" color="teal.600">
+<Heading size="md" color="azul">
     {escultor.apellido}
   </Heading>
-  <Text as="i">DNI: {escultor.dni}</Text>
   <Text as="i">País: {escultor.pais}</Text>
   <Text as="i">Premios: {escultor.premios}</Text>
-  <Text as="i">Fecha de Nacimiento: {escultor.fechaNacimiento}</Text>
   <Text as="i">Lugar de Nacimiento: {escultor.lugarNacimiento}</Text>
-  <Text as="i">Teléfono: {escultor.telefono}</Text>
   <Text as="i">Biografía: {escultor.biografia}</Text>
 </Stack>
 
