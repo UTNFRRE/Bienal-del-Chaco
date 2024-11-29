@@ -11,6 +11,8 @@ import {
   Heading,
   //Grid,
   GridItem,
+  IconButton,
+  Flex,
   //Center,
 } from '@chakra-ui/react';
 import { getEscultores } from '../../../API/Escultores';
@@ -18,6 +20,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useEdicion } from '../../../EdicionContexto';
 import { useAuth } from '../../../LoginContexto';
+import { ArrowLeftIcon, ArrowRightIcon } from '@chakra-ui/icons';
 
 interface Escultor {
   id: number;
@@ -39,6 +42,9 @@ function Escultoress () {
   const navigate = useNavigate(); 
   const { edicion } = useEdicion();
   const { rolUser } = useAuth();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize] = useState(10); // Cantidad de obras por página
+  const [totalPages, setTotalPages] = useState(2);
 
   const handleCardClick = (id: number) => {
     if (rolUser !== '') {
@@ -47,6 +53,18 @@ function Escultoress () {
     navigate(`/public/escultores/${id}`);
     }
   }
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
   
   const [Escultores, setEscultores] = useState<Escultor[]>([]);
   
@@ -62,96 +80,7 @@ function Escultoress () {
       };
     
       fetchEscultores();
-    }, [edicion]);
-
-//   return (
-//     <Container maxWidth="100vw" width="100vw" height="100vh" centerContent>
-//       <Grid
-//         templateColumns="repeat(auto-fit, minmax(250px, 1fr))"
-//         gap={10}
-//         w={'90%'}
-//         h={'100%'}
-//         justifyItems="center"
-//         alignItems="center"
-//         mt={6}
-//       >
-//         {Escultores.map((escultor) => (
-//           <GridItem w="270px" h="340px" mr={'100px'}>
-//             <Card
-//               outline="2px solid #b4b4b8"
-//               bg="linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)"
-//               w="110%"
-//               h="105%"
-//               className="my-box"
-//               borderRadius={3}
-//               sx={{
-//                 transition: 'transform 0.3s ease',
-//                 '&:hover': {
-//                   transform: 'scale(1.05)',
-//                   cursor: 'pointer',
-//                 },
-//               }}
-//             >
-//               <CardBody
-//                 h={'100%'}
-//                 w={'100%'}
-//                 display="flex"
-//                 p={0}
-//                 justifyContent="center"
-//                 alignItems="center"
-//                 onClick={() => handleCardClick(escultor.id)}
-//               >
-//                 <Stack
-//                   h={'240px'}
-//                   w={'263px'}
-//                   borderRadius={3}
-//                   borderWidth={2}
-//                   borderColor={'darkgray'}
-//                 >
-//                   <Image
-//                     src={escultor.foto}
-//                     m={0}
-//                     w={'100%'}
-//                     h={'100%'}
-//                     borderRadius={3}
-//                   />
-//                 </Stack>
-//               </CardBody>
-
-//               <Stack
-//                 mt={0}
-//                 bg="white"
-//                 width="100%"
-//                 height="90px"
-//                 maxHeight={'27%'}
-//                 direction={'row'}
-//                 justifyContent={'space-between'}
-//               >
-//                 <Stack direction={'column'}>
-//                   <Text
-//                     ml={'22px'}
-//                     mt={'5px'}
-//                     whiteSpace="pre-line"
-//                     fontSize="18px"
-//                     lineHeight="1.2"
-//                     bg="black"
-//                     bgClip="text"
-//                     fontWeight="bold"
-//                   >
-//                     {escultor.nombre}
-//                   </Text>
-//                   <Text ml={'22px'} as="i" fontSize="17px" color="black">
-//                     {escultor.pais}
-//                   </Text>
-//                 </Stack>
-//                 {/* <Image src={escultor.bandera} width="60px" height="40px" mr={"11px"} mt={"20px"}/> */}
-//               </Stack>
-//             </Card>
-//           </GridItem>
-//         ))}
-//       </Grid>
-//     </Container>
-//   );
+    }, [currentPage, pageSize, edicion]);
 
 
 return (
@@ -276,6 +205,26 @@ return (
           </GridItem>
         ))}
       </SimpleGrid>
+      {/* <Box w={'100%'} mr={20}>
+        <Flex justifyContent="flex-end" mt={4} gap={1}>
+          <IconButton
+            aria-label="Previous Page"
+            icon={<ArrowLeftIcon />}
+            variant="bienal"
+            borderRadius={3}
+            onClick={() => handlePreviousPage()}
+            isDisabled={currentPage === 1}
+          />
+          <IconButton
+            aria-label="Next Page"
+            icon={<ArrowRightIcon />}
+            variant="bienal"
+            borderRadius={3}
+            onClick={() => handleNextPage()}
+            isDisabled={currentPage === totalPages}
+          />
+        </Flex>
+      </Box> */}
     </Container>
   );}
 

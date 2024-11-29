@@ -188,7 +188,7 @@ const ObraDetail = () => {
             >
               <Text as="em" mr={3}>Bajo la tematica {obra.tematica}</Text>
               <Text as="em" mr={3}>Creada el {obra.fechaCreacion}</Text>
-              <Text textAlign={'left'} mt={6} ml={4}>
+              <Text textAlign={'left'} mt={6} >
                 {obra.descripcion}
               </Text>
             </Box>
