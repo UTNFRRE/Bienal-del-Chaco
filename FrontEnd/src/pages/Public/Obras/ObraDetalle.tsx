@@ -97,12 +97,7 @@ const ObraDetail = () => {
             position={'relative'}
             justifyContent={'space-around'}
           >
-            <Heading 
-            ml={'4%'} color={'#CDC2A5'} fontSize={'5xl'}
-            marginRight={'auto'}
-            mt={'3%'}
-            
-            >
+            <Heading ml={'4%'} color={'#CDC2A5'} fontSize={'5xl'} marginRight={'auto'} mt={'3%'} fontFamily={"Jost"}>
               {obra.nombre}
             </Heading>
             <Flex position={'relative'} mt={'3%'} marginRight={'8%'}>
@@ -171,7 +166,7 @@ const ObraDetail = () => {
                     zIndex={1}
                   />
                   </Box>
-                  <Box zIndex={1} pl={'90px'} pt={'20px'}>
+                  <Box zIndex={1} pl={'10%'} pt={'20px'}>
                     <Heading size="sm" color="beige">
                       {obra.escultorNombre}
                     </Heading>
@@ -180,25 +175,6 @@ const ObraDetail = () => {
                     </Text>
                   </Box>
                 </Flex>
-            {/* <Box
-              mt={16}
-              mr={'20px'}
-              display={'flex'}
-              textAlign={'right'}
-              flexDirection={'column'}
-              marginLeft={'auto'}
-              w={'80%'}
-            >
-              <Text as="em"> {obra.tematica}</Text>
-              <Text as="em">Creada el {obra.fechaCreacion}</Text>
-              <Text textAlign={'left'} mt={6} ml={4}>
-                {obra.descripcion}
-              </Text>
-              {isDisabled && <Text>Ya has votado por esta obra</Text>}
-              { rolUser !== '' && !isDisabled &&
-              <Button onClick={handleVotarClick} isDisabled={isDisabled}>Votar</Button>
-              }
-            </Box> */}
             <Box
               mt={'18%'}
               mr={'6%'}
@@ -207,13 +183,10 @@ const ObraDetail = () => {
               flexDirection={'column'}
               marginLeft={'auto'}
               w={'90%'}
-              //bg="#0B192C" // Fondo azul
+              fontSize={17}
+              fontFamily={'Barlow'}
               p={4} // Padding para el contenido
               borderRadius="2" // Bordes redondeados
-
-
-              //color: '#d9d8d7' 
-
             >
               <Text as="em" color="azul" fontWeight="bold" textAlign={'left'}>
                 Título: <span style={ { fontWeight: 'normal' }}>{obra.tematica}</span>
