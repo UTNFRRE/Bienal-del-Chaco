@@ -1,4 +1,4 @@
-const API_URL = 'https://bienalbackapi.azurewebsites.net'; // Reemplaza con la URL de tu backend
+const API_URL = 'https://bienalbackapi.azurewebsites.net';
 
 export const getEscultorById = async (id: string) => {
   try {

@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5232';
+const API_URL = 'https://bienalbackapi.azurewebsites.net';
 import Cookies from 'js-cookie';
 
 export const FetchLogin = async (password: string, account: string) => {
