@@ -37,8 +37,9 @@ const ManagerVotes = () => {
 
     useEffect(() => {
         const fetchObras = async () => {
+            const filter = ''
             try{
-                const datos = await getObras(currentPage, pageNumber, edicion);
+                const datos = await getObras(currentPage, pageNumber, edicion, filter);
                 console.log(datos);
                 setObras(datos);
                 setRefresh(!refresh);
@@ -67,10 +68,6 @@ const ManagerVotes = () => {
                     width="100vw"
                     height='10vh'
                     justifyContent='space-between'>
-                    {/* Yoel dijo que sacara esto :( ) */}
-                    {/* <Box position='absolute' zIndex={1} display="flex" width="10vw" top='13%' justifyContent="center" alignItems="center" ml={{ base: 2, md: 4 }}>
-                        <EdicionesMenu />
-                    </Box> */}
                     <Flex
                         zIndex={0}
                         width="100vw"

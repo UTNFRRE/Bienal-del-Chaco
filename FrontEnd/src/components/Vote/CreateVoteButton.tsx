@@ -1,14 +1,27 @@
 //Boton para crear una votacion
 import {useState} from 'react';
-import {Button, Flex, Text} from '@chakra-ui/react';
-import { VscAdd } from "react-icons/vsc";
+import {Button, Flex, Text, useDisclosure} from '@chakra-ui/react';
+import { FaVoteYea } from "react-icons/fa";
+import {NotAllowedIcon} from '@chakra-ui/icons';
+import { useEdicion } from '../../EdicionContexto';
+import ModalConfirmar from '../Modal/ConfirmarCambios';
 
 
 const CreateVoteButton = () => {
     const [hover, setHover] = useState(false);
+    const {votacionHabilitada, Habilitar, Deshabilitar} = useEdicion();
+    const {isOpen, onOpen, onClose} = useDisclosure();
+
+    const handleHabilitarVotacion = () => {
+        Habilitar();
+     }
+     
+     const handleCerrarVotacion = () => {
+        Deshabilitar();
+     }
 
     return(
-        
+        <>
             <Button
                 bg="#1E2A5E"
                 variant="solid"
@@ -16,6 +29,7 @@ const CreateVoteButton = () => {
                 p={4}
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
+                onClick={onOpen}
                 transition="all 0.3s ease"
                 display="flex"
                 alignItems="center"
@@ -27,15 +41,22 @@ const CreateVoteButton = () => {
                         opacity={hover ? 0 : 1}
                         position="absolute"
                     >
-                        <VscAdd />
+                        {votacionHabilitada ? <NotAllowedIcon /> : <FaVoteYea size={23} />}
                     </Flex>
                     <Flex
                         transition="opacity 0.4s ease"
                         opacity={hover ? 1 : 0}
                     >
-                        <Text>Crear Votacion</Text>
+                        {votacionHabilitada ? 'Cerrar Votacion' : 'Habilitar Votacion'}
                     </Flex>
                 </Button>
+                <ModalConfirmar
+                    isOpen={isOpen}
+                    onClose={onClose}
+                    confirmar={votacionHabilitada ? handleCerrarVotacion : handleHabilitarVotacion}
+                    texto={votacionHabilitada ? '¿Está seguro que desea cerrar la votación?' : '¿Está seguro que desea habilitar la votación?'}
+                />
+        </>
         
     )
 }
