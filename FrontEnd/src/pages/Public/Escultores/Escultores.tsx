@@ -1,5 +1,7 @@
 import {
   Box,
+  Flex,
+  Input,
   Image,
   Container,
   Text,
@@ -7,6 +9,7 @@ import {
   Stack,
   Card,
   CardBody,
+  IconButton,
   SimpleGrid,
   Heading,
   //Grid,
@@ -18,6 +21,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useEdicion } from '../../../EdicionContexto';
 import { useAuth } from '../../../LoginContexto';
+import { ArrowLeftIcon, ArrowRightIcon, SearchIcon } from '@chakra-ui/icons';
 
 interface Escultor {
   id: number;
@@ -25,20 +29,19 @@ interface Escultor {
   pais: string;
   foto: string;
 }
-/*
-const json: Escultor[] = [
-  {
-      id:1,
-      nombre: "Juan",
-      pais: "Argentina",
-      foto: "https://www.bienaldelchaco.org/2024/wp-content/uploads/2024/04/Foto-Luis-Bernardi.png"
-  }];*/
+
 
 function Escultoress () {
 
   const navigate = useNavigate(); 
   const { edicion } = useEdicion();
   const { rolUser } = useAuth();
+  const [showInput, setShowInput] = useState(false)
+  const [filter, setFilter] = useState('');
+  const [pageNumber, setpageNumber] = useState(1);
+  const [pageSize] = useState(10);
+
+
 
   const handleCardClick = (id: number) => {
     if (rolUser !== '') {
@@ -53,7 +56,7 @@ function Escultoress () {
     useEffect(() => {
       const fetchEscultores = async () => {
         try {
-          const data = await getEscultores(edicion);
+          const data = await getEscultores(pageNumber, pageSize, edicion, filter);
           console.log(data);
           setEscultores(data);
         } catch (error) {
@@ -62,101 +65,17 @@ function Escultoress () {
       };
     
       fetchEscultores();
-    }, [edicion]);
+    }, [pageNumber, pageSize, edicion, filter]);
 
-//   return (
-//     <Container maxWidth="100vw" width="100vw" height="100vh" centerContent>
-//       <Grid
-//         templateColumns="repeat(auto-fit, minmax(250px, 1fr))"
-//         gap={10}
-//         w={'90%'}
-//         h={'100%'}
-//         justifyItems="center"
-//         alignItems="center"
-//         mt={6}
-//       >
-//         {Escultores.map((escultor) => (
-//           <GridItem w="270px" h="340px" mr={'100px'}>
-//             <Card
-//               outline="2px solid #b4b4b8"
-//               bg="linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)"
-//               w="110%"
-//               h="105%"
-//               className="my-box"
-//               borderRadius={3}
-//               sx={{
-//                 transition: 'transform 0.3s ease',
-//                 '&:hover': {
-//                   transform: 'scale(1.05)',
-//                   cursor: 'pointer',
-//                 },
-//               }}
-//             >
-//               <CardBody
-//                 h={'100%'}
-//                 w={'100%'}
-//                 display="flex"
-//                 p={0}
-//                 justifyContent="center"
-//                 alignItems="center"
-//                 onClick={() => handleCardClick(escultor.id)}
-//               >
-//                 <Stack
-//                   h={'240px'}
-//                   w={'263px'}
-//                   borderRadius={3}
-//                   borderWidth={2}
-//                   borderColor={'darkgray'}
-//                 >
-//                   <Image
-//                     src={escultor.foto}
-//                     m={0}
-//                     w={'100%'}
-//                     h={'100%'}
-//                     borderRadius={3}
-//                   />
-//                 </Stack>
-//               </CardBody>
+    const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setFilter(event.target.value);
+    };
 
-//               <Stack
-//                 mt={0}
-//                 bg="white"
-//                 width="100%"
-//                 height="90px"
-//                 maxHeight={'27%'}
-//                 direction={'row'}
-//                 justifyContent={'space-between'}
-//               >
-//                 <Stack direction={'column'}>
-//                   <Text
-//                     ml={'22px'}
-//                     mt={'5px'}
-//                     whiteSpace="pre-line"
-//                     fontSize="18px"
-//                     lineHeight="1.2"
-//                     bg="black"
-//                     bgClip="text"
-//                     fontWeight="bold"
-//                   >
-//                     {escultor.nombre}
-//                   </Text>
-//                   <Text ml={'22px'} as="i" fontSize="17px" color="black">
-//                     {escultor.pais}
-//                   </Text>
-//                 </Stack>
-//                 {/* <Image src={escultor.bandera} width="60px" height="40px" mr={"11px"} mt={"20px"}/> */}
-//               </Stack>
-//             </Card>
-//           </GridItem>
-//         ))}
-//       </Grid>
-//     </Container>
-//   );
 
 
 return (
     <Container maxWidth="100vw" width="100vw" height="100vh" centerContent 
-    paddingY="%5" 
+    paddingY="%" 
     paddingX="2%" 
     mx="auto"
     paddingLeft={"7%"}
@@ -167,34 +86,33 @@ return (
     bg="#0B192C"
     display="flex"
     position="relative"
-    zIndex={-5} // Esto asegura que esté detrás de los escultores
+    //zIndex={-5} // Esto asegura que esté detrás de los escultores
     paddingX="5vw" // Añade un espacio en los lados para que no toque los bordes
     left="-3vw"
     top="0" 
+    pb={40}
     >
-    <Heading as="h1" size="xl" color={'#CDC2A5'} fontSize={45}  
-    mb={0} mt={8}
-    >
-      Escultores
-    </Heading>
-    </Box>
-    <Box 
-    width="110%"
-    height="50%"
-    bg="#0B192C"
-    //display="flex"
-    position="relative"
-    zIndex={-5} // Esto asegura que esté detrás de los escultores
-    paddingX="5vw" // Añade un espacio en los lados para que no toque los bordes
-    left="-3vw"
-    top="0" 
-    >
-    <Heading as="h1" size="xl" color={'#0B192C'} fontSize={45} 
-    // alignSelf="flex-start" ml="1%" 
-    mb={0} mt={10}
-    >
-      Escultores
-    </Heading>
+    <Flex alignItems={'center'} justifyContent={'space-between'} w={'100%'} direction={'row'} ml={'5%'} mr={'5%'} mt={'5%'}>
+         <Heading color={'#CDC2A5'} fontSize={45}> 
+            Escultores
+         </Heading>
+
+          
+          
+            <Input
+              type="text"
+              value={filter}
+              onChange={handleFilterChange}
+              placeholder="Buscar por Titulo, Tematica o Descripcion..."
+              w={"100%"}
+              borderColor={'#0B192C'}
+              backgroundColor={"#0B192C"}
+             // color={'beige'}
+              variant={"outline"}
+            />
+          
+        
+         </Flex>
     </Box>
       <SimpleGrid
         w='100%'
