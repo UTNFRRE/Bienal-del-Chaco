@@ -5,16 +5,16 @@ import {
   Flex,
   Heading,
   Text,
-  Button,
-  ButtonGroup,
-  IconButton,
+  //Button,
+  Box,
+  //ButtonGroup,
+  //IconButton,
   Skeleton,
 } from '@chakra-ui/react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
-//import { FaFacebook, FaTwitter, FaInstagram, FaWhatsapp } from 'react-icons/fa';
 import { getEventosId } from '../../../API/Public/EventosPu';
-import RedesSociales from '../../../components/Redes/RedesSociales';
 import marcador from '../../../components/icons/marcador.png';
+import RedesSocialesBlue from '../../../components/Redes/RedesSocialesBlue';
 
 interface Evento {
   id: string;
@@ -28,8 +28,8 @@ interface Evento {
 }
 
 const mapContainerStyle = {
-  height: '520px',
-  width: '920px',
+  height: '480px',
+  width: '780px',
 };
 
 const googleMapsApiKey = 'AIzaSyB6cFwxUytgrCP9pqTTEIiLMm477qpJjPs';
@@ -105,36 +105,52 @@ export default function EventoDetalle2() {
     strokeWeight: 1,
   };
 
-  return (
-    <Flex direction={'row'} gap={4}>
-      <Flex mt={6}>
+
+return (
+  <Flex direction="column" gap={4} w="100%" h="90vh">
+    {/* Franja de fondo azul */}
+    <Box
+      width="100%"
+      height="25%"
+      bg="#0B192C"
+      display="flex"
+      position="relative"
+      zIndex={-5}
+    >
+    </Box>
+
+    <Flex direction="row" gap={4} w="100%" h="75%" >
+      <Flex mt={'-7%'} ml={6} w="60%" h="50%" zIndex={5} >
         <LoadScript
           googleMapsApiKey={googleMapsApiKey}
-          loadingElement={<Skeleton height="500px" width="900px" />}
+          loadingElement={<Skeleton height="100%" width="100%" />}
         >
           <GoogleMap
             mapContainerStyle={mapContainerStyle}
             center={position}
             zoom={18}
             onLoad={(mapInstance) => setMap(mapInstance)}
-            // onUnmount={onUnmount}
           >
             <Marker position={position} icon={redMarkerIcon} />
           </GoogleMap>
         </LoadScript>
       </Flex>
-      <Flex direction={'column'} gap={5} alignItems={'center'} flex={1} mt={6}>
-        <Flex direction={'column'} gap={1} textAlign={'center'}>
-          <Heading>{evento.nombre}</Heading>
-          <Text as={'i'}>{evento.tematica}</Text>
+      <Flex direction="column" gap={5} alignItems="center" flex={1} mt={'-9%'} ml={'4%'} mr={'4%'}>
+        <Flex direction="column" gap={1} textAlign="center" >
+          <Heading color={'#CDC2A5'}>{evento.nombre}</Heading>
+          <Text as="em" color="azul" textAlign={'center'} mt={'20%'} fontWeight={'bold'}>
+            Temática: <span style={ { fontWeight: 'normal' }}>{evento.tematica}</span>
+          </Text>
         </Flex>
         <Flex>
-          <RedesSociales />
+          <Text textAlign="justify" fontSize={13} mt={'4%'}>{evento.descripcion}</Text>
         </Flex>
-        <Flex>
-          <Text>{evento.descripcion}</Text>
+        <Flex mt={'20%'}>
+          <RedesSocialesBlue />
         </Flex>
       </Flex>
     </Flex>
-  );
-}
+  </Flex>
+
+);
+};

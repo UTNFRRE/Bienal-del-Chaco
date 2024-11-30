@@ -7,7 +7,7 @@ import {
   //Heading,
   Stack,
   Card,
-  CardBody,
+  //CardBody,
   SimpleGrid,
   Heading,
   //Grid,
@@ -81,10 +81,10 @@ function Escultoress () {
       fetchEscultores();
     }, [pageNumber, pageSize, edicion, filter]);
 
+
     const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       setFilter(event.target.value);
     };
-
 
 
 return (
