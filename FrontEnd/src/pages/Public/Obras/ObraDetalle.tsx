@@ -186,19 +186,16 @@ const ObraDetail = () => {
                   </Box>
                 </Flex>
             <Box
-
               mt={'18%'}
-              mr={'6%'}
-
+              // mr={'6%'}
               display={'flex'}
               textAlign={'right'}
               flexDirection={'column'}
               marginLeft={'auto'}
-
-              w={'90%'}
+              w={'85%'}
               fontSize={17}
               fontFamily={'Barlow'}
-              p={4} // Padding para el contenido
+              p={0} // Padding para el contenido
               borderRadius="2" // Bordes redondeados
             >
               <Text as="em" color="azul" fontWeight="bold" textAlign={'left'}>
@@ -211,25 +208,19 @@ const ObraDetail = () => {
               <Text textAlign="center" color="azul" fontWeight="bold" mt={6}>
                 Descripción
               </Text>
-              <Text textAlign="justify" mt={2} ml={4} color="azul" mb={2}>
+              <Text textAlign="justify" mt={2} color="azul" mb={2}>
               {obra.descripcion}
               </Text>
-              {isDisabled && <Text color="red">Ya has votado por esta obra</Text>}
-              {rolUser !== '' && !isDisabled && (
-                <Button onClick={handleVotarClick} isDisabled={isDisabled} mt={4}>
-                  Votar
-                </Button>
-              )}
 
             </Box>
             <Flex 
               //textAlign={'right'}
               flexDirection={'column'}
-              marginLeft={'15%'}
-              alignContent={'center'}
+              marginLeft={'18%'}
+              alignItems={'center'}
               fontFamily={'Barlow'}
               fontSize={19}
-              w={'70%'}
+              w={'80%'}
               color={'azul'}
               mt={20}>
             {isDisabled && <Flex alignItems={'center'} p={2} gap={2} bgColor={'azul'} color={'beige'} borderRadius={6}>
@@ -243,7 +234,7 @@ const ObraDetail = () => {
             </Flex>}
             
             { rolUser !== '' && !isDisabled && votacionHabilitada &&
-              <Button onClick={handleVotarClick} isDisabled={isDisabled} variant={'bienal'}>Votar</Button>
+              <Button w={'90%'} onClick={handleVotarClick} isDisabled={isDisabled} variant={'bienal'}>Votar</Button>
             }
             </Flex>
           </Box>
