@@ -116,7 +116,7 @@ const ObraDetail = () => {
               position="relative"
               zIndex={1}
               maxWidth={{ base: '100%', md: '100%', lg: '65%' }}
-              width="auto" // Ajusta el ancho automáticamente
+              width="auto" 
               height="auto"
               ml={'1%'}
             >
