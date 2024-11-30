@@ -223,20 +223,21 @@ const ObraDetail = () => {
 
             </Box>
             <Flex 
-             textAlign={'right'}
-             flexDirection={'column'}
-             marginLeft={'auto'}
-             fontFamily={'Barlow'}
-             fontSize={19}
-             w={'80%'}
-             color={'azul'}
-             mt={20}>
-            {isDisabled && <Flex alignItems={'center'} p={2} gap={2} bgColor={'azul'} color={'beige'}>
+              //textAlign={'right'}
+              flexDirection={'column'}
+              marginLeft={'15%'}
+              alignContent={'center'}
+              fontFamily={'Barlow'}
+              fontSize={19}
+              w={'70%'}
+              color={'azul'}
+              mt={20}>
+            {isDisabled && <Flex alignItems={'center'} p={2} gap={2} bgColor={'azul'} color={'beige'} borderRadius={6}>
               <WarningIcon color={'beige'} />
               Ya has votado por esta obra
             </Flex>}
 
-            {!votacionHabilitada && <Flex alignItems={'center'} p={2} gap={2} bgColor={'azul'} color={'beige'}>
+            {!votacionHabilitada && <Flex alignItems={'center'} p={2} gap={2} bgColor={'azul'} color={'beige'} borderRadius={6}>
               <WarningIcon color={'beige'} />
               La votación se encuentra cerrada
             </Flex>}

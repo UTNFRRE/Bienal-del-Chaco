@@ -4,17 +4,13 @@ import {
   Image,
   Container,
   Text,
-  //Heading,
   Stack,
   Card,
-  //CardBody,
   SimpleGrid,
   Heading,
-  //Grid,
   GridItem,
   IconButton,
   Flex,
-  //Center,
 } from '@chakra-ui/react';
 import { getEscultores } from '../../../API/Escultores';
 import { useEffect, useState } from 'react';
@@ -96,20 +92,19 @@ return (
     >
     <Box 
     width="110%"
-    height="40%"
+    height="30%"
     bg="#0B192C"
     display="flex"
     position="relative"
-    //zIndex={-5} // Esto asegura que esté detrás de los escultores
-    paddingX="5vw" // Añade un espacio en los lados para que no toque los bordes
+    paddingX="5vw"
     left="-3vw"
     top="0" 
     pb={40}
     >
-    <Flex alignItems={'center'} justifyContent={'space-between'} w={'100%'} direction={'row'} ml={'5%'} mr={'5%'} mt={'5%'}>
-         <Heading color={'#CDC2A5'} fontSize={45}> 
+    <Flex alignItems={'center'} justifyContent={'space-between'} w={'100%'} direction={'row'} ml={'3%'} mr={'5%'} mt={'5%'}>
+        <Heading color={'#CDC2A5'} fontSize={45}> 
             Escultores
-         </Heading>
+        </Heading>
 
           
           
@@ -191,14 +186,13 @@ return (
                 mt={0}
                 bg="white"
                 width="100%"
-
                 height="100%" // Ajusta el alto de la sección de texto al 30%
                 direction="row"
                 justifyContent="space-between"
                 alignItems="center"
                 flex={1}
                 //maxHeight={'27%'}
-                 onClick={() => handleCardClick(escultor.escultorId)}>
+                onClick={() => handleCardClick(escultor.escultorId)}>
    
                 <Stack direction="column" ml="5%" spacing={0}>
 

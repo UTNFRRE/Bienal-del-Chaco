@@ -135,7 +135,7 @@ return (
           </GoogleMap>
         </LoadScript>
       </Flex>
-      <Flex direction="column" gap={5} alignItems="center" flex={1} mt={'-9%'} ml={'4%'} mr={'4%'}>
+      <Flex direction="column" gap={5} alignItems="center" flex={1} mt={'-9%'} ml={'4%'} mr={'4%'} fontFamily={'Barlow'} fontSize={16}>
         <Flex direction="column" gap={1} textAlign="center" >
           <Heading color={'#CDC2A5'}>{evento.nombre}</Heading>
           <Text as="em" color="azul" textAlign={'center'} mt={'20%'} fontWeight={'bold'}>
@@ -143,7 +143,7 @@ return (
           </Text>
         </Flex>
         <Flex>
-          <Text textAlign="justify" fontSize={13} mt={'4%'}>{evento.descripcion}</Text>
+          <Text textAlign="justify"  mt={'4%'}>{evento.descripcion}</Text>
         </Flex>
         <Flex mt={'20%'}>
           <RedesSocialesBlue />
