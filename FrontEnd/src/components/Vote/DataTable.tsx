@@ -58,9 +58,9 @@ const DataTable : React.FC<DataTableProps> = ({data} ) => {
                     </Tr>
                 ) : (
                     <>
-                        {sortedObras.map((item) => (
-                            <Tr key={item.esculturaId} _hover={{ bg: 'gray.100' }}>
-                                <Td>{item.nombre}</Td>
+                        {sortedObras.map((item,index) => (
+                            <Tr key={item.esculturaId} _hover={{ bg: index == 0 ? '#FFD700' : index == 1 ? '#C0C0C0' : index == 2 ? '#CD7F32':'gray.100'  }}>
+                                <Td>{item.nombre} {index == 0 && '🥇' }{ index == 1 && '🥈'}{index == 2 && '🥉'}</Td>
                                 <Td>{item.promedioVotos}</Td>
                                 <Td>{porcentaje[item.esculturaId]?.toFixed(2)}</Td>
                             </Tr>

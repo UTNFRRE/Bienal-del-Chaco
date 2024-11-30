@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { Box, Heading, Text, Image, Flex, Button } from '@chakra-ui/react';
+import { Box, Heading, Text, Image, Flex, Button, AlertIcon } from '@chakra-ui/react';
 import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import RedesSocialesLight from '../../../components/Redes/RedesSocialesLight';
@@ -9,6 +9,8 @@ import Cookies from 'js-cookie';
 import ObrasRelacionadas from './ObrasRelacionadas';
 import { HeadVotos } from '../../../API/Public/Votacion';
 import { useAuth } from '../../../LoginContexto';
+import { useEdicion } from '../../../EdicionContexto';
+import { WarningIcon } from '@chakra-ui/icons';
 
 interface Obra {
   esculturaId: number;
@@ -28,8 +30,10 @@ const ObraDetail = () => {
   const [obra, setObra] = useState<Obra | null>(null);
   const [images, setImages] = useState<any[]>([]);
   const [isDisabled, setIsDisabled] = useState(false);
+  const [token, setToken] = useState<string | null>(null);
   const navigate = useNavigate();
   const { rolUser } = useAuth();
+  const {votacionHabilitada} = useEdicion();
 
   useEffect(() => {
     const fetchObraById = async () => {
@@ -62,6 +66,10 @@ const ObraDetail = () => {
   }, [obra, userId]);
 
   useEffect(() => {
+    setToken('aaaaa')
+  }, []);
+
+  useEffect(() => {
     if (obra) {
       const images = [
         {
@@ -74,7 +82,7 @@ const ObraDetail = () => {
   }, [obra]);
 
   const handleVotarClick = () => {
-    navigate(`/user/voting/${id}/${userId}`);
+    navigate(`/user/voting/${id}/${token}`);
   };
 
   return (
@@ -97,7 +105,9 @@ const ObraDetail = () => {
             position={'relative'}
             justifyContent={'space-around'}
           >
+
             <Heading ml={'4%'} color={'#CDC2A5'} fontSize={'5xl'} marginRight={'auto'} mt={'3%'} fontFamily={"Jost"}>
+
               {obra.nombre}
             </Heading>
             <Flex position={'relative'} mt={'3%'} marginRight={'8%'}>
@@ -176,12 +186,15 @@ const ObraDetail = () => {
                   </Box>
                 </Flex>
             <Box
+
               mt={'18%'}
               mr={'6%'}
+
               display={'flex'}
               textAlign={'right'}
               flexDirection={'column'}
               marginLeft={'auto'}
+
               w={'90%'}
               fontSize={17}
               fontFamily={'Barlow'}
@@ -207,7 +220,31 @@ const ObraDetail = () => {
                   Votar
                 </Button>
               )}
+
             </Box>
+            <Flex 
+             textAlign={'right'}
+             flexDirection={'column'}
+             marginLeft={'auto'}
+             fontFamily={'Barlow'}
+             fontSize={19}
+             w={'80%'}
+             color={'azul'}
+             mt={20}>
+            {isDisabled && <Flex alignItems={'center'} p={2} gap={2} bgColor={'azul'} color={'beige'}>
+              <WarningIcon color={'beige'} />
+              Ya has votado por esta obra
+            </Flex>}
+
+            {!votacionHabilitada && <Flex alignItems={'center'} p={2} gap={2} bgColor={'azul'} color={'beige'}>
+              <WarningIcon color={'beige'} />
+              La votación se encuentra cerrada
+            </Flex>}
+            
+            { rolUser !== '' && !isDisabled && votacionHabilitada &&
+              <Button onClick={handleVotarClick} isDisabled={isDisabled} variant={'bienal'}>Votar</Button>
+            }
+            </Flex>
           </Box>
           </Box>
           <Flex direction={'column'}>

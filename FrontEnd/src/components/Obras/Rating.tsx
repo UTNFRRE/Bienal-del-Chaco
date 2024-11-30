@@ -23,7 +23,7 @@ interface RatingProps {
 // saque esto de la templates de la comunidad
 function Rating({ rating }: RatingProps) {
   return (
-    <Box display="flex" alignItems="center">
+    <Box display="flex" alignItems="center" color="#c3b79b">
       {Array(5)
         .fill('')
         .map((_, i) => {

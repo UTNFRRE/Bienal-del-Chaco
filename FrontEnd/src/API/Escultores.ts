@@ -1,9 +1,9 @@
 const API_URL = 'http://localhost:5232';
 
 //Obtenemos todos los escultores
-export const getEscultores = async (edicion: string) => {
+export const getEscultores = async (pageNumber: number, pageSize: number, edicion: string, busqueda: string) => {
   try {
-    const response = await fetch(`${API_URL}/Escultor/api/escultoresPublic?AnioEdicion=${edicion}`);
+    const response = await fetch(`${API_URL}/Escultor?pageNumber=${pageNumber}&pageSize=${pageSize}&AnioEdicion=${edicion}&busqueda=${busqueda}`);
     if (response.ok) {
       const data = await response.json();
       return data;

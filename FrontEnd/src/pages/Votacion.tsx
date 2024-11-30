@@ -6,6 +6,9 @@ import { useParams } from 'react-router-dom';
 import { getObraById } from '../API/Admin/Obras';
 import { addVoto } from '../API/Public/Votacion';
 import { useToast } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
+import { useEdicion } from '../EdicionContexto';
+import { InfoIcon } from '@chakra-ui/icons';
 
 interface Obra {
     esculturaId: number;
@@ -22,10 +25,12 @@ interface Obra {
 
 function Voted() {
     const { id } = useParams<{ id: string }>();
-    const { userId } = useParams<{ userId: string }>();
+    const { token } = useParams<{ token: string }>();
+    const navigate = useNavigate();
     const [obra, setObra] = useState<Obra | null>(null);
     const [puntaje, setPuntaje] = useState<number>(0);
     const toast = useToast();
+    const {votacionHabilitada} = useEdicion();
 
     useEffect(() => {
         const fetchObraById = async (id?: string) => {
@@ -46,14 +51,12 @@ function Voted() {
     };
 
     const handlePuntuacion = async () => {
-        // Verificación de valores antes de hacer la llamada
-        if (!userId || !obra?.esculturaId || puntaje === 0) {
-            console.error("Faltan valores para la votación:", { userId, esculturaId: obra?.esculturaId, puntaje });
-            return; // Salir si falta algún valor
+        if ( !obra?.esculturaId || puntaje === 0) {
+            return; 
         }
 
         try {
-            await addVoto(userId, obra.esculturaId, puntaje);
+            await addVoto(obra.esculturaId, puntaje);
             toast({
                 title: 'Exito',
                 description: 'Voto registrado correctamente',
@@ -71,6 +74,7 @@ function Voted() {
                 isClosable: true,
             });
         }
+        navigate('/user/obras');
     };
 
     return (
@@ -100,6 +104,10 @@ function Voted() {
                     flexDirection="column"
                     justifyContent="space-around"
                 >
+                    {!votacionHabilitada && <Box
+                        bg={'azul'}
+                        color={'beige'}
+                    >  <InfoIcon color={'beige'}/> La votacion no se encuentra habilitada </Box> }
                     {obra && <Card data={obra} />}
                     <Box display="flex" alignItems="center" justifyContent="space-between" flexDirection="column" width="30%" height="15%">
                         <Boton onRatingChange={handlePuntajeChange} />
@@ -111,6 +119,7 @@ function Voted() {
                             onClick={handlePuntuacion}
                             color="#cdc2a5"
                             fontSize="1.3em"
+                            isDisabled={puntaje === 0 || !obra || !votacionHabilitada}
                             sx={{
                                 _hover: {
                                     transform: 'scale(1.1)',

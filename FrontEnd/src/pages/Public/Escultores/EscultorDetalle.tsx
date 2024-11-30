@@ -20,10 +20,9 @@ interface Escultor {
     dni:string;
     pais: string;
     telefono:string
-    //fechaNacimiento: string;
-    //lugarNacimiento:string;
-    //premios: string;
-    //foto:string;
+    fechaNacimiento: string;
+    lugarNacimiento:string;
+    premios: string;
     biografia:string;
     foto:string;
   }
@@ -55,6 +54,9 @@ const EscultorDetail = () => {
         dni: '',
         pais:  '',
         telefono: '',
+        fechaNacimiento: '',
+        lugarNacimiento:'',
+        premios: '',
         biografia:  '',
         foto: '',
       });
@@ -144,20 +146,34 @@ const EscultorDetail = () => {
               display="flex"
               flexDirection={'column'}
               mt={1}
-              mr={10}
+              mr={20}
               className="Informacion"
             >
-            <Flex gap="4" alignItems="center" 
-            justifyContent={'center'} mt={8}>
+            <Flex gap="4" alignItems="center" width="100%"
+            justifyContent={'center'} mt={8}  mr = {4}>
               
-              <Box>
-                <Heading size="sm">{escultor.nombre}</Heading>
-                <Heading size="sm">{escultor.apellido}</Heading>
-                <Text as="i">{escultor.dni}</Text>
-                <Text as="i">{escultor.pais}</Text>
-                <Text as="i">{escultor.telefono}</Text>
-                <Text as="i">{escultor.biografia}</Text>
-              </Box>
+<Stack
+  mt={2}
+  bg="white"
+  maxW="100%" 
+  direction="column"
+  justifyContent="center"
+  alignItems="flex-start" // Asegura que el contenido esté alineado a la izquierda
+  flex={1}
+  spacing={2}
+  p={4}
+  ml={0}
+>
+<Heading size="md" color="azul">
+    {escultor.apellido}
+  </Heading>
+  <Text as="i">País: {escultor.pais}</Text>
+  <Text as="i">Premios: {escultor.premios}</Text>
+  <Text as="i">Lugar de Nacimiento: {escultor.lugarNacimiento}</Text>
+  <Text as="i">Biografía: {escultor.biografia}</Text>
+</Stack>
+
+
             </Flex>
             <Box
               mt={6}

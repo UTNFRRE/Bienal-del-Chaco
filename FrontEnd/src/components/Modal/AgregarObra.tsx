@@ -204,7 +204,6 @@ function AgregarObra({ isOpen, onClose, confirmar }: ModalProps) {
                     Imagen
                   </FormLabel>
                   <Flex justify="center">
-                    {/* Como recupero la ruta de la imagen? */}
                     <DropZone maxFiles={1} onFilesChange={handleFilesChange} />
                   </Flex>
                 </Stack>
