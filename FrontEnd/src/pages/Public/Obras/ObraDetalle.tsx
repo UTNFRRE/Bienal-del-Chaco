@@ -11,6 +11,7 @@ import { HeadVotos } from '../../../API/Public/Votacion';
 import { useAuth } from '../../../LoginContexto';
 import { useEdicion } from '../../../EdicionContexto';
 import { WarningIcon } from '@chakra-ui/icons';
+import { GetToken } from '../../../API/Public/Votacion';
 
 interface Obra {
   esculturaId: number;
@@ -30,7 +31,6 @@ const ObraDetail = () => {
   const [obra, setObra] = useState<Obra | null>(null);
   const [images, setImages] = useState<any[]>([]);
   const [isDisabled, setIsDisabled] = useState(false);
-  const [token, setToken] = useState<string | null>(null);
   const navigate = useNavigate();
   const { rolUser } = useAuth();
   const {votacionHabilitada} = useEdicion();
@@ -66,10 +66,6 @@ const ObraDetail = () => {
   }, [obra, userId]);
 
   useEffect(() => {
-    setToken('aaaaa')
-  }, []);
-
-  useEffect(() => {
     if (obra) {
       const images = [
         {
@@ -81,8 +77,13 @@ const ObraDetail = () => {
     }
   }, [obra]);
 
-  const handleVotarClick = () => {
-    navigate(`/user/voting/${id}/${token}`);
+  const handleVotarClick = async () => {
+    try {
+     const tokenObra = await GetToken(Number(id))
+     navigate(`/user/voting/${id}/${tokenObra}`);
+    } catch (error) {
+      console.error('Error en el fetch de la obra:', error);
+    }
   };
 
   return (
