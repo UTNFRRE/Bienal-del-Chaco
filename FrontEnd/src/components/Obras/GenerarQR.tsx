@@ -42,7 +42,7 @@ const GenerarQR: React.FC<QRProps> = ({urlcodigo}) => {
 
     useEffect(() => {
         handleQrCodeGenerator();
-      }, [url]);
+      }, [urlcodigo]);
   
     return (
         <Box className="qrcode__container" p={4}>
@@ -50,7 +50,7 @@ const GenerarQR: React.FC<QRProps> = ({urlcodigo}) => {
             {qrIsVisible && (
               <>
                 <Box className="qrcode__image" ref={qrCodeRef} mb={4}>
-                  <QRCode value={url} size={300} />
+                  <QRCode value={urlcodigo} size={300} />
                 </Box>
                 <Button leftIcon={<FaDownload />} onClick={downloadQRCode} variant="bienal">
                   Descargar

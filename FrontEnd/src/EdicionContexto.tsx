@@ -14,7 +14,7 @@ const EdicionContext = createContext<EdicionContextProps | undefined>(undefined)
 
 export const EdicionProvider = ({ children }: { children: ReactNode }) => {
   const [edicion, setEdicion] = useState<string>('2024'); // Valor inicial
-  const [votacionHabilitada, setVotacionHabilitada] = useState<boolean>(false);
+  const [votacionHabilitada, setVotacionHabilitada] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchVotacion = async () => {

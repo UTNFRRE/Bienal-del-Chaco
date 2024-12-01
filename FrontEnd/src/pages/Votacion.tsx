@@ -1,4 +1,4 @@
-import { Box, Flex, Button } from '@chakra-ui/react';
+import { Box, Flex, Button, Heading , Image} from '@chakra-ui/react';
 import Card from '../components/Vote/Card';
 import Boton from '../components/Vote/Button';
 import { useState, useEffect } from 'react';
@@ -9,6 +9,8 @@ import { useToast } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { useEdicion } from '../EdicionContexto';
 import { InfoIcon } from '@chakra-ui/icons';
+import { TokenValido } from '../API/Public/Votacion';
+import imgLogo from '../components/icons/pagina.png';
 
 interface Obra {
     esculturaId: number;
@@ -31,6 +33,7 @@ function Voted() {
     const [puntaje, setPuntaje] = useState<number>(0);
     const toast = useToast();
     const {votacionHabilitada} = useEdicion();
+    const [tokenValido, setTokenValido] = useState<boolean>(false);
 
     useEffect(() => {
         const fetchObraById = async (id?: string) => {
@@ -44,6 +47,23 @@ function Voted() {
             }
         };
         fetchObraById(id);
+
+        const fetchTokenValido = async (token: string, esculturaId: number) => {
+            try {
+                const data = await TokenValido(token, esculturaId);
+                setTokenValido(data);
+            } catch (error) {
+                console.error('Error en el fetch de la obra:', error);
+            }
+        };
+
+        if (id && token) {
+        fetchTokenValido(token, parseInt(id));
+        }
+
+        console.log('id', id)
+        console.log('token', token)
+
     }, [id]);
 
     const handlePuntajeChange = (rating: number) => {
@@ -77,7 +97,7 @@ function Voted() {
         navigate('/user/obras');
     };
 
-    return (
+    return tokenValido ? (
         <Box
             w="100vh"
             h={{ base: '100vh', lg: '100vh' }}
@@ -133,6 +153,34 @@ function Voted() {
                     </Box>
                 </Flex>
             </Box>
+        </Box>
+    ) : (
+        <Box
+        w="100vh"
+        h={{ base: '100vh', lg: '100vh' }}
+        minHeight="100vh"
+        overflow="hidden"
+        >
+        <Box
+            bgColor={{ base: '#0B192C', lg: '#0B192C' }}
+            w="100%"
+            h="100%"
+            bgSize="cover"
+            bgPosition="center"
+            position="absolute"
+            filter="contrast(120%)"
+            display="flex"
+            flexDirection={'column'}
+            color={'beige'}
+            justifyContent={'center'}
+            alignItems={'center'}
+        >
+            <Image
+                src={imgLogo}
+                w="150px"
+            ></Image>
+            <Heading>Url No Valida</Heading>
+        </Box>
         </Box>
     );
 }
