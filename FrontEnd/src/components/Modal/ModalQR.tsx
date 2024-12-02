@@ -4,18 +4,12 @@ import {
     ModalOverlay, 
     ModalContent, 
     ModalHeader, 
-    ModalFooter, 
     ModalBody, 
     ModalCloseButton, 
-    Button,
-    Box, 
-    Image,
-    Select,
     Text
 } from '@chakra-ui/react';
 import QrCodeGenerator from '../Obras/GenerarQR';
 import { GetToken } from '../../API/Public/Votacion';
-const API_URL = 'http://localhost:5173';
 
 interface Obra {
     esculturaId: string;
@@ -48,7 +42,7 @@ const ModalQR: React.FC<QRProps> = ({isOpen,onClose, obra}) => {
         try {
           const data = await GetToken(esculturaId);
           const token = data.token;
-          const url = `${API_URL}/voting/${esculturaId}/${token}`;
+          const url = `${window.location.origin}/voting/${esculturaId}/${token}`;
           setUrlCodigo(url);
         } catch (error) {
           console.error('Error en el fetch de obras:', error);
