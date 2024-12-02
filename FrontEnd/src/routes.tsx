@@ -11,8 +11,7 @@ import ObrasAdmin from './pages/Admin/Obras/ObrasAd';
 import TablaObrasQR from './pages/VerQR/VerQR';
 import ManagerVotes from './pages/Admin/ManagerVotes';
 import Voted from  './pages/Votacion';
-import { RiOilLine } from 'react-icons/ri';
-import obras from './API/ObrasVote';
+import Usuarios from './pages/Admin/Usuarios/Usuarios';
 
 const routes = [
   {
@@ -29,7 +28,7 @@ const routes = [
   },
   {
     path: 'usuarios',
-    element: <ErrorPage />,
+    element: <Usuarios />,
     title: 'Usuarios',
     rol: 'admin',
   },

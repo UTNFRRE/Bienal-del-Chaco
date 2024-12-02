@@ -91,3 +91,31 @@ export const AddUser = async (
         throw new Error('Network error: ' + error);
     }
   };
+
+export const GetUsuarios = async () => {
+    try {
+        const response = await fetch(`${API_URL}/Usuarios`);
+        if (response.ok) {
+          const data = await response.json();
+        return data;
+        } else {
+        throw new Error('Error en la respuesta del servidor');
+        }
+    } catch (error) {
+        throw new Error('Network error: ' + error);
+    }
+};
+
+export const GetRoles = async () => {
+    try {
+        const response = await fetch(`${API_URL}/api/Roles/Lista de Roles`);
+        if (response.ok) {
+          const data = await response.json();
+        return data;
+        } else {
+        throw new Error('Error en la respuesta del servidor');
+        }
+    } catch (error) {
+        throw new Error('Network error: ' + error);
+    }
+};
