@@ -12,7 +12,9 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [rolUser, setRolUser] = useState('');
+  const [rolUser, setRolUser] = useState(
+    Cookies.get('role') || ''
+  );
   const [isAuthenticated, setIsAuthenticated] = useState(
     (!Cookies.get('access_token') ) ? false : true
   );

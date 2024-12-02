@@ -63,7 +63,7 @@ const ModalQR: React.FC<QRProps> = ({isOpen,onClose, obra}) => {
             if (obra) {
                 obtenerToken(parseInt(obra.esculturaId));
             }
-        }, 10000); // 60000 ms = 1 min
+        }, 60000); // 60000 ms = 1 min
     
         return () => clearInterval(intervalId);
     }, [obra, isOpen]);

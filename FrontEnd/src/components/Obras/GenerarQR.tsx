@@ -14,7 +14,7 @@ interface QRProps {
 
 const GenerarQR: React.FC<QRProps> = ({urlcodigo}) => {
     const [url, setUrl] = useState(urlcodigo);
-    const [qrIsVisible, setQrIsVisible] = useState(false);
+    const [qrIsVisible, setQrIsVisible] = useState(true);
     const qrCodeRef = useRef(null);
   
     const handleQrCodeGenerator = () => {
