@@ -54,7 +54,7 @@ export default function Registro() {
   
       const register = async () => {
           const response = await AddUser(fullName, username, email, password, birthDate);
-          if (response.ok) {
+          if (response) {
           toast({
             title: 'Registro exitoso',
             description: 'Usuario registrado correctamente.',

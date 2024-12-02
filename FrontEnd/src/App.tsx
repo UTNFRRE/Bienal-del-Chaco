@@ -10,6 +10,7 @@ import Public from './layout/Public';
 import User from './layout/User';
 import Register from './layout/Registro';
 import theme from './theme/theme';
+import Voted from './pages/Votacion';
 // import Vote from  './layout/Vote';
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
         <EdicionProvider>
           <BrowserRouter>
         <Routes>
+            <Route path="/voting/:id/:token" element={<Voted />} />
            <Route path="/auth/*" element={<Auth />} />
             <Route path="/registro" element={<Register />} />
            <Route path="/public/*" element={<Public />} />

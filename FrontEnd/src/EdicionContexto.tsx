@@ -14,13 +14,14 @@ const EdicionContext = createContext<EdicionContextProps | undefined>(undefined)
 
 export const EdicionProvider = ({ children }: { children: ReactNode }) => {
   const [edicion, setEdicion] = useState<string>('2024'); // Valor inicial
-  const [votacionHabilitada, setVotacionHabilitada] = useState<boolean>(false);
+  const [votacionHabilitada, setVotacionHabilitada] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchVotacion = async () => {
       try {
         const data = await GetVotacion(edicion);
-        setVotacionHabilitada(data.votacionHabilitada);
+        // setVotacionHabilitada(data.votacionHabilitada);
+        setVotacionHabilitada(true)
       } catch (error) {
         console.error('Error fetching votacion:', error);
       }
