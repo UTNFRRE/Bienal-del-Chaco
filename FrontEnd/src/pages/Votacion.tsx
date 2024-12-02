@@ -11,6 +11,8 @@ import { useEdicion } from '../EdicionContexto';
 import { InfoIcon } from '@chakra-ui/icons';
 import { TokenValido } from '../API/Public/Votacion';
 import imgLogo from '../components/icons/pagina.png';
+import { HeadVotos } from '../API/Public/Votacion';
+import Cookies from 'js-cookie';
 
 interface Obra {
     esculturaId: number;
@@ -27,6 +29,8 @@ interface Obra {
 
 function Voted() {
     const { id } = useParams<{ id: string }>();
+    const userId = Cookies.get('IdUser');
+    const [isDisabled, setIsDisabled] = useState(false);
     const { token } = useParams<{ token: string }>();
     const navigate = useNavigate();
     const [obra, setObra] = useState<Obra | null>(null);
@@ -66,6 +70,23 @@ function Voted() {
 
     }, [id]);
 
+    useEffect(() => {
+        const fetchHeadVotos = async () => {
+          if (!userId || !obra) return;
+          try {
+            const response = await HeadVotos(userId, obra.esculturaId);
+            if (response.ok) {
+              setIsDisabled(true); 
+            }
+          } catch (error) {
+            console.error('Error en la verificación de votos:', error);
+          }
+        };
+        if (obra) {
+          fetchHeadVotos();
+        }
+      }, [obra, userId]);
+
     const handlePuntajeChange = (rating: number) => {
         setPuntaje(rating);
     };
@@ -97,7 +118,7 @@ function Voted() {
         navigate('/user/obras');
     };
 
-    return tokenValido ? (
+    return tokenValido && !isDisabled ? (
         <Box
             w="100vh"
             h={{ base: '100vh', lg: '100vh' }}
@@ -154,7 +175,7 @@ function Voted() {
                 </Flex>
             </Box>
         </Box>
-    ) : (
+    ) :  (
         <Box
         w="100vh"
         h={{ base: '100vh', lg: '100vh' }}
@@ -179,7 +200,16 @@ function Voted() {
                 src={imgLogo}
                 w="150px"
             ></Image>
-            <Heading>Url No Valida</Heading>
+            <Heading>
+            {!tokenValido && 
+                'Url No Valida'
+            }
+            </Heading>
+            <Heading>
+            {isDisabled && 
+                'Ya has votado por esta obra'
+            }
+            </Heading>
         </Box>
         </Box>
     );

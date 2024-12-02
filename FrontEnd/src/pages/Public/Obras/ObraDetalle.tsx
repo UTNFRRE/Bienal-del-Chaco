@@ -26,11 +26,12 @@ interface Obra {
 }
 
 const ObraDetail = () => {
-  const userId = Cookies.get('IdUser');
+ 
   const { id } = useParams<{ id: string }>();
+  const userId = Cookies.get('IdUser');
+  const [isDisabled, setIsDisabled] = useState(false);
   const [obra, setObra] = useState<Obra | null>(null);
   const [images, setImages] = useState<any[]>([]);
-  const [isDisabled, setIsDisabled] = useState(false);
   const navigate = useNavigate();
   const { rolUser } = useAuth();
   const {votacionHabilitada} = useEdicion();
@@ -48,22 +49,7 @@ const ObraDetail = () => {
     fetchObraById();
   }, [id]);
 
-  useEffect(() => {
-    const fetchHeadVotos = async () => {
-      if (!userId || !obra) return;
-      try {
-        const response = await HeadVotos(userId, obra.esculturaId);
-        if (response.ok) {
-          setIsDisabled(true); // Deshabilita el botón si la API responde con 200
-        }
-      } catch (error) {
-        console.error('Error en la verificación de votos:', error);
-      }
-    };
-    if (obra) {
-      fetchHeadVotos();
-    }
-  }, [obra, userId]);
+ 
 
   useEffect(() => {
     if (obra) {
@@ -76,6 +62,23 @@ const ObraDetail = () => {
       setImages(images);
     }
   }, [obra]);
+
+  useEffect(() => {
+    const fetchHeadVotos = async () => {
+      if (!userId || !obra) return;
+      try {
+        const response = await HeadVotos(userId, obra.esculturaId);
+        if (response.ok) {
+          setIsDisabled(true); 
+        }
+      } catch (error) {
+        console.error('Error en la verificación de votos:', error);
+      }
+    };
+    if (obra) {
+      fetchHeadVotos();
+    }
+  }, [obra, userId]);
 
   const handleVotarClick = async () => {
     try {
@@ -235,7 +238,10 @@ const ObraDetail = () => {
             </Flex>}
             
             { rolUser !== '' && !isDisabled && votacionHabilitada &&
-              <Button w={'90%'} onClick={handleVotarClick} isDisabled={isDisabled} variant={'bienal'}>Votar</Button>
+              <Flex mt={2} alignItems={'center'} p={2} gap={2} bgColor={'azul'} color={'beige'} borderRadius={6}>
+              <WarningIcon color={'beige'} />
+             Escanea el QR para votar
+            </Flex>
             }
             </Flex>
           </Box>
