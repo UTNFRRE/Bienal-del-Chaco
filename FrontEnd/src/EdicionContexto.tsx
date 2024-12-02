@@ -20,7 +20,8 @@ export const EdicionProvider = ({ children }: { children: ReactNode }) => {
     const fetchVotacion = async () => {
       try {
         const data = await GetVotacion(edicion);
-        setVotacionHabilitada(data.votacionHabilitada);
+        // setVotacionHabilitada(data.votacionHabilitada);
+        setVotacionHabilitada(true)
       } catch (error) {
         console.error('Error fetching votacion:', error);
       }

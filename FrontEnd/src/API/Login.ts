@@ -54,9 +54,9 @@ export const AddUser = async (
         });
         if (response.ok) {
         await AddRoltoUser(email, 'user'); 
-        return ;
+        return true;
         } else {
-        throw new Error('Error en la respuesta del servidor');
+        return false;
         }
     } catch (error) {
         throw new Error('Network error: ' + error);
@@ -72,12 +72,6 @@ export const AddUser = async (
         const response = await fetch(`${API_URL}/api/Roles/AsignarRol?email=${email}&rolename=${roleName}`, {
         method: 'POST',
         });
-        if (response.ok) {
-        const data = await response.json();
-        return data;
-        } else {
-        throw new Error('Error en la respuesta del servidor');
-        }
     } catch (error) {
         throw new Error('Network error: ' + error);
     }

@@ -80,7 +80,7 @@ const ObraDetail = () => {
   const handleVotarClick = async () => {
     try {
      const tokenObra = await GetToken(Number(id))
-     navigate(`/user/voting/${id}/${tokenObra}`);
+     navigate(`/user/voting/${id}/${tokenObra.token}`);
     } catch (error) {
       console.error('Error en el fetch de la obra:', error);
     }
@@ -98,7 +98,7 @@ const ObraDetail = () => {
       w={'100%'}>
           <Box
             w={'100%'}
-            minHeight={'33vh'} 
+            minHeight={'25vh'} 
             display={'flex'}
             mb={-5}
             backgroundColor="#0B192C"
@@ -123,7 +123,7 @@ const ObraDetail = () => {
             flexDirection={'row'}
           >
             <Box p={4} 
-              top={"-10%"} 
+              top={"-15px"} 
               position="relative"
               zIndex={1}
               maxWidth={{ base: '100%', md: '100%', lg: '65%' }}
@@ -229,7 +229,7 @@ const ObraDetail = () => {
               Ya has votado por esta obra
             </Flex>}
 
-            {!votacionHabilitada && <Flex alignItems={'center'} p={2} gap={2} bgColor={'azul'} color={'beige'} borderRadius={6}>
+            {!votacionHabilitada && <Flex mt={2} alignItems={'center'} p={2} gap={2} bgColor={'azul'} color={'beige'} borderRadius={6}>
               <WarningIcon color={'beige'} />
               La votación se encuentra cerrada
             </Flex>}

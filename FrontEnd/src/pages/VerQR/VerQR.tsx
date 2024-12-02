@@ -217,8 +217,7 @@ import {
         <ModalQR
           isOpen={isOpenQR}
           onClose={onCloseQR}
-          obra={obraElegida?.nombre || ''}
-          urlcodigo={`https://github.com/UTNFRRE/Bienal-del-Chaco`}
+          obra={obraElegida}
         />
       </>
     );
