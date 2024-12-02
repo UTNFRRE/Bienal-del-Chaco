@@ -1,4 +1,4 @@
-import { createContext, useState, ReactNode, useContext } from 'react';
+import { createContext, useState,useEffect, ReactNode, useContext, useCallback} from 'react';
 import Cookies from 'js-cookie';
 import { FetchLogin, getUserId} from './API/Login';
 
@@ -17,13 +17,14 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     (!Cookies.get('access_token') ) ? false : true
   );
 
+
   const onLogin = async (password: string, account: string) => {
     try {
       await FetchLogin(password, account);
       const data = await getUserId(account);
       setRolUser(data.roleName);
       setIsAuthenticated(true);
-      
+      Cookies.set('role', data.roleName); // Guardar el rol en las cookies
     } catch (error) {
       console.error('Error durante el inicio de sesión:', error);
       if (error instanceof Error) {

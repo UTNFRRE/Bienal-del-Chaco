@@ -11,24 +11,35 @@ import User from './layout/User';
 import Register from './layout/Registro';
 import theme from './theme/theme';
 import Voted from './pages/Votacion';
+import ProtectedRoute from './pages/ProtectedRoute';
 // import Vote from  './layout/Vote';
 
 function App() {
-  useEffect(() => {
-    document.title = 'Bienal del Chaco';
-  }, []);
 
   const { isAuthenticated, rolUser } = useAuth();
   const isAdmin = rolUser.includes('admin') 
   const isUser = rolUser.includes('user');
   const isEmpleado = rolUser.includes('empleado');
+
+
+  useEffect(() => {
+    document.title = 'Bienal del Chaco';
+  }, []);
+
  
   return (
     <ChakraProvider theme={theme}>
         <EdicionProvider>
           <BrowserRouter>
         <Routes>
-            <Route path="/voting/:id/:token" element={<Voted />} />
+          <Route
+              path="/voting/:id/:token"
+              element={
+                <ProtectedRoute>
+                  <Voted />
+                </ProtectedRoute>
+              }
+            />
            <Route path="/auth/*" element={<Auth />} />
             <Route path="/registro" element={<Register />} />
            <Route path="/public/*" element={<Public />} />
@@ -48,8 +59,8 @@ function App() {
                     ? isAdmin
                       ? '/admin/escultores'
                       : isUser ? '/user/escultores' 
-                      : isEmpleado ? '/empleado/obras' : '/auth/'
-                    : '/auth/'
+                      : isEmpleado ? '/empleado/obras' : '/public/escultores'
+                    : '/public/escultores'
                 }
           />
         }
