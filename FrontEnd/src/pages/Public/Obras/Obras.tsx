@@ -104,11 +104,9 @@ export default function ObrasPublic() {
   };
 
   const handleCardClick = (id: number) => {
-    if (rolUser !== '') {
-      console.log('rolUser', rolUser);
+    if (rolUser === 'user') {
       navigate(`/user/obras/${id}`);
     } else {
-    console.log('rolUserPublico', rolUser);
     navigate(`/public/obras/${id}`);
     }
   };
