@@ -94,7 +94,15 @@ export const AddUser = async (
 
 export const GetUsuarios = async () => {
     try {
-        const response = await fetch(`${API_URL}/Usuarios`);
+        const token = Cookies.get('access_token');
+        const response = await fetch(`${API_URL}/Usuarios`,
+        {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+            },
+        }
+        );
+
         if (response.ok) {
           const data = await response.json();
         return data;
