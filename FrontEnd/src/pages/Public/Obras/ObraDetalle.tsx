@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { Box, Heading, Text, Image, Flex, Button, AlertIcon } from '@chakra-ui/react';
+import { Box, Heading, Text, Image, Flex, Button, AlertIcon, Stack } from '@chakra-ui/react';
 import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import RedesSocialesLight from '../../../components/Redes/RedesSocialesLight';
@@ -150,73 +150,80 @@ const ObraDetail = () => {
               mt={1}
               className="Informacion"
             >
-              <Flex
-                  gap="4"
-                  alignItems="center"
-                  justifyContent="center"
-                  mt={9}
-                  position="relative"
-                >
-                  <Box
-                    position="absolute"
-                    left="0"
-                    top="0"
-                    bottom="0"
-                    bgColor="azul"
-                    borderTopLeftRadius="full"
-                    borderBottomLeftRadius="full"
-                    overflow="hidden"
-                    width="calc(100% - 70px)"
-                    h={'90px'}
-                    ml="70px"
-                  >
-                  <Image
-                    src={obra.escultorImagen}
-                    boxSize="90px"
-                    borderRadius="full"
-                    borderWidth={1}
-                    borderColor="azul"
-                    borderStyle="solid"
-                    zIndex={1}
-                  />
-                  </Box>
-                  <Box zIndex={1} pl={'10%'} pt={'20px'}>
-                    <Heading size="sm" color="beige">
-                      {obra.escultorNombre}
-                    </Heading>
-                    <Text as="i" color="beige">
-                      {obra.escultorPais}
-                    </Text>
-                  </Box>
-                </Flex>
-            <Box
-              mt={'18%'}
-              // mr={'6%'}
-              display={'flex'}
-              textAlign={'right'}
-              flexDirection={'column'}
-              marginLeft={'auto'}
-              w={'85%'}
-              fontSize={17}
-              fontFamily={'Barlow'}
-              p={0} // Padding para el contenido
-              borderRadius="2" // Bordes redondeados
-            >
-              <Text as="em" color="azul" fontWeight="bold" textAlign={'left'}>
-                Título: <span style={ { fontWeight: 'normal' }}>{obra.tematica}</span>
-              </Text>
-              <Text as="em" color="azul" fontWeight="bold" mt={3} textAlign={'left'}>
-                <span style={{ fontWeight: 'normal' }}>Creada el</span>
-                <span style={{ fontWeight: 'bold' }}> {obra.fechaCreacion}</span>
-              </Text>
-              <Text textAlign="center" color="azul" fontWeight="bold" mt={6}>
-                Descripción
-              </Text>
-              <Text textAlign="justify" mt={2} color="azul" mb={2}>
-              {obra.descripcion}
-              </Text>
+             
 
+                
+                <Box
+              w={{ base: '100%', md: '100%', lg: '80%' }}
+              display="flex"
+              flexDirection={'column'}
+              mt={1}
+              ml={20}
+              className="Informacion"
+            >
+                <Flex gap="4" alignItems="center" width="100%"
+            justifyContent={'center'} mt={8}  mr = {4}>
+              
+              <Stack
+  mt={2}
+  bg="#FAF5FF"
+  maxW={{ base: "95%", md: "80%", lg: "100%" }} // Ajusta el ancho en diferentes tamaños de pantalla
+  direction="column"
+  justifyContent="flex-start"
+  alignItems="flex-start" // Mantiene el contenido alineado a la izquierda
+  flex={1}
+  spacing={4}
+  p={{ base: 2, md: 4 }} // Ajusta el padding para pantallas más pequeñas
+  ml={0}
+  minH={{ base: "50px", md: "50px" }} // Ajusta la altura mínima
+  border="2px solid gray" // Agrega un borde gris
+  borderRadius="8px"
+  mx="auto" // Centra horizontalmente
+>
+  <Flex
+    gap={{ base: 6, md: 4 }} // Espaciado entre imagen y texto
+    alignItems="center"
+    justifyContent="flex-start" // Alinea el contenido a la izquierda
+    mt={0} // Elimina el margen superior del Flex
+    width="90%" // Ancho del contenedor responsivo
+    maxWidth="1100px" // Límite máximo de ancho
+    mx="auto" // Centrado horizontal
+    p={{ base: 2, md: 4 }} // Padding interno para evitar bordes ajustados
+    bg="azulClaro" // Fondo opcional para visualizar el contenedor
+    borderRadius="lg" // Bordes redondeados para un diseño más limpio
+  >
+    <Image
+      src={obra.escultorImagen}
+      boxSize={{ base: "70px", md: "90px" }} // Tamaño de imagen responsivo
+      borderRadius="full"
+      borderWidth={1}
+      borderColor="azul"
+      borderStyle="solid"
+    />
+    <Box>
+      <Heading size={{ base: "xs", md: "sm" }} color="black">
+        {obra.escultorNombre}
+      </Heading>
+      <Text as="i" fontSize={{ base: "xs", md: "sm" }} color="black">
+        {obra.escultorPais}
+      </Text>
+    </Box>
+  </Flex>
+
+  <Flex alignItems="center" mt={0}> {/* Margen superior eliminado */}
+    <Text as="b" mr={2} fontSize={{ base: "sm", md: "md", lg: "lg" }}>Temática:</Text>
+    <Text as="i" fontSize={{ base: "sm", md: "md", lg: "lg" }}>{obra.tematica}</Text>
+  </Flex>
+  <Flex alignItems="center" mt={0}> {/* Margen superior eliminado */}
+    <Text as="b" mr={2} fontSize={{ base: "sm", md: "md", lg: "lg" }}>Fecha de Creación:</Text>
+    <Text as="i" fontSize={{ base: "sm", md: "md", lg: "lg" }}>{obra.fechaCreacion}</Text>
+  </Flex>
+</Stack>
+
+
+            </Flex>
             </Box>
+
             <Flex 
               //textAlign={'right'}
               flexDirection={'column'}

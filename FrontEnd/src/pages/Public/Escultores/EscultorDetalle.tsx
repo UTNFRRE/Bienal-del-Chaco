@@ -115,7 +115,7 @@ const EscultorDetail = () => {
               justifyContent={'space-around'}
             >
               <Heading ml={'7%'} color={'#CDC2A5'} fontSize={'5xl'}>
-                {escultor.nombre}
+                {escultor.nombre} {escultor.apellido}
               </Heading>
               <Flex>
                 <RedesSocialesLight />
@@ -152,26 +152,52 @@ const EscultorDetail = () => {
             <Flex gap="4" alignItems="center" width="100%"
             justifyContent={'center'} mt={8}  mr = {4}>
               
-<Stack
+              <Stack
   mt={2}
-  bg="white"
-  maxW="100%" 
+  bg="#FAF5FF"
+  maxW={{ base: "95%", md: "80%", lg: "100%" }} // Ajusta el ancho en diferentes tamaños de pantalla
   direction="column"
-  justifyContent="center"
-  alignItems="flex-start" // Asegura que el contenido esté alineado a la izquierda
+  justifyContent="flex-start"
+  alignItems="flex-start" // Mantiene el contenido alineado a la izquierda
   flex={1}
-  spacing={2}
-  p={4}
+  spacing={4}
+  p={{ base: 2, md: 4 }} // Ajusta el padding para pantallas más pequeñas
   ml={0}
+  minH={{ base: "150px", md: "200px" }} // Ajusta la altura mínima
+  border="2px solid gray" // Agrega un borde gris
+  borderRadius="8px"
+  mx="auto" // Centra horizontalmente
 >
-<Heading size="md" color="azul">
-    {escultor.apellido}
-  </Heading>
-  <Text as="i">País: {escultor.pais}</Text>
-  <Text as="i">Premios: {escultor.premios}</Text>
-  <Text as="i">Lugar de Nacimiento: {escultor.lugarNacimiento}</Text>
-  <Text as="i">Biografía: {escultor.biografia}</Text>
+  <Flex justifyContent="center" width="100%">
+    <Text
+      as="h2"
+      fontSize={{ base: "lg", md: "xl", lg: "2xl" }} // Ajusta el tamaño de la fuente
+      textAlign="center"
+    >
+      Sobre {escultor.nombre} {escultor.apellido}
+    </Text>
+  </Flex>
+  <Flex alignItems="center">
+    <Text as="b" mr={2} fontSize={{ base: "sm", md: "md", lg: "lg" }}>País:</Text>
+    <Text as="i" fontSize={{ base: "sm", md: "md", lg: "lg" }}>{escultor.pais}</Text>
+  </Flex>
+  <Flex alignItems="center">
+    <Text as="b" mr={2} fontSize={{ base: "sm", md: "md", lg: "lg" }}>Premios:</Text>
+    <Text as="i" fontSize={{ base: "sm", md: "md", lg: "lg" }}>{escultor.premios}</Text>
+  </Flex>
+  <Flex alignItems="center">
+    <Text as="b" mr={2} fontSize={{ base: "sm", md: "md", lg: "lg" }}>Lugar de Nacimiento:</Text>
+    <Text as="i" fontSize={{ base: "sm", md: "md", lg: "lg" }}>{escultor.lugarNacimiento}</Text>
+  </Flex>
+  <Flex alignItems="center">
+    <Text as="b" mr={2} fontSize={{ base: "sm", md: "md", lg: "lg" }}>Biografía:</Text>
+    <Text as="i" fontSize={{ base: "sm", md: "md", lg: "lg" }}>{escultor.biografia}</Text>
+  </Flex>
 </Stack>
+
+
+
+
 
 
             </Flex>
@@ -193,99 +219,126 @@ const EscultorDetail = () => {
             </Box>
           </Box>
           </Box>
-          <Flex direction={'column'}>
-            <Flex bg={'azul'} color={'beige'} w={'100%'} textAlign={'start'}
-            h={'15vh'}
-            mb={4}
-            alignItems={'center'}
-            >
-              <Text fontSize={24} ml={5} fontWeight={'bold'}>
-              Obras 
-              </Text>
-            </Flex> 
-            <Flex maxW={"100%"} w={"100%"}>
+          <Flex direction="column">
+  {/* Header */}
+  <Flex
+    bg="azul"
+    color="beige"
+    w="100%"
+    textAlign="start"
+    h={{ base: "10vh", md: "15vh" }} // Ajusta la altura según el tamaño de pantalla
+    mb={4}
+    alignItems="center"
+  >
+    <Text
+      fontSize={{ base: "18px", md: "24px", lg: "28px" }} // Escalado de texto
+      ml={5}
+      fontWeight="bold"
+    >
+      Obras
+    </Text>
+  </Flex>
 
-            {obra.map((o) => {
-                return (
-                  <GridItem  p={4} w="25%" h="85%" mr={'30px'} mb={'50px'}>
-            <Card
-              outline="2px solid #b4b4b8"
-              bg="linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)"
+  {/* Grid Container */}
+  <Flex
+    flexWrap="wrap" // Permite que los elementos se ajusten automáticamente
+    justifyContent="center" // Centra los elementos
+    maxW="100%"
+    w="100%"
+    gap={{ base: "16px", md: "24px" }} // Espaciado entre las tarjetas
+  >
+    {obra.map((o) => (
+      <GridItem
+      key={o.id}
+      p={4}
+      w={{ base: "100%", sm: "45%", md: "30%", lg: "25%" }}
+      h="auto"
+    >
+      <Card
+        outline="2px solid #b4b4b8"
+        bg="linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)"
+        w="100%"
+        h="350px" // Altura fija para todos los cards
+        className="my-box"
+        borderRadius={3}
+        sx={{
+          transition: "transform 0.3s ease",
+          "&:hover": {
+            transform: "scale(1.05)",
+            cursor: "pointer",
+          },
+        }}
+      >
+        {/* Image Section */}
+        <CardBody
+          h="70%" // Ocupa un 70% del alto total
+          w="100%"
+          display="flex"
+          p={0}
+          justifyContent="center"
+          alignItems="center"
+          onClick={() => handleCardClick(o.id)}
+        >
+          <Stack
+            h="100%"
+            w="100%"
+            borderRadius={3}
+            borderWidth={2}
+            borderColor="darkgray"
+          >
+            <Image
+              src={o.imagenes}
               w="100%"
               h="100%"
-              className="my-box"
+              objectFit="cover" // Mantiene la proporción
               borderRadius={3}
-              sx={{
-                transition: 'transform 0.3s ease',
-                '&:hover': {
-                  transform: 'scale(1.05)',
-                  cursor: 'pointer',
-                },
-              }}
+            />
+          </Stack>
+        </CardBody>
+    
+        {/* Text Section */}
+        <Stack
+          mt={0}
+          bg="white"
+          width="100%"
+          height="30%" // Ocupa el 30% del alto total
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+          p={2}
+        >
+          <Stack direction="column">
+            <Text
+              ml="22px"
+              mt="5px"
+              whiteSpace="pre-line"
+              fontSize={{ base: "14px", md: "18px" }}
+              lineHeight="1.2"
+              bg="black"
+              bgClip="text"
+              fontWeight="bold"
+              noOfLines={1} // Trunca el texto si es demasiado largo
             >
-              <CardBody
-                h={'70%'}
-                w={'100%'}
-                display="flex"
-                p={0}
-                justifyContent="center"
-                alignItems="center"
-                onClick={() => handleCardClick(o.id)}
-              >
-                <Stack
-                  h={'100%'}
-                  w={'100%'}
-                  borderRadius={3}
-                  borderWidth={2}
-                  borderColor={'darkgray'}
-                >
-                  <Image
-                    src={o.imagenes}
-                    m={0}
-                    w={'100%'}
-                    h={'100%'}
-                    borderRadius={3}
-                  />
-                </Stack>
-              </CardBody>
-
-              <Stack
-                mt={0}
-                bg="white"
-                width="100%"
-                height="30%"
-                maxHeight={'27%'}
-                direction={'row'}
-                justifyContent={'space-between'}
-              >
-                <Stack direction={'column'}>
-                  <Text
-                    ml={'22px'}
-                    mt={'5px'}
-                    whiteSpace="pre-line"
-                    fontSize="18px"
-                    lineHeight="1.2"
-                    bg="black"
-                    bgClip="text"
-                    fontWeight="bold"
-                  >
-                    {o.nombre}
-                  </Text>
-                  <Text ml={'22px'} as="i" fontSize="17px" color="black">
-                    {o.descripcion}
-                  </Text>
-                </Stack>
-                {/* <Image src={escultor.bandera} width="60px" height="40px" mr={"11px"} mt={"20px"}/> */}
-              </Stack>
-            </Card>
-          </GridItem>
-                )
-          })}
+              {o.nombre}
+            </Text>
+            <Text
+              ml="22px"
+              as="i"
+              fontSize={{ base: "12px", md: "16px" }}
+              color="black"
+              noOfLines={2} // Trunca el texto en la descripción
+            >
+              {o.descripcion}
+            </Text>
+          </Stack>
+        </Stack>
+      </Card>
+    </GridItem>
+    
+    ))}
+  </Flex>
 
 
-
-
-            </Flex>
             
         
           </Flex>
