@@ -42,10 +42,11 @@ function Escultoress () {
 
 
   const handleCardClick = (id: number) => {
-    if (rolUser !== '') {
+    if (rolUser === 'user') {
       navigate(`/user/escultores/${id}`);
     } else {
     navigate(`/public/escultores/${id}`);
+    console.log(id, 'Escultor');
     }
   }
 
