@@ -35,7 +35,7 @@ export const ProximosEventos = () => {
 
 
   const handleCardClick = (id: number) => {
-    if (rolUser !== '') {
+    if (rolUser === 'user') {
     navigate(`/user/eventos/${id}`);
     } else {
     navigate(`/public/eventos/${id}`);

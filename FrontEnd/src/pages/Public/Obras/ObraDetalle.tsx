@@ -13,6 +13,11 @@ import { useEdicion } from '../../../EdicionContexto';
 import { WarningIcon } from '@chakra-ui/icons';
 import { GetToken } from '../../../API/Public/Votacion';
 
+type Imagen = {
+  url: string;
+  id: number;
+  esculturaId: number;
+};
 interface Obra {
   esculturaId: number;
   nombre: string;
@@ -22,8 +27,10 @@ interface Obra {
   escultorNombre: string;
   escultorPais: string;
   escultorImagen: string;
-  imagenes: string;
+  imagenes: Imagen[];
+  promedioVotos: number;
 }
+
 
 const ObraDetail = () => {
  
@@ -53,12 +60,10 @@ const ObraDetail = () => {
 
   useEffect(() => {
     if (obra) {
-      const images = [
-        {
-          original: obra.imagenes,
-          thumbnail: obra.imagenes,
-        },
-      ];
+      const images = obra.imagenes.map((imagen) => ({
+        original: imagen.url,
+        thumbnail: imagen.url,
+      }));
       setImages(images);
     }
   }, [obra]);

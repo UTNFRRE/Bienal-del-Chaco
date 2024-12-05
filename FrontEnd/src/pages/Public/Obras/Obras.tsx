@@ -25,6 +25,12 @@ import { getObras } from '../../../API/Admin/Obras';
 import { ArrowLeftIcon, ArrowRightIcon, SearchIcon } from '@chakra-ui/icons';
 import Rating from '../../../components/Obras/Rating';
 import { useAuth } from '../../../LoginContexto';
+
+type Imagen = {
+  url: string;
+  id: number;
+  esculturaId: number;
+};
 interface Obra {
   esculturaId: number;
   nombre: string;
@@ -34,7 +40,7 @@ interface Obra {
   escultorNombre: string;
   escultorPais: string;
   escultorImagen: string;
-  imagenes: string;
+  imagenes: Imagen[];
   promedioVotos: number;
 }
 
@@ -176,13 +182,12 @@ export default function ObrasPublic() {
           columnClassName="my-masonry-grid_column"
         >
           {/* Como las imagenes estan en un arreglo, para usar el carrusel react pide que esten en un json con las llaves original y thumbnail. Entonces por cada obra se crea ese json */}
-          {obras.map((obra, index) => {
-            const images = [
-              {
-                original: obra.imagenes,
-                thumbnail: obra.imagenes,
-              },
-            ];
+            {obras.map((obra, index) => {
+            const images = obra.imagenes.map((imagen) => ({
+              original: imagen.url,
+              thumbnail: imagen.url,
+            }));
+            console.log(obra)
             return (
               <React.Fragment key={obra.esculturaId}>
                 {/* Como hay elementos que se renderizan dentro de otro elemento (carrusel dentro de la card) se usa esa tag para evitar errores */}
