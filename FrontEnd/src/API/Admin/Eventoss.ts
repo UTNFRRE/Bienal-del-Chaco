@@ -1,5 +1,8 @@
-const API_URL = 'http://localhost:5232';
+
 import Cookies from 'js-cookie';
+
+const API_URL = 'https://bienalbackapi.azurewebsites.net';
+
 
 //Obtener todos los eventos
 

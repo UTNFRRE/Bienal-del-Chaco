@@ -59,8 +59,10 @@ function App() {
                     ? isAdmin
                       ? '/admin/escultores'
                       : isUser ? '/user/escultores' 
-                      : isEmpleado ? '/empleado/obras' : '/public/escultores'
-                    : '/public/escultores'
+
+                      : isEmpleado ? '/empleado/obras' : '/public/obras'
+                    : '/public/obras'
+
                 }
           />
         }

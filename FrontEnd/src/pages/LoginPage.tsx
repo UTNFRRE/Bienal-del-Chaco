@@ -60,6 +60,7 @@ export default function LoginPage() {
         navigate('/user/escultores');
       };
     }
+
   };
   return (
     <Box

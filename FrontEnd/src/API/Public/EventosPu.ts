@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5232';
+const API_URL = 'https://bienalbackapi.azurewebsites.net';
 
 export const getProximosEventos = async (edicion: string) => {
     try {

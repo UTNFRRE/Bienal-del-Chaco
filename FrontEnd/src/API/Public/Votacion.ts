@@ -1,5 +1,8 @@
-export const API_URL = 'http://localhost:5232';
+
 import useCookies from 'js-cookie';
+
+const API_URL = 'https://bienalbackapi.azurewebsites.net';
+
 
 export const addVoto = async (
     esculturaId: number,

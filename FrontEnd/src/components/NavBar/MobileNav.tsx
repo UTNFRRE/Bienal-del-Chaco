@@ -10,8 +10,8 @@ import {
   DrawerContent,
   DrawerCloseButton,
   VStack,
-  Link,
 } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 import { FiMenu } from 'react-icons/fi';
 import NavItem from './NavItem';
 
@@ -48,8 +48,8 @@ export default function MobileNav({ LINK_ITEMS }: NavContentProps) {
           </DrawerHeader>
           <DrawerBody bg="linear-gradient(to right, #000000, #434343)">
             <VStack align="start">
-              {LINK_ITEMS.map((link, index) => (
-                <Link key={index} href={link.url} onClick={onClose}>
+              {LINK_ITEMS.map((link, key) => (
+                <Link key={key} to={link.url} onClick={onClose} style={{ textDecoration: 'none' }}>
                   <NavItem title={link.title} />
                 </Link>
               ))}
