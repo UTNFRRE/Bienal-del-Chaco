@@ -51,16 +51,17 @@ export const ProximosEventos = () => {
   }
 
   return (
-    <Flex direction={'column'} ml={10}>
+    <Flex direction="column" ml={10} align="center" width="100%" paddingX={{ base: "5vw", md: "0" }}>
       <Box 
-      width="110%"
+      width="150%"
       height="100%"
       bg="#0B192C"
       display="flex"
       position="relative"
+      justifyContent="center"
       zIndex={-5} // Esto asegura que esté detrás de los escultores
       paddingX="5vw" // Añade un espacio en los lados para que no toque los bordes
-      left="-5vw"
+      left="-20vw"
       >
       <Heading mb={4} mt={6} color={'#CDC2A5'}>
         Proximos Eventos
@@ -68,7 +69,7 @@ export const ProximosEventos = () => {
       
       </Box>
       <Box 
-      width="110%"
+      width="150%"
       height="100%"
       bg="#0B192C"
       display="flex"
@@ -82,7 +83,12 @@ export const ProximosEventos = () => {
           hhhh
         </Heading>
       </Box>
-      <SimpleGrid columns={3} spacing={7}>
+      <SimpleGrid columns={{ base: 1, md: 3 }} 
+        spacing={7}
+   
+        width="100%" 
+        padding={{ base: "0 4vw", md: "0" }}
+        >
         {eventos.length === 0 ? <Text top="-150%" color={'#CDC2A5'} position="relative">No hay eventos proximos</Text> : null}
         {eventos.map((evento, index) =>
           index < 9 ? (
@@ -97,6 +103,7 @@ export const ProximosEventos = () => {
               bg="linear-gradient(120deg, #b4b4b8 60%, #dfe1e6 80%)"
               p={4}
               maxWidth={'95%'}
+              
               borderRadius={3}
               borderWidth={1}
               borderColor={'secundaryHover'}
