@@ -77,7 +77,6 @@ const ManagerVotes = () => {
                         gap={4}
                     >
                         <CreateVoteButton />
-                        <QrButton data={Obras} />
                     </Flex>
                 </Flex>
                 <Flex

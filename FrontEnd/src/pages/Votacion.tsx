@@ -14,16 +14,21 @@ import imgLogo from '../components/icons/pagina.png';
 import { HeadVotos } from '../API/Public/Votacion';
 import Cookies from 'js-cookie';
 
-interface Obra {
+type Imagen = {
+    url: string;
+    id: number;
+    esculturaId: number;
+  };
+  interface Obra {
     esculturaId: number;
     nombre: string;
-    tematica: string;
+    tematica: string | null;
     descripcion: string;
-    escultorId: number;
     fechaCreacion: string;
-    esculturNombre: string;
+    escultorNombre: string;
     escultorPais: string;
-    imagenes: string;
+    escultorImagen: string;
+    imagenes: Imagen[];
     promedioVotos: number;
 }
 
@@ -118,7 +123,7 @@ function Voted() {
         navigate('/user/obras');
     };
 
-    return tokenValido && !isDisabled ? (
+    return tokenValido && !isDisabled && votacionHabilitada ? (
         <Box
             w="100vh"
             h={{ base: '100vh', lg: '100vh' }}
@@ -145,10 +150,7 @@ function Voted() {
                     flexDirection="column"
                     justifyContent="space-around"
                 >
-                    {!votacionHabilitada && <Box
-                        bg={'azul'}
-                        color={'beige'}
-                    >  <InfoIcon color={'beige'}/> La votacion no se encuentra habilitada </Box> }
+                   
                     {obra && <Card data={obra} />}
                     <Box display="flex" alignItems="center" justifyContent="space-between" flexDirection="column" width="30%" height="15%">
                         <Boton onRatingChange={handlePuntajeChange} />
@@ -208,6 +210,11 @@ function Voted() {
             <Heading>
             {isDisabled && 
                 'Ya has votado por esta obra'
+            }
+            </Heading>
+            <Heading>
+            {!votacionHabilitada && 
+                'La votación se encuentra cerrada'
             }
             </Heading>
         </Box>

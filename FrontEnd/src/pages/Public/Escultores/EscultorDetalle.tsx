@@ -36,8 +36,8 @@ interface Escultor {
 
 
 const EscultorDetail = () => {
-  const [images, setImages] = useState<any[]>([]);
-  const navigate = useNavigate();
+    const [images, setImages] = useState<any[]>([]);
+    const navigate = useNavigate();
     const { id } = useParams<{ id: string }>();
     const [obra, setObra] = useState<Obra[]>([
       {
@@ -93,7 +93,8 @@ const EscultorDetail = () => {
           setImages(images);
         }
       }, [obra]);
-  
+
+
     return (
       <Box
       display={'flex'}
@@ -279,21 +280,21 @@ const EscultorDetail = () => {
           alignItems="center"
           onClick={() => handleCardClick(o.id)}
         >
-          <Stack
+            <Stack
             h="100%"
             w="100%"
             borderRadius={3}
             borderWidth={2}
             borderColor="darkgray"
-          >
+            >
             <Image
-              src={o.imagenes}
+              src={o.imagenes.split(',')[1]}
               w="100%"
               h="100%"
               objectFit="cover" // Mantiene la proporción
               borderRadius={3}
             />
-          </Stack>
+            </Stack>
         </CardBody>
     
         {/* Text Section */}
