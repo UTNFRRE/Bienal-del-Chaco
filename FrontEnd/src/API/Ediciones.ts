@@ -1,4 +1,5 @@
 const API_URL = 'http://localhost:5232';
+import Cookies from "js-cookie";
 
 //Obtenemos todas las ediciones
 export const getEdiciones = async () => {
@@ -40,9 +41,13 @@ export const addEdicion = async (anio: string, fechaInicio: string, fechaFin:str
 export const EditVotacion = async (id: string, valor: boolean) => {
   const formData = new FormData();
   formData.append('VotacionHabilitada', valor.toString());
+  const token = Cookies.get('access_token');
   try {
     const response = await fetch(`${API_URL}/Edicion/${id}`, {
       method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
       body: formData,
     });
     if (response.ok) {
@@ -58,8 +63,12 @@ export const EditVotacion = async (id: string, valor: boolean) => {
 
 export const GetVotacion = async (id: string) => {
   try {
+    const token = Cookies.get('access_token'); 
     const response = await fetch(`${API_URL}/Edicion/${id}`, {
       method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      }
     });
     if (response.ok) {
       const data = await response.json();

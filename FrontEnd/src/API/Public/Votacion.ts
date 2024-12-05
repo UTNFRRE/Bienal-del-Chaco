@@ -7,11 +7,13 @@ export const addVoto = async (
 ) => {
     
     const userId = useCookies.get('IdUser');
+    const token = useCookies.get('access_token');
     try {
         const response = await fetch(`${API_URL}/Votos`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
             },
             body: JSON.stringify({userId, esculturaId, puntuacion}),
         });
@@ -32,10 +34,13 @@ export const HeadVotos = async(
     userId: string,
     esculturaId: number,
 ) => {
-
+    const token = useCookies.get('access_token');
     try {
         const response = await fetch(`${API_URL}/Votos?userid=${userId}&esculturaid=${esculturaId}`, {
             method: 'HEAD',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            }
         });
 
        return response;
