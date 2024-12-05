@@ -27,7 +27,7 @@ interface Escultor {
     id:number;
     nombre: string;
     descripcion: string;
-    imagenes: string;
+    imagenes: string[];
   }
 
 
@@ -40,7 +40,7 @@ const EscultorDetail = () => {
         id:0,
         nombre: '',
         descripcion: '',
-        imagenes: '',
+        imagenes: [''],
       }
     ]);
     const [escultor, setEscultor] = useState<Escultor>({
@@ -205,7 +205,7 @@ return (
                   {/* Image Section */}
                   <CardBody h="70%" w="100%" display="flex" p={0} justifyContent="center" alignItems="center" onClick={() => handleCardClick(o.id)}>
                     <Stack h="100%" w="100%" borderRadius={3} borderWidth={2} borderColor="darkgray">
-                      <Image src={o.imagenes} w="100%" h="100%" objectFit="cover" borderRadius={3} />
+                      <Image src={o.imagenes[0]} w="100%" h="100%" objectFit="cover" borderRadius={3} />
                     </Stack>
                   </CardBody>
 

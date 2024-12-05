@@ -239,12 +239,12 @@ const ObraDetail = () => {
               w={'80%'}
               color={'azul'}
               mt={20}>
-            {isDisabled && <Flex alignItems={'center'} p={2} gap={2} bgColor={'azul'} color={'beige'} borderRadius={6}>
+            {isDisabled && rolUser !== '' && <Flex alignItems={'center'} p={2} gap={2} bgColor={'azul'} color={'beige'} borderRadius={6}>
               <WarningIcon color={'beige'} />
               Ya has votado por esta obra
             </Flex>}
 
-            {!votacionHabilitada && <Flex mt={2} alignItems={'center'} p={2} gap={2} bgColor={'azul'} color={'beige'} borderRadius={6}>
+            {!votacionHabilitada && rolUser !== '' && <Flex mt={2} alignItems={'center'} p={2} gap={2} bgColor={'azul'} color={'beige'} borderRadius={6}>
               <WarningIcon color={'beige'} />
               La votación se encuentra cerrada
             </Flex>}
