@@ -67,10 +67,13 @@ export const AddUser = async (
     email: string,
     roleName: string,
     ) => {
-    
+    const token = Cookies.get('access_token');
     try {
-        const response = await fetch(`${API_URL}/api/Roles/AsignarRol?email=${email}&rolename=${roleName}`, {
+        await fetch(`${API_URL}/api/Roles/AsignarRol?email=${email}&rolename=${roleName}`, {
         method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        },
         });
     } catch (error) {
         throw new Error('Network error: ' + error);

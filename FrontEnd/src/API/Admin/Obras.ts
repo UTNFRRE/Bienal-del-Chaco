@@ -1,5 +1,5 @@
 const API_URL = 'http://localhost:5232';
-import { useEdicion } from "../../EdicionContexto";
+import Cookies from 'js-cookie';
 
 // Obtener todas las obras
 export const getObras = async (currentPage: number, pageSize: number, edicion:string, busqueda: string) => {
@@ -30,6 +30,8 @@ export const addObra = async (
   edicion: string
 ) => {
   const formData = new FormData();
+  const token = Cookies.get('access_token');
+
   formData.append('Nombre', titulo);
   formData.append('Descripcion', descripcion);
   formData.append('Imagen', imagen);
@@ -41,6 +43,9 @@ export const addObra = async (
   try {
     const response = await fetch(`${API_URL}/Esculturas`, {
       method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
       body: formData,
     });
     if (response.ok) {
@@ -67,7 +72,9 @@ export const editObra = async (
   edicion:string
 ) => {
   const formData = new FormData();
+  const token = Cookies.get('access_token');
   var method = '';
+
   if (typeof imagen === 'string') {
     formData.append('Nombre', titulo);
     formData.append('Descripcion', descripcion);
@@ -86,10 +93,12 @@ export const editObra = async (
     method = 'PUT';
   }
 
-  console.log(method);
   try {
     const response = await fetch(`${API_URL}/Esculturas/${id}`, {
       method: `${method}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
       body: formData,
     });
     if (response.ok) {
@@ -104,9 +113,13 @@ export const editObra = async (
 
 // Eliminar una obra
 export const deleteObra = async (id: string) => {
+  const token = Cookies.get('access_token');
   try {
     const response = await fetch(`${API_URL}/Esculturas/${id}`, {
       method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     if (response.ok) {
       return;
