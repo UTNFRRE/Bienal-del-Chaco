@@ -23,7 +23,7 @@ export default function EventosPublic() {
   const [value, onChange] = useState<Value>(new Date());
 
   return (
-    <Flex direction={'column'} gap={10}>
+    <Flex overflow="hidden" direction={'column'} gap={10}>
       <Flex direction={'column'}>
         <ProximosEventos />
       </Flex>
