@@ -11,13 +11,14 @@ import {
 } from '@chakra-ui/react';
 import ImagenFondo from '../components/icons/login2.png';
 import Logo from '../components/icons/pagina.png';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../LoginContexto';
 import { useToast } from '@chakra-ui/react';
 import { useState } from 'react';
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { onLogin } = useAuth();
   const [password, setPassword] = useState('');
   const [account, setAccount] = useState('');
@@ -36,6 +37,12 @@ export default function LoginPage() {
         duration: 5000,
         isClosable: true,
       });
+
+      const from =  `${location.state?.from?.pathname}`;
+
+      if (from.startsWith('/voting/')) {
+        window.location.href = from;
+      }
     } catch (error) {
       console.error('Network error', error);
       showToast({

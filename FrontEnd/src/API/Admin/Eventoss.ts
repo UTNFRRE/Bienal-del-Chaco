@@ -1,4 +1,8 @@
+
+import Cookies from 'js-cookie';
+
 const API_URL = 'https://bienalbackapi.azurewebsites.net';
+
 
 //Obtener todos los eventos
 
@@ -29,6 +33,7 @@ export const addEvento = async (
   edicion: string
 ) => {
   const formData = new FormData();
+  const token = Cookies.get('access_token');
   formData.append('Nombre', Nombre);
   formData.append('Fecha', Fecha);
   formData.append('Lugar', Lugar);
@@ -41,6 +46,9 @@ export const addEvento = async (
   try {
     const response = await fetch(`${API_URL}/Eventos`, {
       method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
       body: formData,
     });
     if (response.ok) {
@@ -67,6 +75,7 @@ export const editEvento = async (
   latitud: number
 ) => {
   const formData = new FormData();
+  const token = Cookies.get('access_token');
   formData.append('Nombre', Nombre);
   formData.append('Fecha', Fecha);
   formData.append('Lugar', Lugar);
@@ -78,6 +87,9 @@ export const editEvento = async (
   try {
     const response = await fetch(`${API_URL}/Eventos/${Id}`, {
       method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
       body: formData,
     });
     if (response.ok) {
@@ -94,9 +106,13 @@ export const editEvento = async (
 // Eliminar un evento
 
 export const deleteEvento = async (Id: string) => {
+  const token = Cookies.get('access_token');
   try {
     const response = await fetch(`${API_URL}/Eventos/${Id}`, {
       method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     if (response.ok) {
       return;

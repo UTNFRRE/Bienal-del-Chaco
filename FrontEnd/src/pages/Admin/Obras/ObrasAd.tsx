@@ -39,16 +39,22 @@ import {
   deleteObra,
 } from '../../../API/Admin/Obras';
 
+type Imagen = {
+  url: string;
+  id: number;
+  esculturaId: number;
+};
 interface Obra {
-  esculturaId: string;
+  esculturaId: number;
   nombre: string;
-  tematica: string;
+  tematica: string | null;
   descripcion: string;
   fechaCreacion: string;
   escultorNombre: string;
   escultorPais: string;
   escultorImagen: string;
-  imagenes: string;
+  imagenes: Imagen[];
+  promedioVotos: number;
 }
 
 function TablaObras() {
@@ -130,7 +136,7 @@ function TablaObras() {
     autor: number,
     paisAutor: string,
     descripcion: string,
-    imagen: File
+    imagen: File[]
   ) => {
     const PostObra = async () => {
       try {
@@ -166,7 +172,7 @@ function TablaObras() {
     autor: number,
     paisAutor: string,
     descripcion: string,
-    imagenes: string | File
+    imagenes: (string | File)[]
   ) => {
     const PutObra = async () => {
       try {
@@ -289,7 +295,7 @@ function TablaObras() {
                         justifyContent="center"
                       >
                         <Image
-                          src={`${obra.imagenes}?${new Date().getTime()}`}
+                          src={obra.imagenes.length > 0 ? `${obra.imagenes[0].url}?${new Date().getTime()}`: ''}
                           alt={obra.nombre}
                           width="100px"
                           height="auto"
@@ -380,8 +386,7 @@ function TablaObras() {
       <ModalQR
         isOpen={isOpenQR}
         onClose={onCloseQR}
-        obra={obraElegida?.nombre || ''}
-        urlcodigo={`https://github.com/UTNFRRE/Bienal-del-Chaco`}
+        obra={obraElegida}
       />
     </>
   );

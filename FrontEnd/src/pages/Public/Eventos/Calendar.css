@@ -165,3 +165,54 @@
 .react-calendar--selectRange .react-calendar__tile--hover {
   background-color: #e6e6e6;
 }
+
+
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+  .react-calendar {
+    width: 100%; /* Ajusta el ancho al 100% del contenedor */
+    max-width: 100%; /* Asegúrate de que no se desborde */
+  }
+
+  .react-calendar__tile {
+    width: 60px; /* Tamaño más pequeño para días */
+    height: 60px; 
+    font-size: 0.7em; /* Texto más pequeño */
+  }
+
+  .react-calendar__year-view .react-calendar__tile,
+  .react-calendar__decade-view .react-calendar__tile,
+  .react-calendar__century-view .react-calendar__tile {
+    padding: 1em 0.3em; /* Reduce el espacio interno */
+  }
+
+  .react-calendar__month-view__weekdays__weekday {
+    font-size: 0.65em; /* Tamaño de los días de la semana */
+    padding: 0.3em; 
+  }
+
+  .react-calendar__navigation {
+    flex-direction: row; /* Asegura que las flechas sigan en la misma fila */
+    justify-content: space-between; /* Las flechas se separan en los extremos */
+  }
+
+  .react-calendar__navigation button {
+    min-width: 30px; /* Ajusta el tamaño de los botones si es necesario */
+    font-size: 1.2em; /* Ajusta el tamaño del texto de las flechas */
+  }
+
+  .react-calendar--doubleView {
+    flex-direction: column; /* Cambia a diseño vertical */
+    width: 100%;
+  }
+
+  .react-calendar--doubleView .react-calendar__viewContainer {
+    flex-direction: column; /* Alinea las vistas una debajo de la otra */
+  }
+
+  .react-calendar--doubleView .react-calendar__viewContainer > * {
+    width: 100%; /* Ajusta el ancho */
+    margin: 0.5em 0; /* Espaciado vertical */
+  }
+}

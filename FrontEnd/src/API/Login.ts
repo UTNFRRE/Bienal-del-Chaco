@@ -54,9 +54,9 @@ export const AddUser = async (
         });
         if (response.ok) {
         await AddRoltoUser(email, 'user'); 
-        return ;
+        return true;
         } else {
-        throw new Error('Error en la respuesta del servidor');
+        return false;
         }
     } catch (error) {
         throw new Error('Network error: ' + error);
@@ -67,17 +67,14 @@ export const AddUser = async (
     email: string,
     roleName: string,
     ) => {
-    
+    const token = Cookies.get('access_token');
     try {
-        const response = await fetch(`${API_URL}/api/Roles/AsignarRol?email=${email}&rolename=${roleName}`, {
+        await fetch(`${API_URL}/api/Roles/AsignarRol?email=${email}&rolename=${roleName}`, {
         method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        },
         });
-        if (response.ok) {
-        const data = await response.json();
-        return data;
-        } else {
-        throw new Error('Error en la respuesta del servidor');
-        }
     } catch (error) {
         throw new Error('Network error: ' + error);
     }
@@ -97,3 +94,39 @@ export const AddUser = async (
         throw new Error('Network error: ' + error);
     }
   };
+
+export const GetUsuarios = async () => {
+    try {
+        const token = Cookies.get('access_token');
+        const response = await fetch(`${API_URL}/Usuarios`,
+        {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+            },
+        }
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+        return data;
+        } else {
+        throw new Error('Error en la respuesta del servidor');
+        }
+    } catch (error) {
+        throw new Error('Network error: ' + error);
+    }
+};
+
+export const GetRoles = async () => {
+    try {
+        const response = await fetch(`${API_URL}/api/Roles/Lista de Roles`);
+        if (response.ok) {
+          const data = await response.json();
+        return data;
+        } else {
+        throw new Error('Error en la respuesta del servidor');
+        }
+    } catch (error) {
+        throw new Error('Network error: ' + error);
+    }
+};

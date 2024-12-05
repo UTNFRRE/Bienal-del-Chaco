@@ -1,44 +1,82 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { 
     Modal, 
     ModalOverlay, 
     ModalContent, 
     ModalHeader, 
-    ModalFooter, 
     ModalBody, 
     ModalCloseButton, 
-    Button,
-    Box, 
-    Image,
-    Select
+    Text
 } from '@chakra-ui/react';
 import QrCodeGenerator from '../Obras/GenerarQR';
+import { GetToken } from '../../API/Public/Votacion';
 
-
+type Imagen = {
+    url: string;
+    id: number;
+    esculturaId: number;
+  };
+  interface Obra {
+    esculturaId: number;
+    nombre: string;
+    tematica: string | null;
+    descripcion: string;
+    fechaCreacion: string;
+    escultorNombre: string;
+    escultorPais: string;
+    escultorImagen: string;
+    imagenes: Imagen[];
+    promedioVotos: number;
+  }
 interface QRProps {
 
     isOpen: boolean;
 
     onClose: () => void;
 
-    urlcodigo: string;
-
-    obra:string;
+    obra:Obra | null;
     
 }
 
 
-const ModalQR: React.FC<QRProps> = ({isOpen,onClose, urlcodigo, obra}) => {
+const ModalQR: React.FC<QRProps> = ({isOpen,onClose, obra}) => {
+    const [urlcodigo, setUrlCodigo] = React.useState<string>(''); 
+
+    useEffect(() => {
+        const obtenerToken = async (esculturaId: number) => {
+        try {
+          const data = await GetToken(esculturaId);
+          const token = data.token;
+          const url = `${window.location.origin}/voting/${esculturaId}/${token}`;
+          setUrlCodigo(url);
+        } catch (error) {
+          console.error('Error en el fetch de obras:', error);
+        }
+        };
+        
+        if(obra){
+            obtenerToken(obra.esculturaId);
+        }
+
+        const intervalId = setInterval(() => {
+            if (obra) {
+                obtenerToken(obra.esculturaId);
+            }
+        }, 60000); // 60000 ms = 1 min
+    
+        return () => clearInterval(intervalId);
+    }, [obra, isOpen]);
 
     return (
         <>
             <Modal isOpen={isOpen} onClose={onClose} size={"full"}>
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader>QR para {obra}</ModalHeader>
+                    <ModalHeader>QR para {obra?.nombre}</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
                        <QrCodeGenerator urlcodigo={urlcodigo} />
+                       <Text> La url es: {urlcodigo} </Text>
                     </ModalBody>
                 </ModalContent>
             </Modal>

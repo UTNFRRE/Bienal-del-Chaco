@@ -1,5 +1,9 @@
 
+import Cookies from 'js-cookie';
+
+
 import { useEdicion } from "../../EdicionContexto";
+
 
 const API_URL = 'https://bienalbackapi.azurewebsites.net';
 
@@ -29,13 +33,19 @@ export const addObra = async (
   autor: number,
   paisAutor: string,
   descripcion: string,
-  imagen: File,
+  imagen: File[],
   edicion: string
 ) => {
   const formData = new FormData();
+  const token = Cookies.get('access_token');
+
   formData.append('Nombre', titulo);
   formData.append('Descripcion', descripcion);
-  formData.append('Imagen', imagen);
+
+  for (let i = 0; i < imagen.length; i++) {
+    formData.append('Imagenes', imagen[i]);
+  }
+
   formData.append('EscultorID', autor.toString());
   formData.append('FechaCreacion', fecha);
   formData.append('Tematica', tematica);
@@ -44,6 +54,9 @@ export const addObra = async (
   try {
     const response = await fetch(`${API_URL}/Esculturas`, {
       method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
       body: formData,
     });
     if (response.ok) {
@@ -59,40 +72,39 @@ export const addObra = async (
 
 // Editar una obra existente
 export const editObra = async (
-  id: string,
+  id: number,
   titulo: string,
   tematica: string,
   fecha: string,
   autor: number,
   paisAutor: string,
   descripcion: string,
-  imagen: File | string,
+  imagen: (string | File)[],
   edicion:string
 ) => {
   const formData = new FormData();
-  var method = '';
-  if (typeof imagen === 'string') {
-    formData.append('Nombre', titulo);
-    formData.append('Descripcion', descripcion);
-    formData.append('EscultorID', autor.toString());
-    formData.append('FechaCreacion', fecha);
-    formData.append('Tematica', tematica);
-    method = 'PATCH';
-  } else {
-    formData.append('Nombre', titulo);
-    formData.append('Descripcion', descripcion);
-    formData.append('Imagen', imagen);
-    formData.append('EscultorID', autor.toString());
-    formData.append('FechaCreacion', fecha);
-    formData.append('Tematica', tematica);
-    formData.append('EdicionAño', edicion);
-    method = 'PUT';
-  }
+  const token = Cookies.get('access_token');
+  console.log('imagaaba', imagen)
 
-  console.log(method);
+    formData.append('Nombre', titulo);
+    formData.append('Descripcion', descripcion);
+   
+    for (let i = 0; i < imagen.length; i++) {
+      if (imagen[i] instanceof File) {
+        formData.append('NuevasImagenes', imagen[i]);
+      }
+    }
+
+    formData.append('EscultorID', autor.toString());
+    formData.append('FechaCreacion', fecha);
+    formData.append('Tematica', tematica);
+
   try {
     const response = await fetch(`${API_URL}/Esculturas/${id}`, {
-      method: `${method}`,
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
       body: formData,
     });
     if (response.ok) {
@@ -106,10 +118,14 @@ export const editObra = async (
 };
 
 // Eliminar una obra
-export const deleteObra = async (id: string) => {
+export const deleteObra = async (id: number) => {
+  const token = Cookies.get('access_token');
   try {
     const response = await fetch(`${API_URL}/Esculturas/${id}`, {
       method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     if (response.ok) {
       return;

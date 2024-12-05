@@ -34,7 +34,7 @@ export function HeaderContent({ LINK_ITEMS, user }: NavContentProps) {
 
   const navigate = useNavigate();
   const { edicion, setEdicion } = useEdicion();
-  const {onLogout} = useAuth();
+  const {rolUser, onLogout} = useAuth();
   const [ediciones, setEdiciones] = useState<any[]>([]);
   const [refresh, setRefresh] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -116,9 +116,11 @@ export function HeaderContent({ LINK_ITEMS, user }: NavContentProps) {
           </MenuItemOption>
               ))}
             </MenuOptionGroup>
+            { rolUser === 'admin' && (
             <MenuItem icon={<AddIcon />} onClick={onOpen}>
               Nueva
             </MenuItem>
+            )}
             </MenuList>
         </Menu>
         </Flex>

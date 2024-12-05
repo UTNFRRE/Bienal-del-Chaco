@@ -38,7 +38,7 @@ interface ModalProps {
     autor: number,
     paisAutor: string,
     descripcion: string,
-    imagenes: string | File
+    imagenes: (string | File)[]
   ) => void;
   obra: any;
 }
@@ -47,8 +47,8 @@ function ModificarObra({ isOpen, onClose, confirmar, obra }: ModalProps) {
   const [titulo, setTitulo] = useState('');
   const [tematica, setTematica] = useState('');
   const [escultorPais, setEscultorPais] = useState('');
-  const [imagenPrev, setImagenPrev] = useState<string>('');
-  const [imagen, setImagen] = useState<string | File>(''); // Como recupero la ruta de la imagen?
+  const [imagenPrev, setImagenPrev] = useState<string[]>([]);
+  const [imagen, setImagen] = useState<(string | File)[]>([]);  
   const [autor, setAutor] = useState<number>(0);
   const [descripcion, setDescripcion] = useState('');
   const [fecha, setFecha] = useState('');
@@ -68,7 +68,7 @@ function ModificarObra({ isOpen, onClose, confirmar, obra }: ModalProps) {
     setTitulo('');
     setTematica('');
     setEscultorPais('');
-    setImagen('');
+    //setImagen('');
     setAutor(0);
     setDescripcion('');
     setFecha('');
@@ -85,7 +85,8 @@ function ModificarObra({ isOpen, onClose, confirmar, obra }: ModalProps) {
       setEscultorPais(obra.escultorPais);
       setDescripcion(obra.descripcion);
       setFecha(obra.fechaCreacion);
-      setImagenPrev(`${obra.imagenes}?${new Date().getTime()}`); //Se agrega marca de tiempo, pq sino la imagen queda en cache del navegador
+      const imagenesPrevias = obra.imagenes.map((imagen: any) => `${imagen.url}?${new Date().getTime()}`);
+      setImagenPrev(imagenesPrevias);
       setImagen(obra.imagenes);
     }
     const fetchEscultores = async () => {
@@ -105,7 +106,7 @@ function ModificarObra({ isOpen, onClose, confirmar, obra }: ModalProps) {
   }, [isOpen]);
 
   const handleFilesChange = (files: File[]) => {
-    setImagen(files[0]);
+    setImagen(files);
     console.log('La imagen es' + files[0]);
   };
 

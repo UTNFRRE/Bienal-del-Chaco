@@ -1,17 +1,24 @@
 import './Card.css';
 
-interface Obra {
+
+type Imagen = {
+    url: string;
+    id: number;
+    esculturaId: number;
+  };
+  interface Obra {
     esculturaId: number;
     nombre: string;
-    tematica: string;
+    tematica: string | null;
     descripcion: string;
-    escultorId: number;
     fechaCreacion: string;
-    esculturNombre: string;
+    escultorNombre: string;
     escultorPais: string;
-    imagenes: string;
+    escultorImagen: string;
+    imagenes: Imagen[];
     promedioVotos: number;
-}
+  }
+  
 import {Image} from '@chakra-ui/react'
 interface ObraProp {
     data: Obra;
@@ -21,9 +28,9 @@ const Card: React.FC<ObraProp> = ({ data }) => {
     return (
         <div className="card">
             <div className="card_form">
-                <span>{data.esculturNombre}</span>
+                <span>{data.escultorNombre}</span>
                 <Image
-                src={data.imagenes}
+                src={data.imagenes[0].url}
                 boxSize="90px"
                 borderRadius="full"
                 borderWidth={1}
