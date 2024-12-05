@@ -196,8 +196,10 @@ function TablaEventos() {
           // borderWidth="1px"
           bg="secundaryBg"
           p={6}
+          pl={{base:1}}
+          ml={{base:0}}
           // boxShadow="md"
-          w="80%"
+          w={{base:"99%", md:"80%"}}
           borderWidth={1}
           borderColor={'secundaryHover'}
           // position="relative"
@@ -215,7 +217,7 @@ function TablaEventos() {
                     <Th textAlign="center" minW="300px" display={{ base: 'none', md: 'table-cell' }}>
                       Descripcion
                     </Th>
-                    <Th textAlign="center">Fecha</Th>
+                    <Th textAlign="center" minW={{ base: '90px', sm: '200px', md: '250px', lg: '300px'} } >Fecha</Th>
                     <Th textAlign="center">Acciones</Th>
                   </Tr>
                 </Thead>
@@ -228,12 +230,13 @@ function TablaEventos() {
                       <Td textAlign="center" display={{ base: 'none', md: 'table-cell' }}>
                         {truncateText(evento.descripcion, 40)}
                       </Td>
-                      <Td textAlign="center">{formatDate(evento.fecha)}</Td>
+                      <Td textAlign="center" minW={{ base: '90px', sm: '200px', md: '250px', lg: '300px'} }  >{formatDate(evento.fecha)}</Td>
                       <Td>
                         <Flex
                           gap={2}
                           justifyContent="center"
                           alignItems="center"
+                          direction={{ base: 'column', md: 'row' }}
                         >
                           <IconButton
                             aria-label="Editar"
