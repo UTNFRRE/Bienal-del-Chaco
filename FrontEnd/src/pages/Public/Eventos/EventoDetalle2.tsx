@@ -111,16 +111,27 @@ return (
     {/* Franja de fondo azul */}
     <Box
       width="100%"
-      height="25%"
+      height={{ base: "40%", md: "25%"}}
       bg="#0B192C"
-      display="flex"
-      position="relative"
+      position={{base: "absolute", md: "relative"}}
       zIndex={-5}
+      order={{ base: 0, md: 0 }}
+      
     >
+      <Heading
+        display={{ base: "block", md: "none" }}
+        color="#CDC2A5"
+        position="absolute"
+        top="30%"
+        left="50%"
+        transform="translate(-50%, -50%)"
+      >
+        {evento.nombre}
+      </Heading>
     </Box>
 
-    <Flex direction="row" gap={4} w="100%" h="75%" >
-      <Flex mt={'-7%'} ml={6} w="60%" h="50%" zIndex={5} >
+    <Flex direction={{base: "column", md: "row"}} gap={4} w="100%" h="auto" >
+      <Flex mt={{base: 170, md:"-7%"}} ml={6} w={{base: "90%", md:"60%"}} maxWidth={{base: "100%", md: "60%"}} h="50%" zIndex={5} order={{ base: 1, md: 0 }} > {/* el heigth mm*/}
         <LoadScript
           googleMapsApiKey={googleMapsApiKey}
           loadingElement={<Skeleton height="100%" width="100%" />}
@@ -135,17 +146,17 @@ return (
           </GoogleMap>
         </LoadScript>
       </Flex>
-      <Flex direction="column" gap={5} alignItems="center" flex={1} mt={'-9%'} ml={'4%'} mr={'4%'} fontFamily={'Barlow'} fontSize={16}>
+      <Flex direction="column" gap={5} alignItems="center" flex={1} mt={{ base: 4, md: "-9%" }} ml={{ base: 4, md: "4%" }} mr={{ base: 4, md: "4%" }} fontFamily={'Barlow'} fontSize={16} order={{ base: 2, md: 1 }} >
         <Flex direction="column" gap={1} textAlign="center" >
-          <Heading color={'#CDC2A5'}>{evento.nombre}</Heading>
-          <Text as="em" color="azul" textAlign={'center'} mt={'20%'} fontWeight={'bold'}>
+          <Heading display={{base:"none", md:"block"}} color={'#CDC2A5'}>{evento.nombre}</Heading>
+          <Text as="em" color="azul" textAlign={'center'} mt={'50%'} fontWeight={'bold'}>
             Temática: <span style={ { fontWeight: 'normal' }}>{evento.tematica}</span>
           </Text>
         </Flex>
         <Flex>
           <Text textAlign="justify"  mt={'4%'}>{evento.descripcion}</Text>
         </Flex>
-        <Flex mt={'20%'}>
+        <Flex mt={{ base: 4, md: "20%" }} order={{ base: 3, md: 2 }} >
           <RedesSocialesBlue />
         </Flex>
       </Flex>
