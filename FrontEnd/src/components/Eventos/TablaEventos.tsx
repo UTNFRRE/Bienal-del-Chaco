@@ -210,9 +210,9 @@ function TablaEventos() {
                 <Thead>
                   <Tr mt={6}>
                     <Th textAlign="center">Nombre</Th>
-                    <Th textAlign="center">Lugar</Th>
-                    <Th textAlign="center">Tematica</Th>
-                    <Th textAlign="center" minW="300px">
+                    <Th textAlign="center" display={{ base: 'none', md: 'table-cell' }} >Lugar</Th>
+                    <Th textAlign="center" display={{ base: 'none', md: 'table-cell' }}>Tematica</Th>
+                    <Th textAlign="center" minW="300px" display={{ base: 'none', md: 'table-cell' }}>
                       Descripcion
                     </Th>
                     <Th textAlign="center">Fecha</Th>
@@ -223,9 +223,9 @@ function TablaEventos() {
                   {eventos.map((evento, index) => (
                     <Tr key={index}>
                       <Td textAlign="center">{evento.nombre}</Td>
-                      <Td textAlign="center">{evento.lugar}</Td>
-                      <Td textAlign="center">{evento.tematica}</Td>
-                      <Td textAlign="center">
+                      <Td textAlign="center" display={{ base: 'none', md: 'table-cell' }}>{evento.lugar}</Td>
+                      <Td textAlign="center" display={{ base: 'none', md: 'table-cell' }}>{evento.tematica}</Td>
+                      <Td textAlign="center" display={{ base: 'none', md: 'table-cell' }}>
                         {truncateText(evento.descripcion, 40)}
                       </Td>
                       <Td textAlign="center">{formatDate(evento.fecha)}</Td>
