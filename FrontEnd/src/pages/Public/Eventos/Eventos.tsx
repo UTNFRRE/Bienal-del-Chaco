@@ -27,8 +27,8 @@ export default function EventosPublic() {
       <Flex direction={'column'}>
         <ProximosEventos />
       </Flex>
-      <Flex justifyContent={'space-around'} direction={'row'}>
-        <Flex>
+      <Flex justifyContent={'space-around'} direction={{base:"column", md:"row"}}>
+        <Flex width={{base:"90%"}} ml={{base:5}}>
           <Calendar
             onChange={onChange}
             value={value}
