@@ -11,18 +11,23 @@ import {
 import QrCodeGenerator from '../Obras/GenerarQR';
 import { GetToken } from '../../API/Public/Votacion';
 
-interface Obra {
-    esculturaId: string;
+type Imagen = {
+    url: string;
+    id: number;
+    esculturaId: number;
+  };
+  interface Obra {
+    esculturaId: number;
     nombre: string;
-    tematica: string;
+    tematica: string | null;
     descripcion: string;
     fechaCreacion: string;
     escultorNombre: string;
     escultorPais: string;
     escultorImagen: string;
-    imagenes: string;
+    imagenes: Imagen[];
+    promedioVotos: number;
   }
-
 interface QRProps {
 
     isOpen: boolean;
@@ -50,12 +55,12 @@ const ModalQR: React.FC<QRProps> = ({isOpen,onClose, obra}) => {
         };
         
         if(obra){
-            obtenerToken(parseInt(obra.esculturaId));
+            obtenerToken(obra.esculturaId);
         }
 
         const intervalId = setInterval(() => {
             if (obra) {
-                obtenerToken(parseInt(obra.esculturaId));
+                obtenerToken(obra.esculturaId);
             }
         }, 60000); // 60000 ms = 1 min
     

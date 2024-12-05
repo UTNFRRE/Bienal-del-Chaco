@@ -26,7 +26,7 @@ export const addObra = async (
   autor: number,
   paisAutor: string,
   descripcion: string,
-  imagen: File,
+  imagen: File[],
   edicion: string
 ) => {
   const formData = new FormData();
@@ -34,7 +34,11 @@ export const addObra = async (
 
   formData.append('Nombre', titulo);
   formData.append('Descripcion', descripcion);
-  formData.append('Imagen', imagen);
+
+  for (let i = 0; i < imagen.length; i++) {
+    formData.append('Imagenes', imagen[i]);
+  }
+
   formData.append('EscultorID', autor.toString());
   formData.append('FechaCreacion', fecha);
   formData.append('Tematica', tematica);
@@ -61,41 +65,36 @@ export const addObra = async (
 
 // Editar una obra existente
 export const editObra = async (
-  id: string,
+  id: number,
   titulo: string,
   tematica: string,
   fecha: string,
   autor: number,
   paisAutor: string,
   descripcion: string,
-  imagen: File | string,
+  imagen: (string | File)[],
   edicion:string
 ) => {
   const formData = new FormData();
   const token = Cookies.get('access_token');
-  var method = '';
+  console.log('imagaaba', imagen)
 
-  if (typeof imagen === 'string') {
     formData.append('Nombre', titulo);
     formData.append('Descripcion', descripcion);
+   
+    for (let i = 0; i < imagen.length; i++) {
+      if (imagen[i] instanceof File) {
+        formData.append('NuevasImagenes', imagen[i]);
+      }
+    }
+
     formData.append('EscultorID', autor.toString());
     formData.append('FechaCreacion', fecha);
     formData.append('Tematica', tematica);
-    method = 'PATCH';
-  } else {
-    formData.append('Nombre', titulo);
-    formData.append('Descripcion', descripcion);
-    formData.append('Imagen', imagen);
-    formData.append('EscultorID', autor.toString());
-    formData.append('FechaCreacion', fecha);
-    formData.append('Tematica', tematica);
-    formData.append('EdicionAño', edicion);
-    method = 'PUT';
-  }
 
   try {
     const response = await fetch(`${API_URL}/Esculturas/${id}`, {
-      method: `${method}`,
+      method: 'PATCH',
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -112,7 +111,7 @@ export const editObra = async (
 };
 
 // Eliminar una obra
-export const deleteObra = async (id: string) => {
+export const deleteObra = async (id: number) => {
   const token = Cookies.get('access_token');
   try {
     const response = await fetch(`${API_URL}/Esculturas/${id}`, {

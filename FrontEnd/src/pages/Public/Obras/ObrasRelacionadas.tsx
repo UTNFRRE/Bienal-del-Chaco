@@ -8,18 +8,23 @@ import './Mansory.css';
 import Masonry from 'react-masonry-css';
 
 import { getObras } from '../../../API/Admin/Obras';
+type Imagen = {
+  url: string;
+  id: number;
+  esculturaId: number;
+};
 interface Obra {
-    esculturaId: number;
-    nombre: string;
-    tematica: string | null;
-    descripcion: string;
-    fechaCreacion: string;
-    escultorNombre: string;
-    escultorPais: string;
-    escultorImagen: string;
-    imagenes: string;
-  }
-  
+  esculturaId: number;
+  nombre: string;
+  tematica: string | null;
+  descripcion: string;
+  fechaCreacion: string;
+  escultorNombre: string;
+  escultorPais: string;
+  escultorImagen: string;
+  imagenes: Imagen[];
+  promedioVotos: number;
+}
   interface ObrasRelacionadasProps {
     esculturaId: number;
   }
@@ -63,12 +68,10 @@ const ObrasRelacionadas: React.FC<ObrasRelacionadasProps> = ({ esculturaId }) =>
               columnClassName="my-masonry-grid_column"
             >
         {filteredObras.map((obra, index) => {
-            const images = [
-              {
-                original: obra.imagenes,
-                thumbnail: obra.imagenes,
-              },
-            ];
+            const images = obra.imagenes.map((imagen) => ({
+              original: imagen.url,
+              thumbnail: imagen.url,
+            }));
           return (
             <React.Fragment key={obra.esculturaId}>
             {/* Como hay elementos que se renderizan dentro de otro elemento (carrusel dentro de la card) se usa esa tag para evitar errores */}

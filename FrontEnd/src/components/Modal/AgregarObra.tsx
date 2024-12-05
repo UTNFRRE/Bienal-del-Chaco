@@ -19,7 +19,6 @@ import {
 import { useState, useEffect } from 'react';
 import { getEscultores } from '../../API/Admin/Obras';
 import DropZone from '../ZonaCarga/ZonaCarga';
-import Escultores from '../../API/Escultores';
 import { EdicionProvider, useEdicion } from '../../EdicionContexto';
 
 interface ModalProps {
@@ -32,7 +31,7 @@ interface ModalProps {
     autor: number,
     paisAutor: string,
     descripcion: string,
-    imagen: File,
+    imagen: File[],
   ) => void;
 }
 
@@ -47,7 +46,7 @@ function AgregarObra({ isOpen, onClose, confirmar }: ModalProps) {
   const [titulo, setTitulo] = useState('');
   const [tematica, setTematica] = useState('');
   const [escultorPais, setEscultorPais] = useState('');
-  const [imagen, setImagen] = useState<File>(); // Estado para almacenar múltiples archivos de imagen, se usara despues
+  const [imagen, setImagen] = useState<File[]>(); // Estado para almacenar múltiples archivos de imagen, se usara despues
   const [autor, setAutor] = useState<number>(0);
   const [descripcion, setDescripcion] = useState('');
   const [fecha, setFecha] = useState('');
@@ -83,8 +82,8 @@ function AgregarObra({ isOpen, onClose, confirmar }: ModalProps) {
   }, [isOpen]);
 
   const handleFilesChange = (files: File[]) => {
-    setImagen(files[0]);
-    console.log('La imagen es' + files[0]);
+      setImagen(files);
+      console.log('Las imagenes son', files);
   };
 
   function handleConfirmarAdd() {
@@ -204,7 +203,7 @@ function AgregarObra({ isOpen, onClose, confirmar }: ModalProps) {
                     Imagen
                   </FormLabel>
                   <Flex justify="center">
-                    <DropZone maxFiles={1} onFilesChange={handleFilesChange} />
+                    <DropZone maxFiles={3} onFilesChange={handleFilesChange} />
                   </Flex>
                 </Stack>
               </Stack>
